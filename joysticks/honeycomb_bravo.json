@@ -2,102 +2,102 @@
   "ProductName": "HCBravo",
   "USB_VID": "0x294B",
   "USB_PID": "0x1901",
-  "USB_FEAT_length": 5,
-  "USB_REPORT_ID": 1,
   "USB_KEY_OFFSET": 96,
   "Functions": [
     {
       "FunName": "LED",
+      "USB_FEAT_length": 6,
+      "HeaderBytes": ["0x01"],
       "FunIndex": 1,
       "SubFunctions": [
         {
-          "int": "b0b1b2b3"
+          "int": "i8:28"
         }
       ],
       "SubBitFunctions": [
         {
-          "AP.hdg": "t0"
+          "AP_hdg": "t8"
         },
         {
-          "AP.nav": "t1"
+          "AP_nav": "t9"
         },
         {
-          "AP.apr": "t2"
+          "AP_apr": "t10"
         },
         {
-          "AP.rev": "t3"
+          "AP_rev": "t11"
         },
         {
-          "AP.alt": "t4"
+          "AP_alt": "t12"
         },
         {
-          "AP.vs": "t5"
+          "AP_vs": "t13"
         },
         {
-          "AP.ias": "t6"
+          "AP_ias": "t14"
         },
         {
-          "AP.autopilot": "t7"
+          "AP_autopilot": "t15"
         },
         {
-          "Gear.LeftGreen": "t8"
+          "Gear_LeftGreen": "t16"
         },
         {
-          "Gear.LeftRed": "t9"
+          "Gear_LeftRed": "t17"
         },
         {
-          "Gear.CenterGreen": "t10"
+          "Gear_CenterGreen": "t18"
         },
         {
-          "Gear.CenterRed": "t11"
+          "Gear_CenterRed": "t19"
         },
         {
-          "Gear.RightGreen": "t12"
+          "Gear_RightGreen": "t20"
         },
         {
-          "Gear.RightRed": "t13"
+          "Gear_RightRed": "t21"
         },
         {
-          "Light.MasterWarn": "t14"
+          "Light_MasterWarn": "t22"
         },
         {
-          "Light.EngineFire": "t15"
+          "Light_EngineFire": "t23"
         },
         {
-          "Light.LowOil": "t16"
+          "Light_LowOil": "t24"
         },
         {
-          "Light.LowFuel": "t17"
+          "Light_LowFuel": "t25"
         },
         {
-          "Light.Antiice": "t18"
+          "Light_Antiice": "t26"
         },
         {
-          "Light.Starter": "t19"
+          "Light_Starter": "t27"
         },
         {
-          "Light.APU": "t20"
+          "Light_APU": "t28"
         },
         {
-          "Light.MasterCaution": "t21"
+          "Light_MasterCaution": "t29"
         },
         {
-          "Light.Vacuum": "t22"
+          "Light_Vacuum": "t30"
         },
         {
-          "Light.LowHydPressURE": "t23"
+          "Light_LowHydPressURE": "t31"
         },
         {
-          "Lights.AuxFuelPump": "t24"
+          "Lights_AuxFuelPump": "t32"
         },
         {
-          "Lights.ParkingBrake": "t25"
+          "Lights_ParkingBrake": "t33"
         },
         {
-          "Lights.LowVolts": "t26"
+          "Lights_LowVolts": "t34"
         },
         {
-          "Lights.door": "t27"
+          "Lights_door": "t35"
         }
       ]
     }
