@@ -245,8 +245,10 @@ end
 function Qmdev:SetBit(idx, idr, valbase, val)
     valbase = valbase == nil and 0 or valbase
     if val == nil then
-        val = self.Bits[idx + 1]:Get()
-        if self.Bits[idx + 1]:ChangedUpdate() then
+        hdl = self.Bits[idx + 1]
+        if hdl:ChangedUpdate() then
+            val = hdl:GetOld()
+            -- uluaLog(string.format("SetBit=%f", val))
             uluaSet(idr, ilua_bool_ternary(val, valbase, self.RevertBits[idx + 1]))
         end
     else
