@@ -61,6 +61,14 @@ function Qmpe:FreshRmp1()
     self.d_rmp1s:Invalid(-1)
 end
 
+function Qmpe:SetTest()
+    uluaSet(idr_qmpe_hid_vhf1s_mode, 2)
+    uluaSet(idr_qmpe_hid_vhf1a_mode, 2)
+    uluaSet(idr_qmpe_hid_vhf2s_mode, 2)
+    uluaSet(idr_qmpe_hid_vhf2a_mode, 2)
+    uluaSet(idr_qmpe_hid_xpdr_mode, 2)
+end
+
 function Qmpe:SetRmp1SCrs(val)
     self:SetRmp1S(val)
     uluaSet(idr_qmpe_hid_vhf1s_mode, 4)
@@ -288,6 +296,7 @@ function Qmpe:SetRmp2Adf(valscale)
         uluaSet(idr_qmpe_hid_vhf2s_mode, 5)
     end
 end
+
 -- ========================= XPDR
 -- XPDR code 1~4 digi
 function Qmpe:GetXpdr(dpath)
@@ -302,6 +311,7 @@ function Qmpe:_SetXpdr(val)
         uluaSet(idr_qmpe_hid_xpdr_mode, 0)
     end
 end
+
 function Qmpe:SetXpdr(val)
     if val == nil then
         val = self.d_xpdr:Get()
@@ -395,6 +405,7 @@ function Qmpe:OffR1vhf1(dpath)
     self.d_rmp_r1vhf1:Invalid()
     uluaSet(idr_qmpe_hid_rmp_r1vhf1, 0)
 end
+
 -- RMP R1VHF2
 function Qmpe:GetR1vhf2(dpath)
     self.d_rmp_r1vhf2 = iDataRef:New(dpath)
@@ -526,6 +537,7 @@ function Qmpe:SetRVhf1(valbase, val)
         uluaSet(idr_qmpe_hid_acp_r_vhf1, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ========
 -- send VHF2
 function Qmpe:GetSVhf2(dpath)
@@ -577,6 +589,7 @@ function Qmpe:SetRVhf2(valbase, val)
         uluaSet(idr_qmpe_hid_acp_r_vhf2, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ========
 -- send INT/MECH
 function Qmpe:GetSMech(dpath)
@@ -628,6 +641,7 @@ function Qmpe:SetRMech(valbase, val)
         uluaSet(idr_qmpe_hid_acp_r_int, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ========
 -- send ATT/CAB
 function Qmpe:GetSAtt(dpath)
@@ -714,6 +728,7 @@ function Qmpe:SetRPa(valbase, val)
         uluaSet(idr_qmpe_hid_acp_r_pa, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- set ACP all
 function Qmpe:SetAcp()
     self:SetSVhf1()
@@ -733,10 +748,12 @@ function Qmpe:SetAcp()
     self:SetSPa()
     self:SetRPa()
 end
+
 -- set ACP off
 function Qmpe:OffAcp()
     uluaSet(idr_qmpe_hid_acp_int, 0)
 end
+
 -- =========================ECAM
 -- ========
 -- ECAM ENG
@@ -755,6 +772,7 @@ function Qmpe:SetEEng(valbase, val)
         uluaSet(idr_qmpe_hid_ec_eng, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM BLEED
 function Qmpe:GetEBleed(dpath)
     self.d_ec_bleed = iDataRef:New(dpath)
@@ -771,6 +789,7 @@ function Qmpe:SetEBleed(valbase, val)
         uluaSet(idr_qmpe_hid_ec_bleed, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM PRESS
 function Qmpe:GetEPress(dpath)
     self.d_ec_press = iDataRef:New(dpath)
@@ -787,6 +806,7 @@ function Qmpe:SetEPress(valbase, val)
         uluaSet(idr_qmpe_hid_ec_press, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM ELEC
 function Qmpe:GetEElec(dpath)
     self.d_ec_elec = iDataRef:New(dpath)
@@ -803,11 +823,11 @@ function Qmpe:SetEElec(valbase, val)
         uluaSet(idr_qmpe_hid_ec_elec, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM ELEC AC DC
 function Qmpe:GetEElecAcDc(dpath, d_dc_path)
     self.d_ec_elec = iDataRef:New(dpath)
     self.d_ec_elec_dc = iDataRef:New(d_dc_path)
-
 end
 
 function Qmpe:SetEElecAcDc(valbase, val)
@@ -843,6 +863,7 @@ function Qmpe:SetEHyd(valbase, val)
         uluaSet(idr_qmpe_hid_ec_hyd, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM FUEL
 function Qmpe:GetEFuel(dpath)
     self.d_ec_fuel = iDataRef:New(dpath)
@@ -859,6 +880,7 @@ function Qmpe:SetEFuel(valbase, val)
         uluaSet(idr_qmpe_hid_ec_fuel, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM FCTL
 function Qmpe:GetEFctl(dpath)
     self.d_ec_fctl = iDataRef:New(dpath)
@@ -875,6 +897,7 @@ function Qmpe:SetEFctl(valbase, val)
         uluaSet(idr_qmpe_hid_ec_fctl, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM APU
 function Qmpe:GetEApu(dpath)
     self.d_ec_apu = iDataRef:New(dpath)
@@ -891,6 +914,7 @@ function Qmpe:SetEApu(valbase, val)
         uluaSet(idr_qmpe_hid_ec_apu, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM COND
 function Qmpe:GetECond(dpath)
     self.d_ec_cond = iDataRef:New(dpath)
@@ -907,6 +931,7 @@ function Qmpe:SetECond(valbase, val)
         uluaSet(idr_qmpe_hid_ec_cond, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM DOOR
 function Qmpe:GetEDoor(dpath)
     self.d_ec_door = iDataRef:New(dpath)
@@ -923,6 +948,7 @@ function Qmpe:SetEDoor(valbase, val)
         uluaSet(idr_qmpe_hid_ec_door, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM WHEEL
 function Qmpe:GetEWheel(dpath)
     self.d_ec_wheel = iDataRef:New(dpath)
@@ -939,6 +965,7 @@ function Qmpe:SetEWheel(valbase, val)
         uluaSet(idr_qmpe_hid_ec_wheel, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM CLR
 function Qmpe:GetEClr(dpath)
     self.d_ec_clr = iDataRef:New(dpath)
@@ -955,6 +982,7 @@ function Qmpe:SetEClr(valbase, val)
         uluaSet(idr_qmpe_hid_ec_clr, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- ECAM STS
 function Qmpe:GetESts(dpath)
     self.d_ec_sts = iDataRef:New(dpath)
@@ -1049,6 +1077,7 @@ function Qmpe:SetBklMode(val)
         uluaSet(idr_qmpe_hid_bright_mode, val)
     end
 end
+
 -- Backlight ctrl
 function Qmpe:GetBklCtrl(dpath)
     self.d_bklctrl = iDataRef:New(dpath)
@@ -1082,6 +1111,7 @@ function Qmpe:SetWarn(valbase, val)
         uluaSet(idr_qmpe_hid_misc_warn, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC CAUT
 function Qmpe:GetCaut(dpath)
     self.d_misc_caut = iDataRef:New(dpath)
@@ -1098,6 +1128,7 @@ function Qmpe:SetCaut(valbase, val)
         uluaSet(idr_qmpe_hid_misc_caut, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC LOCK3
 function Qmpe:GetLock3(dpath)
     self.d_misc_lock3 = iDataRef:New(dpath)
@@ -1114,6 +1145,7 @@ function Qmpe:SetLock3(valbase, val)
         uluaSet(idr_qmpe_hid_misc_lock3, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC LOCK2
 function Qmpe:GetLock2(dpath)
     self.d_misc_lock2 = iDataRef:New(dpath)
@@ -1130,6 +1162,7 @@ function Qmpe:SetLock2(valbase, val)
         uluaSet(idr_qmpe_hid_misc_lock2, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC LOCK1
 function Qmpe:GetLock1(dpath)
     self.d_misc_lock1 = iDataRef:New(dpath)
@@ -1146,6 +1179,7 @@ function Qmpe:SetLock1(valbase, val)
         uluaSet(idr_qmpe_hid_misc_lock1, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC UNLOCK3
 function Qmpe:GetUnlock3(dpath)
     self.d_misc_unlock3 = iDataRef:New(dpath)
@@ -1162,6 +1196,7 @@ function Qmpe:SetUnlock3(valbase, val)
         uluaSet(idr_qmpe_hid_misc_unlock3, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC UNLOCK2
 function Qmpe:GetUnlock2(dpath)
     self.d_misc_unlock2 = iDataRef:New(dpath)
@@ -1178,6 +1213,7 @@ function Qmpe:SetUnlock2(valbase, val)
         uluaSet(idr_qmpe_hid_misc_unlock2, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC UNLOCK1
 function Qmpe:GetUnlock1(dpath)
     self.d_misc_unlock1 = iDataRef:New(dpath)
@@ -1194,6 +1230,7 @@ function Qmpe:SetUnlock1(valbase, val)
         uluaSet(idr_qmpe_hid_misc_unlock1, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC MSG
 function Qmpe:GetMsg(dpath)
     self.d_misc_msg = iDataRef:New(dpath)
@@ -1210,6 +1247,7 @@ function Qmpe:SetMsg(valbase, val)
         uluaSet(idr_qmpe_hid_misc_msg, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC FAIL
 function Qmpe:GetFail(dpath)
     self.d_misc_fail = iDataRef:New(dpath)
@@ -1226,6 +1264,7 @@ function Qmpe:SetFail(valbase, val)
         uluaSet(idr_qmpe_hid_misc_fail, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC LO
 function Qmpe:GetLo(dpath)
     self.d_misc_lo = iDataRef:New(dpath)
@@ -1242,6 +1281,7 @@ function Qmpe:SetLo(valbase, val)
         uluaSet(idr_qmpe_hid_misc_lo, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC MED
 function Qmpe:GetMed(dpath)
     self.d_misc_med = iDataRef:New(dpath)
@@ -1258,6 +1298,7 @@ function Qmpe:SetMed(valbase, val)
         uluaSet(idr_qmpe_hid_misc_med, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC MAX
 function Qmpe:GetMax(dpath)
     self.d_misc_max = iDataRef:New(dpath)
@@ -1274,6 +1315,7 @@ function Qmpe:SetMax(valbase, val)
         uluaSet(idr_qmpe_hid_misc_max, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC TERR
 function Qmpe:GetTerr(dpath)
     self.d_misc_terr = iDataRef:New(dpath)
@@ -1290,6 +1332,7 @@ function Qmpe:SetTerr(valbase, val)
         uluaSet(idr_qmpe_hid_misc_terr, ilua_bool_ternary(val, valbase))
     end
 end
+
 -- MISC LAND
 function Qmpe:GetLand(dpath)
     self.d_misc_land = iDataRef:New(dpath)
@@ -1365,7 +1408,7 @@ _G.QmpeFakeXpdrKeyTimeOut = -1
 _G.QmpeFakeXpdrKeyIdleTime = os.clock()
 -- XPDR standby code
 _G.QmpeFakeXpdrKeyNum = 0
-_G.QmpeFakeXpdrKeyTable = {0, 0, 0, 0}
+_G.QmpeFakeXpdrKeyTable = { 0, 0, 0, 0 }
 -- global callback function
 _G.QmpeFakeXpdrKeyCallBackFunc = function(KeyCode)
     uluaLog('key press->' .. tostring(KeyCode))
@@ -1404,7 +1447,6 @@ _G.QmpeFakeXpdrKeyCallBackFunc = function(KeyCode)
         end
         -- update FAST CLR timer
         _G.QmpeFakeXpdrFastClrIdleTime = os.clock()
-
     end
     -- reset timer
     _G.QmpeFakeXpdrKeyIdleTime = os.clock()
@@ -1457,7 +1499,6 @@ function Qmpe:FakeXpdrCopy(xcode)
 end
 
 function Qmpe:XpdrBc016(xcode)
-
     local bc016 = 0
     -- extract 1234={1, 2, 3, 4}
     local val = math.floor(xcode / 1000)
@@ -1494,7 +1535,7 @@ function Qmpe:FakeXpdrIsTimeOut()
     return os.clock() - _G.QmpeFakeXpdrKeyIdleTime > QmpeFakeXpdrKeyTimeOut
 end
 
--- ========================= Digital RMP VHF standby Frequency 
+-- ========================= Digital RMP VHF standby Frequency
 local function table_contains(table, element)
     for _, value in pairs(table) do
         if value == element then
@@ -1559,7 +1600,7 @@ _G.QmpeDigiRmpVhf1StbyKeyArray = {}
 _G.QmpeDigiRmpVhf1StbyKeyPressCallBack = nil
 -- global callback function
 _G.QmpeDigiRmpVhf1StbyCallBackFunc = function(increment)
-    local invalidlist = {20, 45, 70, 95}
+    local invalidlist = { 20, 45, 70, 95 }
 
     _G.QmpeDigiRmpVhf1StbyFreq = _G.QmpeDigiRmpVhf1StbyFreq + increment
     -- _G.QmpeDigiRmpVhf1StbyFreq = fixVHFFreq(_G.QmpeDigiRmpVhf1StbyFreq)
@@ -1618,12 +1659,13 @@ function Qmpe:DigiRmpVhf1StbyTimeOutHandle(key)
     -- -1: VHF Key Press
     -- -2: Right LINE 1 Key Press
     -- -3: Right LINE 2 Key Press
-    local array1 = {-1, -2}
+    local array1 = { -1, -2 }
     local array2 = extractDigits(_G.QmpeDigiRmpVhf1StbyFreq)
     table.insert(array2, -2)
     _G.QmpeDigiRmpVhf1KeyArray = combineArrays(array1, array2)
     uluasetTimeout("_G.DigiRmpVhf1KeyPoll()", 200)
 end
+
 ------------------------------------------------------------
 --- VHF2
 _G.QmpeDigiRmpVhf2StbyTimeOut = 1
@@ -1634,7 +1676,7 @@ _G.QmpeDigiRmpVhf2StbyKeyArray = {}
 _G.QmpeDigiRmpVhf2StbyKeyPressCallBack = nil
 -- global callback function
 _G.QmpeDigiRmpVhf2StbyCallBackFunc = function(increment)
-    local invalidlist = {20, 45, 70, 95}
+    local invalidlist = { 20, 45, 70, 95 }
 
     _G.QmpeDigiRmpVhf2StbyFreq = _G.QmpeDigiRmpVhf2StbyFreq + increment
     -- _G.QmpeDigiRmpVhf2StbyFreq = fixVHFFreq(_G.QmpeDigiRmpVhf2StbyFreq)
@@ -1693,7 +1735,7 @@ function Qmpe:DigiRmpVhf2StbyTimeOutHandle(key)
     -- -1: VHF Key Press
     -- -2: Right LINE 1 Key Press
     -- -3: Right LINE 2 Key Press
-    local array1 = {-1, -3}
+    local array1 = { -1, -3 }
     local array2 = extractDigits(_G.QmpeDigiRmpVhf2StbyFreq)
     table.insert(array2, -3)
     _G.QmpeDigiRmpVhf2KeyArray = combineArrays(array1, array2)
