@@ -336,9 +336,9 @@ local led_vs = uluaFind("sim/cockpit2/autopilot/vvi_status")
 local led_cmda = uluaFind("sim/cockpit2/autopilot/servos_on")
 local led_cmdb = uluaFind("sim/cockpit2/autopilot/servos_on")
 
-local led_lgn = uluaFind("sim/flightmodel2/gear/deploy_ratio", "readonly", 0)
-local led_lgl = uluaFind("sim/flightmodel2/gear/deploy_ratio", "readonly", 1)
-local led_lgr = uluaFind("sim/flightmodel2/gear/deploy_ratio", "readonly", 2)
+local led_lgn = uluaFind("sim/flightmodel2/gear/deploy_ratio[0]")
+local led_lgl = uluaFind("sim/flightmodel2/gear/deploy_ratio[1]")
+local led_lgr = uluaFind("sim/flightmodel2/gear/deploy_ratio[2]")
 
 local led_ma = uluaFind("sim/cockpit2/autopilot/flight_director_mode")
 
