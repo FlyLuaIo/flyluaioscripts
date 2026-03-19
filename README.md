@@ -18,6 +18,10 @@ The repository contains:
 - **Hardware abstraction layer**: Common Lua classes abstract each physical device so that aircraft profiles focus only on mapping and logic.
 - **Reusable core library**: Shared base classes under `com/` are reused across both simulators.
 
+## Design Concept
+<img width="1016" height="752" alt="hcbravo" src="https://github.com/user-attachments/assets/f635130d-e145-4ddb-a293-f9945f4e4d05" />
+
+
 ## Supported Hardware
 
 The framework supports multiple QuickMade hardware devices, including but not limited to:
