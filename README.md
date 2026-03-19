@@ -22,11 +22,14 @@ The repository contains:
 
 The framework supports multiple QuickMade hardware devices, including but not limited to:
 
-1. **QGMC710** – General aviation / Hotstart TBM-900 style controller
-2. **QMCP737C** – MCP panel for Boeing 737 family (ZIBO, Level-up, MAX, IXEG, Flightfactor, etc.)
-3. **QCDU B737/A320** – CDU/FMS units for Boeing 737 and Airbus A320 families
-4. **QG1K PFD/MFD** – G1000 glass cockpit (PFD / MFD)
-5. **QFCU** – Airbus A320 FCU style controller (Flightfactor, Toliss, JARDesign, etc.)
+1. **HCBravo** - Honeycombe Bravo throttle
+2. **QGMC710** – General aviation / Hotstart TBM-900 style controller
+3. **QMCP737C** – MCP panel for Boeing 737 family (ZIBO, Level-up, MAX, IXEG, Flightfactor, etc.)
+4. **QCDU B737/A320** – CDU/FMS units for Boeing 737 and Airbus A320 families
+5. **QG1K PFD/MFD** – G1000 glass cockpit (PFD / MFD)
+6. **QFCU** – Airbus A320 FCU style controller
+7. **QMPE** - Radio & Audio & ECAM controller Airbus style
+8. **OMOVH-A** - Airbus Overhead panel
 
 ## Repository Layout
 
