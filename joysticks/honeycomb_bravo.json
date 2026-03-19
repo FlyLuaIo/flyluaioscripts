@@ -9,6 +9,10 @@
       "USB_FEAT_length": 6,
       "HeaderBytes": ["0x01"],
       "FunIndex": 1,
+      "TestBytes": [ "0x01", "0xFF", "0xFF", "0xFF", "0xFF", "0xF0"],
+      "OffBytes": [ "0x01", "0x00", "0x00", "0x00", "0x00", "0x00"],
+      "LightKey": 12,
+      "LightBytes": [ "0x01", "0x00", "0x00", "0x00", "0x00", "0x00"],
       "SubFunctions": [
         {
           "int": "i8:28"
