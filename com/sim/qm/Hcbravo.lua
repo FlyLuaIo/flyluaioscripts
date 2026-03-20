@@ -6,7 +6,7 @@ local Hcbravo = oop.class(com.sim.Qmdev)
 
 function Hcbravo:init()
     self.QmdevId = 0x32129CCC
-    self.FastTurnsPerSecond = 4
+    self.FastTurnsPerSecond = 5
     _G.ilua_hw_assigned_hcbravo = 0
 end
 
@@ -51,7 +51,7 @@ function Hcbravo:absent(FastTurnsPerSecond)
 end
 
 function Hcbravo:Init()
-    if self.absent(self.FastTurnsPerSecond) then
+    if self:absent(self.FastTurnsPerSecond) then
         return false
     end
     if _G.ilua_hw_assigned_hcbravo == 1 then
