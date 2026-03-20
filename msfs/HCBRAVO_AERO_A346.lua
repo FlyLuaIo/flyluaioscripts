@@ -77,28 +77,28 @@ end
 
 -- 13:DEC 12:INC
 function hcbravo_mode_cfg_ias()
-    hcbravo:CfgRpn(13, '(>K:AP_SPD_VAR_DEC)')
-    hcbravo:CfgRpn(12, '(>K:AP_SPD_VAR_INC)')
+    hcbravo:CfgRpn(13, '(L:ASAB_FCU_SPEED_DELTA) -- (>L:ASAB_FCU_SPEED_DELTA)')
+    hcbravo:CfgRpn(12, '(L:ASAB_FCU_SPEED_DELTA) ++ (>L:ASAB_FCU_SPEED_DELTA)')
 end
 
 function hcbravo_mode_cfg_crs()
-    hcbravo:CfgRpn(13, '(>K:VOR1_OBI_DEC)')
-    hcbravo:CfgRpn(12, '(>K:VOR1_OBI_INC)')
+    hcbravo:CfgRpn(13, '(L:AB_MPL_Baro_CPT_Rotation, Number) 20 36 / - (>L:AB_MPL_Baro_CPT_Rotation)')
+    hcbravo:CfgRpn(12, '(L:AB_MPL_Baro_CPT_Rotation, Number) 20 36 / + (>L:AB_MPL_Baro_CPT_Rotation)')
 end
 
 function hcbravo_mode_cfg_hdg()
-    hcbravo:CfgRpn(13, '(>K:HEADING_BUG_DEC)')
-    hcbravo:CfgRpn(12, '(>K:HEADING_BUG_INC)')
+    hcbravo:CfgRpn(13, '(L:ASAB_FCU_HDG_DELTA) -- (>L:ASAB_FCU_HDG_DELTA)')
+    hcbravo:CfgRpn(12, '(L:ASAB_FCU_HDG_DELTA) ++ (>L:ASAB_FCU_HDG_DELTA)')
 end
 
 function hcbravo_mode_cfg_vs()
-    hcbravo:CfgRpn(13, '(>K:AP_VS_VAR_DEC)')
-    hcbravo:CfgRpn(12, '(>K:AP_VS_VAR_INC)')
+    hcbravo:CfgRpn(13, '(L:ASAB_FCU_VS_DELTA) -- (>L:ASAB_FCU_VS_DELTA)')
+    hcbravo:CfgRpn(12, '(L:ASAB_FCU_VS_DELTA) ++ (>L:ASAB_FCU_VS_DELTA)')
 end
 
 function hcbravo_mode_cfg_alt()
-    hcbravo:CfgRpn(13, '(>K:AP_ALT_VAR_DEC)')
-    hcbravo:CfgRpn(12, '(>K:AP_ALT_VAR_INC)')
+    hcbravo:CfgRpn(13, '(L:ASAB_FCU_ALT_DELTA) -- (>L:ASAB_FCU_ALT_DELTA)')
+    hcbravo:CfgRpn(12, '(L:ASAB_FCU_ALT_DELTA) ++ (>L:ASAB_FCU_ALT_DELTA)')
 end
 
 -- 20:ALT 19:VS 18:HDG 17:CRS 16:IAS
