@@ -7,7 +7,9 @@ local Hcbravo = oop.class(com.sim.Qmdev)
 function Hcbravo:init()
     self.QmdevId = 0x32129CCC
     self.FastTurnsPerSecond = 5
-    _G.ilua_hw_assigned_hcbravo = 0
+    if _G.ilua_hw_assigned_hcbravo == nil then
+        _G.ilua_hw_assigned_hcbravo = 0
+    end
 end
 
 function Hcbravo:absent(FastTurnsPerSecond)
