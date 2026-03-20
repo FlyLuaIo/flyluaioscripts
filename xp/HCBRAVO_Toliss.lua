@@ -37,7 +37,7 @@ hcbravo:CfgCmd(30, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/l
 -- gear down
 -- hcbravo:CfgCmd(31, 'sim/flight_controls/landing_gear_down', 'sim/none/none')
 
-if g_hcbravo_enable_vr_functions then
+if g_hcbravo_enable_vr_functions == 1 then
     -- Big Switch 1 top
     hcbravo:CfgCmd(33, 'sim/VR/general/reset_view')
     -- Big Switch 1 bottom
@@ -57,6 +57,9 @@ if g_hcbravo_enable_vr_functions then
     hcbravo:CfgCmd(45, 'sim/VR/toggle_3d_mouse_cursor')
     -- Big Switch 7 bottom
     --hcbravo:CfgCmd(46, 'sim/VR/toggle_3d_mouse_cursor')
+else
+    -- Big Switch 7 top
+    hcbravo:CfgCmd(45, 'toliss_airbus/park_brake_set', 'toliss_airbus/park_brake_release')
 end
 
 -- 13:DEC 12:INC
@@ -107,20 +110,20 @@ hcbravo:GetCentergreen('AirbusFBW/OHPLightsATA32[0]')
 hcbravo:GetCenterred('AirbusFBW/OHPLightsATA32[1]')
 hcbravo:GetRightgreen('AirbusFBW/OHPLightsATA32[4]')
 hcbravo:GetRightred('AirbusFBW/OHPLightsATA32[5]')
-hcbravo:GetMasterwarn('sim/cockpit2/annunciators/master_warning')
+hcbravo:GetMasterwarn('AirbusFBW/OHPLightsATA31[3]')
 hcbravo:GetEnginefire('sim/cockpit2/annunciators/engine_fire')
 hcbravo:GetLowoil('sim/cockpit/warnings/annunciators/oil_pressure')
 hcbravo:GetLowfuel('sim/cockpit2/annunciators/fuel_pressure')
-hcbravo:GetAntiice('sim/cockpit2/ice/ice_prop_heat_on')
+hcbravo:GetAntiice('sim/cockpit2/ice/ice_surface_hot_bleed_air_on')
 hcbravo:GetStarter('sim/flightmodel2/engines/starter_is_running[0]')
-hcbravo:GetApu('sim/cockpit2/electrical/APU_running')
-hcbravo:GetMastercaution('sim/cockpit2/annunciators/master_caution')
+hcbravo:GetApu('AirbusFBW/APUN')
+hcbravo:GetMastercaution('AirbusFBW/OHPLightsATA31[4]')
 hcbravo:GetVacuum('sim/cockpit2/annunciators/low_vacuum')
 hcbravo:GetLowhydpressure('sim/cockpit2/annunciators/hydraulic_pressure')
 hcbravo:GetAuxfuelpump('sim/cockpit2/annunciators/fuel_pressure_low')
 hcbravo:GetParkingbrake('sim/cockpit2/controls/parking_brake_ratio')
 hcbravo:GetLowvolts('sim/cockpit2/annunciators/low_voltage')
-hcbravo:GetDoor('sim/cockpit2/annunciators/cabin_door_open')
+hcbravo:GetDoor('anim/doorFL')
 
 function HCBRAVO_Toliss_LED_UPD()
     hcbravo:SetLed()
