@@ -16,7 +16,7 @@ if not hcbravo:Init() then
     return
 end
 -- Do not remove above lines: hardware detection
-uluaLog('HCBravo for GA')
+uluaLog('HCBravo for Toliss')
 
 uluaAddToggleMenu("HC Bravo enable VR", "蜂窝油门VR功能开启", "g_hcbravo_enable_vr_functions")
 
@@ -99,14 +99,14 @@ hcbravo:GetApr('sim/cockpit2/autopilot/approach_status')
 hcbravo:GetRev('sim/cockpit/autopilot/backcourse_on')
 hcbravo:GetAlt('sim/cockpit2/autopilot/altitude_hold_status')
 hcbravo:GetVs('sim/cockpit2/autopilot/vvi_status')
-hcbravo:GetIas('sim/cockpit2/autopilot/speed_status')
-hcbravo:GetAutopilot('sim/cockpit2/autopilot/servos_on')
-hcbravo:GetLeftgreen('sim/flightmodel2/gear/deploy_ratio[1]')
-hcbravo:GetLeftred('sim/flightmodel2/gear/eagle_claw_angle_deg[1]')
-hcbravo:GetCentergreen('sim/flightmodel2/gear/deploy_ratio[0]')
-hcbravo:GetCenterred('sim/flightmodel2/gear/eagle_claw_angle_deg[0]')
-hcbravo:GetRightgreen('sim/flightmodel2/gear/deploy_ratio[2]')
-hcbravo:GetRightred('sim/flightmodel2/gear/eagle_claw_angle_deg[2]')
+hcbravo:GetIas('AirbusFBW/ATHRmode')
+hcbravo:GetAutopilot('AirbusFBW/AP1Engage')
+hcbravo:GetLeftgreen('AirbusFBW/OHPLightsATA32[2]')
+hcbravo:GetLeftred('AirbusFBW/OHPLightsATA32[3]')
+hcbravo:GetCentergreen('AirbusFBW/OHPLightsATA32[0]')
+hcbravo:GetCenterred('AirbusFBW/OHPLightsATA32[1]')
+hcbravo:GetRightgreen('AirbusFBW/OHPLightsATA32[4]')
+hcbravo:GetRightred('AirbusFBW/OHPLightsATA32[5]')
 hcbravo:GetMasterwarn('sim/cockpit2/annunciators/master_warning')
 hcbravo:GetEnginefire('sim/cockpit2/annunciators/engine_fire')
 hcbravo:GetLowoil('sim/cockpit/warnings/annunciators/oil_pressure')
@@ -122,8 +122,8 @@ hcbravo:GetParkingbrake('sim/cockpit2/controls/parking_brake_ratio')
 hcbravo:GetLowvolts('sim/cockpit2/annunciators/low_voltage')
 hcbravo:GetDoor('sim/cockpit2/annunciators/cabin_door_open')
 
-function HCBRAVO_GA_LED_UPD()
+function HCBRAVO_Toliss_LED_UPD()
     hcbravo:SetLed()
 end
 
-uluaAddDoLoop('HCBRAVO_GA_LED_UPD()')
+uluaAddDoLoop('HCBRAVO_Toliss_LED_UPD()')
