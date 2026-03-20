@@ -1,9 +1,14 @@
 --**********************Copyright***********************--
 -- modified by Wei Shuai <cpuwolf@gmail.com>
--- 2026-03-12
+-- 2026-03-20
 local FastTurnsPerSecond = 4 --How many spins per second  is considered FAST?
 --########################################################
 
+if ilua_is_acftitle_excluded("A3") or ilua_is_acfpath_excluded("toliss") then
+    if ilua_is_acftitle_excluded("A2") or ilua_is_acfpath_excluded("toliss") then
+        return
+    end
+end
 
 -- Do not remove below lines: hardware detection
 local hcbravo = com.sim.qm.Hcbravo:new()

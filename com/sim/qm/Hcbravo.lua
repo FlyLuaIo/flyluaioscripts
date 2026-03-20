@@ -6,6 +6,7 @@ local Hcbravo = oop.class(com.sim.Qmdev)
 
 function Hcbravo:init()
     self.QmdevId = 0x32129CCC
+    self.FastTurnsPerSecond = 4
     _G.ilua_hw_assigned_hcbravo = 0
 end
 
@@ -44,6 +45,8 @@ function Hcbravo:absent(FastTurnsPerSecond)
     _G.idr_hcbravo_hid_led_lights_door = uluaFind('cpuwolf/qmdev/HCBravo/LED/Lights_door')
     _G.idr_hcbravo_hid_invalid = uluaFind('cpuwolf/qmdev/HCBravo/invalid')
     _G.idr_hcbravo_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/HCBravo/fastkeypersec')
+
+    -- uluaSet(idr_hcbravo_hid_fastkeypersec, FastTurnsPerSecond)
     return false
 end
 

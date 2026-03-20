@@ -216,8 +216,8 @@ elseif PLANE_ICAO == "BE9L" then
     qmcp737c:CfgCmd(80, "sim/none/none")
     qmcp737c:CfgCmd(81, "sim/lights/landing_lights_on")
     qmcp737c:CfgCmd(82, "sim/none/none")
-    qmcp737c:CfgCmd(83, "sim/flight_controls/landing_gear_down")
-    qmcp737c:CfgCmd(84, "sim/flight_controls/landing_gear_up")
+    qmcp737c:CfgCmd(83, "sim/flight_controls/landing_gear_down",'sim/none/none')
+    qmcp737c:CfgCmd(84, "sim/flight_controls/landing_gear_up", 'sim/none/none')
 else
     qmcp737c:CfgEncFull(0, 1, "sim/cockpit2/radios/actuators/nav1_obs_deg_mag_pilot", 1, 10, 0, 0, 360)
     qmcp737c:CfgEncFull(4, 5, "laminar/B738/autopilot/mcp_speed_dial_kts_mach", 1, 20, 0, 0, 360)
