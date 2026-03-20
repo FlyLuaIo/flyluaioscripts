@@ -62,7 +62,7 @@ if g_hcbravo_enable_vr_functions == 1 then
     --hcbravo:CfgRpn(36, 'sim/VR/toggle_vr')
 
     -- Big Switch 1 top
-    hcbravo:CfgRpn(33, 'sim/VR/general/reset_view')
+    hcbravo:CfgRpn(33, '1 (>A:CAMERA REQUEST ACTION)')
     -- Big Switch 1 bottom
     --hcbravo:CfgRpn(34, 'sim/VR/general/reset_view')
 
