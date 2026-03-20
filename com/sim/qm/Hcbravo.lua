@@ -1,5 +1,5 @@
 -- *****************************************************************
--- Don't modify this file
+-- Don't modify this file, Most of the code is auto generated
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-12
 -- *****************************************************************
 local Hcbravo = oop.class(com.sim.Qmdev)
