@@ -258,6 +258,7 @@ else
             qmcp737c:CfgCmd(57, "sim/radios/stby_com1_fine_up_833")
             qmcp737c:CfgCmd(58, "sim/radios/stby_com1_coarse_down_833")
             qmcp737c:CfgCmd(59, "sim/radios/stby_com1_coarse_up_833")
+            qmcp737c:CfgCmd(61, "sim/radios/com1_standy_flip")
         else
             uluaSet(idr_qmcp737c_hid_ledvhf1, 0)
             uluaSet(idr_qmcp737c_hid_ledvhf2, 1)
@@ -265,11 +266,13 @@ else
             qmcp737c:CfgCmd(57, "sim/radios/stby_com2_fine_up_833")
             qmcp737c:CfgCmd(58, "sim/radios/stby_com2_coarse_down_833")
             qmcp737c:CfgCmd(59, "sim/radios/stby_com2_coarse_up_833")
+            qmcp737c:CfgCmd(61, "sim/radios/com2_standy_flip")
         end
     end
     qmcp737c_ga_com_switch(idr_qmcp737c_hid_condbtn_60:Get())
+    -- 60: VHF1 VHF2 Toggle
     qmcp737c:CfgValT(60, "cpuwolf/qmdev/QMCP737C/condbtn[60]")
-    qmcp737c:CfgCmd(61, "cpuwolf/qmdev/QMCP737C/condbtn[61]")
+
     qmcp737c:CfgCmd(64, "sim/radios/stby_nav1_fine_down")
     qmcp737c:CfgCmd(65, "sim/radios/stby_nav1_fine_up")
     qmcp737c:CfgCmd(66, "sim/radios/stby_nav1_coarse_down")
