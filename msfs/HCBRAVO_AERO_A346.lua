@@ -47,29 +47,19 @@ hcbravo:CfgRpn(22, '(>K:ELEV_TRIM_UP)')
 
 -- gear up, this config will not hard bind landing gear handler, you still press keyboard G to play with gear
 hcbravo:CfgRpn(30, '(>K:GEAR_UP)', '(>K:GEAR_DOWN)')
--- gear down
--- hcbravo:CfgRpn(31, 'sim/flight_controls/landing_gear_down', 'sim/none/none')
 
 if g_hcbravo_enable_vr_functions == 1 then
     -- Big Switch 1 top
     hcbravo:CfgRpn(33, 'sim/VR/general/reset_view')
-    -- Big Switch 1 bottom
-    --hcbravo:CfgRpn(34, 'sim/VR/general/reset_view')
 
     -- Big Switch 2 top
     hcbravo:CfgRpn(35, 'sim/VR/toggle_vr')
-    -- Big Switch 2 bottom
-    --hcbravo:CfgRpn(36, 'sim/VR/toggle_vr')
 
     -- Big Switch 1 top
     hcbravo:CfgRpn(33, '1 (>A:CAMERA REQUEST ACTION)')
-    -- Big Switch 1 bottom
-    --hcbravo:CfgRpn(34, 'sim/VR/general/reset_view')
 
     -- Big Switch 7 top
     hcbravo:CfgRpn(45, 'sim/VR/toggle_3d_mouse_cursor')
-    -- Big Switch 7 bottom
-    --hcbravo:CfgRpn(46, 'sim/VR/toggle_3d_mouse_cursor')
 else
     -- Big Switch 7 top
     hcbravo:CfgRpn(45, '1 (>K:PARKING_BRAKE_SET)', '0 (>K:PARKING_BRAKE_SET)')

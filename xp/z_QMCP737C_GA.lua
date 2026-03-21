@@ -12,7 +12,7 @@
 -- 此处调整加速点, 值越小,越容易进入加速模式,可根据自己的手感调节
 local FastTurnsPerSecond = 40 -- How many spins per second  is considered FAST?
 --
-local MaxBightness = 30 -- Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
+local MaxBightness = 30       -- Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
 
 -- Do not remove below lines: hardware detection
 local qmcp737c = com.sim.qm.Qmcp737c:new()
@@ -103,8 +103,10 @@ if PLANE_ICAO == "B350" then
     qmcp737c:CfgVal(75, "sim/cockpit2/switches/generic_lights_switch[5]", 1, 0)
     qmcp737c:CfgVal(76, "sim/cockpit2/switches/generic_lights_switch[0]", 1, 0)
     qmcp737c:CfgVal(77, "KA350/ianim/pSubpanel/beaconLights", 1, 0)
-    qmcp737c:CfgCmd(78, "laminar/B738/toggle_switch/position_light_steady", "laminar/B738/toggle_switch/position_light_off")
-    qmcp737c:CfgCmd(79, "laminar/B738/toggle_switch/position_light_strobe", "laminar/B738/toggle_switch/position_light_off")
+    qmcp737c:CfgCmd(78, "laminar/B738/toggle_switch/position_light_steady",
+        "laminar/B738/toggle_switch/position_light_off")
+    qmcp737c:CfgCmd(79, "laminar/B738/toggle_switch/position_light_strobe",
+        "laminar/B738/toggle_switch/position_light_off")
     qmcp737c:CfgVal(80, "KA350/ianim/pSubpanel/landingLightsRight", 1, 0)
     qmcp737c:CfgVal(81, "KA350/ianim/pSubpanel/landingLightsLeft", 1, 0)
     qmcp737c:CfgVal(82, "KA350/ianim/pSubpanel/tailLights", 1, 0)
@@ -216,15 +218,13 @@ elseif PLANE_ICAO == "BE9L" then
     qmcp737c:CfgCmd(80, "sim/none/none")
     qmcp737c:CfgCmd(81, "sim/lights/landing_lights_on")
     qmcp737c:CfgCmd(82, "sim/none/none")
-    qmcp737c:CfgCmd(83, "sim/flight_controls/landing_gear_down",'sim/none/none')
+    qmcp737c:CfgCmd(83, "sim/flight_controls/landing_gear_down", 'sim/none/none')
     qmcp737c:CfgCmd(84, "sim/flight_controls/landing_gear_up", 'sim/none/none')
 else
     qmcp737c:CfgEncFull(0, 1, "sim/cockpit2/radios/actuators/nav1_obs_deg_mag_pilot", 1, 10, 0, 0, 360)
     qmcp737c:CfgEncFull(4, 5, "laminar/B738/autopilot/mcp_speed_dial_kts_mach", 1, 20, 0, 0, 360)
     qmcp737c:CfgEncFull(12, 13, "sim/cockpit/autopilot/heading_mag", 1, 10, 0, 0, 360)
     qmcp737c:CfgEncFull(16, 17, "sim/cockpit/autopilot/altitude", 1, 500, 0, 0, 360)
-    qmcp737c:CfgEncFull(56, 57, "cpuwolf/qmdev/QMCP737C/condbtn[56]", 1, 1, 0, -39500, 39500)
-    qmcp737c:CfgEncFull(58, 59, "cpuwolf/qmdev/QMCP737C/condbtn[58]", 1, 1, 0, -39500, 39500)
     qmcp737c:CfgCmd(0, "sim/radios/obs1_down")
     qmcp737c:CfgCmd(1, "sim/radios/obs1_up")
     qmcp737c:CfgCmd(4, "sim/radios/adf1_card_down")
@@ -246,7 +246,29 @@ else
     qmcp737c:CfgCmd(52, "sim/instruments/map_zoom_in")
     qmcp737c:CfgCmd(53, "172/com_XPDR_mode_Turn_left")
     qmcp737c:CfgCmd(54, "172/com_XPDR_mode_Turn_right")
-    qmcp737c:CfgCmd(60, "cpuwolf/qmdev/QMCP737C/condbtn[60]")
+    --qmcp737c:CfgCmd(56, "sim/radios/stby_com1_fine_down_833")
+    --qmcp737c:CfgCmd(57, "sim/radios/stby_com1_fine_up_833")
+    --qmcp737c:CfgCmd(58, "sim/radios/stby_com1_coarse_down_833")
+    --qmcp737c:CfgCmd(59, "sim/radios/stby_com1_coarse_up_833")
+    _G.qmcp737c_ga_com_switch = function(vhf1or2)
+        if vhf1or2 == 0 then
+            uluaSet(idr_qmcp737c_hid_ledvhf1, 1)
+            uluaSet(idr_qmcp737c_hid_ledvhf2, 0)
+            qmcp737c:CfgCmd(56, "sim/radios/stby_com1_fine_down_833")
+            qmcp737c:CfgCmd(57, "sim/radios/stby_com1_fine_up_833")
+            qmcp737c:CfgCmd(58, "sim/radios/stby_com1_coarse_down_833")
+            qmcp737c:CfgCmd(59, "sim/radios/stby_com1_coarse_up_833")
+        else
+            uluaSet(idr_qmcp737c_hid_ledvhf1, 0)
+            uluaSet(idr_qmcp737c_hid_ledvhf2, 1)
+            qmcp737c:CfgCmd(56, "sim/radios/stby_com2_fine_down_833")
+            qmcp737c:CfgCmd(57, "sim/radios/stby_com2_fine_up_833")
+            qmcp737c:CfgCmd(58, "sim/radios/stby_com2_coarse_down_833")
+            qmcp737c:CfgCmd(59, "sim/radios/stby_com2_coarse_up_833")
+        end
+    end
+    qmcp737c_ga_com_switch(idr_qmcp737c_hid_condbtn_60:Get())
+    qmcp737c:CfgValT(60, "cpuwolf/qmdev/QMCP737C/condbtn[60]")
     qmcp737c:CfgCmd(61, "cpuwolf/qmdev/QMCP737C/condbtn[61]")
     qmcp737c:CfgCmd(64, "sim/radios/stby_nav1_fine_down")
     qmcp737c:CfgCmd(65, "sim/radios/stby_nav1_fine_up")
@@ -262,9 +284,12 @@ else
     qmcp737c:CfgCmd(84, "sim/flight_controls/landing_gear_up")
 end
 
+
+
 function qmcp737c_ga_digi_disp_set_powoff_leds()
     uluaSet(idr_qmcp737c_hid_leds, 0)
 end
+
 function qmcp737c_ga_digi_disp_set_powoff_mcp()
     uluaSet(idr_qmcp737c_hid_crs1mod, 0)
     uluaSet(idr_qmcp737c_hid_iasmod, 4)
@@ -284,6 +309,7 @@ function qmcp737c_ga_digi_disp_set_powoff_com()
     uluaSet(idr_qmcp737c_hid_vhfa, i)
     uluaSet(idr_qmcp737c_hid_vhfs, i)
 end
+
 function qmcp737c_ga_digi_disp_set_powoff_nav()
     uluaSet(idr_qmcp737c_hid_navamod, 0)
     uluaSet(idr_qmcp737c_hid_navsmod, 0)
@@ -386,13 +412,8 @@ function qmcp737c_ga_digi_disp_set_LEDS()
     uluaSet(idr_qmcp737c_hid_ledlnav, uluaGet(led_lnav))
     uluaSet(idr_qmcp737c_hid_ledvorl, uluaGet(led_vorl))
     uluaSet(idr_qmcp737c_hid_ledat, uluaGet(led_at))
-    local qmcp737c_val_condbtn_60 = idr_qmcp737c_hid_condbtn_60:Get()
-    if qmcp737c_val_condbtn_60 == 0 then
-        uluaSet(idr_qmcp737c_hid_ledvhf1, 1)
-        uluaSet(idr_qmcp737c_hid_ledvhf2, 0)
-    else
-        uluaSet(idr_qmcp737c_hid_ledvhf1, 0)
-        uluaSet(idr_qmcp737c_hid_ledvhf2, 1)
+    if idr_qmcp737c_hid_condbtn_60:ChangedUpdate() then
+        qmcp737c_ga_com_switch(idr_qmcp737c_hid_condbtn_60:GetOld())
     end
 end
 
@@ -401,6 +422,7 @@ function qmcp737c_ga_digi_disp_set_CRS1()
     uluaSet(idr_qmcp737c_hid_crs1, uluaGet(d_crs1))
     uluaSet(idr_qmcp737c_hid_crs1mod, 1)
 end
+
 -- be carefull about:
 ----d_ias_A
 ----d_ias_8
@@ -495,6 +517,7 @@ function qmcp737c_ga_digi_disp_set_NAVS()
     uluaSet(idr_qmcp737c_hid_navs, uluaGet(d_navs))
     uluaSet(idr_qmcp737c_hid_navsmod, 1)
 end
+
 -- Backlight
 local light_test_last = 0
 function qmcp737c_ga_digi_disp_set_Bright()
@@ -522,9 +545,9 @@ local qmcp737c_ga_digi_disp_mcp_func_table = {
     qmcp737c_ga_digi_disp_set_CRS2
 }
 
-local qmcp737c_ga_digi_disp_com_func_table = {qmcp737c_ga_digi_disp_set_VHFA, qmcp737c_ga_digi_disp_set_VHFS}
+local qmcp737c_ga_digi_disp_com_func_table = { qmcp737c_ga_digi_disp_set_VHFA, qmcp737c_ga_digi_disp_set_VHFS }
 
-local qmcp737c_ga_digi_disp_nav_func_table = {qmcp737c_ga_digi_disp_set_NAVA, qmcp737c_ga_digi_disp_set_NAVS}
+local qmcp737c_ga_digi_disp_nav_func_table = { qmcp737c_ga_digi_disp_set_NAVA, qmcp737c_ga_digi_disp_set_NAVS }
 local qmcp737c_ga_digi_disp_rr_func_idx = 0
 function qmcp737c_ga_digi_disp_mcp_rr()
     for i = 1, 6 do
@@ -536,17 +559,19 @@ function qmcp737c_ga_digi_disp_mcp_rr()
         qmcp737c_ga_digi_disp_mcp_func_table[qmcp737c_ga_digi_disp_rr_func_idx]()
     end
 end
+
 function qmcp737c_ga_digi_disp_com()
     for i = 1, 2 do
         if qmcp737c_ga_digi_disp_com_func_table[i]() then
-        -- break
+            -- break
         end
     end
 end
+
 function qmcp737c_ga_digi_disp_nav()
     for i = 1, 2 do
         if qmcp737c_ga_digi_disp_nav_func_table[i]() then
-        -- break
+            -- break
         end
     end
 end
@@ -578,4 +603,5 @@ function qmcp737c_ga_digi_disp_every_frame()
         --qmcp737c_ga_digi_disp_powoff_nav()
     end
 end
+
 uluaAddDoLoop("qmcp737c_ga_digi_disp_every_frame()")
