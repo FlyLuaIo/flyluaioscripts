@@ -1,6 +1,5 @@
 {
   "ProductName": "VkbGunUT",
   "USB_VID": "0x231D",
-  "USB_PID": "0x0125",
-  "USB_KEY_OFFSET": 136
+  "USB_PID": "0x0125"
 }
