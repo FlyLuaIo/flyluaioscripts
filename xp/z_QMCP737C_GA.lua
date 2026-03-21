@@ -246,10 +246,7 @@ else
     qmcp737c:CfgCmd(52, "sim/instruments/map_zoom_in")
     qmcp737c:CfgCmd(53, "172/com_XPDR_mode_Turn_left")
     qmcp737c:CfgCmd(54, "172/com_XPDR_mode_Turn_right")
-    --qmcp737c:CfgCmd(56, "sim/radios/stby_com1_fine_down_833")
-    --qmcp737c:CfgCmd(57, "sim/radios/stby_com1_fine_up_833")
-    --qmcp737c:CfgCmd(58, "sim/radios/stby_com1_coarse_down_833")
-    --qmcp737c:CfgCmd(59, "sim/radios/stby_com1_coarse_up_833")
+    -- VHF1/VHF2
     _G.qmcp737c_ga_com_switch = function(vhf1or2)
         if vhf1or2 == 0 then
             uluaSet(idr_qmcp737c_hid_ledvhf1, 1)
@@ -270,7 +267,8 @@ else
         end
     end
     qmcp737c_ga_com_switch(idr_qmcp737c_hid_condbtn_60:Get())
-    -- 60: VHF1 VHF2 Toggle
+    -- key 60: VHF1 VHF2 Push Toggle
+    -- it will trigger idr_qmcp737c_hid_condbtn_60:ChangedUpdate()
     qmcp737c:CfgValT(60, "cpuwolf/qmdev/QMCP737C/condbtn[60]")
 
     qmcp737c:CfgCmd(64, "sim/radios/stby_nav1_fine_down")
