@@ -56,28 +56,28 @@ end
 
 -- 13:DEC 12:INC
 function hcbravo_mode_cfg_ias()
-    hcbravo:CfgCmd(13, 'sim/autopilot/airspeed_down')
-    hcbravo:CfgCmd(12, 'sim/autopilot/airspeed_up')
+    hcbravo:CfgCmd(13, 'sim/autopilot/airspeed_down', 'sim/operation/test_none')
+    hcbravo:CfgCmd(12, 'sim/autopilot/airspeed_up', 'sim/operation/test_none')
 end
 
 function hcbravo_mode_cfg_crs()
-    hcbravo:CfgCmd(13, 'sim/radios/obs_HSI_down')
-    hcbravo:CfgCmd(12, 'sim/radios/obs_HSI_up')
+    hcbravo:CfgCmd(13, 'sim/radios/obs_HSI_down', 'sim/operation/test_none')
+    hcbravo:CfgCmd(12, 'sim/radios/obs_HSI_up', 'sim/operation/test_none')
 end
 
 function hcbravo_mode_cfg_hdg()
-    hcbravo:CfgCmd(13, 'sim/autopilot/heading_down')
-    hcbravo:CfgCmd(12, 'sim/autopilot/heading_up')
+    hcbravo:CfgCmd(13, 'sim/autopilot/heading_down', 'sim/operation/test_none')
+    hcbravo:CfgCmd(12, 'sim/autopilot/heading_up', 'sim/operation/test_none')
 end
 
 function hcbravo_mode_cfg_vs()
-    hcbravo:CfgCmd(13, 'sim/autopilot/vertical_speed_down')
-    hcbravo:CfgCmd(12, 'sim/autopilot/vertical_speed_up')
+    hcbravo:CfgCmd(13, 'sim/autopilot/vertical_speed_down', 'sim/operation/test_none')
+    hcbravo:CfgCmd(12, 'sim/autopilot/vertical_speed_up', 'sim/operation/test_none')
 end
 
 function hcbravo_mode_cfg_alt()
-    hcbravo:CfgCmd(13, 'sim/autopilot/altitude_down')
-    hcbravo:CfgCmd(12, 'sim/autopilot/altitude_up')
+    hcbravo:CfgCmd(13, 'sim/autopilot/altitude_down', 'sim/operation/test_none')
+    hcbravo:CfgCmd(12, 'sim/autopilot/altitude_up', 'sim/operation/test_none')
 end
 
 -- 20:ALT 19:VS 18:HDG 17:CRS 16:IAS
