@@ -381,4 +381,9 @@ function Qmdev:CfgPSw(KeyIdx, idx, presexpect, resexpect)
     end
 end
 
+-- add a menu in GUI
+function Qmdev:AddTogMenu(menuEn, menuCh, globalvarstr)
+    uluaAddToggleMenu(self:getClassName() .. ': ' .. menuEn, self:getClassName() .. ': ' .. menuCh, globalvarstr)
+end
+
 return Qmdev

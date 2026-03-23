@@ -13,7 +13,8 @@ end
 -- Do not remove above lines: hardware detection
 uluaLog('HCBravo for GA')
 
-uluaAddToggleMenu("HC Bravo enable VR", "蜂窝油门VR功能开启", "g_hcbravo_enable_vr_functions")
+
+hcbravo:AddTogMenu("enable VR", "VR功能开启", "g_hcbravo_enable_vr_functions")
 
 -- Input Key binding
 hcbravo:CfgCmd(0, 'sim/autopilot/heading')

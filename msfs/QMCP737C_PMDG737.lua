@@ -29,7 +29,7 @@ end
 
 uluaLog("QMCP737C for PMDG737")
 
-uluaAddToggleMenu("dis 737C gear/flap", "禁用737C起落架/襟翼", "g_dis_qmcp737c_pmdg737_gear_flap")
+qmcp737c:AddTogMenu("disable gear/flap", "禁用起落架/襟翼", "g_dis_qmcp737c_pmdg737_gear_flap")
 
 qmcp737c:CfgRpn(0, "(>K:VOR1_OBI_DEC)")
 qmcp737c:CfgRpn(1, "(>K:VOR1_OBI_INC)")
