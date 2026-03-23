@@ -1,0 +1,70 @@
+{
+  "ProductName": "StkMulti",
+  "USB_VID": "0x06A3",
+  "USB_PID": "0x0D06",
+  "Functions": [
+    {
+      "FunName": "Up",
+      "USB_FEAT_length": 13,
+      "HeaderBytes": ["0x00"],
+      "FunIndex": 1,
+      "TestBytes": ["0x00", "0xFF", "0xD5", "0xFF", "0xFF", "0xF0"],
+      "OffBytes": [
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00"
+      ],
+      "SubFunctions": [
+        {
+          "up1": "i8:8",
+          "up2": "i16:8",
+          "up3": "i24:8",
+          "up4": "i32:8",
+          "up5": "i40:8",
+          "down1": "i48:8",
+          "down2": "i56:8",
+          "down3": "i64:8",
+          "down4": "i72:8",
+          "down5": "i80:8",
+          "leds": "i88:8"
+        }
+      ],
+      "SubBitFunctions": [
+        {
+          "AP_ap": "t88"
+        },
+        {
+          "AP_hdg": "t89"
+        },
+        {
+          "AP_nav": "t90"
+        },
+        {
+          "AP_ias": "t91"
+        },
+        {
+          "AP_alt": "t92"
+        },
+        {
+          "AP_vs": "t93"
+        },
+        {
+          "AP_apr": "t94"
+        },
+        {
+          "AP_rev": "t95"
+        }
+      ]
+    }
+  ]
+}
