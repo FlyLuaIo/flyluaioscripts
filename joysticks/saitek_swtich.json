@@ -20,22 +20,22 @@
       ],
       "SubBitFunctions": [
         {
-          "Red_R": "t8"
+          "Green_N": "t8"
         },
         {
-          "Red_L": "t9"
+          "Green_L": "t9"
         },
         {
-          "Red_N": "t10"
+          "Green_R": "t10"
         },
         {
-          "Green_R": "t11"
+          "Red_N": "t11"
         },
         {
-          "Green_L": "t12"
+          "Red_L": "t12"
         },
         {
-          "Green_N": "t13"
+          "Red_R": "t13"
         }
       ]
     }
