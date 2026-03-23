@@ -317,9 +317,9 @@ qmcp737c:CfgRpn(103, "679501 (>K:ROTOR_BRAKE)")
 ----------------------------  Display Dataref Set	 ------------------------------------
 -- MCP Panel Digital Display
 local dr_qmcp737c_bright_test = iDataRef:New("(L:switch_346_73X,number)")
-local qmcp737c_com1_power = uluaFind("(A:AVIONICS MASTER SWITCH,Bool)")
-local qmcp737c_nav1_power = uluaFind("(A:AVIONICS MASTER SWITCH,Bool)")
-local qmcp737c_battery_on = uluaFind("(A:AVIONICS MASTER SWITCH,Bool)")
+local qmcp737c_com1_power = uluaFind("pmdg/ng3/data/ELEC_BusPowered[3]")
+local qmcp737c_nav1_power = uluaFind("pmdg/ng3/data/ELEC_BusPowered[3]")
+local qmcp737c_battery_on = uluaFind("pmdg/ng3/data/ELEC_BusPowered[3]")
 local qmcp737c_avionics_on = uluaFind("pmdg/ng3/data/MCP_indication_powered") -- 1 batt 2 AC bus
 
 -- CRS1
@@ -587,13 +587,8 @@ local function digi_disp_powoff_mcp()
 end
 
 local function digi_disp_powoff_com()
-    local i = uluaGet(idr_qmcp737c_hid_vhfa)
-    i = i + 1
-    if (i > 128) or (i < 0) then
-        i = 1
-    end
-    uluaSet(idr_qmcp737c_hid_vhfa, i)
-    uluaSet(idr_qmcp737c_hid_vhfs, i)
+    uluaSet(idr_qmcp737c_hid_vhfa, 0)
+    uluaSet(idr_qmcp737c_hid_vhfs, 0)
 end
 local function digi_disp_powoff_nav()
     uluaSet(idr_qmcp737c_hid_navamod, 0)
