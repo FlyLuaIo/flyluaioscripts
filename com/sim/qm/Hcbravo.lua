@@ -48,11 +48,13 @@ function Hcbravo:absent(FastTurnsPerSecond)
 	_G.idr_hcbravo_hid_led_lights_door = uluaFind('cpuwolf/qmdev/HCBravo/LED/Lights_door')
 	_G.idr_hcbravo_hid_invalid = uluaFind('cpuwolf/qmdev/HCBravo/invalid')
 	_G.idr_hcbravo_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/HCBravo/fastkeypersec')
+	uluaSet(idr_hcbravo_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end
 
-function Hcbravo:Init()
-	if self:absent(self.FastTurnsPerSecond) then
+function Hcbravo:Init(FastTurnsPerSecond)
+	local ftps = FastTurnsPerSecond == nil and self.FastTurnsPerSecond or FastTurnsPerSecond
+	if self:absent(ftps) then
 		return false
 	end
 	if _G.ilua_hw_assigned_hcbravo == 1 then

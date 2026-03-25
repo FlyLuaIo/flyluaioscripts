@@ -1,7 +1,8 @@
 
 -- *****************************************************************
--- Don't modify this file, Most of the code is auto generated
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-25_12_39_40UTC
+-- Don't modify this file, unless you know what you are doing
+-- Most of the code are auto generated
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-25_22_20_25UTC
 -- *****************************************************************
 
 local Stkmulti = oop.class(com.sim.Qmdev)
@@ -38,11 +39,13 @@ function Stkmulti:absent(FastTurnsPerSecond)
 	_G.idr_stkmulti_hid_up_ap_rev = uluaFind('cpuwolf/qmdev/StkMulti/Up/AP_rev')
 	_G.idr_stkmulti_hid_invalid = uluaFind('cpuwolf/qmdev/StkMulti/invalid')
 	_G.idr_stkmulti_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/StkMulti/fastkeypersec')
+	uluaSet(_G.idr_stkmulti_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end
 
-function Stkmulti:Init()
-	if self:absent(self.FastTurnsPerSecond) then
+function Stkmulti:Init(FastTurnsPerSecond)
+	local ftps = FastTurnsPerSecond == nil and self.FastTurnsPerSecond or FastTurnsPerSecond
+	if self:absent(ftps) then
 		return false
 	end
 	if _G.ilua_hw_assigned_stkmulti == 1 then
