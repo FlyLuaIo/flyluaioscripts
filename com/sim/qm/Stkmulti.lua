@@ -1,3 +1,9 @@
+
+-- *****************************************************************
+-- Don't modify this file, Most of the code is auto generated
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-25_12_39_40UTC
+-- *****************************************************************
+
 local Stkmulti = oop.class(com.sim.Qmdev)
 function Stkmulti:init()
 	self.QmdevId = 0x2AC8334B

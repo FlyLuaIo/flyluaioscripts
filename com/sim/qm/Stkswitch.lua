@@ -1,3 +1,9 @@
+
+-- *****************************************************************
+-- Don't modify this file, Most of the code is auto generated
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-25_12_38_39UTC
+-- *****************************************************************
+
 local Stkswitch = oop.class(com.sim.Qmdev)
 function Stkswitch:init()
 	self.QmdevId = 0x1E0888B9
@@ -12,12 +18,12 @@ function Stkswitch:absent(FastTurnsPerSecond)
 		return true
 	end
 	_G.idr_stkswitch_hid_led_int = uluaFind('cpuwolf/qmdev/StkSwitch/LED/int')
-	_G.idr_stkswitch_hid_led_green_n = uluaFind('cpuwolf/qmdev/StkSwitch/LED/Green_N')
-	_G.idr_stkswitch_hid_led_green_l = uluaFind('cpuwolf/qmdev/StkSwitch/LED/Green_L')
-	_G.idr_stkswitch_hid_led_green_r = uluaFind('cpuwolf/qmdev/StkSwitch/LED/Green_R')
-	_G.idr_stkswitch_hid_led_red_n = uluaFind('cpuwolf/qmdev/StkSwitch/LED/Red_N')
-	_G.idr_stkswitch_hid_led_red_l = uluaFind('cpuwolf/qmdev/StkSwitch/LED/Red_L')
-	_G.idr_stkswitch_hid_led_red_r = uluaFind('cpuwolf/qmdev/StkSwitch/LED/Red_R')
+	_G.idr_stkswitch_hid_led_greenn = uluaFind('cpuwolf/qmdev/StkSwitch/LED/GreenN')
+	_G.idr_stkswitch_hid_led_greenl = uluaFind('cpuwolf/qmdev/StkSwitch/LED/GreenL')
+	_G.idr_stkswitch_hid_led_greenr = uluaFind('cpuwolf/qmdev/StkSwitch/LED/GreenR')
+	_G.idr_stkswitch_hid_led_redn = uluaFind('cpuwolf/qmdev/StkSwitch/LED/RedN')
+	_G.idr_stkswitch_hid_led_redl = uluaFind('cpuwolf/qmdev/StkSwitch/LED/RedL')
+	_G.idr_stkswitch_hid_led_redr = uluaFind('cpuwolf/qmdev/StkSwitch/LED/RedR')
 	_G.idr_stkswitch_hid_invalid = uluaFind('cpuwolf/qmdev/StkSwitch/invalid')
 	_G.idr_stkswitch_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/StkSwitch/fastkeypersec')
 	return false
@@ -35,87 +41,87 @@ function Stkswitch:Init()
 end
 
 -- ========
--- LED Green_N
+-- LED GreenN
 
-function Stkswitch:GetN(dpath)
+function Stkswitch:GetGreenn(dpath)
 	self:GetBit(1, dpath)
 end
 
-function Stkswitch:SetN(valbase, val)
-	self:SetBit(1, _G.idr_stkswitch_hid_led_green_n, valbase, val)
+function Stkswitch:SetGreenn(valbase, val)
+	self:SetBit(1, _G.idr_stkswitch_hid_led_greenn, valbase, val)
 end
 
 -- ========
--- LED Green_L
+-- LED GreenL
 
-function Stkswitch:GetL(dpath)
+function Stkswitch:GetGreenl(dpath)
 	self:GetBit(2, dpath)
 end
 
-function Stkswitch:SetL(valbase, val)
-	self:SetBit(2, _G.idr_stkswitch_hid_led_green_l, valbase, val)
+function Stkswitch:SetGreenl(valbase, val)
+	self:SetBit(2, _G.idr_stkswitch_hid_led_greenl, valbase, val)
 end
 
 -- ========
--- LED Green_R
+-- LED GreenR
 
-function Stkswitch:GetR(dpath)
+function Stkswitch:GetGreenr(dpath)
 	self:GetBit(3, dpath)
 end
 
-function Stkswitch:SetR(valbase, val)
-	self:SetBit(3, _G.idr_stkswitch_hid_led_green_r, valbase, val)
+function Stkswitch:SetGreenr(valbase, val)
+	self:SetBit(3, _G.idr_stkswitch_hid_led_greenr, valbase, val)
 end
 
 -- ========
--- LED Red_N
+-- LED RedN
 
-function Stkswitch:GetN(dpath)
+function Stkswitch:GetRedn(dpath)
 	self:GetBit(4, dpath)
 end
 
-function Stkswitch:SetN(valbase, val)
-	self:SetBit(4, _G.idr_stkswitch_hid_led_red_n, valbase, val)
+function Stkswitch:SetRedn(valbase, val)
+	self:SetBit(4, _G.idr_stkswitch_hid_led_redn, valbase, val)
 end
 
 -- ========
--- LED Red_L
+-- LED RedL
 
-function Stkswitch:GetL(dpath)
+function Stkswitch:GetRedl(dpath)
 	self:GetBit(5, dpath)
 end
 
-function Stkswitch:SetL(valbase, val)
-	self:SetBit(5, _G.idr_stkswitch_hid_led_red_l, valbase, val)
+function Stkswitch:SetRedl(valbase, val)
+	self:SetBit(5, _G.idr_stkswitch_hid_led_redl, valbase, val)
 end
 
 -- ========
--- LED Red_R
+-- LED RedR
 
-function Stkswitch:GetR(dpath)
+function Stkswitch:GetRedr(dpath)
 	self:GetBit(6, dpath)
 end
 
-function Stkswitch:SetR(valbase, val)
-	self:SetBit(6, _G.idr_stkswitch_hid_led_red_r, valbase, val)
+function Stkswitch:SetRedr(valbase, val)
+	self:SetBit(6, _G.idr_stkswitch_hid_led_redr, valbase, val)
 end
 
 function Stkswitch:SetLed(valbase, val)
-	self:SetN(valbase, val)
-	self:SetL(valbase, val)
-	self:SetR(valbase, val)
-	self:SetN(valbase, val)
-	self:SetL(valbase, val)
-	self:SetR(valbase, val)
+	self:SetGreenn(valbase, val)
+	self:SetGreenl(valbase, val)
+	self:SetGreenr(valbase, val)
+	self:SetRedn(valbase, val)
+	self:SetRedl(valbase, val)
+	self:SetRedr(valbase, val)
 end
 
 --[[
-stkswitch:GetN('')
-stkswitch:GetL('')
-stkswitch:GetR('')
-stkswitch:GetN('')
-stkswitch:GetL('')
-stkswitch:GetR('')
+stkswitch:GetGreenn('')
+stkswitch:GetGreenl('')
+stkswitch:GetGreenr('')
+stkswitch:GetRedn('')
+stkswitch:GetRedl('')
+stkswitch:GetRedr('')
 ]]--
 
 return Stkswitch

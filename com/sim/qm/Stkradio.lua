@@ -1,3 +1,9 @@
+
+-- *****************************************************************
+-- Don't modify this file, Most of the code is auto generated
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-25_12_39_31UTC
+-- *****************************************************************
+
 local Stkradio = oop.class(com.sim.Qmdev)
 function Stkradio:init()
     self.QmdevId = 0x67E6B0B
