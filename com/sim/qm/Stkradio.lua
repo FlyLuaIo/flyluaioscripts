@@ -1,7 +1,8 @@
 
 -- *****************************************************************
--- Don't modify this file, Most of the code is auto generated
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-25_12_39_31UTC
+-- Don't modify this file, unless you know what you are doing
+-- Most of the code are auto generated
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-26_05_12_35UTC
 -- *****************************************************************
 
 local Stkradio = oop.class(com.sim.Qmdev)
@@ -39,11 +40,13 @@ function Stkradio:absent(FastTurnsPerSecond)
 	_G.idr_stkradio_hid_radios_com2stb5 = uluaFind('cpuwolf/qmdev/StkRadio/Radios/com2stb5')
 	_G.idr_stkradio_hid_invalid = uluaFind('cpuwolf/qmdev/StkRadio/invalid')
 	_G.idr_stkradio_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/StkRadio/fastkeypersec')
+	uluaSet(_G.idr_stkradio_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end
 
-function Stkradio:Init()
-	if self:absent(self.FastTurnsPerSecond) then
+function Stkradio:Init(FastTurnsPerSecond)
+	local ftps = FastTurnsPerSecond == nil and self.FastTurnsPerSecond or FastTurnsPerSecond
+	if self:absent(ftps) then
 		return false
 	end
 	if _G.ilua_hw_assigned_stkradio == 1 then
