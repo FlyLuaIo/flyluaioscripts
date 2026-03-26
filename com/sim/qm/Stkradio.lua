@@ -115,6 +115,26 @@ function Stkradio:SetRmp1S(val)
 	end
 end
 
+function Stkradio:encFloatDigits(floatnum, decmlong)
+	decmlong = decmlong == nil and 1 or decmlong
+	local intnum = math.floor(floatnum * (10 ^ decmlong))
+	local digits = self:getDigits(intnum)
+	local len = #digits
+	if len < 5 then
+		for i = 1, 5 - len do
+			-- blank
+			digits[i] = 15
+		end
+	else
+		for i = 1, len - 5 do
+			digits = table.remove(digits, 1)
+		end
+	end
+	local dotidx = len - decmlong
+	digits[dotidx] = digits[dotidx] + 208
+	return digits
+end
+
 function Stkradio:encIntDigits(intnum)
 	local digits = self:getDigits(intnum)
 	local len = #digits

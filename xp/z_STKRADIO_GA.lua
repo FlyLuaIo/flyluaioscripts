@@ -101,6 +101,13 @@ stkradio:CfgFc(3, 'stkradio_mode_cfg_nav2(17, 16, 19, 18, 14)')
 stkradio:CfgFc(4, 'stkradio_mode_cfg_adf(17, 16, 19, 18, 14)')
 stkradio:CfgFc(5, 'stkradio_mode_cfg_dme(17, 16, 19, 18, 14)')
 stkradio:CfgFc(6, 'stkradio_mode_cfg_xpdr(17, 16, 19, 18, 14)')
+local dr_mode1_com1 = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[0]')
+local dr_mode1_com2 = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[1]')
+local dr_mode1_nav1 = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[2]')
+local dr_mode1_nav2 = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[3]')
+local dr_mode1_adf = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[4]')
+local dr_mode1_dme = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[5]')
+local dr_mode1_xpdr = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[6]')
 
 -- 7:COM1 8:COM2 9:NAV1 10:NAV2 11:ADF 12:DME 13:XPDR
 stkradio:CfgFc(7, 'stkradio_mode_cfg_com1(21, 20, 23, 22, 15)')
@@ -110,20 +117,55 @@ stkradio:CfgFc(10, 'stkradio_mode_cfg_nav2(21, 20, 23, 22, 15)')
 stkradio:CfgFc(11, 'stkradio_mode_cfg_adf(21, 20, 23, 22, 15)')
 stkradio:CfgFc(12, 'stkradio_mode_cfg_dme(21, 20, 23, 22, 15)')
 stkradio:CfgFc(13, 'stkradio_mode_cfg_xpdr(21, 20, 23, 22, 15)')
+local dr_mode2_com1 = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[7]')
+local dr_mode2_com2 = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[8]')
+local dr_mode2_nav1 = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[9]')
+local dr_mode2_nav2 = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[10]')
+local dr_mode2_adf = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[11]')
+local dr_mode2_dme = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[12]')
+local dr_mode2_xpdr = iDataRef:New('cpuwolf/qmdev/StkRadio/keysmap[13]')
 
 -- =====RMP radio
-stkradio:GetRmp1("sim/cockpit2/radios/actuators/com1_frequency_hz_833",
-	"sim/cockpit2/radios/actuators/com1_standby_frequency_hz_833")
-stkradio:GetRmp2("sim/cockpit2/radios/actuators/com2_frequency_hz_833",
-	"sim/cockpit2/radios/actuators/com2_standby_frequency_hz_833")
+local dr_com1a = iDataRef:New("sim/cockpit2/radios/actuators/com1_frequency_hz_833")
+local dr_com1s = iDataRef:New("sim/cockpit2/radios/actuators/com1_standby_frequency_hz_833")
+local dr_com2a = iDataRef:New("sim/cockpit2/radios/actuators/com2_frequency_hz_833")
+local dr_com2s = iDataRef:New("sim/cockpit2/radios/actuators/com2_standby_frequency_hz_833")
+--nav
+local dr_nav1a = iDataRef:New("sim/cockpit/radios/nav1_freq_hz")
+local dr_nav1s = iDataRef:New("sim/cockpit/radios/nav1_stdby_freq_hz")
+local dr_nav2a = iDataRef:New("sim/cockpit/radios/nav2_freq_hz")
+local dr_nav2s = iDataRef:New("sim/cockpit/radios/nav2_stdby_freq_hz")
+-- adf
+local dr_adfa = iDataRef:New("sim/cockpit/radios/adf1_freq_hz")
+local dr_adfs = iDataRef:New("sim/cockpit/radios/adf1_stdby_freq_hz")
+
+-- dme
+local dr_dmea = iDataRef:New("sim/cockpit/radios/nav1_dme_dist_m")
+local dr_dmes = iDataRef:New("sim/cockpit/radios/nav2_dme_dist_m")
+
 
 local dr_xpdr_act = iDataRef:New('sim/cockpit/radios/transponder_code')
 
 function Stkradio_GA_Loop_Upd()
-	stkradio:SetRmp1A()
-	stkradio:SetRmp1S()
-	stkradio:SetRmp2A()
-	stkradio:SetRmp2S()
+	if dr_mode1_com1:Get() then
+		stkradio:SetRmp1A(dr_com1a:Get())
+		stkradio:SetRmp1S(dr_com1s:Get())
+	elseif dr_mode1_com2:Get() then
+		stkradio:SetRmp2A(dr_com2a:Get())
+		stkradio:SetRmp2S(dr_com2s:Get())
+	elseif dr_mode1_nav1:Get() then
+		stkradio:SetRmp1A(dr_nav1a:Get())
+		stkradio:SetRmp1S(dr_nav1s:Get())
+	elseif dr_mode1_nav2:Get() then
+		stkradio:SetRmp2A(dr_nav2a:Get())
+		stkradio:SetRmp2S(dr_nav2s:Get())
+	elseif dr_mode1_adf:Get() then
+		stkradio:SetRmp1A(dr_adfa:Get())
+		stkradio:SetRmp1S(dr_adfs:Get())
+	elseif dr_mode1_dme:Get() then
+	elseif dr_mode1_xpdr:Get() then
+	end
+
 	if dr_xpdr_act:ChangedUpdate() then
 		local xpdrnew = dr_xpdr_act:GetOld()
 	end
