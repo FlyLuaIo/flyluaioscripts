@@ -11,19 +11,18 @@ end
 -- Do not remove above lines: hardware detection
 
 uluaLog("Stkmulti for GA")
---[[
-stkmulti:GetAp('')
-stkmulti:GetHdg('')
-stkmulti:GetNav('')
-stkmulti:GetIas('')
-stkmulti:GetAlt('')
-stkmulti:GetVs('')
-stkmulti:GetApr('')
-stkmulti:GetRev('')
-]]--
+
+stkmulti:GetAp('sim/cockpit2/autopilot/servos_on')
+stkmulti:GetHdg('sim/cockpit2/autopilot/heading_status')
+stkmulti:GetNav('sim/cockpit2/autopilot/nav_status')
+stkmulti:GetIas('sim/cockpit2/autopilot/speed_status')
+stkmulti:GetAlt('sim/cockpit2/autopilot/altitude_hold_status')
+stkmulti:GetVs('sim/cockpit2/autopilot/vvi_status')
+stkmulti:GetApr('sim/cockpit2/autopilot/approach_status')
+stkmulti:GetRev('sim/cockpit/autopilot/backcourse_on')
 
 
 function Stkmulti_GA_Loop_Upd()
-	-- stkmulti:SetLeds()
+	stkmulti:SetLeds()
 end
 uluaAddDoLoop("Stkmulti_GA_Loop_Upd()")
