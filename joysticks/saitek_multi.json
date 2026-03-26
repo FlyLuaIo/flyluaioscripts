@@ -4,7 +4,7 @@
   "USB_PID": "0x0D06",
   "Functions": [
     {
-      "FunName": "Up",
+      "FunName": "leds",
       "USB_FEAT_length": 13,
       "HeaderBytes": [
         "0x00",
