@@ -1,0 +1,84 @@
+{
+  "ProductName": "WwEcam",
+  "USB_VID": "0x4098",
+  "USB_PID": "0xBB70",
+  "Functions": [
+    {
+      "FunName": "leds",
+      "USB_FEAT_length": 14,
+      "HeaderBytes": [
+        "0x02",
+        "0x70",
+        "0xBB",
+        "0x00",
+        "0x00",
+        "0x03",
+        "0x49",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00"
+      ],
+      "FunIndex": 1,
+      "LightKey": 18,
+      "LightKeyName": "STS",
+      "LightBytes": [
+        "0x02",
+        "0x70",
+        "0xBB",
+        "0x00",
+        "0x00",
+        "0x03",
+        "0x49",
+        "0x10",
+        "0xEE",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00"
+      ],
+      "TestBytes": [
+        "0x02",
+        "0x70",
+        "0xBB",
+        "0x00",
+        "0x00",
+        "0x03",
+        "0x49",
+        "0xCC",
+        "0x88",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00"
+      ],
+      "OffBytes": [
+        "0x02",
+        "0x70",
+        "0xBB",
+        "0x00",
+        "0x00",
+        "0x03",
+        "0x49",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00"
+      ],
+      "SubFunctions": [
+        {
+          "ledId": "i56:8",
+          "brightness": "i64:8"
+        }
+      ]
+    }
+  ]
+}
