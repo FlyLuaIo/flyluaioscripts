@@ -10,9 +10,9 @@
       "FunIndex": 1,
       "TestBytes": ["0x00", "0x07"],
       "OffBytes": ["0x00", "0x00"],
-      "LightKey": 7,
-      "LightKeyName": "Geen N",
-      "LightBytes": ["0x00", "0x80"],
+      "LightKey": 18,
+      "LightKeyName": "Gear up",
+      "LightBytes": ["0x00", "0x01"],
       "SubFunctions": [
         {
           "int": "i8:6"

@@ -1,5 +1,7 @@
 {
   "ProductName": "VkbGunUT",
   "USB_VID": "0x231D",
-  "USB_PID": "0x0125"
+  "USB_PID": "0x0125",
+  "LightKey": 3,
+  "LightKeyName": "AP OFF"
 }

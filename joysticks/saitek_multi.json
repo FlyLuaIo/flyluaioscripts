@@ -6,8 +6,39 @@
     {
       "FunName": "Up",
       "USB_FEAT_length": 13,
-      "HeaderBytes": ["0x00"],
+      "HeaderBytes": [
+        "0x00",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x00",
+        "0xFF"
+      ],
       "FunIndex": 1,
+      "LightKey": 7,
+      "LightKeyName": "Autopilot",
+      "LightBytes": [
+        "0x00",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x0F",
+        "0x01",
+        "0xFF"
+      ],
       "TestBytes": ["0x00", "0xFF", "0xD5", "0xFF", "0xFF", "0xF0"],
       "OffBytes": [
         "0x00",
@@ -22,7 +53,7 @@
         "0x0F",
         "0x0F",
         "0x00",
-        "0x00"
+        "0xFF"
       ],
       "SubFunctions": [
         {
