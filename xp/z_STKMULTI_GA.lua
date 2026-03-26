@@ -45,6 +45,12 @@ stkmulti:CfgFc(2, 'stkmulti_mode_cfg_ias()')
 stkmulti:CfgFc(3, 'stkmulti_mode_cfg_hdg()')
 stkmulti:CfgFc(4, 'stkmulti_mode_cfg_crs()')
 
+local dr_mode_alt = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[0]')
+local dr_mode_vs = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[1]')
+local dr_mode_ias = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[2]')
+local dr_mode_hdg = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[3]')
+local dr_mode_crs = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[4]')
+
 --AP
 stkmulti:CfgCmd(7, 'sim/autopilot/servos_toggle')
 
@@ -62,6 +68,9 @@ stkmulti:CfgCmd(12, 'sim/autopilot/vertical_speed')
 stkmulti:CfgCmd(13, 'sim/autopilot/approach')
 --REV
 stkmulti:CfgCmd(14, 'sim/autopilot/back_course')
+
+--AUTO THROTTLE
+stkmulti:CfgCmd(15, 'sim/autopilot/autothrottle_arm', 'sim/autopilot/autothrottle_off')
 
 -- flap down
 stkmulti:CfgCmd(17, 'sim/flight_controls/flaps_down')
@@ -85,7 +94,29 @@ stkmulti:GetApr('sim/cockpit2/autopilot/approach_status')
 stkmulti:GetRev('sim/cockpit/autopilot/backcourse_on')
 
 
+local dr_alt = iDataRef:New("sim/cockpit2/autopilot/altitude_dial_ft")
+local dr_vs = iDataRef:New("sim/cockpit2/autopilot/vvi_dial_fpm")
+local dr_ias = iDataRef:New("sim/cockpit2/autopilot/airspeed_dial_kts_mach")
+local dr_hdg = iDataRef:New("sim/cockpit/autopilot/heading_mag")
+local d_crs = iDataRef:New('sim/cockpit/radios/nav1_obs_degm')
+
 function Stkmulti_GA_Loop_Upd()
+	if dr_mode_alt:Get() then
+		stkmulti:setUp(stkmulti:encUIntDigits(dr_alt:Get()))
+		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
+	elseif dr_mode_vs:Get() then
+		stkmulti:setUp(stkmulti:encUIntDigits(dr_alt:Get()))
+		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
+	elseif dr_mode_ias:Get() then
+		stkmulti:setUp(stkmulti:encUIntDigits(dr_ias:Get()))
+		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
+	elseif dr_mode_hdg:Get() then
+		stkmulti:setUp(stkmulti:encUIntDigits(dr_hdg:Get()))
+		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
+	elseif dr_mode_crs:Get() then
+		stkmulti:setUp(stkmulti:encUIntDigits(d_crs:Get()))
+		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
+	end
 	stkmulti:SetLeds()
 end
 

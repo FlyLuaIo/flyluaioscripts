@@ -1,4 +1,3 @@
-
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
@@ -152,6 +151,80 @@ function Stkmulti:SetLeds(valbase, val)
 	self:SetVs(valbase, val)
 	self:SetApr(valbase, val)
 	self:SetRev(valbase, val)
+end
+
+-- 11850 -> {1, 1, 8, 5, 0}
+-- 118255 -> {1, 1, 8, 2, 5, 5}
+function Stkmulti:getDigits(num)
+	-- Handle case for 0
+	if num == 0 then return { 0 } end
+
+	local digits = {}
+
+	-- 1. Find the highest power of 10 (e.g., for 11850, power is 4)
+	local power = math.floor(math.log(num, 10))
+
+	-- 2. Iterate from the highest power down to 0
+	for p = power, 0, -1 do
+		local divisor = 10 ^ p
+
+		-- Get the leftmost digit
+		local digit = math.floor(num / divisor)
+		table.insert(digits, digit)
+
+		-- Update num to be the remainder
+		num = num % divisor
+	end
+
+	return digits
+end
+
+function Stkmulti:encUIntDigits(intnum)
+	local digits = self:getDigits(intnum)
+	local len = #digits
+	if len < 5 then
+		for i = 1, 5 - len do
+			-- blank
+			digits[i] = 15
+		end
+	end
+	return digits
+end
+
+function Stkmulti:encIntDigits(intnum)
+	local digits = self:getDigits(intnum)
+	local len = #digits
+	if intnum < 0 then
+		-- Prepend "-" to the front of the table (at index 1)
+		table.insert(digits, 1, 254)
+		len = len + 1
+	end
+	if len < 5 then
+		for i = 1, 5 - len do
+			-- blank
+			digits[i] = 15
+		end
+	end
+
+	return digits
+end
+
+-- COM1 Active
+function Stkmulti:setUp(digits)
+	uluaSet(_G.idr_stkmulti_hid_leds_up1, digits[1])
+	uluaSet(_G.idr_stkmulti_hid_leds_up2, digits[2])
+	uluaSet(_G.idr_stkmulti_hid_leds_up3, digits[3])
+	uluaSet(_G.idr_stkmulti_hid_leds_up4, digits[4])
+	uluaSet(_G.idr_stkmulti_hid_leds_up5, digits[5])
+end
+
+-- COM1 Standby
+function Stkmulti:setDn(digits)
+	uluaSet(_G.idr_stkmulti_hid_leds_down1, digits[1])
+	uluaSet(_G.idr_stkmulti_hid_leds_down2, digits[2])
+	uluaSet(_G.idr_stkmulti_hid_leds_down3, digits[3])
+	uluaSet(_G.idr_stkmulti_hid_leds_down4, digits[4])
+	uluaSet(_G.idr_stkmulti_hid_leds_down5, digits[5])
 end
 
 return Stkmulti
