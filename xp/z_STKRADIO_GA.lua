@@ -1,4 +1,3 @@
-
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-26_07_32_41UTC
 -- *****************************************************************
@@ -12,6 +11,116 @@ end
 
 uluaLog("Stkradio for GA")
 
-function Stkradio_GA_Loop_Upd()
+
+
+-- 13:DEC 12:INC
+function stkradio_mode_cfg_com1()
+	---- RMP1
+	-- inner
+	stkradio:CfgCmd(17, "sim/radios/stby_com1_fine_down_833")
+	stkradio:CfgCmd(16, "sim/radios/stby_com1_fine_up_833")
+	-- outer
+	stkradio:CfgCmd(19, "sim/radios/stby_com1_coarse_down")
+	stkradio:CfgCmd(18, "sim/radios/stby_com1_coarse_up")
+	-- flip
+	stkradio:CfgCmd(14, "sim/radios/com1_standy_flip")
 end
+
+function stkradio_mode_cfg_com2()
+	---- RMP2
+	-- inner
+	stkradio:CfgCmd(17, "sim/radios/stby_com2_fine_down_833")
+	stkradio:CfgCmd(16, "sim/radios/stby_com2_fine_up_833")
+	-- outer
+	stkradio:CfgCmd(19, "sim/radios/stby_com2_coarse_down")
+	stkradio:CfgCmd(18, "sim/radios/stby_com2_coarse_up")
+	-- flip
+	stkradio:CfgCmd(14, "sim/radios/com2_standy_flip")
+end
+
+function stkradio_mode_cfg_nav1()
+	-- inner
+	stkradio:CfgCmd(17, 'sim/radios/stby_nav1_fine_down')
+	stkradio:CfgCmd(16, 'sim/radios/stby_nav1_fine_up')
+	-- outer	
+	stkradio:CfgCmd(19, 'sim/radios/stby_nav1_coarse_down')
+	stkradio:CfgCmd(18, 'sim/radios/stby_nav1_coarse_up')
+	-- flip	
+	stkradio:CfgCmd(14, 'sim/radios/nav1_standy_flip')
+end
+
+function stkradio_mode_cfg_nav2()
+	-- inner
+	stkradio:CfgCmd(17, 'sim/radios/stby_nav2_fine_down')
+	stkradio:CfgCmd(16, 'sim/radios/stby_nav2_fine_up')
+	-- outer	
+	stkradio:CfgCmd(19, 'sim/radios/stby_nav2_coarse_down')
+	stkradio:CfgCmd(18, 'sim/radios/stby_nav2_coarse_up')
+	-- flip	
+	stkradio:CfgCmd(14, 'sim/radios/nav2_standy_flip')
+end
+
+function stkradio_mode_cfg_adf()
+	-- inner
+	stkradio:CfgCmd(17, 'sim/radios/stby_adf1_ones_tens_down')
+	stkradio:CfgCmd(16, 'sim/radios/stby_adf1_ones_tens_up')
+	-- outer	
+	stkradio:CfgCmd(19, 'sim/radios/stby_adf1_hundreds_thous_down')
+	stkradio:CfgCmd(18, 'sim/radios/stby_adf1_hundreds_thous_up')
+	-- flip	
+	stkradio:CfgCmd(14, 'sim/radios/adf1_standy_flip')
+end
+
+function stkradio_mode_cfg_dme()
+	-- inner
+	stkradio:CfgCmd(17, 'sim/radios/obs1_down')
+	stkradio:CfgCmd(16, 'sim/radios/obs1_up')
+	-- outer	
+	stkradio:CfgCmd(19, 'sim/operation/test_none')
+	stkradio:CfgCmd(18, 'sim/operation/test_none')
+	-- flip	
+	stkradio:CfgCmd(14, 'sim/GPS/g430n1_cdi')
+end
+
+function stkradio_mode_cfg_xpdr()
+	-- inner
+	stkradio:CfgCmd(17, 'sim/transponder/transponder_34_down')
+	stkradio:CfgCmd(16, 'sim/transponder/transponder_34_up')
+	-- outer	
+	stkradio:CfgCmd(19, 'sim/transponder/transponder_12_down')
+	stkradio:CfgCmd(18, 'sim/transponder/transponder_12_up')
+	-- flip	
+	stkradio:CfgCmd(14, 'sim/transponder/transponder_ident')
+end
+
+-- 0:COM1 1:COM2 2:NAV1 3:NAV2 4:ADF 5:DME 6:XPDR
+stkradio:CfgFc(0, 'stkradio_mode_cfg_com1()')
+stkradio:CfgFc(1, 'stkradio_mode_cfg_com2()')
+stkradio:CfgFc(2, 'stkradio_mode_cfg_nav1()')
+stkradio:CfgFc(3, 'stkradio_mode_cfg_nav2()')
+stkradio:CfgFc(4, 'stkradio_mode_cfg_adf()')
+stkradio:CfgFc(5, 'stkradio_mode_cfg_dme()')
+stkradio:CfgFc(6, 'stkradio_mode_cfg_xpdr()')
+
+-- 7:COM1 8:COM2 9:NAV1 10:NAV2 11:ADF 12:DME 13:XPDR
+
+
+-- =====RMP radio
+stkradio:GetRmp1("sim/cockpit2/radios/actuators/com1_frequency_hz_833",
+	"sim/cockpit2/radios/actuators/com1_standby_frequency_hz_833")
+stkradio:GetRmp2("sim/cockpit2/radios/actuators/com2_frequency_hz_833",
+	"sim/cockpit2/radios/actuators/com2_standby_frequency_hz_833")
+
+local dr_xpdr_act = iDataRef:New('sim/cockpit/radios/transponder_code')
+
+function Stkradio_GA_Loop_Upd()
+	stkradio:SetRmp1A()
+	stkradio:SetRmp1S()
+	stkradio:SetRmp2A()
+	stkradio:SetRmp2S()
+	if dr_xpdr_act:ChangedUpdate() then
+		local xpdrnew = dr_xpdr_act:GetOld()
+	end
+end
+
 uluaAddDoLoop("Stkradio_GA_Loop_Upd()")
