@@ -12,6 +12,23 @@ function Wwecam:init()
 	if _G.ilua_hw_assigned_wwecam == nil then
 		_G.ilua_hw_assigned_wwecam = 0
 	end
+	self.LED_BACKLIGHT = 0
+	self.LED_ALL_BRIGHTNESS = 1
+	self.LED_EMER_BRIGHTNESS = 3
+	self.LED_ENG = 4
+	self.LED_BLEED = 5
+	self.LED_PRESS = 6
+	self.LED_ELEC = 7
+	self.LED_HYD = 8
+	self.LED_FUEL = 9
+	self.LED_APU = 10
+	self.LED_COND = 11
+	self.LED_DOOR = 12
+	self.LED_WHEEL = 13
+	self.LED_FCTL = 14
+	self.LED_CLR_L = 15
+	self.LED_STS = 16
+	self.LED_CLR_R = 17
 end
 
 function Wwecam:absent(FastTurnsPerSecond)
