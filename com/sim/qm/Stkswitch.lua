@@ -1,7 +1,8 @@
 
 -- *****************************************************************
--- Don't modify this file, Most of the code is auto generated
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-25_12_38_39UTC
+-- Don't modify this file, unless you know what you are doing
+-- Most of the code are auto generated
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-26_10_40_00UTC
 -- *****************************************************************
 
 local Stkswitch = oop.class(com.sim.Qmdev)
@@ -26,11 +27,13 @@ function Stkswitch:absent(FastTurnsPerSecond)
 	_G.idr_stkswitch_hid_led_redr = uluaFind('cpuwolf/qmdev/StkSwitch/LED/RedR')
 	_G.idr_stkswitch_hid_invalid = uluaFind('cpuwolf/qmdev/StkSwitch/invalid')
 	_G.idr_stkswitch_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/StkSwitch/fastkeypersec')
+	uluaSet(_G.idr_stkswitch_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end
 
-function Stkswitch:Init()
-	if self:absent(self.FastTurnsPerSecond) then
+function Stkswitch:Init(FastTurnsPerSecond)
+	local ftps = FastTurnsPerSecond == nil and self.FastTurnsPerSecond or FastTurnsPerSecond
+	if self:absent(ftps) then
 		return false
 	end
 	if _G.ilua_hw_assigned_stkswitch == 1 then
@@ -114,14 +117,5 @@ function Stkswitch:SetLed(valbase, val)
 	self:SetRedl(valbase, val)
 	self:SetRedr(valbase, val)
 end
-
---[[
-stkswitch:GetGreenn('')
-stkswitch:GetGreenl('')
-stkswitch:GetGreenr('')
-stkswitch:GetRedn('')
-stkswitch:GetRedl('')
-stkswitch:GetRedr('')
-]]--
 
 return Stkswitch
