@@ -2,7 +2,7 @@
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-26_22_43_18UTC
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-26_23_34_59UTC
 -- *****************************************************************
 
 local Wwecam = oop.class(com.sim.Qmdev)
@@ -32,11 +32,10 @@ function Wwecam:init()
 end
 
 function Wwecam:absent(FastTurnsPerSecond)
-	if not uluaFind('cpuwolf/qmdev/WwEcam/leds/ledId') then
+	if not uluaFind('cpuwolf/qmdev/WwEcam/leds/ledCmd') then
 		return true
 	end
-	_G.idr_wwecam_hid_leds_ledid = uluaFind('cpuwolf/qmdev/WwEcam/leds/ledId')
-	_G.idr_wwecam_hid_leds_brightness = uluaFind('cpuwolf/qmdev/WwEcam/leds/brightness')
+	_G.idr_wwecam_hid_leds_ledcmd = uluaFind('cpuwolf/qmdev/WwEcam/leds/ledCmd')
 	_G.idr_wwecam_hid_invalid = uluaFind('cpuwolf/qmdev/WwEcam/invalid')
 	_G.idr_wwecam_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/WwEcam/fastkeypersec')
 	uluaSet(_G.idr_wwecam_hid_fastkeypersec, FastTurnsPerSecond)

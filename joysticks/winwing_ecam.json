@@ -75,8 +75,7 @@
       ],
       "SubFunctions": [
         {
-          "ledId": "i56:8",
-          "brightness": "i64:8"
+          "ledCmd": "i56:16"
         }
       ]
     }
