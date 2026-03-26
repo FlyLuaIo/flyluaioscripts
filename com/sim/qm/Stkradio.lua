@@ -165,8 +165,7 @@ function Stkradio:encRadioDigits(freqint)
 end
 
 -- COM1 Active
- function Stkradio:setCom1A(freqint)
-	local digits = self:encRadioDigits(freqint)
+function Stkradio:setCom1A(digits)
 	uluaSet(_G.idr_stkradio_hid_radios_com1act1, digits[1])
 	uluaSet(_G.idr_stkradio_hid_radios_com1act2, digits[2])
 	uluaSet(_G.idr_stkradio_hid_radios_com1act3, digits[3])
@@ -175,8 +174,7 @@ end
  end
 
 -- COM1 Standby
-function Stkradio:setCom1S(freqint)
-	local digits = self:encRadioDigits(freqint)
+function Stkradio:setCom1S(digits)
 	uluaSet(_G.idr_stkradio_hid_radios_com1stb1, digits[1])
 	uluaSet(_G.idr_stkradio_hid_radios_com1stb2, digits[2])
 	uluaSet(_G.idr_stkradio_hid_radios_com1stb3, digits[3])
@@ -185,8 +183,7 @@ function Stkradio:setCom1S(freqint)
 end
 
 -- COM2 Active
-function Stkradio:setCom2A(freqint)
-	local digits = self:encRadioDigits(freqint)
+function Stkradio:setCom2A(digits)
 	uluaSet(_G.idr_stkradio_hid_radios_com2act1, digits[1])
 	uluaSet(_G.idr_stkradio_hid_radios_com2act2, digits[2])
 	uluaSet(_G.idr_stkradio_hid_radios_com2act3, digits[3])
@@ -195,8 +192,7 @@ function Stkradio:setCom2A(freqint)
 end
 
 -- COM2 Standby
-function Stkradio:setCom2S(freqint)
-	local digits = self:encRadioDigits(freqint)
+function Stkradio:setCom2S(digits)
 	uluaSet(_G.idr_stkradio_hid_radios_com2stb1, digits[1])
 	uluaSet(_G.idr_stkradio_hid_radios_com2stb2, digits[2])
 	uluaSet(_G.idr_stkradio_hid_radios_com2stb3, digits[3])
