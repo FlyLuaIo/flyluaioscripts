@@ -185,7 +185,7 @@ function Stkmulti:encUIntDigits(intnum)
 	if len < 5 then
 		for i = 1, 5 - len do
 			-- blank
-			digits[i] = 15
+			table.insert(digits, 1, 15)
 		end
 	end
 	return digits
@@ -202,7 +202,7 @@ function Stkmulti:encIntDigits(intnum)
 	if len < 5 then
 		for i = 1, 5 - len do
 			-- blank
-			digits[i] = 15
+			table.insert(digits, 1, 15)
 		end
 	end
 

@@ -101,19 +101,19 @@ local dr_hdg = iDataRef:New("sim/cockpit/autopilot/heading_mag")
 local d_crs = iDataRef:New('sim/cockpit/radios/nav1_obs_degm')
 
 function Stkmulti_GA_Loop_Upd()
-	if dr_mode_alt:Get() then
+	if dr_mode_alt:Get() > 0 then
 		stkmulti:setUp(stkmulti:encUIntDigits(dr_alt:Get()))
 		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
-	elseif dr_mode_vs:Get() then
+	elseif dr_mode_vs:Get() > 0 then
 		stkmulti:setUp(stkmulti:encUIntDigits(dr_alt:Get()))
 		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
-	elseif dr_mode_ias:Get() then
+	elseif dr_mode_ias:Get() > 0 then
 		stkmulti:setUp(stkmulti:encUIntDigits(dr_ias:Get()))
 		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
-	elseif dr_mode_hdg:Get() then
+	elseif dr_mode_hdg:Get() > 0 then
 		stkmulti:setUp(stkmulti:encUIntDigits(dr_hdg:Get()))
 		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
-	elseif dr_mode_crs:Get() then
+	elseif dr_mode_crs:Get() > 0 then
 		stkmulti:setUp(stkmulti:encUIntDigits(d_crs:Get()))
 		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
 	end

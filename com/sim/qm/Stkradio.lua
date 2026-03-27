@@ -1,4 +1,3 @@
-
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
@@ -7,7 +6,7 @@
 
 local Stkradio = oop.class(com.sim.Qmdev)
 function Stkradio:init()
-    self.QmdevId = 0x67E6B0B
+	self.QmdevId = 0x67E6B0B
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_stkradio == nil then
 		_G.ilua_hw_assigned_stkradio = 0
@@ -58,7 +57,7 @@ end
 
 -- 11850 -> {1, 1, 8, 5, 0}
 -- 118255 -> {1, 1, 8, 2, 5, 5}
- function Stkradio:getDigits(num)
+function Stkradio:getDigits(num)
 	-- Handle case for 0
 	if num == 0 then return { 0 } end
 
@@ -78,7 +77,6 @@ end
 		-- Update num to be the remainder
 		num = num % divisor
 	end
-
 	return digits
 end
 
@@ -127,7 +125,7 @@ function Stkradio:encFloatDigits(floatnum, decmlong)
 		end
 	else
 		for i = 1, len - 5 do
-			digits = table.remove(digits, 1)
+			table.remove(digits, 1)
 		end
 	end
 	local dotidx = len - decmlong
@@ -139,13 +137,13 @@ function Stkradio:encIntDigits(intnum)
 	local digits = self:getDigits(intnum)
 	local len = #digits
 	if len < 5 then
-		for i = 1, 5-len do
+		for i = 1, 5 - len do
 			-- blank
-			digits[i] = 15
+			table.insert(digits, 1, 15)
 		end
 	else
 		for i = 1, len - 5 do
-			digits = table.remove(digits, 1)
+			table.remove(digits, 1)
 		end
 	end
 	return digits
@@ -158,8 +156,8 @@ function Stkradio:encRadioDigits(freqint)
 	if len <= 5 then
 		digits[3] = digits[3] + 208
 	else
+		table.remove(digits, 1)
 		digits[2] = digits[2] + 208
-		digits = table.remove(digits, 1)
 	end
 	return digits
 end
@@ -171,7 +169,7 @@ function Stkradio:setCom1A(digits)
 	uluaSet(_G.idr_stkradio_hid_radios_com1act3, digits[3])
 	uluaSet(_G.idr_stkradio_hid_radios_com1act4, digits[4])
 	uluaSet(_G.idr_stkradio_hid_radios_com1act5, digits[5])
- end
+end
 
 -- COM1 Standby
 function Stkradio:setCom1S(digits)

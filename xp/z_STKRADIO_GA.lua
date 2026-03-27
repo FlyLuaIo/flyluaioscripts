@@ -146,51 +146,53 @@ local dr_dmes = iDataRef:New("sim/cockpit/radios/nav2_dme_dist_m")
 local dr_xpdr = iDataRef:New('sim/cockpit/radios/transponder_code')
 
 function Stkradio_GA_Loop_Upd()
+	local d_xpdr = stkradio:encIntDigits(dr_xpdr:Get())
 	-- update radio up
-	if dr_mode1_com1:Get() then
-		stkradio:SetCom1A(stkradio:encRadioDigits(dr_com1a:Get()))
-		stkradio:SetCom1S(stkradio:encRadioDigits(dr_com1s:Get()))
-	elseif dr_mode1_com2:Get() then
-		stkradio:SetCom1A(stkradio:encRadioDigits(dr_com2a:Get()))
-		stkradio:SetCom1S(stkradio:encRadioDigits(dr_com2s:Get()))
-	elseif dr_mode1_nav1:Get() then
-		stkradio:SetCom1A(stkradio:encRadioDigits(dr_nav1a:Get()))
-		stkradio:SetCom1S(stkradio:encRadioDigits(dr_nav1s:Get()))
-	elseif dr_mode1_nav2:Get() then
-		stkradio:SetCom1A(stkradio:encRadioDigits(dr_nav2a:Get()))
-		stkradio:SetCom1S(stkradio:encRadioDigits(dr_nav2s:Get()))
-	elseif dr_mode1_adf:Get() then
-		stkradio:SetCom1A(stkradio:encRadioDigits(dr_adfa:Get()))
-		stkradio:SetCom1S(stkradio:encRadioDigits(dr_adfs:Get()))
-	elseif dr_mode1_dme:Get() then
-		stkradio:SetCom1A(stkradio:encFloatDigits(dr_adfa:Get()))
-		stkradio:SetCom1S(stkradio:encFloatDigits(dr_adfs:Get()))
-	elseif dr_mode1_xpdr:Get() then
-		stkradio:SetCom1A(stkradio:encIntDigits(dr_xpdr:Get()))
-		stkradio:SetCom1S(stkradio:encIntDigits(dr_xpdr:Get()))
+	if dr_mode1_com1:Get() > 0 then
+		stkradio:setCom1A(stkradio:encRadioDigits(dr_com1a:Get()))
+		stkradio:setCom1S(stkradio:encRadioDigits(dr_com1s:Get()))
+	elseif dr_mode1_com2:Get() > 0 then
+		stkradio:setCom1A(stkradio:encRadioDigits(dr_com2a:Get()))
+		stkradio:setCom1S(stkradio:encRadioDigits(dr_com2s:Get()))
+	elseif dr_mode1_nav1:Get() > 0 then
+		stkradio:setCom1A(stkradio:encRadioDigits(dr_nav1a:Get()))
+		stkradio:setCom1S(stkradio:encRadioDigits(dr_nav1s:Get()))
+	elseif dr_mode1_nav2:Get() > 0 then
+		stkradio:setCom1A(stkradio:encRadioDigits(dr_nav2a:Get()))
+		stkradio:setCom1S(stkradio:encRadioDigits(dr_nav2s:Get()))
+	elseif dr_mode1_adf:Get() > 0 then
+		stkradio:setCom1A(stkradio:encRadioDigits(dr_adfa:Get()))
+		stkradio:setCom1S(stkradio:encRadioDigits(dr_adfs:Get()))
+	elseif dr_mode1_dme:Get() > 0 then
+		stkradio:setCom1A(stkradio:encFloatDigits(dr_adfa:Get()))
+		stkradio:setCom1S(stkradio:encFloatDigits(dr_adfs:Get()))
+	elseif dr_mode1_xpdr:Get() > 0 then
+		stkradio:setCom1A(d_xpdr)
+		stkradio:setCom1S(d_xpdr)
 	end
+
 	-- update radio down
-	if dr_mode2_com1:Get() then
-		stkradio:SetCom2A(stkradio:encRadioDigits(dr_com1a:Get()))
-		stkradio:SetCom2S(stkradio:encRadioDigits(dr_com1s:Get()))
-	elseif dr_mode2_com2:Get() then
-		stkradio:SetCom2A(stkradio:encRadioDigits(dr_com2a:Get()))
-		stkradio:SetCom2S(stkradio:encRadioDigits(dr_com2s:Get()))
-	elseif dr_mode2_nav1:Get() then
-		stkradio:SetCom2A(stkradio:encRadioDigits(dr_nav1a:Get()))
-		stkradio:SetCom2S(stkradio:encRadioDigits(dr_nav1s:Get()))
-	elseif dr_mode2_nav2:Get() then
-		stkradio:SetCom2A(stkradio:encRadioDigits(dr_nav2a:Get()))
-		stkradio:SetCom2S(stkradio:encRadioDigits(dr_nav2s:Get()))
-	elseif dr_mode2_adf:Get() then
-		stkradio:SetCom2A(stkradio:encRadioDigits(dr_adfa:Get()))
-		stkradio:SetCom2S(stkradio:encRadioDigits(dr_adfs:Get()))
-	elseif dr_mode2_dme:Get() then
-		stkradio:SetCom2A(stkradio:encFloatDigits(dr_adfa:Get()))
-		stkradio:SetCom2S(stkradio:encFloatDigits(dr_adfs:Get()))
-	elseif dr_mode2_xpdr:Get() then
-		stkradio:SetCom2A(stkradio:encIntDigits(dr_xpdr:Get()))
-		stkradio:SetCom2S(stkradio:encIntDigits(dr_xpdr:Get()))
+	if dr_mode2_com1:Get() > 0 then
+		stkradio:setCom2A(stkradio:encRadioDigits(dr_com1a:Get()))
+		stkradio:setCom2S(stkradio:encRadioDigits(dr_com1s:Get()))
+	elseif dr_mode2_com2:Get() > 0 then
+		stkradio:setCom2A(stkradio:encRadioDigits(dr_com2a:Get()))
+		stkradio:setCom2S(stkradio:encRadioDigits(dr_com2s:Get()))
+	elseif dr_mode2_nav1:Get() > 0 then
+		stkradio:setCom2A(stkradio:encRadioDigits(dr_nav1a:Get()))
+		stkradio:setCom2S(stkradio:encRadioDigits(dr_nav1s:Get()))
+	elseif dr_mode2_nav2:Get() > 0 then
+		stkradio:setCom2A(stkradio:encRadioDigits(dr_nav2a:Get()))
+		stkradio:setCom2S(stkradio:encRadioDigits(dr_nav2s:Get()))
+	elseif dr_mode2_adf:Get() > 0 then
+		stkradio:setCom2A(stkradio:encRadioDigits(dr_adfa:Get()))
+		stkradio:setCom2S(stkradio:encRadioDigits(dr_adfs:Get()))
+	elseif dr_mode2_dme:Get() > 0 then
+		stkradio:setCom2A(stkradio:encFloatDigits(dr_adfa:Get()))
+		stkradio:setCom2S(stkradio:encFloatDigits(dr_adfs:Get()))
+	elseif dr_mode2_xpdr:Get() > 0 then
+		stkradio:setCom2A(d_xpdr)
+		stkradio:setCom2S(d_xpdr)
 	end
 end
 
