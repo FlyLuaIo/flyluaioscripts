@@ -146,7 +146,6 @@ local dr_dmes = iDataRef:New("sim/cockpit/radios/nav2_dme_dist_m")
 local dr_xpdr = iDataRef:New('sim/cockpit/radios/transponder_code')
 
 function Stkradio_GA_Loop_Upd()
-	local d_xpdr = stkradio:encIntDigits(dr_xpdr:Get())
 	-- update radio up
 	if dr_mode1_com1:Get() > 0 then
 		stkradio:setCom1A(stkradio:encRadioDigits(dr_com1a:Get()))
@@ -167,6 +166,7 @@ function Stkradio_GA_Loop_Upd()
 		stkradio:setCom1A(stkradio:encFloatDigits(dr_adfa:Get()))
 		stkradio:setCom1S(stkradio:encFloatDigits(dr_adfs:Get()))
 	elseif dr_mode1_xpdr:Get() > 0 then
+		local d_xpdr = stkradio:encIntDigits(dr_xpdr:Get())
 		stkradio:setCom1A(d_xpdr)
 		stkradio:setCom1S(d_xpdr)
 	end
@@ -191,6 +191,7 @@ function Stkradio_GA_Loop_Upd()
 		stkradio:setCom2A(stkradio:encFloatDigits(dr_adfa:Get()))
 		stkradio:setCom2S(stkradio:encFloatDigits(dr_adfs:Get()))
 	elseif dr_mode2_xpdr:Get() > 0 then
+		local d_xpdr = stkradio:encIntDigits(dr_xpdr:Get())
 		stkradio:setCom2A(d_xpdr)
 		stkradio:setCom2S(d_xpdr)
 	end
