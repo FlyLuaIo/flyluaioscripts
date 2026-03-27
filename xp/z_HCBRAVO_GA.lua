@@ -116,7 +116,7 @@ hcbravo:GetLowhydpressure('sim/cockpit2/annunciators/hydraulic_pressure')
 hcbravo:GetAuxfuelpump('sim/cockpit2/annunciators/fuel_pressure_low')
 hcbravo:GetParkingbrake('sim/cockpit2/controls/parking_brake_ratio')
 hcbravo:GetLowvolts('sim/cockpit2/annunciators/low_voltage')
-hcbravo:GetDoor('sim/cockpit2/annunciators/cabin_door_open')
+hcbravo:GetDoor('sim/flightmodel2/misc/door_open_ratio[0]')
 
 function HCBRAVO_GA_LED_UPD()
     hcbravo:SetLed()

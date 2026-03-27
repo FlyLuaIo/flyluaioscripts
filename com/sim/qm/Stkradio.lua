@@ -121,7 +121,8 @@ function Stkradio:encFloatDigits(floatnum, decmlong)
 	if len < 5 then
 		for i = 1, 5 - len do
 			-- blank
-			digits[i] = 15
+			table.insert(digits, 1, 15)
+			len = len + 1
 		end
 	else
 		for i = 1, len - 5 do
@@ -129,7 +130,11 @@ function Stkradio:encFloatDigits(floatnum, decmlong)
 		end
 	end
 	local dotidx = len - decmlong
-	digits[dotidx] = digits[dotidx] + 208
+	if digits[dotidx] ~= 15 then
+		digits[dotidx] = digits[dotidx] + 208
+	else
+		digits[dotidx] = 208
+	end
 	return digits
 end
 
