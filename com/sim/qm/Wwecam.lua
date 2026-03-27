@@ -71,6 +71,41 @@ function Wwecam:PowerOff()
 	end
 end
 
+function Wwecam:SetTest()
+	self:SetBrt(128)
+	self:SendLedCmd(self.LED_ALL_BRIGHTNESS, 255)
+	for i = 1, #self.ledIds do
+		self:SendLedCmd(self.ledIds[i], 1)
+	end
+end
+
+function Wwecam:SetBrt(val)
+	self:SendLedCmd(self.LED_BACKLIGHT, val)
+	self:SendLedCmd(self.LED_EMER_BRIGHTNESS, val)
+end
+
+-- ========
+-- Backlight
+function Wwecam:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
+end
+
+function Wwecam:SetBkl(val)
+	if val == nil then
+		val = self.d_bkl:Get() * self.d_bkl_scale
+		if self.d_bkl:ChangedUpdate() then
+			self:SetBrt(val)
+		end
+	else
+		self:SetBrt(val)
+	end
+end
+
+function Wwecam:FreshBkl()
+	self.d_bkl:Invalid(-1)
+end
+
 -- =========================ECAM
 -- ========
 -- ECAM ENG
