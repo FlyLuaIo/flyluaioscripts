@@ -14,7 +14,7 @@ end
 
 uluaLog("QMOVH-A of PMDG B737")
 
-qmcp737c:AddTogMenu("need GPWS", "需要GPWS功能", "g_need_qmovha_pmdg737_gpws")
+qmovha:AddTogMenu("need GPWS", "需要GPWS功能", "g_need_qmovha_pmdg737_gpws")
 
 -- A330
 local isPMDG800 = false
