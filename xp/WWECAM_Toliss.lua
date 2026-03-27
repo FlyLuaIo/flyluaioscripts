@@ -31,7 +31,16 @@ end
 
 uluaLog("Wwecam for Toliss")
 
---------------------Input Key Binding ---------------------
+--------------------Input Keys Binding ---------------------
+
+-- ECAM
+-- TO CONFIG
+wwecam:CfgCmd(1, "AirbusFBW/TOConfigPress")
+
+wwecam:CfgValT(4, "AirbusFBW/SDENG")
+wwecam:CfgValT(5, "AirbusFBW/SDBLEED")
+wwecam:CfgValT(6, "AirbusFBW/SDPRESS")
+
 function flip_ecam_ac_dc()
 	-- uluaLog(string.format("flip_ecam_ac_dc=%d", iniA330_ecam_elec_acdc))
 	iniA330_ecam_elec_acdc = 1 - iniA330_ecam_elec_acdc
@@ -49,6 +58,20 @@ else
 	wwecam:CfgFc(7, "", "flip_ecam_ac_dc()")
 end
 
+wwecam:CfgValT(8, "AirbusFBW/SDHYD")
+wwecam:CfgValT(9, "AirbusFBW/SDFUEL")
+
+wwecam:CfgValT(10, "AirbusFBW/SDAPU")
+wwecam:CfgValT(11, "AirbusFBW/SDCOND")
+wwecam:CfgValT(12, "AirbusFBW/SDDOOR")
+wwecam:CfgValT(13, "AirbusFBW/SDWHEEL")
+wwecam:CfgValT(14, "AirbusFBW/SDFCTL")
+
+wwecam:CfgCmd(15, "AirbusFBW/ECAMAll")
+
+wwecam:CfgCmd(16, "AirbusFBW/ECP/CaptainClear")
+wwecam:CfgValT(18, "AirbusFBW/SDSTATUS")
+wwecam:CfgCmd(19, "AirbusFBW/ECAMRecall")
 
 --------------------Output lights ---------------------
 -- =====ECAM
