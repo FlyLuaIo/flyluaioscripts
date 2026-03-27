@@ -2,6 +2,8 @@
   "ProductName": "StkSwitch",
   "USB_VID": "0x06A3",
   "USB_PID": "0x0D67",
+  "LightKey": 18,
+  "LightKeyName": "Gear up",
   "Functions": [
     {
       "FunName": "LED",
@@ -10,8 +12,6 @@
       "FunIndex": 1,
       "TestBytes": ["0x00", "0x07"],
       "OffBytes": ["0x00", "0x00"],
-      "LightKey": 18,
-      "LightKeyName": "Gear up",
       "LightBytes": ["0x00", "0x01"],
       "SubFunctions": [
         {

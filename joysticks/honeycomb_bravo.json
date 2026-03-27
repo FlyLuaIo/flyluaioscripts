@@ -2,6 +2,8 @@
   "ProductName": "HCBravo",
   "USB_VID": "0x294B",
   "USB_PID": "0x1901",
+  "LightKey": 7,
+  "LightKeyName": "AUTOPILOT",
   "Functions": [
     {
       "FunName": "LED",
@@ -10,8 +12,6 @@
       "FunIndex": 1,
       "TestBytes": ["0x00", "0xFF", "0xD5", "0xFF", "0xFF", "0xF0"],
       "OffBytes": ["0x00", "0x00", "0x00", "0x00", "0x00", "0x00"],
-      "LightKey": 7,
-      "LightKeyName": "AUTOPILOT",
       "LightBytes": ["0x00", "0x80", "0x00", "0x00", "0x00", "0x00"],
       "SubFunctions": [
         {

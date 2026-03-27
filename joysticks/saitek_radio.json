@@ -2,14 +2,14 @@
   "ProductName": "StkRadio",
   "USB_VID": "0x06A3",
   "USB_PID": "0x0D05",
+  "LightKey": 6,
+  "LightKeyName": "top XPDR",
   "Functions": [
     {
       "FunName": "Radios",
       "USB_FEAT_length": 23,
       "HeaderBytes": ["0x00"],
       "FunIndex": 1,
-      "LightKey": 6,
-      "LightKeyName": "top XPDR",
       "LightBytes": ["0x00", "0x0F", "0x07", "0x07", "0x00", "0x00"],
       "TestBytes": ["0x00", "0xFF", "0xD5", "0xFF", "0xFF", "0xF0"],
       "OffBytes": [

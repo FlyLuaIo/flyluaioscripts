@@ -2,6 +2,8 @@
   "ProductName": "StkMulti",
   "USB_VID": "0x06A3",
   "USB_PID": "0x0D06",
+  "LightKey": 7,
+  "LightKeyName": "Autopilot",
   "Functions": [
     {
       "FunName": "leds",
@@ -22,8 +24,6 @@
         "0xFF"
       ],
       "FunIndex": 1,
-      "LightKey": 7,
-      "LightKeyName": "Autopilot",
       "LightBytes": [
         "0x00",
         "0x0F",
