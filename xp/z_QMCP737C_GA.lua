@@ -283,8 +283,8 @@ else
     qmcp737c:CfgCmd(79, 'sim/lights/strobe_lights_on', 'sim/lights/strobe_lights_off')
     qmcp737c:CfgCmd(81, 'sim/lights/landing_01_light_on', 'sim/lights/landing_01_light_off')
     qmcp737c:CfgCmd(82, 'sim/lights/landing_02_light_on', 'sim/lights/landing_01_light_off')
-    qmcp737c:CfgCmd(83, 'sim/flight_controls/landing_gear_down')
-    qmcp737c:CfgCmd(84, 'sim/flight_controls/landing_gear_up')
+    qmcp737c:CfgCmd(83, 'sim/flight_controls/landing_gear_down', 'sim/operation/test_none')
+    qmcp737c:CfgCmd(84, 'sim/flight_controls/landing_gear_up', 'sim/operation/test_none')
 end
 
 
