@@ -195,7 +195,7 @@ function Stkmulti:encIntDigits(intnum)
 	local digits = self:getDigits(intnum)
 	local len = #digits
 	if intnum < 0 then
-		-- Prepend "-" to the front of the table (at index 1)
+		-- add -
 		table.insert(digits, 1, 254)
 		len = len + 1
 	end
