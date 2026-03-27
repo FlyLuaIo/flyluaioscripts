@@ -81,12 +81,12 @@ end
 function Wwecam:SetEEng(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_eng:Get()
 		if self.d_ec_eng:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_eng, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_eng:GetOld()
+			self:SendLedCmd(self.LED_ENG, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_eng, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_ENG, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -98,12 +98,12 @@ end
 function Wwecam:SetEBleed(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_bleed:Get()
 		if self.d_ec_bleed:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_bleed, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_bleed:GetOld()
+			self:SendLedCmd(self.LED_BLEED, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_bleed, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_BLEED, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -115,12 +115,12 @@ end
 function Wwecam:SetEPress(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_press:Get()
 		if self.d_ec_press:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_press, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_press:GetOld()
+			self:SendLedCmd(self.LED_PRESS, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_press, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_PRESS, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -132,12 +132,12 @@ end
 function Wwecam:SetEElec(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_elec:Get()
 		if self.d_ec_elec:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_elec, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_elec:GetOld()
+			self:SendLedCmd(self.LED_ELEC, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_elec, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_ELEC, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -151,16 +151,15 @@ function Wwecam:SetEElecAcDc(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	local val_dc
 	if val == nil then
-		val = self.d_ec_elec:Get()
-		val_dc = self.d_ec_elec_dc:Get()
-
 		if self.d_ec_elec:ChangedUpdate() or self.d_ec_elec_dc:ChangedUpdate() then
+			val = self.d_ec_elec:GetOld()
+			val_dc = self.d_ec_elec_dc:GetOld()
 			val = (val + val_dc) / 2
-			uluaSet(idr_qmpe_hid_ec_elec, ilua_bool_ternary(val, valbase))
+			self:SendLedCmd(self.LED_ELEC, ilua_bool_ternary(val, valbase))
 		end
 	else
 		val = (val + val_dc) / 2
-		uluaSet(idr_qmpe_hid_ec_elec, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_ELEC, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -172,12 +171,12 @@ end
 function Wwecam:SetEHyd(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_hyd:Get()
 		if self.d_ec_hyd:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_hyd, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_hyd:GetOld()
+			self:SendLedCmd(self.LED_HYD, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_hyd, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_HYD, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -189,12 +188,12 @@ end
 function Wwecam:SetEFuel(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_fuel:Get()
 		if self.d_ec_fuel:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_fuel, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_fuel:GetOld()
+			self:SendLedCmd(self.LED_FUEL, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_fuel, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_FUEL, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -206,12 +205,12 @@ end
 function Wwecam:SetEFctl(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_fctl:Get()
 		if self.d_ec_fctl:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_fctl, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_fctl:GetOld()
+			self:SendLedCmd(self.LED_FCTL, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_fctl, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_FCTL, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -223,12 +222,12 @@ end
 function Wwecam:SetEApu(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_apu:Get()
 		if self.d_ec_apu:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_apu, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_apu:GetOld()
+			self:SendLedCmd(self.LED_APU, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_apu, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_APU, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -240,12 +239,12 @@ end
 function Wwecam:SetECond(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_cond:Get()
 		if self.d_ec_cond:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_cond, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_cond:GetOld()
+			self:SendLedCmd(self.LED_COND, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_cond, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_COND, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -257,12 +256,12 @@ end
 function Wwecam:SetEDoor(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_door:Get()
 		if self.d_ec_door:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_door, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_door:GetOld()
+			self:SendLedCmd(self.LED_DOOR, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_door, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_DOOR, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -274,29 +273,46 @@ end
 function Wwecam:SetEWheel(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_wheel:Get()
 		if self.d_ec_wheel:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_wheel, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_wheel:GetOld()
+			self:SendLedCmd(self.LED_WHEEL, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_wheel, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_WHEEL, ilua_bool_ternary(val, valbase))
 	end
 end
 
--- ECAM CLR
-function Wwecam:GetEClr(dpath)
-	self.d_ec_clr = iDataRef:New(dpath)
+-- ECAM CLR Left
+function Wwecam:GetEClrL(dpath)
+	self.d_ec_clr_l = iDataRef:New(dpath)
 end
 
-function Wwecam:SetEClr(valbase, val)
+function Wwecam:SetEClrL(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_clr:Get()
-		if self.d_ec_clr:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_clr, ilua_bool_ternary(val, valbase))
+		if self.d_ec_clr_l:ChangedUpdate() then
+			val = self.d_ec_clr_l:GetOld()
+			self:SendLedCmd(self.LED_CLR_L, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_clr, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_CLR_L, ilua_bool_ternary(val, valbase))
+	end
+end
+
+-- ECAM CLR Right
+function Wwecam:GetEClrR(dpath)
+	self.d_ec_clr_r = iDataRef:New(dpath)
+end
+
+function Wwecam:SetEClrR(valbase, val)
+	valbase = valbase == nil and 0 or valbase
+	if val == nil then
+		if self.d_ec_clr_r:ChangedUpdate() then
+			val = self.d_ec_clr_r:GetOld()
+			self:SendLedCmd(self.LED_CLR_R, ilua_bool_ternary(val, valbase))
+		end
+	else
+		self:SendLedCmd(self.LED_CLR_R, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -308,12 +324,12 @@ end
 function Wwecam:SetESts(valbase, val)
 	valbase = valbase == nil and 0 or valbase
 	if val == nil then
-		val = self.d_ec_sts:Get()
 		if self.d_ec_sts:ChangedUpdate() then
-			uluaSet(idr_qmpe_hid_ec_sts, ilua_bool_ternary(val, valbase))
+			val = self.d_ec_sts:GetOld()
+			self:SendLedCmd(self.LED_STS, ilua_bool_ternary(val, valbase))
 		end
 	else
-		uluaSet(idr_qmpe_hid_ec_sts, ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(self.LED_STS, ilua_bool_ternary(val, valbase))
 	end
 end
 
@@ -331,7 +347,8 @@ function Wwecam:SetEcam(valbase)
 	self:SetECond(valbase)
 	self:SetEDoor(valbase)
 	self:SetEWheel(valbase)
-	self:SetEClr(valbase)
+	self:SetEClrL(valbase)
+	self:SetEClrR(valbase)
 	self:SetESts(valbase)
 end
 
@@ -348,13 +365,9 @@ function Wwecam:SetEcamAcDc(valbase)
 	self:SetECond(valbase)
 	self:SetEDoor(valbase)
 	self:SetEWheel(valbase)
-	self:SetEClr(valbase)
+	self:SetEClrL(valbase)
+	self:SetEClrR(valbase)
 	self:SetESts(valbase)
-end
-
--- set ECAM off
-function Wwecam:OffEcam()
-	uluaSet(idr_qmpe_hid_ec_int, 0)
 end
 
 return Wwecam
