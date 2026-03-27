@@ -50,6 +50,8 @@ uluaLog('Wwecam for Toliss')
 -- ECAM
 -- TO CONFIG
 wwecam:CfgCmd(1, 'AirbusFBW/TOConfigPress')
+-- EMER CANCEL
+wwecam:CfgCmd(2, 'AirbusFBW/EmerCancel')
 
 wwecam:CfgValT(4, 'AirbusFBW/SDENG')
 wwecam:CfgValT(5, 'AirbusFBW/SDBLEED')
