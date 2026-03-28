@@ -145,33 +145,163 @@ function Wwagp:SendBit(idx, valbase, val)
 end
 
 -- ========
--- LED gear unlock left
-function Wwagp:GetUnlockl(dpath)
-	self:GetBit(1, dpath)
+-- LEDS ULOCKL
+function Wwagp:GetUlockL(dpath)
+	self:GetBit(self.LEDS_ULOCKL, dpath)
 end
 
-function Wwagp:SetUnlockl(valbase, val)
-	self:SendBit(1, valbase, val)
-end
-
--- ========
--- LED gear unlock Nose
-function Wwagp:GetUnlockn(dpath)
-	self:GetBit(2, dpath)
-end
-
-function Wwagp:SetUnlockn(valbase, val)
-	self:SendBit(2, valbase, val)
+function Wwagp:SetUlockL(valbase, val)
+	self:SendBit(self.LEDS_ULOCKL, valbase, val)
 end
 
 -- ========
--- LED gear unlock Right
-function Wwagp:GetUnlockr(dpath)
-	self:GetBit(3, dpath)
+-- LEDS ULOCKN
+function Wwagp:GetUlockN(dpath)
+	self:GetBit(self.LEDS_ULOCKN, dpath)
 end
 
-function Wwagp:SetUnlockr(valbase, val)
-	self:SendBit(3, valbase, val)
+function Wwagp:SetUlockN(valbase, val)
+	self:SendBit(self.LEDS_ULOCKN, valbase, val)
+end
+
+-- ========
+-- LEDS ULOCKR
+function Wwagp:GetUlockR(dpath)
+	self:GetBit(self.LEDS_ULOCKR, dpath)
+end
+
+function Wwagp:SetUlockR(valbase, val)
+	self:SendBit(self.LEDS_ULOCKR, valbase, val)
+end
+
+-- ========
+-- LEDS BRAKEHOT
+function Wwagp:GetBrakeHot(dpath)
+	self:GetBit(self.LEDS_BRAKEHOT, dpath)
+end
+
+function Wwagp:SetBrakeHot(valbase, val)
+	self:SendBit(self.LEDS_BRAKEHOT, valbase, val)
+end
+
+-- ========
+-- LEDS LOCKL
+function Wwagp:GetLockL(dpath)
+	self:GetBit(self.LEDS_LOCKL, dpath)
+end
+
+function Wwagp:SetLockL(valbase, val)
+	self:SendBit(self.LEDS_LOCKL, valbase, val)
+end
+
+-- ========
+-- LEDS LOCKN
+function Wwagp:GetLockN(dpath)
+	self:GetBit(self.LEDS_LOCKN, dpath)
+end
+
+function Wwagp:SetLockN(valbase, val)
+	self:SendBit(self.LEDS_LOCKN, valbase, val)
+end
+
+-- ========
+-- LEDS LOCKR
+function Wwagp:GetLockR(dpath)
+	self:GetBit(self.LEDS_LOCKR, dpath)
+end
+
+function Wwagp:SetLockR(valbase, val)
+	self:SendBit(self.LEDS_LOCKR, valbase, val)
+end
+
+-- ========
+-- LEDS BRAKEON
+function Wwagp:GetBrakeOn(dpath)
+	self:GetBit(self.LEDS_BRAKEON, dpath)
+end
+
+function Wwagp:SetBrakeOn(valbase, val)
+	self:SendBit(self.LEDS_BRAKEON, valbase, val)
+end
+
+-- ========
+-- LEDS LOWD
+function Wwagp:GetLowD(dpath)
+	self:GetBit(self.LEDS_LOWD, dpath)
+end
+
+function Wwagp:SetLowD(valbase, val)
+	self:SendBit(self.LEDS_LOWD, valbase, val)
+end
+
+-- ========
+-- LEDS MEDD
+function Wwagp:GetMedD(dpath)
+	self:GetBit(self.LEDS_MEDD, dpath)
+end
+
+function Wwagp:SetMedD(valbase, val)
+	self:SendBit(self.LEDS_MEDD, valbase, val)
+end
+
+-- ========
+-- LEDS MAXD
+function Wwagp:GetMaxD(dpath)
+	self:GetBit(self.LEDS_MAXD, dpath)
+end
+
+function Wwagp:SetMaxD(valbase, val)
+	self:SendBit(self.LEDS_MAXD, valbase, val)
+end
+
+-- ========
+-- LEDS LOW
+function Wwagp:GetLow(dpath)
+	self:GetBit(self.LEDS_LOW, dpath)
+end
+
+function Wwagp:SetLow(valbase, val)
+	self:SendBit(self.LEDS_LOW, valbase, val)
+end
+
+-- ========
+-- LEDS MED
+function Wwagp:GetMed(dpath)
+	self:GetBit(self.LEDS_MED, dpath)
+end
+
+function Wwagp:SetMed(valbase, val)
+	self:SendBit(self.LEDS_MED, valbase, val)
+end
+
+-- ========
+-- LEDS MAX
+function Wwagp:GetMax(dpath)
+	self:GetBit(self.LEDS_MAX, dpath)
+end
+
+function Wwagp:SetMax(valbase, val)
+	self:SendBit(self.LEDS_MAX, valbase, val)
+end
+
+-- ========
+-- LEDS TERR
+function Wwagp:GetTerr(dpath)
+	self:GetBit(self.LEDS_TERR, dpath)
+end
+
+function Wwagp:SetTerr(valbase, val)
+	self:SendBit(self.LEDS_TERR, valbase, val)
+end
+
+-- ========
+-- LEDS LEVER
+function Wwagp:GetLever(dpath)
+	self:GetBit(self.LEDS_LEVER, dpath)
+end
+
+function Wwagp:SetLever(valbase, val)
+	self:SendBit(self.LEDS_LEVER, valbase, val)
 end
 
 function Wwagp:IsLcdTextChanged(newtext)
