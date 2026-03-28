@@ -137,10 +137,10 @@ function Wwagp:SendBit(idx, valbase, val)
 		if hdl:ChangedUpdate() then
 			val = hdl:GetOld()
 			-- uluaLog(string.format("SendBit=%f", val))
-			self:SendLedCmd(ilua_bool_ternary(val, valbase, self.RevertBits[idx + 1]))
+			self:SendLedCmd(idx, ilua_bool_ternary(val, valbase, self.RevertBits[idx + 1]))
 		end
 	else
-		self:SendLedCmd(ilua_bool_ternary(val, valbase))
+		self:SendLedCmd(idx, ilua_bool_ternary(val, valbase))
 	end
 end
 

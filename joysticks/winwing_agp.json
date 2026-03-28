@@ -80,52 +80,52 @@
       ],
       "SubIndexFunctions": [
         {
-          "UlockL": "t3"
+          "UlockL": "3"
         },
         {
-          "UlockN": "t4"
+          "UlockN": "4"
         },
         {
-          "UlockR": "t5"
+          "UlockR": "5"
         },
         {
-          "BrakeHot": "t6"
+          "BrakeHot": "6"
         },
         {
-          "LockL": "t7"
+          "LockL": "7"
         },
         {
-          "LockN": "t8"
+          "LockN": "8"
         },
         {
-          "LockR": "t9"
+          "LockR": "9"
         },
         {
-          "BrakeOn": "t10"
+          "BrakeOn": "10"
         },
         {
-          "LowD": "t11"
+          "LowD": "11"
         },
         {
-          "MedD": "t12"
+          "MedD": "12"
         },
         {
-          "MaxD": "t13"
+          "MaxD": "13"
         },
         {
-          "Low": "t14"
+          "Low": "14"
         },
         {
-          "Med": "t15"
+          "Med": "15"
         },
         {
-          "Max": "t16"
+          "Max": "16"
         },
         {
-          "Terr": "t17"
+          "Terr": "17"
         },
         {
-          "Lever": "t18"
+          "Lever": "18"
         }
       ]
     },
