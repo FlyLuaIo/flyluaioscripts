@@ -57,22 +57,22 @@ function Wwagp:init()
 		self.LEDS_TERR = 17
 		self.LEDS_LEVER = 18
 		self.ledIds = {
-			LEDS_ULOCKL,
-			LEDS_ULOCKN,
-			LEDS_ULOCKR,
-			LEDS_BRAKEHOT,
-			LEDS_LOCKL,
-			LEDS_LOCKN,
-			LEDS_LOCKR,
-			LEDS_BRAKEON,
-			LEDS_LOWD,
-			LEDS_MEDD,
-			LEDS_MAXD,
-			LEDS_LOW,
-			LEDS_MED,
-			LEDS_MAX,
-			LEDS_TERR,
-			LEDS_LEVER
+			self.LEDS_ULOCKL,
+			self.LEDS_ULOCKN,
+			self.LEDS_ULOCKR,
+			self.LEDS_BRAKEHOT,
+			self.LEDS_LOCKL,
+			self.LEDS_LOCKN,
+			self.LEDS_LOCKR,
+			self.LEDS_BRAKEON,
+			self.LEDS_LOWD,
+			self.LEDS_MEDD,
+			self.LEDS_MAXD,
+			self.LEDS_LOW,
+			self.LEDS_MED,
+			self.LEDS_MAX,
+			self.LEDS_TERR,
+			self.LEDS_LEVER
 		}
 	end
 end
