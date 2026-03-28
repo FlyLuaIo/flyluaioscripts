@@ -40,6 +40,40 @@ function Wwagp:init()
 			['-'] = 0x40,
 			['_'] = 0x08
 		}
+		self.LED_BACKLIGHT = 0
+		self.LED_LCD_BRIGHTNESS = 1
+		self.LED_OVERALL_LEDS_BRIGHTNESS = 2
+		self.LED_LDG_GEAR_UNLK_LEFT = 3
+		self.LED_LDG_GEAR_UNLK_CENTER = 4
+		self.LED_LDG_GEAR_UNLK_RIGHT = 5
+		self.LED_BRAKE_FAN_HOT = 6
+		self.LED_LDG_GEAR_ARROW_GREEN_LEFT = 7
+		self.LED_LDG_GEAR_ARROW_GREEN_CENTER = 8
+		self.LED_LDG_GEAR_ARROW_GREEN_RIGHT = 9
+		self.LED_BRAKE_FAN_ON = 10
+		self.LED_AUTOBRK_DECEL_LO = 11
+		self.LED_AUTOBRK_DECEL_MED = 12
+		self.LED_AUTOBRK_DECEL_HI = 13
+		self.LED_AUTOBRK_LO_ON = 14
+		self.LED_AUTOBRK_MED_ON = 15
+		self.LED_AUTOBRK_HI_ON = 16
+		self.LED_TERRAIN_ON = 17
+		self.ledIds = {
+			self.LED_LDG_GEAR_UNLK_LEFT,
+			self.LED_LDG_GEAR_UNLK_CENTER,
+			self.LED_LDG_GEAR_UNLK_RIGHT,
+			self.LED_BRAKE_FAN_HOT,
+			self.LED_LDG_GEAR_ARROW_GREEN_LEFT,
+			self.LED_LDG_GEAR_ARROW_GREEN_CENTER,
+			self.LED_LDG_GEAR_ARROW_GREEN_RIGHT,
+			self.LED_BRAKE_FAN_ON,
+			self.LED_AUTOBRK_DECEL_LO,
+			self.LED_AUTOBRK_DECEL_MED,
+			self.LED_AUTOBRK_DECEL_HI,
+			self.LED_AUTOBRK_LO_ON,
+			self.LED_AUTOBRK_MED_ON,
+			self.LED_AUTOBRK_HI_ON,
+			self.LED_TERRAIN_ON }
 	end
 end
 
@@ -82,6 +116,64 @@ function Wwagp:Next()
 	return val
 end
 
+function Wwagp:SendLedCmd(LedId, value)
+	local combinedValue = (LedId * 256) + value
+	uluaSet(_G.idr_wwagp_hid_leds_ledcmd, combinedValue)
+end
+
+function Wwagp:PowerOff()
+	self:SendLedCmd(self.LED_BACKLIGHT, 0)
+	self:SendLedCmd(self.LED_LCD_BRIGHTNESS, 0)
+	self:SendLedCmd(self.LED_OVERALL_LEDS_BRIGHTNESS, 0)
+	for i = 1, #self.ledIds do
+		self:SendLedCmd(self.ledIds[i], 0)
+	end
+end
+
+function Wwagp:SendBit(idx, valbase, val)
+	valbase = valbase == nil and 0 or valbase
+	if val == nil then
+		hdl = self.Bits[idx + 1]
+		if hdl:ChangedUpdate() then
+			val = hdl:GetOld()
+			-- uluaLog(string.format("SendBit=%f", val))
+			self:SendLedCmd(ilua_bool_ternary(val, valbase, self.RevertBits[idx + 1]))
+		end
+	else
+		self:SendLedCmd(ilua_bool_ternary(val, valbase))
+	end
+end
+
+-- ========
+-- LED gear unlock left
+function Wwagp:GetUnlockl(dpath)
+	self:GetBit(1, dpath)
+end
+
+function Wwagp:SetUnlockl(valbase, val)
+	self:SendBit(1, valbase, val)
+end
+
+-- ========
+-- LED gear unlock Nose
+function Wwagp:GetUnlockn(dpath)
+	self:GetBit(2, dpath)
+end
+
+function Wwagp:SetUnlockn(valbase, val)
+	self:SendBit(2, valbase, val)
+end
+
+-- ========
+-- LED gear unlock Right
+function Wwagp:GetUnlockr(dpath)
+	self:GetBit(3, dpath)
+end
+
+function Wwagp:SetUnlockr(valbase, val)
+	self:SendBit(3, valbase, val)
+end
+
 function Wwagp:IsLcdTextChanged(newtext)
 	if newtext ~= self.LcdText then
 		self.LcdText = newtext
@@ -90,8 +182,6 @@ function Wwagp:IsLcdTextChanged(newtext)
 		return false
 	end
 end
-
-
 
 -- 2. Parsing Logic (Ported from ProductAGP::parseSegment)
 function Wwagp:parseSegment(text, expectedLength)
