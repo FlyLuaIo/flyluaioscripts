@@ -1,7 +1,8 @@
+
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-28_11_04_16UTC
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-28_13_57_28UTC
 -- *****************************************************************
 
 local Wwagp = oop.class(com.sim.Qmdev)
@@ -20,9 +21,14 @@ function Wwagp:absent(FastTurnsPerSecond)
 	end
 	_G.idr_wwagp_hid_leds_ledcmd = uluaFind('cpuwolf/qmdev/WwAgp/leds/ledCmd')
 	_G.idr_wwagp_hid_lcd_seqnum = uluaFind('cpuwolf/qmdev/WwAgp/lcd/seqNum')
-	_G.idr_wwagp_hid_lcd_chr = uluaFind('cpuwolf/qmdev/WwAgp/lcd/Chr')
-	_G.idr_wwagp_hid_lcd_utc = uluaFind('cpuwolf/qmdev/WwAgp/lcd/Utc')
-	_G.idr_wwagp_hid_lcd_et = uluaFind('cpuwolf/qmdev/WwAgp/lcd/Et')
+	_G.idr_wwagp_hid_lcd_lcd1 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd1')
+	_G.idr_wwagp_hid_lcd_lcd2 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd2')
+	_G.idr_wwagp_hid_lcd_lcd3 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd3')
+	_G.idr_wwagp_hid_lcd_lcd4 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd4')
+	_G.idr_wwagp_hid_lcd_lcd5 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd5')
+	_G.idr_wwagp_hid_lcd_lcd6 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd6')
+	_G.idr_wwagp_hid_lcd_lcd7 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd7')
+	_G.idr_wwagp_hid_lcd_lcd8 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd8')
 	_G.idr_wwagp_hid_finish_seqnum = uluaFind('cpuwolf/qmdev/WwAgp/finish/seqNum')
 	_G.idr_wwagp_hid_invalid = uluaFind('cpuwolf/qmdev/WwAgp/invalid')
 	_G.idr_wwagp_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/WwAgp/fastkeypersec')
@@ -173,8 +179,14 @@ end
 function Wwagp:setLcdStr(chrono, utc, elapsed)
 	local result = encodeDisplay(chrono, utc, elapsed)
 	local pcounter = self:Next()
-	chrnum = result
-	uluaSet(_G.idr_wwagp_hid_lcd_chr, chrnum)
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd1, result[2] * 256 + result[1])
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd2, result[4] * 256 + result[3])
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd3, result[6] * 256 + result[5])
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd4, result[8] * 256 + result[7])
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd5, result[10] * 256 + result[9])
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd6, result[12] * 256 + result[11])
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd7, result[14] * 256 + result[13])
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd8, result[16] * 256 + result[15])
 	uluaSet(_G.idr_wwagp_hid_lcd_seqnum, pcounter)
 	uluaSet(_G.idr_wwagp_hid_finish_seqnum, pcounter)
 end
