@@ -77,6 +77,56 @@
         {
           "ledCmd": "i56:16"
         }
+      ],
+      "SubIndexFunctions": [
+        {
+          "UlockL": "t3"
+        },
+        {
+          "UlockN": "t4"
+        },
+        {
+          "UlockR": "t5"
+        },
+        {
+          "BrakeHot": "t6"
+        },
+        {
+          "LockL": "t7"
+        },
+        {
+          "LockN": "t8"
+        },
+        {
+          "LockR": "t9"
+        },
+        {
+          "BrakeOn": "t10"
+        },
+        {
+          "LowD": "t11"
+        },
+        {
+          "MedD": "t12"
+        },
+        {
+          "MaxD": "t13"
+        },
+        {
+          "Low": "t14"
+        },
+        {
+          "Med": "t15"
+        },
+        {
+          "Max": "t16"
+        },
+        {
+          "Terr": "t17"
+        },
+        {
+          "Lever": "t18"
+        }
       ]
     },
     {
