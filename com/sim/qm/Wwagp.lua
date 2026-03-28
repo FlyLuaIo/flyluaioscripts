@@ -1,4 +1,3 @@
-
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
@@ -12,6 +11,35 @@ function Wwagp:init()
 	if _G.ilua_hw_assigned_wwagp == nil then
 		_G.ilua_hw_assigned_wwagp = 0
 		self.PackageConter = 0
+		self.LcdText = ""
+		-- 1. Character to 7-Segment Bitmask Mapping
+		self.SEGMENT_MAP = {
+			['0'] = 0x3F,
+			['1'] = 0x06,
+			['2'] = 0x5B,
+			['3'] = 0x4F,
+			['4'] = 0x66,
+			['5'] = 0x6D,
+			['6'] = 0x7D,
+			['7'] = 0x07,
+			['8'] = 0x7F,
+			['9'] = 0x6F,
+			['A'] = 0x77,
+			['B'] = 0x7C,
+			['C'] = 0x39,
+			['D'] = 0x5E,
+			['E'] = 0x79,
+			['F'] = 0x71,
+			['G'] = 0x3D,
+			['H'] = 0x76,
+			['L'] = 0x38,
+			['P'] = 0x73,
+			['S'] = 0x6D,
+			['U'] = 0x3E,
+			[' '] = 0x00,
+			['-'] = 0x40,
+			['_'] = 0x08
+		}
 	end
 end
 
@@ -54,37 +82,19 @@ function Wwagp:Next()
 	return val
 end
 
--- 1. Character to 7-Segment Bitmask Mapping
-local SEGMENT_MAP = {
-	['0'] = 0x3F,
-	['1'] = 0x06,
-	['2'] = 0x5B,
-	['3'] = 0x4F,
-	['4'] = 0x66,
-	['5'] = 0x6D,
-	['6'] = 0x7D,
-	['7'] = 0x07,
-	['8'] = 0x7F,
-	['9'] = 0x6F,
-	['A'] = 0x77,
-	['B'] = 0x7C,
-	['C'] = 0x39,
-	['D'] = 0x5E,
-	['E'] = 0x79,
-	['F'] = 0x71,
-	['G'] = 0x3D,
-	['H'] = 0x76,
-	['L'] = 0x38,
-	['P'] = 0x73,
-	['S'] = 0x6D,
-	['U'] = 0x3E,
-	[' '] = 0x00,
-	['-'] = 0x40,
-	['_'] = 0x08
-}
+function Wwagp:IsLcdTextChanged(newtext)
+	if newtext ~= self.LcdText then
+		self.LcdText = newtext
+		return true
+	else
+		return false
+	end
+end
+
+
 
 -- 2. Parsing Logic (Ported from ProductAGP::parseSegment)
-local function parseSegment(text, expectedLength)
+function Wwagp:parseSegment(text, expectedLength)
 	local digits = ""
 	local localColonMask = 0
 
@@ -116,19 +126,18 @@ local function parseSegment(text, expectedLength)
 end
 
 -- 3. Main Packet Construction
-local function encodeDisplay(chrono, utc, elapsed)
+function Wwagp:encodeDisplay(chrono, utc, elapsed)
 	-- Initialize 32-byte packet (index 1 to 56)
 	local packet = {}
 	for i = 0, 56 do packet[i] = 0x00 end
-
 
 	-- B. Define the Scattered Row Offsets
 	local rowOffsets = { 25, 29, 33, 37, 41, 45, 49, 53 }
 
 	-- C. Parse Input Strings
-	local d1, m1 = parseSegment(chrono, 4)
-	local d2, m2 = parseSegment(utc, 6)
-	local d3, m3 = parseSegment(elapsed, 4)
+	local d1, m1 = self:parseSegment(chrono, 4)
+	local d2, m2 = self:parseSegment(utc, 6)
+	local d3, m3 = self:parseSegment(elapsed, 4)
 
 	local allDigits = d1 .. d2 .. d3
 	-- Combine into a 14-bit mask shifted by offsets 0, 4, 10
@@ -137,7 +146,7 @@ local function encodeDisplay(chrono, utc, elapsed)
 	-- D. Encode into Scattered Packet Bytes
 	for digitIdx = 0, 13 do
 		local char = allDigits:sub(digitIdx + 1, digitIdx + 1):upper()
-		local charMask = SEGMENT_MAP[char] or 0
+		local charMask = self.SEGMENT_MAP[char] or 0
 
 		-- Byte offset inside row: 0 for digits 0-7, 1 for digits 8-13
 		local columnOffset = math.floor(digitIdx / 8)
@@ -157,6 +166,8 @@ local function encodeDisplay(chrono, utc, elapsed)
 			packet[targetByte] = packet[targetByte]| (1 << bitPos)
 		end
 	end
+
+	-- remove empty header
 	for i = 1, 24 do
 		table.remove(packet, 1) -- Removes index 1 and shifts others [1]
 	end
@@ -165,7 +176,7 @@ end
 
 --[[
 -- Example usage:
-local finalPacket = encodeDisplay("12:34", "123456", "00:01", 1)
+local finalPacket = encodeDisplay("12:34", "12:34:56", "00:01", 1)
 
 -- Debug print: only show the scattered bytes containing digit data
 for i, v in ipairs(finalPacket) do
@@ -173,11 +184,44 @@ for i, v in ipairs(finalPacket) do
 end
 ]] --
 
+function Wwagp:formatChronoStr(chronosec)
+	local chrono = ""
+	local chrono_seconds = tonumber(chronosec) or 0
+
+	if chrono_seconds > 0 then
+		local total_seconds = math.floor(chrono_seconds)
+		local mins = math.floor(total_seconds / 60)
+		local secs = total_seconds % 60
+		chrono = string.format("%02d:%02d", mins, secs)
+	end
+	return chrono
+end
+
+function Wwagp:formatUTCdateStr(day_of_year)
+	local utc = ""
+	day_of_year = day_of_year + 1
+
+	-- To calculate the date from day of year in Lua:
+	local current_year = os.date("*t").year
+	-- Get timestamp for January 1st of current year
+	local jan1_ts = os.time({ year = current_year, month = 1, day = 1, hour = 12 })
+	-- Add the days (seconds in a day = 86400)
+	local target_ts = jan1_ts + (math.max(day_of_year - 1, 0) * 86400)
+	local date_table = os.date("*t", target_ts)
+
+	utc = string.format("%02d:%02d:%02d", date_table.month, date_table.day, date_table.year % 100)
+	return utc
+end
+
 --First Digit Data starts at: packet[25]
 --Last Digit Data ends at: packet[54] (specifically, the high bits of the colon row).
 --Total Span: 30 bytes of the packet are involved in display data, though only 16 of those bytes actually contain digit bits.
 function Wwagp:setLcdStr(chrono, utc, elapsed)
-	local result = encodeDisplay(chrono, utc, elapsed)
+	if not self:IsLcdTextChanged(chrono .. utc .. elapsed) then
+		-- nothing is changed
+		return
+	end
+	local result = self:encodeDisplay(chrono, utc, elapsed)
 	local pcounter = self:Next()
 	uluaSet(_G.idr_wwagp_hid_lcd_lcd1, result[2] * 256 + result[1])
 	uluaSet(_G.idr_wwagp_hid_lcd_lcd2, result[4] * 256 + result[3])
