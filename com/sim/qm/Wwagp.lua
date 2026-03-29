@@ -313,6 +313,25 @@ function Wwagp:IsLcdTextChanged(newtext)
 	end
 end
 
+function Wwagp:Setleds(valbase, val)
+	self:SetUlockL(valbase, val)
+	self:SetUlockN(valbase, val)
+	self:SetUlockR(valbase, val)
+	self:SetBrakeHot(valbase, val)
+	self:SetLockL(valbase, val)
+	self:SetLockN(valbase, val)
+	self:SetLockR(valbase, val)
+	self:SetBrakeOn(valbase, val)
+	self:SetLowD(valbase, val)
+	self:SetMedD(valbase, val)
+	self:SetMaxD(valbase, val)
+	self:SetLow(valbase, val)
+	self:SetMed(valbase, val)
+	self:SetMax(valbase, val)
+	self:SetTerr(valbase, val)
+	self:SetLever(valbase, val)
+end
+
 -- 2. Parsing Logic (Ported from ProductAGP::parseSegment)
 function Wwagp:parseSegment(text, expectedLength)
 	local digits = ""

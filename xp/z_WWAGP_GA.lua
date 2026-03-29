@@ -20,7 +20,24 @@ wwagp:CfgCmd(23, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/lan
 --================================ Input LED/LCD
 
 
-
+--[[
+wwagp:Get(UlockL)
+wwagp:Get(UlockN)
+wwagp:Get(UlockR)
+wwagp:Get(BrakeHot)
+wwagp:Get(LockL)
+wwagp:Get(LockN)
+wwagp:Get(LockR)
+wwagp:Get(BrakeOn)
+wwagp:Get(LowD)
+wwagp:Get(MedD)
+wwagp:Get(MaxD)
+wwagp:Get(Low)
+wwagp:Get(Med)
+wwagp:Get(Max)
+wwagp:Get(Terr)
+wwagp:Get(Lever)
+]] --
 
 --====LCD
 local dr_chrono = iDataRef:New('sim/cockpit2/clock_timer/chrono_time[0]')
