@@ -21,22 +21,22 @@ wwagp:CfgCmd(23, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/lan
 
 
 --[[
-wwagp:Get(UlockL)
-wwagp:Get(UlockN)
-wwagp:Get(UlockR)
-wwagp:Get(BrakeHot)
-wwagp:Get(LockL)
-wwagp:Get(LockN)
-wwagp:Get(LockR)
-wwagp:Get(BrakeOn)
-wwagp:Get(LowD)
-wwagp:Get(MedD)
-wwagp:Get(MaxD)
-wwagp:Get(Low)
-wwagp:Get(Med)
-wwagp:Get(Max)
-wwagp:Get(Terr)
-wwagp:Get(Lever)
+wwagp:GetUlockL('')
+wwagp:GetUlockN('')
+wwagp:GetUlockR('')
+wwagp:GetBrakeHot('')
+wwagp:GetLockL('')
+wwagp:GetLockN('')
+wwagp:GetLockR('')
+wwagp:GetBrakeOn('')
+wwagp:GetLowD('')
+wwagp:GetMedD('')
+wwagp:GetMaxD('')
+wwagp:GetLow('')
+wwagp:GetMed('')
+wwagp:GetMax('')
+wwagp:GetTerr('')
+wwagp:GetLever('')
 ]] --
 
 --====LCD

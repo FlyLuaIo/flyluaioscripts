@@ -304,15 +304,6 @@ function Wwagp:SetLever(valbase, val)
 	self:SendBit(self.LEDS_LEVER, valbase, val)
 end
 
-function Wwagp:IsLcdTextChanged(newtext)
-	if newtext ~= self.LcdText then
-		self.LcdText = newtext
-		return true
-	else
-		return false
-	end
-end
-
 function Wwagp:Setleds(valbase, val)
 	self:SetUlockL(valbase, val)
 	self:SetUlockN(valbase, val)
@@ -330,6 +321,15 @@ function Wwagp:Setleds(valbase, val)
 	self:SetMax(valbase, val)
 	self:SetTerr(valbase, val)
 	self:SetLever(valbase, val)
+end
+
+function Wwagp:IsLcdTextChanged(newtext)
+	if newtext ~= self.LcdText then
+		self.LcdText = newtext
+		return true
+	else
+		return false
+	end
 end
 
 -- 2. Parsing Logic (Ported from ProductAGP::parseSegment)
