@@ -217,10 +217,29 @@ qmpe:CfgCmd(71, "AirbusFBW/ATCCodeKey6")
 qmpe:CfgCmd(72, "AirbusFBW/ATCCodeKey7")
 qmpe:CfgCmd(73, "AirbusFBW/ATCCodeKey0")
 qmpe:CfgCmd(74, "AirbusFBW/ATCCodeKeyCLR")
--- autobrake
-qmpe:CfgCmd(75, "AirbusFBW/AbrkLo")
-qmpe:CfgCmd(76, "AirbusFBW/AbrkMed")
-qmpe:CfgCmd(77, "AirbusFBW/AbrkMax")
+
+if not isINIA340 then
+    -- autobrake
+    qmpe:CfgCmd(75, "AirbusFBW/AbrkLo")
+    qmpe:CfgCmd(76, "AirbusFBW/AbrkMed")
+    qmpe:CfgCmd(77, "AirbusFBW/AbrkMax")
+else
+    -- autobrake
+    qmpe:CfgVal(75, "AirbusFBW/AutoBrkSel", 1, nil)
+    qmpe:CfgVal(76, "AirbusFBW/AutoBrkSel", 2, nil)
+    --qmpe:CfgVal(77, "AirbusFBW/AutoBrkSel", 5, nil)
+    local cmd_auto_rto = uluaFind("AirbusFBW/AbrkMax")
+    local drf_brk_pos = iDataRef:New("AirbusFBW/AutoBrkSel")
+    function key_77_long_func()
+        uluaCmdOnce(cmd_auto_rto)
+    end
+
+    function key_77_short_func()
+        drf_brk_pos:Set(5)
+    end
+
+    qmpe:CfgLongFc(77, 1000, key_77_long_func, key_77_short_func)
+end
 
 ---- RMP1
 -- inner
@@ -369,9 +388,15 @@ qmpe:GetLand("AirbusFBW/OHPLightsATA31[1]")
 
 qmpe:GetTerr("AirbusFBW/OHPLightsATA34[24]")
 
-qmpe:GetLo("AirbusFBW/OHPLightsATA32[12]")
-qmpe:GetMed("AirbusFBW/OHPLightsATA32[14]")
-qmpe:GetMax("AirbusFBW/OHPLightsATA32[16]")
+if not isINIA340 then
+    qmpe:GetLo("AirbusFBW/OHPLightsATA32[12]")
+    qmpe:GetMed("AirbusFBW/OHPLightsATA32[14]")
+    qmpe:GetMax("AirbusFBW/OHPLightsATA32[16]")
+else
+    qmpe:GetLo("AirbusFBW/AutoBrkLo")
+    qmpe:GetMed("AirbusFBW/AutoBrkMed")
+    qmpe:GetMax("AirbusFBW/AutoBrkSel")
+end
 
 qmpe:GetBkl("AirbusFBW/PanelBrightnessLevel", 60)
 
@@ -511,6 +536,9 @@ local dr_test = iDataRef:New("AirbusFBW/AnnunMode") -- 0: DIM 1: BRT 2: test mod
 local dr_power
 local dr_bkl_power
 
+local drf_brk_sel = iDataRef:New("AirbusFBW/AutoBrkSel")
+local drf_brk_max = iDataRef:New("AirbusFBW/AutoBrkMax")
+
 if oldversion then
     dr_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on")     -- 0: OFF >0: ON
     dr_bkl_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on") -- 0: OFF >0: ON
@@ -561,7 +589,40 @@ function Qmpe_Toliss_loop()
     else
         qmpe:SetEcamAcDc()
     end
-    qmpe:SetMisc()
+    --qmpe:SetMisc()
+
+
+    qmpe:SetWarn()
+    qmpe:SetCaut()
+
+    qmpe:SetLock1()
+    qmpe:SetLock2()
+    qmpe:SetLock3()
+    qmpe:SetUnlock1()
+    qmpe:SetUnlock2()
+    qmpe:SetUnlock3()
+
+    qmpe:SetMsg()
+    qmpe:SetFail()
+
+    qmpe:SetLo()
+    qmpe:SetMed()
+    if isINIA340 then
+        if drf_brk_sel:ChangedUpdate() or drf_brk_max:ChangedUpdate() then
+            if drf_brk_sel:GetOld() > 4 or drf_brk_max:GetOld() > 0 then
+                qmpe:SetMax(0, 1)
+            else
+                qmpe:SetMax(0, 0)
+            end
+        end
+    else
+        qmpe:SetMax()
+    end
+    qmpe:SetTerr()
+    qmpe:SetLand()
+
+    -- brightness
+    qmpe:SetBkl()
 end
 
 uluaAddDoLoop("Qmpe_Toliss_loop()")
