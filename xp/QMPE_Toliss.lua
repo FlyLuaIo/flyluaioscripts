@@ -535,10 +535,6 @@ local dr_test = iDataRef:New("AirbusFBW/AnnunMode") -- 0: DIM 1: BRT 2: test mod
 
 local dr_power
 local dr_bkl_power
-
-local drf_brk_sel = iDataRef:New("AirbusFBW/AutoBrkSel")
-local drf_brk_max = iDataRef:New("AirbusFBW/AutoBrkMax")
-
 if oldversion then
     dr_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on")     -- 0: OFF >0: ON
     dr_bkl_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on") -- 0: OFF >0: ON
@@ -547,21 +543,26 @@ else
     dr_bkl_power = iDataRef:New("AirbusFBW/ACBusVoltages[0]")              -- 0: OFF >0: ON
 end
 
+local drf_brk_sel = iDataRef:New("AirbusFBW/AutoBrkSel")
+local drf_brk_max = iDataRef:New("AirbusFBW/AutoBrkMax")
+
 function Qmpe_Toliss_loop()
     -- expert code: cold and dark
-    local b_power = dr_power:Get()
-    if b_power == 0 then
-        qmpe:Off()
-        return
-    else
-        if dr_bkl_power:Get() > 0 then
-            qmpe:FreshBkl()
+    if dr_power:ChangedUpdate() then
+        local b_power = dr_power:GetOld()
+        if b_power == 0 then
+            qmpe:Off()
+            return
+        else
+            if dr_bkl_power:Get() > 0 then
+                qmpe:FreshBkl()
+            end
         end
     end
 
     -- expert code: test mode
-    local b_test = dr_test:Get()
     if dr_test:ChangedUpdate() then
+        local b_test = dr_test:GetOld()
         if b_test == 2 then
             qmpe:SetBklMode(1)
             return
