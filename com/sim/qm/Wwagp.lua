@@ -4,7 +4,9 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-03-28_13_57_28UTC
 -- *****************************************************************
 
+local bit = require("bit")
 local Wwagp = oop.class(com.sim.Qmdev)
+
 function Wwagp:init()
 	self.QmdevId = 0xC305EEB
 	self.FastTurnsPerSecond = 5
@@ -342,11 +344,15 @@ function Wwagp:parseSegment(text, expectedLength)
 		if char == ":" or char == "." then
 			local pos = #digits
 			if expectedLength >= 6 then
-				if char == ":" then localColonMask = localColonMask | (1 << (pos - 1)) end
-				localColonMask = localColonMask | (1 << pos)
+				if char == ":" then
+					localColonMask = bit.bor(localColonMask, bit.lshift(1, pos - 1))
+				end
+				localColonMask = bit.bor(localColonMask, bit.lshift(1, pos))
 			else
-				if char == ":" then localColonMask = localColonMask | (1 << pos) end
-				localColonMask = localColonMask | (1 << (pos + 1))
+				if char == ":" then
+					localColonMask = bit.bor(localColonMask, bit.lshift(1, pos))
+				end
+				localColonMask = bit.bor(localColonMask, bit.lshift(1, pos + 1))
 			end
 		else
 			digits = digits .. char
@@ -355,7 +361,7 @@ function Wwagp:parseSegment(text, expectedLength)
 
 	local padding = expectedLength - #digits
 	if padding > 0 then
-		localColonMask = localColonMask << padding
+		localColonMask = bit.lshift(localColonMask, padding)
 		digits = string.rep(" ", padding) .. digits
 	elseif padding < 0 then
 		digits = digits:sub(-expectedLength)
@@ -364,7 +370,7 @@ function Wwagp:parseSegment(text, expectedLength)
 	return digits, localColonMask
 end
 
--- 3. Main Packet Construction
+-- 3. Main Packet Construction (Updated for LuaJIT bit library)
 function Wwagp:encodeDisplay(chrono, utc, elapsed)
 	-- Initialize 32-byte packet (index 1 to 56)
 	local packet = {}
@@ -380,7 +386,7 @@ function Wwagp:encodeDisplay(chrono, utc, elapsed)
 
 	local allDigits = d1 .. d2 .. d3
 	-- Combine into a 14-bit mask shifted by offsets 0, 4, 10
-	local colonMask = m1 | (m2 << 4) | (m3 << 10)
+	local colonMask = bit.bor(m1, bit.lshift(m2, 4), bit.lshift(m3, 10))
 
 	-- D. Encode into Scattered Packet Bytes
 	for digitIdx = 0, 13 do
@@ -393,22 +399,22 @@ function Wwagp:encodeDisplay(chrono, utc, elapsed)
 
 		-- Segments A-G (Rows 0-6)
 		for segIdx = 0, 6 do
-			if (charMask & (1 << segIdx)) ~= 0 then
+			if bit.band(charMask, bit.lshift(1, segIdx)) ~= 0 then
 				local targetByte = rowOffsets[segIdx + 1] + columnOffset
-				packet[targetByte] = packet[targetByte]| (1 << bitPos)
+				packet[targetByte] = bit.bor(packet[targetByte], bit.lshift(1, bitPos))
 			end
 		end
 
 		-- Colons/Dots (Row 7)
-		if (colonMask & (1 << digitIdx)) ~= 0 then
+		if bit.band(colonMask, bit.lshift(1, digitIdx)) ~= 0 then
 			local targetByte = rowOffsets[8] + columnOffset
-			packet[targetByte] = packet[targetByte]| (1 << bitPos)
+			packet[targetByte] = bit.bor(packet[targetByte], bit.lshift(1, bitPos))
 		end
 	end
 
 	-- remove empty header
 	for i = 1, 24 do
-		table.remove(packet, 1) -- Removes index 1 and shifts others [1]
+		table.remove(packet, 1) -- Removes index 1 and shifts others
 	end
 	return packet
 end
