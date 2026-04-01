@@ -543,8 +543,15 @@ else
     dr_bkl_power = iDataRef:New("AirbusFBW/ACBusVoltages[0]")              -- 0: OFF >0: ON
 end
 
-local drf_brk_sel = iDataRef:New("AirbusFBW/AutoBrkSel")
-local drf_brk_max = iDataRef:New("AirbusFBW/AutoBrkMax")
+if isINIA340 then
+    local drf_brk_sel = iDataRef:New("AirbusFBW/AutoBrkSel")
+    local drf_brk_max = iDataRef:New("AirbusFBW/AutoBrkMax")
+end
+
+local ecam_lt_base = 0.2
+if oldversion then
+    ecam_lt_base = 0.4
+end
 
 function Qmpe_Toliss_loop()
     -- expert code: cold and dark
@@ -586,13 +593,11 @@ function Qmpe_Toliss_loop()
     qmpe:SetRmp()
     qmpe:SetAcp()
     if not isINIA330 and not isINIA340 then
-        qmpe:SetEcam()
+        qmpe:SetEcam(ecam_lt_base)
     else
-        qmpe:SetEcamAcDc()
+        qmpe:SetEcamAcDc(ecam_lt_base)
     end
     --qmpe:SetMisc()
-
-
     qmpe:SetWarn()
     qmpe:SetCaut()
 

@@ -34,7 +34,7 @@ function Qmdev:AddKey(KeyIdx)
     if self.KeyTable[KeyIdx] == nil then
         self.KeyTable[KeyIdx] = true
     else
-        uluaLog(KeyIdx .. "<-already assigned")
+        uluaLog(self:getClassName() .. " [" ..KeyIdx .. "] already assigned")
     end
 end
 

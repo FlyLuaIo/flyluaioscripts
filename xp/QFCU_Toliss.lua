@@ -144,9 +144,11 @@ qfcu:CfgVal(45, "sim/cockpit2/EFIS/EFIS_2_selection_pilot", 2, 1)
 -- qfcu:CfgCmd(47, "sim/GPS/g430n2_msg", "sim/instruments/barometer_up")
 qfcu:CfgVal(48, "AirbusFBW/BaroStdCapt", 0, nil)
 qfcu:CfgVal(49, "AirbusFBW/BaroStdCapt", 1, nil)
+--inHg/hPa
 qfcu:CfgVal(50, "AirbusFBW/BaroUnitCapt", 0, 1)
 qfcu:CfgVal(51, "AirbusFBW/BaroStdFO", 0, nil)
 qfcu:CfgVal(52, "AirbusFBW/BaroStdFO", 1, nil)
+--inHg/hPa
 qfcu:CfgVal(53, "AirbusFBW/BaroUnitFO", 0, 1)
 qfcu:CfgCmd(54, "sim/GPS/g430n2_msg", "toliss_airbus/dispcommands/HeadingTrackModeSwitch")
 qfcu:CfgCmd(55, "sim/GPS/g430n2_msg", "sim/autopilot/knots_mach_toggle")
