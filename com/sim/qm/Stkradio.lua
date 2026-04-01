@@ -159,6 +159,10 @@ function Stkradio:encRadioDigits(freqint)
 	local digits = self:getDigits(freqint)
 	local len = #digits
 	if len <= 5 then
+		for i = 1, 5 - len do
+			-- blank
+			table.insert(digits, 1, 15)
+		end
 		digits[3] = digits[3] + 208
 	else
 		table.remove(digits, 1)

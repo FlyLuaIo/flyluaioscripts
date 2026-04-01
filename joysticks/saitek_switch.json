@@ -2,6 +2,7 @@
   "ProductName": "StkSwitch",
   "USB_VID": "0x06A3",
   "USB_PID": "0x0D67",
+  "USBDelayMs": 60,
   "LightKey": 18,
   "LightKeyName": "Gear up",
   "Functions": [

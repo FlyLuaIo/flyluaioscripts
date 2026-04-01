@@ -2,6 +2,7 @@
   "ProductName": "HCBravo",
   "USB_VID": "0x294B",
   "USB_PID": "0x1901",
+  "USBDelayMs": 30,
   "LightKey": 7,
   "LightKeyName": "AUTOPILOT",
   "Functions": [
