@@ -180,7 +180,13 @@ function Stkmulti:getDigits(num)
 end
 
 function Stkmulti:encUIntDigits(intnum)
-	local digits = self:getDigits(intnum)
+	local uint
+	if intnum < 0 then
+		uint = -1 * intnum
+	else
+		uint = intnum
+	end
+	local digits = self:getDigits(uint)
 	local len = #digits
 	if len < 5 then
 		for i = 1, 5 - len do
@@ -192,7 +198,13 @@ function Stkmulti:encUIntDigits(intnum)
 end
 
 function Stkmulti:encIntDigits(intnum)
-	local digits = self:getDigits(intnum)
+	local uint
+	if intnum < 0 then
+		uint = -1 * intnum
+	else
+		uint = intnum
+	end
+	local digits = self:getDigits(uint)
 	local len = #digits
 	if intnum < 0 then
 		-- add -
