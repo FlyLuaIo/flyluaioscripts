@@ -98,24 +98,60 @@ local dr_alt = iDataRef:New("sim/cockpit2/autopilot/altitude_dial_ft")
 local dr_vs = iDataRef:New("sim/cockpit2/autopilot/vvi_dial_fpm")
 local dr_ias = iDataRef:New("sim/cockpit2/autopilot/airspeed_dial_kts_mach")
 local dr_hdg = iDataRef:New("sim/cockpit/autopilot/heading_mag")
-local d_crs = iDataRef:New('sim/cockpit/radios/nav1_obs_degm')
-
+local dr_crs = iDataRef:New('sim/cockpit/radios/nav1_obs_degm')
+local digi_alt
+local digi_vs
+local digi_ias
+local digi_hdg
+local digi_crs
+dr_alt:Invalid()
+dr_vs:Invalid()
+dr_ias:Invalid()
+dr_hdg:Invalid()
+dr_crs:Invalid()
 function Stkmulti_GA_Loop_Upd()
-	if dr_mode_alt:Get() > 0 then
-		stkmulti:setUp(stkmulti:encUIntDigits(dr_alt:Get()))
-		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
-	elseif dr_mode_vs:Get() > 0 then
-		stkmulti:setUp(stkmulti:encUIntDigits(dr_alt:Get()))
-		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
-	elseif dr_mode_ias:Get() > 0 then
-		stkmulti:setUp(stkmulti:encUIntDigits(dr_ias:Get()))
-		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
-	elseif dr_mode_hdg:Get() > 0 then
-		stkmulti:setUp(stkmulti:encUIntDigits(dr_hdg:Get()))
-		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
-	elseif dr_mode_crs:Get() > 0 then
-		stkmulti:setUp(stkmulti:encUIntDigits(d_crs:Get()))
-		stkmulti:setDn(stkmulti:encIntDigits(dr_vs:Get()))
+	if dr_mode_alt:ChangedUpdate() or
+		dr_mode_vs:ChangedUpdate() or
+		dr_mode_ias:ChangedUpdate() or
+		dr_mode_hdg:ChangedUpdate() or
+		dr_mode_crs:ChangedUpdate() then
+		dr_alt:Invalid()
+		dr_vs:Invalid()
+		dr_ias:Invalid()
+		dr_hdg:Invalid()
+		dr_crs:Invalid()
+	end
+	if dr_alt:ChangedUpdate() then
+		digi_alt = stkmulti:encUIntDigits(dr_alt:GetOld())
+	end
+	if dr_vs:ChangedUpdate() then
+		digi_vs = stkmulti:encIntDigits(dr_vs:GetOld())
+	end
+	if dr_ias:ChangedUpdate() then
+		digi_ias = stkmulti:encUIntDigits(dr_ias:GetOld())
+	end
+	if dr_hdg:ChangedUpdate() then
+		digi_hdg = stkmulti:encUIntDigits(dr_hdg:GetOld())
+	end
+	if dr_crs:ChangedUpdate() then
+		digi_crs = stkmulti:encUIntDigits(dr_crs:GetOld())
+	end
+	--
+	if dr_mode_alt:GetOld() > 0 then
+		stkmulti:setUp(digi_alt)
+		stkmulti:setDn(digi_vs)
+	elseif dr_mode_vs:GetOld() > 0 then
+		stkmulti:setUp(digi_alt)
+		stkmulti:setDn(digi_vs)
+	elseif dr_mode_ias:GetOld() > 0 then
+		stkmulti:setUp(digi_ias)
+		stkmulti:setDn(digi_vs)
+	elseif dr_mode_hdg:GetOld() > 0 then
+		stkmulti:setUp(digi_hdg)
+		stkmulti:setDn(digi_vs)
+	elseif dr_mode_crs:GetOld() > 0 then
+		stkmulti:setUp(digi_crs)
+		stkmulti:setDn(digi_vs)
 	end
 	stkmulti:SetLeds()
 end
