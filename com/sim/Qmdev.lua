@@ -211,13 +211,15 @@ function Qmdev:CfgVal(KeyIdx, ValStr, PressInt, ReleaseInt)
     -- uluaLog(self.QmdevId .. ', ' .. str)
 end
 
--- uluaQmdevConfig(7, 'TDFKEY;48;"B:AUTOPILOT_Baro_1_QNH"')
+-- uluaQmdevConfig(7, 'TDFKEY;48;"B:AUTOPILOT_Baro_1_QNH";0;1')
 -- @ValStr: (string) dataref string for XP or B event for MSFS
 -- No return value.
-function Qmdev:CfgValT(KeyIdx, ValStr)
+function Qmdev:CfgValT(KeyIdx, ValStr, Int0, Int1)
     self:AddKey(KeyIdx)
     str = 'TDFKEY;' .. tostring(KeyIdx) .. ';"'
-    str = str .. ValStr .. '"'
+    str = str .. ValStr .. '";'
+    str = str .. (Int0 == nil and '0' or tostring(Int0)) .. ';'
+    str = str .. (Int0 == nil and '1' or tostring(Int1))
     uluaQmdevConfig(self.QmdevId, str)
     -- uluaLog(self.QmdevId .. ', ' .. str)
 end
