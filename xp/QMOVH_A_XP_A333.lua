@@ -44,7 +44,7 @@ qmovha:CfgPSw(5, pswh4, 0)
 local pswh6 = QmdevPosSwitchInit("sim/cockpit2/switches/landing_lights_switch[1]", 0.5, "laminar/A333/switch/lighting/taxi_light_up",
     "laminar/A333/switch/lighting/taxi_light_dn")
 qmovha:CfgPSw(6, pswh6, 1)
-qmovha:CfgPSw(45, 6, 0.5)
+qmovha:CfgPSw(45, pswh6, 0.5)
 qmovha:CfgPSw(7, pswh6, 0)
 
 -- R Landing lights

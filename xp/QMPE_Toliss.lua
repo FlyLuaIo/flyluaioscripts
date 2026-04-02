@@ -84,7 +84,7 @@ qmpe:CfgCmd(26, "AirbusFBW/ACP1/CABPress")
 -- PA TX nop, Airbus PA send is not latched
 -- qmpe:CfgCmd(27, "1 (>L:S_ASP_PA_SEND)", "0 (>L:S_ASP_PA_SEND)")
 
-if not isINIA330 then
+if not isINIA330 and not isINIA340 then
     -- VHF1 RX volume
     qmpe:CfgEncFull(16, 17, "ckpt/oh/vhf1/1/anim", 10, 10, 1, 0, 270)
     -- VHF2 RX volume
