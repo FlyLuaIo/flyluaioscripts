@@ -34,7 +34,7 @@ function Qmdev:AddKey(KeyIdx)
     if self.KeyTable[KeyIdx] == nil then
         self.KeyTable[KeyIdx] = true
     else
-        uluaLog(self:getClassName() .. " [" ..KeyIdx .. "] already assigned")
+        uluaLog(self:getClassName() .. " [" .. KeyIdx .. "] already assigned")
     end
 end
 
@@ -275,61 +275,64 @@ end
 
 ------------------------------------------------------------
 -- PID position switch
-_G.QmdevPosSwitchPosStatusDr = {}
-_G.QmdevPosSwitchRpnIncStr = {}
-_G.QmdevPosSwitchRpnDecStr = {}
-_G.QmdevPosSwitchPosExpect = {}
-_G.QmdevPosSwitchPosStepSize = {}
-_G.QmdevPosSwitchPosDelay = {}
 
-_G.QmdevPosSwitchRpnIncDr = {}
-_G.QmdevPosSwitchRpnDecDr = {}
+_G["QmdevPosSwitch"] = {
+    PosStatusDr = {},
+    RpnIncStr = {},
+    RpnDecStr = {},
+    PosExpect = {},
+    PosStepSize = {},
+    PosDelay = {},
 
-_G.QmdevPosallocator = IndexAllocator.new()
+    RpnIncDr = {},
+    RpnDecDr = {},
+}
+
+_G.QmdevPosSwitch.allocator = IndexAllocator.new()
 
 _G.QmdevPosSwitchInit = function(rpnstring, step, rpnIncstring, rpnDecstring, delay)
-    local idx = _G.QmdevPosallocator:alloc()
+    local idx = _G.QmdevPosSwitch.allocator:alloc()
     delayact = delay == nil and 100 or delay
-    if _G.QmdevPosSwitchPosExpect[idx] ~= nil then
-        uluaLog(string.format("QmdevPosSwitchInit Duplicated %d, change 1st param", idx))
+    if _G.QmdevPosSwitch.PosExpect[idx] ~= nil then
+        uluaLog(string.format("_G.QmdevPosSwitch.Init Duplicated %d, change 1st param", idx))
     end
 
-    _G.QmdevPosSwitchPosStepSize[idx] = step
-    _G.QmdevPosSwitchPosExpect[idx] = -1
-    _G.QmdevPosSwitchPosStatusDr[idx] = uluaFind(rpnstring)
-    _G.QmdevPosSwitchRpnIncStr[idx] = rpnIncstring
-    _G.QmdevPosSwitchRpnDecStr[idx] = rpnDecstring
-    _G.QmdevPosSwitchPosDelay[idx] = delayact
+    _G.QmdevPosSwitch.PosStepSize[idx] = step
+    _G.QmdevPosSwitch.PosExpect[idx] = -1
+    _G.QmdevPosSwitch.PosStatusDr[idx] = uluaFind(rpnstring)
+    _G.QmdevPosSwitch.RpnIncStr[idx] = rpnIncstring
+    _G.QmdevPosSwitch.RpnDecStr[idx] = rpnDecstring
+    _G.QmdevPosSwitch.PosDelay[idx] = delayact
     if uluaCmdBegin ~= nil then
-        _G.QmdevPosSwitchRpnIncDr[idx] = uluaFind(rpnIncstring)
-        _G.QmdevPosSwitchRpnDecDr[idx] = uluaFind(rpnDecstring)
+        _G.QmdevPosSwitch.RpnIncDr[idx] = uluaFind(rpnIncstring)
+        _G.QmdevPosSwitch.RpnDecDr[idx] = uluaFind(rpnDecstring)
     end
     return idx
 end
 
 _G.QmdevPosSwitchSet = function(idx, dnum)
-    _G.QmdevPosSwitchPosExpect[idx] = dnum
+    _G.QmdevPosSwitch.PosExpect[idx] = dnum
     _G.QmdevPosSwitchSetAction(idx)
 end
 
 _G.QmdevPosSwitchSetAction = function(idx)
-    local pos = uluaGet(QmdevPosSwitchPosStatusDr[idx])
-    local steps = (_G.QmdevPosSwitchPosExpect[idx] - pos) / _G.QmdevPosSwitchPosStepSize[idx]
+    local pos = uluaGet(_G.QmdevPosSwitch.PosStatusDr[idx])
+    local steps = (_G.QmdevPosSwitch.PosExpect[idx] - pos) / _G.QmdevPosSwitch.PosStepSize[idx]
 
-    uluaLog(string.format("steps=%d %d = %d ", _G.QmdevPosSwitchPosExpect[idx], pos, steps))
+    uluaLog(string.format("steps=%d %d = %d ", _G.QmdevPosSwitch.PosExpect[idx], pos, steps))
 
-    if _G.QmdevPosSwitchRpnIncStr[idx] == _G.QmdevPosSwitchRpnDecStr[idx] then
+    if _G.QmdevPosSwitch.RpnIncStr[idx] == _G.QmdevPosSwitch.RpnDecStr[idx] then
         uluaLog("LOOP")
         if steps ~= 0 then
             if uluaCmdBegin == nil then
-                uluaWriteCmd(QmdevPosSwitchRpnIncStr[idx])
+                uluaWriteCmd(_G.QmdevPosSwitch.RpnIncStr[idx])
             else
-                uluaCmdOnce(_G.QmdevPosSwitchRpnIncDr[idx])
-                uluasetTimeout("uluaGet(QmdevPosSwitchPosStatusDr[" .. tostring(idx) .. "])",
-                    _G.QmdevPosSwitchPosDelay[idx] * 0.8)
+                uluaCmdOnce(_G.QmdevPosSwitch.RpnIncDr[idx])
+                uluasetTimeout("uluaGet(_G.QmdevPosSwitch.PosStatusDr[" .. tostring(idx) .. "])",
+                    _G.QmdevPosSwitch.PosDelay[idx] * 0.8)
             end
 
-            uluasetTimeout("_G.QmdevPosSwitchSetAction(" .. tostring(idx) .. ")", _G.QmdevPosSwitchPosDelay[idx])
+            uluasetTimeout("_G.QmdevPosSwitchSetAction(" .. tostring(idx) .. ")", _G.QmdevPosSwitch.PosDelay[idx])
         end
         return
     end
@@ -338,14 +341,14 @@ _G.QmdevPosSwitchSetAction = function(idx)
         for uup = 1, steps do
             uluaLog("UP")
             if uluaCmdBegin == nil then
-                uluaWriteCmd(QmdevPosSwitchRpnIncStr[idx])
+                uluaWriteCmd(_G.QmdevPosSwitch.RpnIncStr[idx])
             else
-                uluaCmdOnce(_G.QmdevPosSwitchRpnIncDr[idx])
-                uluasetTimeout("uluaGet(QmdevPosSwitchPosStatusDr[" .. tostring(idx) .. "])",
-                    _G.QmdevPosSwitchPosDelay[idx] / 2)
+                uluaCmdOnce(_G.QmdevPosSwitch.RpnIncDr[idx])
+                uluasetTimeout("uluaGet(_G.QmdevPosSwitch.PosStatusDr[" .. tostring(idx) .. "])",
+                    _G.QmdevPosSwitch.PosDelay[idx] / 2)
             end
             if steps > 1 then
-                uluasetTimeout("_G.QmdevPosSwitchSetAction(" .. tostring(idx) .. ")", _G.QmdevPosSwitchPosDelay[idx])
+                uluasetTimeout("_G.QmdevPosSwitchSetAction(" .. tostring(idx) .. ")", _G.QmdevPosSwitch.PosDelay[idx])
                 break
             end
         end
@@ -354,14 +357,14 @@ _G.QmdevPosSwitchSetAction = function(idx)
         for ddn = 1, steps do
             uluaLog("DOWN")
             if uluaCmdBegin == nil then
-                uluaWriteCmd(QmdevPosSwitchRpnDecStr[idx])
+                uluaWriteCmd(_G.QmdevPosSwitch.RpnDecStr[idx])
             else
-                uluaCmdOnce(_G.QmdevPosSwitchRpnDecDr[idx])
-                uluasetTimeout("uluaGet(QmdevPosSwitchPosStatusDr[" .. tostring(idx) .. "])",
-                    _G.QmdevPosSwitchPosDelay[idx] / 2)
+                uluaCmdOnce(_G.QmdevPosSwitch.RpnDecDr[idx])
+                uluasetTimeout("uluaGet(_G.QmdevPosSwitch.PosStatusDr[" .. tostring(idx) .. "])",
+                    _G.QmdevPosSwitch.PosDelay[idx] / 2)
             end
             if steps > 1 then
-                uluasetTimeout("_G.QmdevPosSwitchSetAction(" .. tostring(idx) .. ")", _G.QmdevPosSwitchPosDelay[idx])
+                uluasetTimeout("_G.QmdevPosSwitchSetAction(" .. tostring(idx) .. ")", _G.QmdevPosSwitch.PosDelay[idx])
                 break
             end
         end

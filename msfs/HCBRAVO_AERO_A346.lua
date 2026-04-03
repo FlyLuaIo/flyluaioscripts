@@ -22,13 +22,13 @@ hcbravo:CfgRpn(0, '(>K:AP_PANEL_HEADING_HOLD)')
 
 -- (>K:THROTTLE_REVERSE_THRUST_HOLD)
 local pswh8 = QmdevPosSwitchInit("(L:TLS_ENG_LEVER1POS)", 0.5, "(>L:TLS_ENG_LEVER1POS)",
-    "(>L:TLS_ENG_LEVER1POS)", 1000)
+    "(>L:TLS_ENG_LEVER1POS)", 1200)
 local pswh9 = QmdevPosSwitchInit("(L:TLS_ENG_LEVER2POS)", 0.5, "(>L:TLS_ENG_LEVER2POS)",
-    "(>L:TLS_ENG_LEVER2POS)", 1000)
+    "(>L:TLS_ENG_LEVER2POS)", 1200)
 local pswh10 = QmdevPosSwitchInit("(L:TLS_ENG_LEVER3POS)", 0.5, "(>L:TLS_ENG_LEVER3POS)",
-    "(>L:TLS_ENG_LEVER3POS)", 1000)
+    "(>L:TLS_ENG_LEVER3POS)", 1200)
 local pswh11 = QmdevPosSwitchInit("(L:TLS_ENG_LEVER4POS)", 0.5, "(>L:TLS_ENG_LEVER4POS)",
-    "(>L:TLS_ENG_LEVER4POS)", 1100)
+    "(>L:TLS_ENG_LEVER4POS)", 1200)
 local prestr = hcbravo:GenPSwStr(pswh8, nil) ..
     hcbravo:GenPSwStr(pswh9, nil) .. hcbravo:GenPSwStr(pswh10, nil) .. hcbravo:GenPSwStr(pswh11, nil)
 local relstr = hcbravo:GenPSwStr(pswh8, 0) ..
