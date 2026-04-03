@@ -286,13 +286,22 @@ _G["QmdevPosSwitch"] = {
 
     RpnIncDr = {},
     RpnDecDr = {},
+    DecimalAccu = {}
 }
 
+_G.QmdevPosSwitch.IsDecimal = function(fnum)
+    if math.floor(fnum) ~= fnum then
+        uluaLog("Contains decimals")
+        return true
+    end
+    return false
+end
 _G.QmdevPosSwitch.allocator = IndexAllocator.new()
 
-_G.QmdevPosSwitchInit = function(rpnstring, step, rpnIncstring, rpnDecstring, delay)
+_G.QmdevPosSwitchInit = function(rpnstring, step, rpnIncstring, rpnDecstring, delay, decaccu)
     local idx = _G.QmdevPosSwitch.allocator:alloc()
     delayact = delay == nil and 100 or delay
+    _G.QmdevPosSwitch.DecimalAccu[idx] = decaccu == nil and 0.1 or decaccu
     if _G.QmdevPosSwitch.PosExpect[idx] ~= nil then
         uluaLog(string.format("_G.QmdevPosSwitch.Init Duplicated %d, change 1st param", idx))
     end
@@ -318,6 +327,10 @@ end
 _G.QmdevPosSwitchSetAction = function(idx)
     local pos = uluaGet(_G.QmdevPosSwitch.PosStatusDr[idx])
     local steps = (_G.QmdevPosSwitch.PosExpect[idx] - pos) / _G.QmdevPosSwitch.PosStepSize[idx]
+    local delta = 0
+    if _G.QmdevPosSwitch.IsDecimal(steps) then
+        delta = _G.QmdevPosSwitch.DecimalAccu[idx]
+    end
 
     uluaLog(string.format("steps=%d %d = %d ", _G.QmdevPosSwitch.PosExpect[idx], pos, steps))
 
