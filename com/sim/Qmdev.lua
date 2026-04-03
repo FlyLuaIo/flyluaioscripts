@@ -128,8 +128,8 @@ _G.QmdevPressCallBackFunc = function(KeyIdx, WaitMs)
     end
 end
 
-_G.QmdevReleaseCallBackFunc = function(KeyIdx)
-    if uluagetTimestamp() - _G.LongPressStartTime[KeyIdx] > 500 then
+_G.QmdevReleaseCallBackFunc = function(KeyIdx, WaitMs)
+    if uluagetTimestamp() - _G.LongPressStartTime[KeyIdx] > WaitMs then
         uluaLog("Long Press key " .. KeyIdx)
     else
         uluaLog("Short Press key " .. KeyIdx)
@@ -164,7 +164,7 @@ function Qmdev:CfgLongFc(KeyIdx, WaitMs, LongPressFunc, ShortPressFunc, InitPres
         end
     end
     strpress = "_G.QmdevPressCallBackFunc(" .. tostring(KeyIdx) .. "," .. tostring(WaitMs) .. ")"
-    strrelease = "_G.QmdevReleaseCallBackFunc(" .. tostring(KeyIdx) .. ")"
+    strrelease = "_G.QmdevReleaseCallBackFunc(" .. tostring(KeyIdx) .. "," .. tostring(WaitMs) .. ")"
     -- uluaLog(strpress)
     -- uluaLog(strrelease)
     uluaQmdevRegisterKey(self.QmdevId, KeyIdx, strpress, strrelease, "")
