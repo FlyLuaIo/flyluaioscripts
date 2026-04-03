@@ -19,21 +19,25 @@ uluaLog("HCBravo for Aerosoft A346")
 -- Input Key binding
 hcbravo:CfgRpn(0, '(>K:AP_PANEL_HEADING_HOLD)')
 
+
+-- (>K:THROTTLE_REVERSE_THRUST_HOLD)
 local pswh8 = QmdevPosSwitchInit("(L:TLS_ENG_LEVER1POS)", 0.5, "(>L:TLS_ENG_LEVER1POS)",
     "(>L:TLS_ENG_LEVER1POS)", 1000)
-hcbravo:CfgPSw(8, pswh8, nil, 0)
-
 local pswh9 = QmdevPosSwitchInit("(L:TLS_ENG_LEVER2POS)", 0.5, "(>L:TLS_ENG_LEVER2POS)",
     "(>L:TLS_ENG_LEVER2POS)", 1000)
-hcbravo:CfgPSw(9, pswh9, nil, 0)
-
 local pswh10 = QmdevPosSwitchInit("(L:TLS_ENG_LEVER3POS)", 0.5, "(>L:TLS_ENG_LEVER3POS)",
     "(>L:TLS_ENG_LEVER3POS)", 1000)
-hcbravo:CfgPSw(10, pswh10, nil, 0)
-
 local pswh11 = QmdevPosSwitchInit("(L:TLS_ENG_LEVER4POS)", 0.5, "(>L:TLS_ENG_LEVER4POS)",
     "(>L:TLS_ENG_LEVER4POS)", 1100)
-hcbravo:CfgPSw(11, pswh11, nil, 0)
+local prestr = hcbravo:GenPSwStr(pswh8, nil) ..
+    hcbravo:GenPSwStr(pswh9, nil) .. hcbravo:GenPSwStr(pswh10, nil) .. hcbravo:GenPSwStr(pswh11, nil)
+local relstr = hcbravo:GenPSwStr(pswh8, 0) ..
+    hcbravo:GenPSwStr(pswh9, 0) .. hcbravo:GenPSwStr(pswh10, 0) .. hcbravo:GenPSwStr(pswh11, 0)
+
+hcbravo:CfgFc(8, prestr, relstr)
+hcbravo:CfgFc(9, prestr, relstr)
+hcbravo:CfgFc(10, prestr, relstr)
+hcbravo:CfgFc(11, prestr, relstr)
 
 -- flap down
 hcbravo:CfgRpn(14, '(>K:FLAPS_INCR)')
@@ -118,7 +122,7 @@ hcbravo:GetLowoil('(A:WARNING OIL PRESSURE, Bool)')
 hcbravo:GetLowfuel('(A:GENERAL ENG FUEL PRESSURE:index,Psi)')
 hcbravo:GetAntiice('(A:ENG ANTI ICE:index,Bool)')
 hcbravo:GetStarter('')
-hcbravo:GetApu('')
+hcbravo:GetApu('(L:TLS_APU_N_OUT)')
 hcbravo:GetMastercaution('(L:AB_MPL_Master_Caution_Light)')
 hcbravo:GetVacuum('')
 hcbravo:GetLowhydpressure('')
