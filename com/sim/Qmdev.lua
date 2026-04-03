@@ -90,7 +90,7 @@ end
 function Qmdev:CfgTog(KeyIdx, BeventStr, RpnStr)
     self:AddKey(KeyIdx)
     str = 'uluaSet(uluaFind("' .. BeventStr .. '"), 1-uluaGet(uluaFind("' .. RpnStr .. '")))'
-    uluaQmdevRegisterKey(self.QmdevId, KeyIdx, str, "")
+    uluaQmdevRegisterKey(self.QmdevId, KeyIdx, str, "", "")
     -- uluaLog(self.QmdevId .. ', ' .. str)
 end
 
@@ -99,11 +99,12 @@ end
 -- @FuncReleaseStr: (string, optional) Lua code for key release
 -- uluaQmdevRegisterKey(2, 71, "qmcp737c_zibo738_cmd_disconnect(1)", "qmcp737c_zibo738_cmd_disconnect(0)")
 -- No return value.
-function Qmdev:CfgFc(KeyIdx, FuncPressStr, FuncReleaseStr)
+function Qmdev:CfgFc(KeyIdx, FuncPressStr, FuncReleaseStr, FuncFastStr)
     self:AddKey(KeyIdx)
     FuncReleaseStr = FuncReleaseStr == nil and "" or FuncReleaseStr
-    uluaQmdevRegisterKey(self.QmdevId, KeyIdx, FuncPressStr, FuncReleaseStr)
-    -- uluaLog(self.QmdevId .. ', ' .. FuncPressStr.. ', '.. FuncReleaseStr)
+    FuncFastStr = FuncFastStr == nil and "" or FuncFastStr
+    uluaQmdevRegisterKey(self.QmdevId, KeyIdx, FuncPressStr, FuncReleaseStr, FuncFastStr)
+    -- uluaLog(self.QmdevId .. ', ' .. FuncPressStr .. ', '.. FuncReleaseStr .. ', '.. FuncFastStr)
 end
 
 -- Long press
@@ -166,7 +167,7 @@ function Qmdev:CfgLongFc(KeyIdx, WaitMs, LongPressFunc, ShortPressFunc, InitPres
     strrelease = "_G.QmdevReleaseCallBackFunc(" .. tostring(KeyIdx) .. ")"
     -- uluaLog(strpress)
     -- uluaLog(strrelease)
-    uluaQmdevRegisterKey(self.QmdevId, KeyIdx, strpress, strrelease)
+    uluaQmdevRegisterKey(self.QmdevId, KeyIdx, strpress, strrelease, "")
 end
 
 -- CfgCmd(2, 9, "39101 (>K:ROTOR_BRAKE)", "")

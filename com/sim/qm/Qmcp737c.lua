@@ -6,6 +6,7 @@ local Qmcp737c = oop.class(com.sim.Qmdev)
 
 function Qmcp737c:init()
 	self.QmdevId = 2
+    self.FastTurnsPerSecond = 5
 	--uluaLog('Qmcp737c:init'..self.QmdevId)
 end
 
