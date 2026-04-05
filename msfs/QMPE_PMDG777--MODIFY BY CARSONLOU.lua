@@ -225,17 +225,17 @@ qmpe:GetR2vhf1("(L:A32NX_RMP_R_SELECTED_MODE) 1 ==")
 qmpe:GetR2vhf2("(A:CIRCUIT AVIONICS ON,Bool)")
 -- =====ACP
 -- VHF1 TX LIGHT
-qmpe:GetSVhf1("(A:COM TRANSMIT:1, Bool)")
+qmpe:GetSVhf1("(L:switch_5362_a)")
 -- VHF1 CALL LIGHT
 qmpe:GetCVhf1("(L:I_ASP_VHF_1_CALL)")
 -- VHF1 RX LIGHT
-qmpe:GetRVhf1("(A:COM RECEIVE:1, Bool)")
+qmpe:GetRVhf1("(L:switch_548_a)")
 -- VHF2 TX LIGHT
-qmpe:GetSVhf2("(A:COM TRANSMIT:2, Bool)")
+qmpe:GetSVhf2("(L:switch_5372_a)")
 -- VHF2 CALL LIGHT
 qmpe:GetCVhf2("(L:I_ASP_VHF_2_CALL)")
 -- VHF2 RX LIGHT
-qmpe:GetRVhf2("(A:COM RECEIVE:2, Bool)")
+qmpe:GetRVhf2("(L:switch_549_a)")
 -- MECH TX LIGHT
 qmpe:GetSMech("(L:I_ASP_INT_SEND)")
 -- MECH CALL LIGHT
