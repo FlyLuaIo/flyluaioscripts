@@ -1,4 +1,4 @@
-## QMDev Lua API Developer Guide
+## Qmdev Lua API Developer Guide
 
 ### Table of Contents
 1. Overview
@@ -16,7 +16,7 @@
 
 ## 1. Overview
 
-QMDev is a hardware control framework for flight simulators.  
+Qmdev is a hardware control framework for flight simulators.  
 It uses Lua scripts to bridge USB HID hardware devices with:
 
 - **X-Plane 11 / 12**
@@ -259,96 +259,6 @@ qcdubf:CfgEncFull(
 qcdubf:GetScreenBrt("laminar/B738/electric/instrument_brightness[11]")
 ```
 
-### 5.5 Qg1kMFD – G1000 MFD
-
-```lua
--- Check whether the hardware exists
-if ilua_hw_qg1k_mfd_absent(FastTurnsPerSecond) then return end
-
--- Configure G1000 MFD encoder and keys
-uluaQmdevConfig(4, 'ROTATE;"f";8;9;5;1;0;0;360;"sim/cockpit/autopilot/heading_mag"')
-uluaQmdevConfig(4, 'ASSIGN;0;"sim/GPS/g1000n3_nvol_dn"')
-```
-
-### 5.6 Qg1kPFD – G1000 PFD
-
-```lua
--- Check whether the hardware exists
-if ilua_hw_qg1k_pfd_absent(FastTurnsPerSecond) then return end
-
--- Configure G1000 PFD encoder and keys
-uluaQmdevConfig(3, 'ROTATE;"f";8;9;5;1;0;0;360;"sim/cockpit/autopilot/heading_mag"')
-uluaQmdevConfig(3, 'ASSIGN;0;"sim/GPS/g1000n1_nvol_dn"')
-```
-
-### 5.7 Qmcp737c – MCP 737 Controller
-
-```lua
-local qmcp737c = com.sim.qm.Qmcp737c:new()
-if not qmcp737c:Init() then return end
-
--- Course selector
-qmcp737c:GetCrs1("sim/cockpit/radios/nav1_obs_degm")
-qmcp737c:SetCrs1()
-
--- IAS / Mach
-qmcp737c:GetIas(
-    "sim/cockpit/autopilot/airspeed",
-    "sim/cockpit/autopilot/airspeed_is_mach",
-    "sim/cockpit/autopilot/airspeed_mach",
-    "sim/cockpit/autopilot/airspeed_8",
-    "sim/cockpit/autopilot/airspeed_a",
-    "sim/cockpit/autopilot/airspeed_show"
-)
-qmcp737c:SetIas()
-
--- Heading
-qmcp737c:GetHdg("sim/cockpit/autopilot/heading")
-qmcp737c:SetHdg()
-
--- Altitude
-qmcp737c:GetAlt("sim/cockpit/autopilot/altitude", 0)
-qmcp737c:SetAlt()
-
--- Vertical speed
-qmcp737c:GetVs("sim/cockpit/autopilot/vertical_velocity")
-qmcp737c:SetVs()
-```
-
-### 5.8 Qfcu – Airbus FCU Controller
-
-```lua
-local qfcu = com.sim.qm.Qfcu:new()
-if not qfcu:Init() then return end
-
--- Speed
-qfcu:GetSpd("sim/cockpit/autopilot/airspeed")
-qfcu:SetSpd()
-
--- Heading
-qfcu:GetHdg("sim/cockpit/autopilot/heading")
-qfcu:SetHdg()
-
--- Altitude
-qfcu:GetAlt("sim/cockpit/autopilot/altitude")
-qfcu:SetAlt()
-
--- Vertical speed
-qfcu:GetVs("sim/cockpit/autopilot/vertical_velocity")
-qfcu:SetVs()
-```
-
-### 5.9 Qcdu – Generic CDU Controller
-
-```lua
-local qcdu = com.sim.qm.Qcdu:new()
-if not qcdu:Init() then return end
-
--- Simple example: display mapping
-qcdu:GetDisplay("sim/cockpit/radios/nav1_freq_hz")
-qcdu:SetDisplay()
-```
-
 ---
 
 ## 6. Configuration APIs
@@ -432,56 +342,15 @@ Qmdev:CfgVal(KeyIdx, ValStr, PressInt, ReleaseInt)
 -- ReleaseInt: integer value written on release (optional)
 ```
 
-#### Touch value button
+#### Toggle value button
 
 ```lua
-Qmdev:CfgValT(KeyIdx, ValStr)
+Qmdev:CfgValT(KeyIdx, ValStr， value0, value1)
 -- Writes to ValStr when the button is active (touch‑style input)
 ```
 
-### 6.3 High‑Level Configuration Helper: `uluaQmdevConfig`
 
-The `uluaQmdevConfig` helper allows you to configure a device using a single string.
-
-```lua
--- Encoder configuration
-uluaQmdevConfig(
-    deviceId,
-    'ROTATE;"type";decKey;incKey;step;fastStep;mode;min;max;"dataref"'
-)
-
--- Button assignment
-uluaQmdevConfig(
-    deviceId,
-    'ASSIGN;keyId;"condition";"command"'
-)
-
--- Dataref value button
-uluaQmdevConfig(
-    deviceId,
-    'DFKEY;keyId;value;;"dataref"'
-)
-
--- Toggle dataref button
-uluaQmdevConfig(
-    deviceId,
-    'TDFKEY;keyId;"dataref"'
-)
-```
-
-### 6.4 Hardware Presence Checks
-
-When using devices like QG1K PFD / MFD, always check whether the hardware is present:
-
-```lua
--- G1000 MFD
-if ilua_hw_qg1k_mfd_absent(FastTurnsPerSecond) then return end
-
--- G1000 PFD
-if ilua_hw_qg1k_pfd_absent(FastTurnsPerSecond) then return end
-```
-
-### 6.5 Aircraft Type Checks
+### 6.3 Aircraft Type Checks
 
 Use multiple checks to ensure a profile only runs on the intended aircraft:
 
@@ -541,40 +410,6 @@ dataref:Invalid(-1)
 - `A:VERTICAL SPEED, feet per minute` – Vertical speed
 - `L:XMLVAR_AirSpeedIsInMach` – Airspeed unit (Mach or knots)
 
-#### Airbus FBW
-
-- `AirbusFBW/MCDU1LSK1L` – MCDU1 left soft key 1
-- `AirbusFBW/MCDU1LSK2L` – MCDU1 left soft key 2
-- `AirbusFBW/MCDUIntegBrightness[0]` – MCDU1 brightness
-- `AirbusFBW/DUBrightness[6]` – MCDU1 display brightness
-- `AirbusFBW/PanelBrightnessLevel` – Panel brightness level
-- `AirbusFBW/FCUIntegralBrightness` – FCU overall brightness
-
-#### Boeing 737
-
-- `laminar/B738/button/fmc1_1L` – FMC1 left soft key 1
-- `laminar/B738/button/fmc1_2L` – FMC1 left soft key 2
-- `laminar/B738/electric/instrument_brightness[10]` – FMC1 brightness
-- `laminar/B738/indicators/fmc_exec_lights` – FMC1 EXEC lights
-- `laminar/B738/fmc/fmc_message` – FMC1 messages
-
-#### G1000
-
-- `sim/GPS/g1000n1_*` – G1000 PFD commands
-- `sim/GPS/g1000n3_*` – G1000 MFD commands
-- `sim/cockpit2/radios/actuators/audio_selection_com1` – COM1 audio
-- `sim/cockpit2/radios/actuators/audio_selection_com2` – COM2 audio
-- `sim/cockpit2/radios/actuators/audio_selection_nav1` – NAV1 audio
-- `sim/cockpit2/radios/actuators/audio_selection_nav2` – NAV2 audio
-
-#### General System
-
-- `sim/cockpit/electrical/avionics_on` – Avionics master
-- `sim/cockpit/electrical/battery_on` – Battery switch
-- `sim/cockpit/electrical/cockpit_lights` – Cockpit lights
-- `sim/cockpit/electrical/instrument_brightness` – Instrument brightness
-- `sim/cockpit/misc/barometer_setting` – Barometer setting
-
 ---
 
 ## 8. Best Practices
@@ -612,16 +447,11 @@ if PLANE_TAILNUMBER ~= "ZB738" then return end
 ### 8.3 Choosing Configuration Methods
 
 - **Traditional methods**: direct calls like `CfgRpn`, `CfgEncFull`, `CfgCmd` – best when you need fine‑grained control for a specific device.
-- **Generic methods**: `uluaQmdevConfig` – recommended for newer hardware and for large, data‑driven configurations.
 
 ```lua
 -- Traditional configuration
 qmcp737c:CfgRpn(0, "(>H:AS1000_PFD_CRS_DEC)")
 qmcp737c:CfgEncFull(0, 1, "dataref", 0.05, 0.05, 1, 0.05, 1.0)
-
--- Generic configuration
-uluaQmdevConfig(deviceId, 'ROTATE;"type";decKey;incKey;step;fastStep;mode;min;max;"dataref"')
-uluaQmdevConfig(deviceId, 'ASSIGN;keyId;"condition";"command"')
 ```
 
 ### 8.4 Error Handling and Logging
@@ -639,107 +469,12 @@ if uluaFind("AirbusFBW/PanelBrightnessLevel") == nil then
 end
 ```
 
-### 8.5 Performance
+### 8.5 Main Loop
 
 - Register update functions with `uluaAddDoLoop`.
 - Avoid heavy computations on every frame.
 - Use `ChangedUpdate()` to only react when a value actually changes.
 - Choose sensible update intervals.
 
-### 8.6 Code Organization
-
-- Keep configuration parameters at the top of the file.
-- Use descriptive variable names.
-- Group configuration by function (e.g. “Autopilot”, “Radio”, “Lighting”).
-- Add concise comments only where the intent is not obvious from the code.
-
-### 8.7 Data Reference Management
-
-- Store datarefs in variables with clear names.
-- Always check whether a dataref exists before using it.
-- Use appropriate data types and ranges.
-
-### 8.8 Debugging Tips
-
-```lua
--- Log current aircraft ICAO
-uluaLog("Debug: current ICAO = " .. (PLANE_ICAO or "unknown"))
-
--- Log hardware initialization result
-uluaLog("Debug: hardware init result = " .. tostring(hardware:Init()))
-
--- Check dataref
-local dr = iDataRef:New("dataref_path")
-if dr == nil then
-    uluaLog("Error: dataref does not exist")
-else
-    uluaLog("OK: dataref value = " .. dr:Get())
-end
-
--- Validate configuration
-uluaQmdevConfig(deviceId, config_string)
-uluaLog("Configuration applied: " .. config_string)
-```
-
 ---
 
-## 9. Troubleshooting
-
-### 9.1 Hardware Not Detected
-
-- Check the physical connection.
-- Verify the device ID.
-- Confirm driver / firmware installation.
-- Use `ilua_hw_*_absent()` helpers to check presence.
-
-### 9.2 Buttons Not Responding
-
-- Verify button configuration (key index and command strings).
-- Confirm the aircraft actually supports the command.
-- Check that the profile is running for the correct aircraft.
-
-### 9.3 Display Issues
-
-- Verify dataref / simvar paths.
-- Check brightness settings and related datarefs.
-- Confirm the display mapping (`Get*` / `Set*` functions) is called.
-
-### 9.4 Performance Problems
-
-- Reduce update frequency.
-- Avoid heavy logic in per‑frame callbacks.
-- Use `ChangedUpdate()` to avoid unnecessary work.
-
-### 9.5 Aircraft Type Check Fails
-
-- Re‑check ICAO code, title and tail number.
-- Ensure exclusion rules (`ilua_is_acf*_excluded`) are correct.
-
-### 9.6 Configuration Has No Effect
-
-- Verify the device ID used in `uluaQmdevConfig`.
-- Check the configuration string format carefully.
-- Confirm the hardware actually supports the chosen configuration.
-- Re‑check dataref / simvar paths.
-
----
-
-## 10. Changelog
-
-### Version 2.0.0 (English Guide, New Layout)
-
-- Reorganized documentation to match the new folder structure (`xp/`, `msfs/`, `com/`).
-- Added detailed explanations for:
-  - Base classes in `com/oop`
-  - Core device base class `Qmdev`
-  - Hardware abstraction classes under `com/sim/qm`
-  - `uluaQmdevConfig` generic configuration helper
-- Expanded sections on:
-  - Aircraft type checks
-  - Hardware detection
-  - Data reference management
-  - Best practices and troubleshooting
-
-### Version 1.0.0
-
-- Initial Lua API description for QMDev hardware.
