@@ -262,6 +262,9 @@ function Stkradio_GA_Loop_Upd()
 	elseif dr_mode1_xpdr:GetOld() > 0 then
 		stkradio:setCom1A(digi_xpdr)
 		stkradio:setCom1S(digi_xpdr)
+	else -- initial power on
+		stkradio:setCom1A(digi_com1a)
+		stkradio:setCom1S(digi_com1s)
 	end
 
 	-- update radio down
@@ -286,6 +289,9 @@ function Stkradio_GA_Loop_Upd()
 	elseif dr_mode2_xpdr:GetOld() > 0 then
 		stkradio:setCom2A(digi_xpdr)
 		stkradio:setCom2S(digi_xpdr)
+	else -- initial power on
+		stkradio:setCom2A(digi_com2a)
+		stkradio:setCom2S(digi_com2s)
 	end
 end
 

@@ -152,6 +152,9 @@ function Stkmulti_GA_Loop_Upd()
 	elseif dr_mode_crs:GetOld() > 0 then
 		stkmulti:setUp(digi_crs)
 		stkmulti:setDn(digi_vs)
+	else -- initial power on
+		stkmulti:setUp(digi_alt)
+		stkmulti:setDn(digi_vs)
 	end
 	stkmulti:SetLeds()
 end
