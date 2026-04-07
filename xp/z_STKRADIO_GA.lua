@@ -113,18 +113,18 @@ stkradio:CfgFc(12, 'stkradio_mode_cfg_dme(21, 20, 23, 22, 15)')
 stkradio:CfgFc(13, 'stkradio_mode_cfg_xpdr(21, 20, 23, 22, 15)')
 
 
-stkradio:initCom1('sim/cockpit2/radios/actuators/com1_frequency_hz_833',
+stkradio:getDigiCom1('sim/cockpit2/radios/actuators/com1_frequency_hz_833',
 	'sim/cockpit2/radios/actuators/com1_standby_frequency_hz_833')
-stkradio:initCom2('sim/cockpit2/radios/actuators/com2_frequency_hz_833',
+stkradio:getDigiCom2('sim/cockpit2/radios/actuators/com2_frequency_hz_833',
 	'sim/cockpit2/radios/actuators/com2_standby_frequency_hz_833')
-stkradio:initNav1('sim/cockpit/radios/nav1_freq_hz', 'sim/cockpit/radios/nav1_stdby_freq_hz')
-stkradio:initNav2('sim/cockpit/radios/nav2_freq_hz', 'sim/cockpit/radios/nav2_stdby_freq_hz')
-stkradio:initAdf('sim/cockpit/radios/adf1_freq_hz', 'sim/cockpit/radios/adf1_stdby_freq_hz')
-stkradio:initDme('sim/cockpit/radios/nav1_dme_dist_m', 'sim/cockpit/radios/nav2_dme_dist_m')
-stkradio:initXpdr('sim/cockpit/radios/transponder_code')
+stkradio:getDigiNav1('sim/cockpit/radios/nav1_freq_hz', 'sim/cockpit/radios/nav1_stdby_freq_hz')
+stkradio:getDigiNav2('sim/cockpit/radios/nav2_freq_hz', 'sim/cockpit/radios/nav2_stdby_freq_hz')
+stkradio:getDigiAdf('sim/cockpit/radios/adf1_freq_hz', 'sim/cockpit/radios/adf1_stdby_freq_hz')
+stkradio:getDigiDme('sim/cockpit/radios/nav1_dme_dist_m', 'sim/cockpit/radios/nav2_dme_dist_m')
+stkradio:getDigiXpdr('sim/cockpit/radios/transponder_code')
 
 function Stkradio_GA_Loop_Upd()
-	stkradio:ModeLoop()
+	stkradio:loopDigi()
 end
 
 uluaAddDoLoop('Stkradio_GA_Loop_Upd()')

@@ -39,6 +39,12 @@ function Stkmulti:absent(FastTurnsPerSecond)
 	_G.idr_stkmulti_hid_invalid = uluaFind('cpuwolf/qmdev/StkMulti/invalid')
 	_G.idr_stkmulti_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/StkMulti/fastkeypersec')
 	uluaSet(_G.idr_stkmulti_hid_fastkeypersec, FastTurnsPerSecond)
+
+	self.dr_mode_alt = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[0]')
+	self.dr_mode_vs = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[1]')
+	self.dr_mode_ias = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[2]')
+	self.dr_mode_hdg = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[3]')
+	self.dr_mode_crs = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[4]')
 	return false
 end
 
@@ -230,4 +236,74 @@ function Stkmulti:setDn(digits)
 	uluaSet(_G.idr_stkmulti_hid_leds_down5, digits[5])
 end
 
+
+function Stkmulti:GetDigiAlt(dataref)
+	self.dr_alt = iDataRef:New(dataref)
+	self.digi_alt = {}
+end
+function Stkmulti:GetDigiVs(dataref)
+	self.dr_vs = iDataRef:New(dataref)
+	self.digi_vs = {}
+end
+function Stkmulti:GetDigiIas(dataref)
+	self.dr_ias = iDataRef:New(dataref)
+	self.digi_ias = {}
+end
+function Stkmulti:GetDigiHdg(dataref)
+	self.dr_hdg = iDataRef:New(dataref)
+	self.digi_hdg = {}
+end
+function Stkmulti:GetDigiCrs(dataref)
+	self.dr_crs = iDataRef:New(dataref)
+	self.digi_crs = {}
+end
+
+function Stkmulti:loopDigi()
+	if self.dr_mode_alt:ChangedUpdate() or
+		self.dr_mode_vs:ChangedUpdate() or
+		self.dr_mode_ias:ChangedUpdate() or
+		self.dr_mode_hdg:ChangedUpdate() or
+		self.dr_mode_crs:ChangedUpdate() then
+		self.dr_alt:Invalid()
+		self.dr_vs:Invalid()
+		self.dr_ias:Invalid()
+		self.dr_hdg:Invalid()
+		self.dr_crs:Invalid()
+	end
+	if self.dr_alt:ChangedUpdate() then
+		self.digi_alt = self:encUIntDigits(self.dr_alt:GetOld())
+	end
+	if self.dr_vs:ChangedUpdate() then
+		self.digi_vs = self:encIntDigits(self.dr_vs:GetOld())
+	end
+	if self.dr_ias:ChangedUpdate() then
+		self.digi_ias = self:encUIntDigits(self.dr_ias:GetOld())
+	end
+	if self.dr_hdg:ChangedUpdate() then
+		self.digi_hdg = self:encUIntDigits(self.dr_hdg:GetOld())
+	end
+	if self.dr_crs:ChangedUpdate() then
+		self.digi_crs = self:encUIntDigits(self.dr_crs:GetOld())
+	end
+	--
+	if self.dr_mode_alt:GetOld() > 0 then
+		self:setUp(self.digi_alt)
+		self:setDn(self.digi_vs)
+	elseif self.dr_mode_vs:GetOld() > 0 then
+		self:setUp(self.digi_alt)
+		self:setDn(self.digi_vs)
+	elseif self.dr_mode_ias:GetOld() > 0 then
+		self:setUp(self.digi_ias)
+		self:setDn(self.digi_vs)
+	elseif self.dr_mode_hdg:GetOld() > 0 then
+		self:setUp(self.digi_hdg)
+		self:setDn(self.digi_vs)
+	elseif self.dr_mode_crs:GetOld() > 0 then
+		self:setUp(self.digi_crs)
+		self:setDn(self.digi_vs)
+	else -- initial power on
+		self:setUp(self.digi_alt)
+		self:setDn(self.digi_vs)
+	end
+end
 return Stkmulti

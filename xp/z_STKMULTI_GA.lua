@@ -45,11 +45,7 @@ stkmulti:CfgFc(2, 'stkmulti_mode_cfg_ias()')
 stkmulti:CfgFc(3, 'stkmulti_mode_cfg_hdg()')
 stkmulti:CfgFc(4, 'stkmulti_mode_cfg_crs()')
 
-local dr_mode_alt = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[0]')
-local dr_mode_vs = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[1]')
-local dr_mode_ias = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[2]')
-local dr_mode_hdg = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[3]')
-local dr_mode_crs = iDataRef:New('cpuwolf/qmdev/StkMulti/keysmap[4]')
+
 
 --AP
 stkmulti:CfgCmd(7, 'sim/autopilot/servos_toggle')
@@ -82,8 +78,7 @@ stkmulti:CfgCmd(18, 'sim/flight_controls/pitch_trim_down')
 -- trim up
 stkmulti:CfgCmd(19, 'sim/flight_controls/pitch_trim_up')
 
-
-
+-- Leds
 stkmulti:GetAp('sim/cockpit2/autopilot/servos_on')
 stkmulti:GetHdg('sim/cockpit2/autopilot/heading_status')
 stkmulti:GetNav('sim/cockpit2/autopilot/nav_status')
@@ -93,69 +88,15 @@ stkmulti:GetVs('sim/cockpit2/autopilot/vvi_status')
 stkmulti:GetApr('sim/cockpit2/autopilot/approach_status')
 stkmulti:GetRev('sim/cockpit/autopilot/backcourse_on')
 
+-- Digitals
+stkmulti:GetDigiAlt("sim/cockpit2/autopilot/altitude_dial_ft")
+stkmulti:GetDigiVs("sim/cockpit2/autopilot/vvi_dial_fpm")
+stkmulti:GetDigiIas("sim/cockpit2/autopilot/airspeed_dial_kts_mach")
+stkmulti:GetDigiHdg("sim/cockpit/autopilot/heading_mag")
+stkmulti:GetDigiCrs('sim/cockpit/radios/nav1_obs_degm')
 
-local dr_alt = iDataRef:New("sim/cockpit2/autopilot/altitude_dial_ft")
-local dr_vs = iDataRef:New("sim/cockpit2/autopilot/vvi_dial_fpm")
-local dr_ias = iDataRef:New("sim/cockpit2/autopilot/airspeed_dial_kts_mach")
-local dr_hdg = iDataRef:New("sim/cockpit/autopilot/heading_mag")
-local dr_crs = iDataRef:New('sim/cockpit/radios/nav1_obs_degm')
-local digi_alt
-local digi_vs
-local digi_ias
-local digi_hdg
-local digi_crs
-dr_alt:Invalid()
-dr_vs:Invalid()
-dr_ias:Invalid()
-dr_hdg:Invalid()
-dr_crs:Invalid()
 function Stkmulti_GA_Loop_Upd()
-	if dr_mode_alt:ChangedUpdate() or
-		dr_mode_vs:ChangedUpdate() or
-		dr_mode_ias:ChangedUpdate() or
-		dr_mode_hdg:ChangedUpdate() or
-		dr_mode_crs:ChangedUpdate() then
-		dr_alt:Invalid()
-		dr_vs:Invalid()
-		dr_ias:Invalid()
-		dr_hdg:Invalid()
-		dr_crs:Invalid()
-	end
-	if dr_alt:ChangedUpdate() then
-		digi_alt = stkmulti:encUIntDigits(dr_alt:GetOld())
-	end
-	if dr_vs:ChangedUpdate() then
-		digi_vs = stkmulti:encIntDigits(dr_vs:GetOld())
-	end
-	if dr_ias:ChangedUpdate() then
-		digi_ias = stkmulti:encUIntDigits(dr_ias:GetOld())
-	end
-	if dr_hdg:ChangedUpdate() then
-		digi_hdg = stkmulti:encUIntDigits(dr_hdg:GetOld())
-	end
-	if dr_crs:ChangedUpdate() then
-		digi_crs = stkmulti:encUIntDigits(dr_crs:GetOld())
-	end
-	--
-	if dr_mode_alt:GetOld() > 0 then
-		stkmulti:setUp(digi_alt)
-		stkmulti:setDn(digi_vs)
-	elseif dr_mode_vs:GetOld() > 0 then
-		stkmulti:setUp(digi_alt)
-		stkmulti:setDn(digi_vs)
-	elseif dr_mode_ias:GetOld() > 0 then
-		stkmulti:setUp(digi_ias)
-		stkmulti:setDn(digi_vs)
-	elseif dr_mode_hdg:GetOld() > 0 then
-		stkmulti:setUp(digi_hdg)
-		stkmulti:setDn(digi_vs)
-	elseif dr_mode_crs:GetOld() > 0 then
-		stkmulti:setUp(digi_crs)
-		stkmulti:setDn(digi_vs)
-	else -- initial power on
-		stkmulti:setUp(digi_alt)
-		stkmulti:setDn(digi_vs)
-	end
+	stkmulti:loopDigi()
 	stkmulti:SetLeds()
 end
 

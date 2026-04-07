@@ -215,7 +215,7 @@ function Stkradio:setCom2S(digits)
 	uluaSet(_G.idr_stkradio_hid_radios_com2stb5, digits[5])
 end
 
-function Stkradio:initCom1(a, s)
+function Stkradio:getDigiCom1(a, s)
 	-- =====RMP radio
 	self.dr_com1a = iDataRef:New(a)
 	self.digi_com1a = {}
@@ -223,14 +223,14 @@ function Stkradio:initCom1(a, s)
 	self.digi_com1s = {}
 end
 
-function Stkradio:initCom2(a, s)
+function Stkradio:getDigiCom2(a, s)
 	self.dr_com2a = iDataRef:New(a)
 	self.digi_com2a = {}
 	self.dr_com2s = iDataRef:New(s)
 	self.digi_com2s = {}
 end
 
-function Stkradio:initNav1(a, s)
+function Stkradio:getDigiNav1(a, s)
 	--nav
 	self.dr_nav1a = iDataRef:New(a)
 	self.digi_nav1a = {}
@@ -238,14 +238,14 @@ function Stkradio:initNav1(a, s)
 	self.digi_nav1s = {}
 end
 
-function Stkradio:initNav2(a, s)
+function Stkradio:getDigiNav2(a, s)
 	self.dr_nav2a = iDataRef:New(a)
 	self.digi_nav2a = {}
 	self.dr_nav2s = iDataRef:New(s)
 	self.digi_nav2s = {}
 end
 
-function Stkradio:initAdf(a, s)
+function Stkradio:getDigiAdf(a, s)
 	-- adf
 	self.dr_adfa = iDataRef:New(a)
 	self.digi_adfa = {}
@@ -253,7 +253,7 @@ function Stkradio:initAdf(a, s)
 	self.digi_adfs = {}
 end
 
-function Stkradio:initDme(d1, d2)
+function Stkradio:getDigiDme(d1, d2)
 	-- dme
 	self.dr_dmea = iDataRef:New(d1)
 	self.digi_dmea = {}
@@ -261,13 +261,13 @@ function Stkradio:initDme(d1, d2)
 	self.digi_dmes = {}
 end
 
-function Stkradio:initXpdr(xp)
+function Stkradio:getDigiXpdr(xp)
 	-- transponder
 	self.dr_xpdr = iDataRef:New(xp)
 	self.digi_xpdr = {}
 end
 
-function Stkradio:ModeLoop()
+function Stkradio:loopDigi()
 	if self.dr_mode1_com1:ChangedUpdate() or
 		self.dr_mode1_com2:ChangedUpdate() or
 		self.dr_mode1_nav1:ChangedUpdate() or
