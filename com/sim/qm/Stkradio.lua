@@ -58,25 +58,17 @@ end
 -- 11850 -> {1, 1, 8, 5, 0}
 -- 118255 -> {1, 1, 8, 2, 5, 5}
 function Stkradio:getDigits(num)
-	-- Handle case for 0
-	if num == 0 then return { 0 } end
-
 	local digits = {}
+	local s = tostring(math.floor(num))
 
-	-- 1. Find the highest power of 10 (e.g., for 11850, power is 4)
-	local power = math.floor(math.log(num, 10))
-
-	-- 2. Iterate from the highest power down to 0
-	for p = power, 0, -1 do
-		local divisor = 10 ^ p
-
-		-- Get the leftmost digit
-		local digit = math.floor(num / divisor)
-		table.insert(digits, digit)
-
-		-- Update num to be the remainder
-		num = num % divisor
+	for i = 1, #s do
+		local char = s:sub(i, i)
+		-- Ignore minus signs for negative numbers
+		if char:match("%d") then
+			table.insert(digits, tonumber(char))
+		end
 	end
+
 	return digits
 end
 

@@ -138,7 +138,7 @@ local digi_com2s
 local dr_nav1a = iDataRef:New("sim/cockpit/radios/nav1_freq_hz")
 local digi_nav1a
 local dr_nav1s = iDataRef:New("sim/cockpit/radios/nav1_stdby_freq_hz")
-local digi_navs
+local digi_nav1s
 local dr_nav2a = iDataRef:New("sim/cockpit/radios/nav2_freq_hz")
 local digi_nav2a
 local dr_nav2s = iDataRef:New("sim/cockpit/radios/nav2_stdby_freq_hz")
@@ -266,26 +266,26 @@ function Stkradio_GA_Loop_Upd()
 
 	-- update radio down
 	if dr_mode2_com1:GetOld() > 0 then
-		stkradio:setCom1A(digi_com1a)
-		stkradio:setCom1S(digi_com1s)
+		stkradio:setCom2A(digi_com1a)
+		stkradio:setCom2S(digi_com1s)
 	elseif dr_mode2_com2:GetOld() > 0 then
-		stkradio:setCom1A(digi_com2a)
-		stkradio:setCom1S(digi_com2s)
+		stkradio:setCom2A(digi_com2a)
+		stkradio:setCom2S(digi_com2s)
 	elseif dr_mode2_nav1:GetOld() > 0 then
-		stkradio:setCom1A(digi_nav1a)
-		stkradio:setCom1S(digi_nav1s)
+		stkradio:setCom2A(digi_nav1a)
+		stkradio:setCom2S(digi_nav1s)
 	elseif dr_mode2_nav2:GetOld() > 0 then
-		stkradio:setCom1A(digi_nav2a)
-		stkradio:setCom1S(digi_nav2s)
+		stkradio:setCom2A(digi_nav2a)
+		stkradio:setCom2S(digi_nav2s)
 	elseif dr_mode2_adf:GetOld() > 0 then
-		stkradio:setCom1A(digi_adfa)
-		stkradio:setCom1S(digi_adfs)
+		stkradio:setCom2A(digi_adfa)
+		stkradio:setCom2S(digi_adfs)
 	elseif dr_mode2_dme:GetOld() > 0 then
-		stkradio:setCom1A(digi_dmea)
-		stkradio:setCom1S(digi_dmes)
+		stkradio:setCom2A(digi_dmea)
+		stkradio:setCom2S(digi_dmes)
 	elseif dr_mode2_xpdr:GetOld() > 0 then
-		stkradio:setCom1A(digi_xpdr)
-		stkradio:setCom1S(digi_xpdr)
+		stkradio:setCom2A(digi_xpdr)
+		stkradio:setCom2S(digi_xpdr)
 	end
 end
 
