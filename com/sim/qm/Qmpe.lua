@@ -504,6 +504,11 @@ function Qmpe:SetSVhf1(valbase, val)
     end
 end
 
+function Qmpe:OffSvhf1(dpath)
+    self.d_s_vhf1:Invalid()
+    uluaSet(idr_qmpe_hid_acp_s_vhf1, 0)
+end
+
 -- Call VHF1
 function Qmpe:GetCVhf1(dpath)
     self.d_c_vhf1 = iDataRef:New(dpath)
@@ -554,6 +559,11 @@ function Qmpe:SetSVhf2(valbase, val)
     else
         uluaSet(idr_qmpe_hid_acp_s_vhf2, ilua_bool_ternary(val, valbase))
     end
+end
+
+function Qmpe:OffSvhf2(dpath)
+    self.d_s_vhf2:Invalid()
+    uluaSet(idr_qmpe_hid_acp_s_vhf2, 0)
 end
 
 -- Call VHF2

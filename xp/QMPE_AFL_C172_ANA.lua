@@ -323,18 +323,17 @@ local function rmp2_update()
     qmpe:SetRmp2()
 end
 -- =====Annunciator test
-local dr_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on")                -- 0: OFF 1: ON
+local dr_power = iDataRef:New("C172/electric/bus1/power")                -- 0: OFF 1: ON
 local dr_com_tx_sel = iDataRef:New("sim/cockpit2/radios/actuators/audio_com_selection") -- 6:COM1 7:COM2
+dr_power:Invalid()
 function Qmpe_Afl172_XP_loop()
     -- expert code: cold and dark
     local b_power = dr_power:Get()
-    if dr_power:ChangedUpdate() then
-        if b_power == 0 then
-            qmpe:SetBkl(0)
-            return
-        else
-            qmpe:FreshBkl()
-        end
+    if b_power == 0 then
+        qmpe:Off()
+        return
+    else
+        qmpe:FreshBkl()
     end
 
     -- DATA
