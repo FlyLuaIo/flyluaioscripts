@@ -122,7 +122,7 @@ function Wwagp:Next()
 end
 
 function Wwagp:SendLedCmd(LedId, value)
-	local val = value % 128
+	local val = math.floor(value) % 128
 	local combinedValue = (val * 256) + LedId
 	uluaSet(_G.idr_wwagp_hid_leds_ledcmd, combinedValue)
 end
@@ -351,15 +351,6 @@ function Wwagp:Setleds(valbase, val)
 	self:SetLever(valbase, val)
 end
 
-function Wwagp:IsLcdTextChanged(newtext)
-	if newtext ~= self.LcdText then
-		self.LcdText = newtext
-		return true
-	else
-		return false
-	end
-end
-
 -- 2. Parsing Logic (Ported from ProductAGP::parseSegment)
 function Wwagp:parseSegment(text, expectedLength)
 	local digits = ""
@@ -484,6 +475,15 @@ function Wwagp:formatUTCdateStr(day_of_year)
 	return utc
 end
 
+function Wwagp:IsLcdTextChanged(newtext)
+	if newtext ~= self.LcdText then
+		self.LcdText = newtext
+		return true
+	else
+		return false
+	end
+end
+
 --First Digit Data starts at: packet[25]
 --Last Digit Data ends at: packet[54] (specifically, the high bits of the colon row).
 --Total Span: 30 bytes of the packet are involved in display data, though only 16 of those bytes actually contain digit bits.
@@ -492,6 +492,7 @@ function Wwagp:setLcdStr(chrono, utc, elapsed)
 		-- nothing is changed
 		return
 	end
+	--uluaLog(chrono .. utc .. elapsed)
 	local result = self:encodeDisplay(chrono, utc, elapsed)
 	local pcounter = self:Next()
 

@@ -53,17 +53,17 @@ local dr_et_min = iDataRef:New('sim/cockpit2/clock_timer/hobbs_time_minutes')
 
 local dr_utc_is_date = iDataRef:New('cpuwolf/qmdev/WwAgp/keysmap[14]')
 
-local chrono = ""
+local gChrono = ""
 local utc = ""
 local elapsed_time = ""
 function Wwagp_GA_LCD_Loop()
 	--Chrone
 	if dr_chrono:ChangedUpdate() then
 		local chr = dr_chrono:GetOld()
-		if chr == 0 then
-			chrone = "    "
+		if math.floor(chr) == 0 then
+			gChrono = "     "
 		else
-			chrono = wwagp:formatChronoStr(chr)
+			gChrono = wwagp:formatChronoStr(chr)
 		end
 	end
 
@@ -74,7 +74,7 @@ function Wwagp_GA_LCD_Loop()
 		dr_utc_min:Invalid()
 		dr_utc_sec:Invalid()
 	end
-	if dr_utc_is_date:GetOld() then
+	if dr_utc_is_date:GetOld() > 0 then
 		if dr_utc_days:ChangedUpdate() then
 			utc = wwagp:formatUTCdateStr(dr_utc_days:GetOld())
 		end
@@ -90,7 +90,7 @@ function Wwagp_GA_LCD_Loop()
 	end
 
 	-- Write to hardware
-	wwagp:setLcdStr(chrono, utc, elapsed_time)
+	wwagp:setLcdStr(gChrono, utc, elapsed_time)
 end
 
 function Wwagp_GA_Loop_Upd()

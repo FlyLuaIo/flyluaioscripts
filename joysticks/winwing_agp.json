@@ -2,7 +2,6 @@
   "ProductName": "WwAgp",
   "USB_VID": "0x4098",
   "USB_PID": "0xBB80",
-  "USBDelayMs": 10,
   "LightKey": 18,
   "LightKeyName": "STS",
   "Functions": [
