@@ -17,6 +17,10 @@ wwagp:CfgCmd(11, 'sim/instruments/chrono1_start_stop')
 
 wwagp:CfgCmd(23, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/landing_gear_down')
 
+
+--====backlight
+wwagp:GetBkl('sim/cockpit2/electrical/instrument_brightness_ratio_manual[0]', 126)
+
 --================================ Input LED/LCD ===
 wwagp:GetUlockL("cpuwolf/qmdev/WwAgp/condbtn[1]")
 wwagp:GetUlockN("cpuwolf/qmdev/WwAgp/condbtn[1]")
@@ -35,9 +39,7 @@ wwagp:GetMax('cpuwolf/qmdev/WwAgp/condbtn[1]')
 wwagp:GetTerr('cpuwolf/qmdev/WwAgp/condbtn[1]')
 wwagp:GetLever('cpuwolf/qmdev/WwAgp/condbtn[1]')
 
---====backlight
 
-wwagp:GetBkl('sim/cockpit2/electrical/instrument_brightness_ratio_manual[0]', 120)
 
 --====LCD
 local dr_chrono = iDataRef:New('sim/cockpit2/clock_timer/chrono_time[0]')
