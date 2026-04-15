@@ -8,7 +8,7 @@ local bit = require("bit")
 local Wwagp = oop.class(com.sim.Qmdev)
 
 function Wwagp:init()
-	self.QmdevId = 0xC305EEB
+	self.QmdevId = 0x3AEBEE64
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwagp == nil then
 		_G.ilua_hw_assigned_wwagp = 0
@@ -42,6 +42,9 @@ function Wwagp:init()
 			['-'] = 0x40,
 			['_'] = 0x08
 		}
+		self.LED_BACKLIGHT = 0
+		self.LED_LCD_BRIGHTNESS = 1
+		self.LED_OVERALL_LEDS_BRIGHTNESS = 2
 		self.LEDS_ULOCKL = 3
 		self.LEDS_ULOCKN = 4
 		self.LEDS_ULOCKR = 5
@@ -119,8 +122,31 @@ function Wwagp:Next()
 end
 
 function Wwagp:SendLedCmd(LedId, value)
-	local combinedValue = (value * 256) + LedId
+	local val = value % 128
+	local combinedValue = (val * 256) + LedId
 	uluaSet(_G.idr_wwagp_hid_leds_ledcmd, combinedValue)
+end
+
+-- ========
+-- Backlight
+function Wwagp:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
+end
+
+function Wwagp:SetBkl(val)
+	if val == nil then
+		if self.d_bkl:ChangedUpdate() then
+			val = self.d_bkl:GetOld() * self.d_bkl_scale
+			self:SendLedCmd(self.LED_BACKLIGHT, val)
+			self:SendLedCmd(self.LED_LCD_BRIGHTNESS, val)
+			self:SendLedCmd(self.LED_OVERALL_LEDS_BRIGHTNESS, val)
+		end
+	else
+		self:SendLedCmd(self.LED_BACKLIGHT, val)
+		self:SendLedCmd(self.LED_LCD_BRIGHTNESS, val)
+		self:SendLedCmd(self.LED_OVERALL_LEDS_BRIGHTNESS, val)
+	end
 end
 
 function Wwagp:PowerOff()
@@ -468,14 +494,15 @@ function Wwagp:setLcdStr(chrono, utc, elapsed)
 	end
 	local result = self:encodeDisplay(chrono, utc, elapsed)
 	local pcounter = self:Next()
-	uluaSet(_G.idr_wwagp_hid_lcd_lcd1, result[2] * 256 + result[1])
-	uluaSet(_G.idr_wwagp_hid_lcd_lcd2, result[4] * 256 + result[3])
-	uluaSet(_G.idr_wwagp_hid_lcd_lcd3, result[6] * 256 + result[5])
-	uluaSet(_G.idr_wwagp_hid_lcd_lcd4, result[8] * 256 + result[7])
-	uluaSet(_G.idr_wwagp_hid_lcd_lcd5, result[10] * 256 + result[9])
-	uluaSet(_G.idr_wwagp_hid_lcd_lcd6, result[12] * 256 + result[11])
-	uluaSet(_G.idr_wwagp_hid_lcd_lcd7, result[14] * 256 + result[13])
-	uluaSet(_G.idr_wwagp_hid_lcd_lcd8, result[16] * 256 + result[15])
+
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd1, bit.bor(result[1], bit.lshift(result[2], 8)))
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd2, bit.bor(result[5], bit.lshift(result[6], 8)))
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd3, bit.bor(result[9], bit.lshift(result[10], 8)))
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd4, bit.bor(result[13], bit.lshift(result[14], 8)))
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd5, bit.bor(result[17], bit.lshift(result[18], 8)))
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd6, bit.bor(result[21], bit.lshift(result[22], 8)))
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd7, bit.bor(result[25], bit.lshift(result[26], 8)))
+	uluaSet(_G.idr_wwagp_hid_lcd_lcd8, bit.bor(result[29], bit.lshift(result[30], 8)))
 	uluaSet(_G.idr_wwagp_hid_lcd_seqnum, pcounter)
 	uluaSet(_G.idr_wwagp_hid_finish_seqnum, pcounter)
 end

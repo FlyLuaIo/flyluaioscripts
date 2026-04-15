@@ -35,6 +35,10 @@ wwagp:GetMax('cpuwolf/qmdev/WwAgp/condbtn[1]')
 wwagp:GetTerr('cpuwolf/qmdev/WwAgp/condbtn[1]')
 wwagp:GetLever('cpuwolf/qmdev/WwAgp/condbtn[1]')
 
+--====backlight
+
+wwagp:GetBkl('sim/cockpit2/electrical/instrument_brightness_ratio_manual[0]', 120)
+
 --====LCD
 local dr_chrono = iDataRef:New('sim/cockpit2/clock_timer/chrono_time[0]')
 
@@ -90,6 +94,7 @@ function Wwagp_GA_LCD_Loop()
 end
 
 function Wwagp_GA_Loop_Upd()
+	wwagp:SetBkl()
 	Wwagp_GA_LCD_Loop()
 	-- update LEDs
 	wwagp:Setleds()
