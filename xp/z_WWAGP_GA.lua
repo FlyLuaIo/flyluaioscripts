@@ -17,10 +17,10 @@ wwagp:CfgCmd(11, 'sim/instruments/chrono1_start_stop')
 
 wwagp:CfgCmd(23, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/landing_gear_down')
 
---================================ Input LED/LCD
-wwagp:GetUnlockL("cpuwolf/qmdev/WwAgp/condbtn[1]")
-wwagp:GetUnlockN("cpuwolf/qmdev/WwAgp/condbtn[1]")
-wwagp:GetUnlockR("cpuwolf/qmdev/WwAgp/condbtn[1]")
+--================================ Input LED/LCD ===
+wwagp:GetUlockL("cpuwolf/qmdev/WwAgp/condbtn[1]")
+wwagp:GetUlockN("cpuwolf/qmdev/WwAgp/condbtn[1]")
+wwagp:GetUlockR("cpuwolf/qmdev/WwAgp/condbtn[1]")
 wwagp:GetBrakeHot('cpuwolf/qmdev/WwAgp/condbtn[1]')
 wwagp:GetLockL("sim/flightmodel2/gear/deploy_ratio[1]")
 wwagp:GetLockN("sim/flightmodel2/gear/deploy_ratio[0]")
@@ -87,12 +87,12 @@ function Wwagp_GA_LCD_Loop()
 
 	-- Write to hardware
 	wwagp:setLcdStr(chrono, utc, elapsed_time)
-	-- update LEDs
-	wwagp:Setleds()
 end
 
 function Wwagp_GA_Loop_Upd()
 	Wwagp_GA_LCD_Loop()
+	-- update LEDs
+	wwagp:Setleds()
 end
 
 uluaAddDoLoop('Wwagp_GA_Loop_Upd()')
