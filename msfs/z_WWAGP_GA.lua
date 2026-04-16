@@ -46,12 +46,10 @@ local dr_chrono = iDataRef:New('(E:SIMULATION TIME, second)')
 
 local dr_utc_days = iDataRef:New('(E:ZULU YEAR,number)')
 
-local dr_utc_hr = iDataRef:New('(E:ZULU TIME,second)')
-local dr_utc_min = iDataRef:New('(E:ZULU TIME,second)')
 local dr_utc_sec = iDataRef:New('(E:ZULU TIME,second)')
 
-local dr_et_hr = iDataRef:New('(E:SIMULATION TIME, second)')
-local dr_et_min = iDataRef:New('(E:SIMULATION TIME, second)')
+local dr_et_hr = iDataRef:New('(E:SIMULATION TIME, second) 3600 /')
+local dr_et_min = iDataRef:New('(E:SIMULATION TIME, second) 60 /')
 
 local dr_utc_is_date = iDataRef:New('cpuwolf/qmdev/WwAgp/keysmap[14]')
 
@@ -72,8 +70,6 @@ function Wwagp_GA_LCD_Loop()
 	-- UTC time
 	if dr_utc_is_date:ChangedUpdate() then
 		dr_utc_days:Invalid()
-		dr_utc_hr:Invalid()
-		dr_utc_min:Invalid()
 		dr_utc_sec:Invalid()
 	end
 	if dr_utc_is_date:GetOld() > 0 then
@@ -81,8 +77,12 @@ function Wwagp_GA_LCD_Loop()
 			utc = wwagp:formatUTCdateStr(dr_utc_days:GetOld())
 		end
 	else
-		if dr_utc_hr:ChangedUpdate() or dr_utc_min:ChangedUpdate() or dr_utc_sec:ChangedUpdate() then
-			utc = string.format("%02d:%02d:%02d", dr_utc_hr:GetOld(), dr_utc_min:GetOld(), dr_utc_sec:GetOld())
+		if dr_utc_sec:ChangedUpdate() then
+			local totalSeconds = math.floor(dr_utc_sec:GetOld())
+			local h = math.floor(totalSeconds / 3600)
+			local m = math.floor((totalSeconds % 3600) / 60)
+			local s = totalSeconds % 60
+			utc = string.format("%02d:%02d:%02d", h, m, s)
 		end
 	end
 

@@ -452,7 +452,7 @@ function Wwagp:formatChronoStr(chronosec)
 
 	if chrono_seconds > 0 then
 		local total_seconds = math.floor(chrono_seconds)
-		local mins = math.floor(total_seconds / 60)
+		local mins = math.floor(total_seconds / 60) % 60
 		local secs = total_seconds % 60
 		chrono = string.format("%02d:%02d", mins, secs)
 	end
