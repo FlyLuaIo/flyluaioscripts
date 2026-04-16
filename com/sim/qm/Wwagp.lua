@@ -149,6 +149,10 @@ function Wwagp:SetBkl(val)
 	end
 end
 
+function Wwagp:FreshBkl()
+	self.d_bkl:Invalid(-1)
+end
+
 function Wwagp:PowerOff()
 	self:SendLedCmd(self.LED_BACKLIGHT, 0)
 	self:SendLedCmd(self.LED_LCD_BRIGHTNESS, 0)

@@ -44,17 +44,18 @@ wwagp:GetLever('cpuwolf/qmdev/WwAgp/condbtn[1]')
 --====LCD
 local dr_chrono = iDataRef:New('(E:SIMULATION TIME, second)')
 
-local dr_utc_days = iDataRef:New('(E:ZULU YEAR,number)')
+local dr_utc_year = iDataRef:New('(E:ZULU YEAR, number)')
+local dr_utc_mon = iDataRef:New('(E:ZULU MONTH OF YEAR, number)')
+local dr_utc_day = iDataRef:New('(E:ZULU DAY OF MONTH, number)')
 
-local dr_utc_sec = iDataRef:New('(E:ZULU TIME,second)')
+local dr_utc_sec = iDataRef:New('(E:ZULU TIME, second)')
 
-local dr_et_hr = iDataRef:New('(E:SIMULATION TIME, second) 3600 /')
-local dr_et_min = iDataRef:New('(E:SIMULATION TIME, second) 60 /')
+local dr_et_sec = iDataRef:New('(E:SIMULATION TIME, second)')
 
 local dr_utc_is_date = iDataRef:New('cpuwolf/qmdev/WwAgp/keysmap[14]')
 
 local gChrono = ""
-local utc = ""
+local gUtc = ""
 local elapsed_time = ""
 function Wwagp_GA_LCD_Loop()
 	--Chrone
@@ -69,12 +70,16 @@ function Wwagp_GA_LCD_Loop()
 
 	-- UTC time
 	if dr_utc_is_date:ChangedUpdate() then
-		dr_utc_days:Invalid()
+		dr_utc_year:Invalid()
+		dr_utc_mon:Invalid()
+		dr_utc_day:Invalid()
 		dr_utc_sec:Invalid()
 	end
 	if dr_utc_is_date:GetOld() > 0 then
-		if dr_utc_days:ChangedUpdate() then
-			utc = wwagp:formatUTCdateStr(dr_utc_days:GetOld())
+		if dr_utc_year:ChangedUpdate() or dr_utc_mon:ChangedUpdate() or dr_utc_day:ChangedUpdate() then
+			local mm = dr_utc_mon:GetOld() % 12
+			local yy = dr_utc_year:GetOld() % 100
+			gUtc = string.format("%02d:%02d:%02d", mm, dr_utc_day:GetOld(), yy)
 		end
 	else
 		if dr_utc_sec:ChangedUpdate() then
@@ -82,17 +87,20 @@ function Wwagp_GA_LCD_Loop()
 			local h = math.floor(totalSeconds / 3600)
 			local m = math.floor((totalSeconds % 3600) / 60)
 			local s = totalSeconds % 60
-			utc = string.format("%02d:%02d:%02d", h, m, s)
+			gUtc = string.format("%02d:%02d:%02d", h, m, s)
 		end
 	end
 
 	-- ET
-	if dr_et_hr:ChangedUpdate() or dr_et_min:ChangedUpdate() then
-		elapsed_time = string.format("%02d:%02d", dr_et_hr:GetOld(), dr_et_min:GetOld())
+	if dr_et_sec:ChangedUpdate() then
+		local totalSeconds = math.floor(dr_et_sec:GetOld())
+		local h = math.floor(totalSeconds / 3600)
+		local m = math.floor((totalSeconds % 3600) / 60)
+		elapsed_time = string.format("%02d:%02d", h, m)
 	end
 
 	-- Write to hardware
-	wwagp:setLcdStr(gChrono, utc, elapsed_time)
+	wwagp:setLcdStr(gChrono, gUtc, elapsed_time)
 end
 
 function Wwagp_GA_Loop_Upd()
