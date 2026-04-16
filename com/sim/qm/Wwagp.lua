@@ -139,18 +139,58 @@ function Wwagp:SetBkl(val)
 		if self.d_bkl:ChangedUpdate() then
 			val = self.d_bkl:GetOld() * self.d_bkl_scale
 			self:SendLedCmd(self.LED_BACKLIGHT, val)
-			self:SendLedCmd(self.LED_LCD_BRIGHTNESS, val)
-			self:SendLedCmd(self.LED_OVERALL_LEDS_BRIGHTNESS, val)
 		end
 	else
 		self:SendLedCmd(self.LED_BACKLIGHT, val)
-		self:SendLedCmd(self.LED_LCD_BRIGHTNESS, val)
-		self:SendLedCmd(self.LED_OVERALL_LEDS_BRIGHTNESS, val)
 	end
 end
 
 function Wwagp:FreshBkl()
 	self.d_bkl:Invalid(-1)
+end
+
+-- ========
+-- Leds Backlight
+function Wwagp:GetLedBkl(dpath, scale)
+	self.d_ledbkl_scale = scale == nil and 30 or scale
+	self.d_ledbkl = iDataRef:New(dpath)
+end
+
+function Wwagp:SetLedBkl(val)
+	if val == nil then
+		if self.d_ledbkl:ChangedUpdate() then
+			val = self.d_ledbkl:GetOld() * self.d_ledbkl_scale
+			self:SendLedCmd(self.LED_OVERALL_LEDS_BRIGHTNESS, val)
+		end
+	else
+		self:SendLedCmd(self.LED_OVERALL_LEDS_BRIGHTNESS, val)
+	end
+end
+
+function Wwagp:FreshLedBkl()
+	self.d_ledbkl:Invalid(-1)
+end
+
+-- Digis Backlight
+function Wwagp:GetDigiBkl(dpath, scale)
+	self.d_digibkl_scale = scale == nil and 30 or scale
+	self.d_digibkl = iDataRef:New(dpath)
+end
+
+function Wwagp:SetDigiBkl(val)
+	if val == nil then
+		if self.d_digibkl:ChangedUpdate() then
+			val = self.d_digibkl:GetOld() * self.d_digibkl_scale
+			self:SendLedCmd(self.LED_LCD_BRIGHTNESS, val)
+		end
+	else
+		self:SendLedCmd(self.LED_LCD_BRIGHTNESS, val)
+		self.d_digibkl:Invalid(-1)
+	end
+end
+
+function Wwagp:FreshDigiBkl()
+	self.d_digibkl:Invalid(-1)
 end
 
 function Wwagp:PowerOff()
