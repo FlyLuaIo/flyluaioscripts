@@ -120,7 +120,7 @@ function Wwagp_GA_Loop_Upd()
 	if dr_test:ChangedUpdate() then
 		b_test = dr_test:GetOld()
 		if b_test == 1 then
-			wwagp:setLcdStr("88:88", "88:88:88", "88:88")
+			wwagp:setLcdStrTest()
 			wwagp:SetBkl()
 			wwagp:Setleds(0, 1)
 		elseif b_test == 2 then

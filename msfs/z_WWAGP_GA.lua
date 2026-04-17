@@ -19,9 +19,9 @@ wwagp:CfgCmd(23, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/lan
 
 
 --====backlight
-wwagp:GetBkl('(A:LIGHT POTENTIOMETER:3, Percent)', 126)
-wwagp:GetDigiBkl("(L:TLS_FCU_AVAILABLE, Bool)", 120) -- 0~1
-wwagp:GetLedBkl("(L:TLS_FCU_AVAILABLE, Bool)", 120)  -- 0~1
+wwagp:GetBkl('(A:LIGHT POTENTIOMETER:85, Percent)', 2)
+wwagp:GetDigiBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 2) -- 0~100
+wwagp:GetLedBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 2)  -- 0~100
 --================================ Input LED/LCD ===
 wwagp:GetUlockL("(L:MSATR_GEAR_LEFT_UNLK_LT)")
 wwagp:GetUlockN("(L:MSATR_GEAR_NOSE_UNLK_LT)")

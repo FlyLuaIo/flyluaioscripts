@@ -552,4 +552,8 @@ function Wwagp:setLcdStr(chrono, utc, elapsed)
 	uluaSet(_G.idr_wwagp_hid_finish_seqnum, pcounter)
 end
 
+function Wwagp:setLcdStrTest()
+	self:setLcdStr("88:88", "88:88:88", "88:88")
+end
+
 return Wwagp
