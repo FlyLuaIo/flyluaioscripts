@@ -12,10 +12,10 @@ end
 uluaLog('WinWing AGP for GA')
 
 --================================ Output key binding
-wwagp:CfgCmd(8, 'sim/instruments/chrono1_reset')
-wwagp:CfgCmd(11, 'sim/instruments/chrono1_start_stop')
+wwagp:CfgRpn(8, 'sim/instruments/chrono1_reset')
+wwagp:CfgRpn(11, 'sim/instruments/chrono1_start_stop')
 
-wwagp:CfgCmd(23, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/landing_gear_down')
+wwagp:CfgRpn(23, '(>K:GEAR_UP)', '(>K:GEAR_DOWN)')
 
 
 --====backlight
