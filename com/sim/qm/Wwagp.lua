@@ -122,7 +122,7 @@ function Wwagp:Next()
 end
 
 function Wwagp:SendLedCmd(LedId, value)
-	local val = math.floor(value) % 128
+	local val = math.floor(value) % 255
 	local combinedValue = (val * 256) + LedId
 	uluaSet(_G.idr_wwagp_hid_leds_ledcmd, combinedValue)
 end

@@ -19,8 +19,9 @@ wwagp:CfgCmd(23, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/lan
 
 
 --====backlight
-wwagp:GetBkl('sim/cockpit2/electrical/instrument_brightness_ratio_manual[0]', 126)
-
+wwagp:GetBkl('sim/cockpit/electrical/cockpit_lights', 250)
+wwagp:GetDigiBkl("sim/cockpit2/switches/avionics_power_on", 200) -- 0~1
+wwagp:GetLedBkl("sim/cockpit2/switches/avionics_power_on", 200)  -- 0~1
 --================================ Input LED/LCD ===
 wwagp:GetUlockL("cpuwolf/qmdev/WwAgp/condbtn[1]")
 wwagp:GetUlockN("cpuwolf/qmdev/WwAgp/condbtn[1]")
@@ -94,9 +95,54 @@ function Wwagp_GA_LCD_Loop()
 	-- Write to hardware
 	wwagp:setLcdStr(gChrono, utc, elapsed_time)
 end
-
+local dr_test = iDataRef:New("sim/cockpit/warnings/annunciator_test_pressed") -- 0: normal 1:test
+local dr_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on") -- 0: OFF 1: ON
 function Wwagp_GA_Loop_Upd()
+	-- expert code: cold and dark
+	local b_power
+	if dr_power:ChangedUpdate() then
+		b_power = dr_power:GetOld()
+		if b_power == 0 then
+			wwagp:PowerOff()
+			wwagp:FreshBkl()
+			wwagp:FreshDigiBkl()
+			wwagp:FreshLedBkl()
+			wwagp:FreshBits()
+		end
+	else
+		b_power = dr_power:Get()
+	end
+	if b_power == 0 then
+		return
+	end
+	-- expert code: test mode
+	local b_test
+	if dr_test:ChangedUpdate() then
+		b_test = dr_test:GetOld()
+		if b_test == 1 then
+			wwagp:setLcdStr("88:88", "88:88:88", "88:88")
+			wwagp:SetBkl()
+			wwagp:Setleds(0, 1)
+		elseif b_test == 2 then
+			-- DIM
+			wwagp:SetLedBkl(30)
+		else
+			wwagp:FreshBkl()
+			wwagp:FreshDigiBkl()
+			wwagp:FreshLedBkl()
+			wwagp:FreshBits()
+		end
+	else
+		b_test = dr_test:Get()
+	end
+
+	if b_test == 1 then
+		--test mode don't need refresh data
+		return
+	end
 	wwagp:SetBkl()
+	wwagp:SetDigiBkl()
+	wwagp:SetLedBkl()
 	Wwagp_GA_LCD_Loop()
 	-- update LEDs
 	wwagp:Setleds()
