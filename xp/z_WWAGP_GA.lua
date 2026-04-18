@@ -43,8 +43,13 @@ wwagp:GetLever('cpuwolf/qmdev/WwAgp/condbtn[1]')
 
 
 --====LCD
-local dr_chrono = iDataRef:New('sim/cockpit2/clock_timer/chrono_time[0]')
-
+local dr_chrono
+if nil == uluaFind("sim/cockpit2/clock_timer/chrono_time[0]") then
+	-- XP11
+	dr_chrono = iDataRef:New('sim/cockpit2/clock_timer/hobbs_time_seconds')
+else
+	dr_chrono = iDataRef:New('sim/cockpit2/clock_timer/chrono_time[0]')
+end
 local dr_utc_days = iDataRef:New('sim/time/local_date_days')
 
 local dr_utc_hr = iDataRef:New('sim/cockpit2/clock_timer/zulu_time_hours')
