@@ -7,7 +7,7 @@
   "Functions": [
     {
       "FunName": "leds",
-      "USB_FEAT_length": 14,
+      "USB_CMD_length": 14,
       "HeaderBytes": [
         "0x02",
         "0x70",
