@@ -13,7 +13,7 @@ if not wwagp:Init() then
 end
 -- Do not remove above lines: hardware detection
 
-uluaLog('Wwagp for Toliss')
+
 
 -- 0:ELEC AC  1:ELEC DC
 local iniA330_ecam_elec_acdc = 0
@@ -27,6 +27,8 @@ if not ilua_is_acftitle_excluded('A33') then
 elseif not ilua_is_acftitle_excluded('A34') then
 	isINIA340 = true
 	uluaLog('- Wwagp Toliss A34X')
+else
+	uluaLog('Wwagp for Toliss')
 end
 
 --================================ Output key binding
