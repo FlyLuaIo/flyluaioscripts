@@ -2,6 +2,10 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-16
 -- *****************************************************************
 
+if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") == nil then
+	return
+end
+
 -- Do not remove below lines: hardware detection
 local wwagp = com.sim.qm.Wwagp:new()
 if not wwagp:Init() then

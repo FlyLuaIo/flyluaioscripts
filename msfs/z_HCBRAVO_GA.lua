@@ -3,7 +3,9 @@
 -- 2026-03-17
 local FastTurnsPerSecond = 30 --How many spins per second  is considered FAST?
 --########################################################
-
+if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") == nil then
+    return
+end
 
 -- Do not remove below lines: hardware detection
 local hcbravo = com.sim.qm.Hcbravo:new()

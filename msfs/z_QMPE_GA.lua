@@ -1,6 +1,9 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-05-16
 -- *****************************************************************
+if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") == nil then
+    return
+end
 -- Do not remove below lines: hardware detection
 local qmpe = com.sim.qm.Qmpe:new()
 if not qmpe:Init() then

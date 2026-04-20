@@ -50,7 +50,7 @@ end
 -- @MaxStep: (number, optional) Maximum step value (default 99999)
 -- No return value.
 function Qmdev:CfgEncTypeFull(DataType, DecKey, IncKey, Rpnstr, SlowStep, FastStep, StepMode, MinStep, MaxStep)
-    if math.abs(DecKey - IncKey) ~= 1 or DecKey < 0 or IncKey < 0 then
+    if math.abs(DecKey - IncKey) < 1 or DecKey < 0 or IncKey < 0 then
         error("key id error")
     end
     self:AddKey(DecKey)

@@ -1,6 +1,10 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2025-08-26
 -- *****************************************************************
+if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") == nil then
+    return
+end
+
 -- Do not remove below lines: hardware detection
 local qmovha = com.sim.qm.Qmovha:new()
 if not qmovha:Init() then
