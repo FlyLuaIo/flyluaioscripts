@@ -23,20 +23,23 @@ wwagp:CfgRpn(1, '75155 (>K:ROTOR_BRAKE)', '75155 2 + (>K:ROTOR_BRAKE)')
 wwagp:CfgRpn(2, "75159 (>K:ROTOR_BRAKE)", "75159 2 + (>K:ROTOR_BRAKE)")
 wwagp:CfgRpn(3, "75163 (>K:ROTOR_BRAKE)", "75163 2 + (>K:ROTOR_BRAKE)")
 wwagp:CfgRpn(4, "75167 (>K:ROTOR_BRAKE)", "75167 2 + (>K:ROTOR_BRAKE)")
-
-wwagp:CfgRpn(5, '1 (>L:INI_ANTISKID_SWITCH)')
-wwagp:CfgRpn(6, '0 (>L:INI_ANTISKID_SWITCH)')
-wwagp:CfgRpn(8, '1 (>L:INI_CHR_RESET_COMMAND)')
-wwagp:CfgRpn(11, '1 (>L:INI_CHR_START_COMMAND)')
-wwagp:CfgRpn(14, '1 (>L:INI_CLOCK_DATE_BUTTON)', '0 (>L:INI_CLOCK_DATE_BUTTON)')
+-- SKID
+wwagp:CfgRpn(5, '75171 (>K:ROTOR_BRAKE)', '75171 2 + (>K:ROTOR_BRAKE)')
+wwagp:CfgRpn(6, '75171 (>K:ROTOR_BRAKE)', '75171 2 + (>K:ROTOR_BRAKE)')
+-- RST
+wwagp:CfgRpn(8, '75135 (>K:ROTOR_BRAKE)', '75135 2 + (>K:ROTOR_BRAKE)')
+-- CHR
+wwagp:CfgRpn(11, '75139 (>K:ROTOR_BRAKE)', '75139 2 + (>K:ROTOR_BRAKE)')
+-- DATE
+wwagp:CfgRpn(14, '75143 (>K:ROTOR_BRAKE)', '75143 2 + (>K:ROTOR_BRAKE)')
 
 wwagp:CfgRpn(16, '2 (>L:INI_CLOCK_GPS_STATE)')
 wwagp:CfgRpn(17, '1 (>L:INI_CLOCK_GPS_STATE)')
 wwagp:CfgRpn(18, '0 (>L:INI_CLOCK_GPS_STATE)')
 
-wwagp:CfgRpn(19, '0 (>L:INI_CLOCK_RUN_STATE)')
-wwagp:CfgRpn(20, '1 (>L:INI_CLOCK_RUN_STATE)')
-wwagp:CfgRpn(21, '2 (>L:INI_CLOCK_RUN_STATE)')
+wwagp:CfgRpn(19, '75150 1 + (>K:ROTOR_BRAKE)', '75151 1 + (>K:ROTOR_BRAKE)')
+wwagp:CfgRpn(21, '75151 1 + (>K:ROTOR_BRAKE)', '75151 2 + (>K:ROTOR_BRAKE)')
+
 
 -- Terrain FO:75092
 wwagp:CfgRpn(22, "75088 (>K:ROTOR_BRAKE)", "75088 2 + (>K:ROTOR_BRAKE)")
@@ -82,7 +85,7 @@ local dr_utc_sec = iDataRef:New('(E:ZULU TIME, second)')
 local dr_et_hr = iDataRef:New('(L:FSL_MIP_CLOCK_ET_HR)')
 local dr_et_min = iDataRef:New('(L:FSL_MIP_CLOCK_ET_MIN)')
 
-local dr_utc_is_date = iDataRef:New('(L:INI_CLOCK_DATE_BUTTON)')
+local dr_utc_is_date = iDataRef:New('(L:VC_MIP_CHRONO_DATE_SET_Button)')
 
 local gChrono = ''
 local gUtc = ''
@@ -138,7 +141,7 @@ function Wwagp_GA_LCD_Loop()
 end
 
 -- =====Annunciator test
-local dr_test = iDataRef:New('(L:VC_OVHD_INTLT_AnnLt_Switch)')    -- 0: TEST 1:BRT: 2: DIM
+local dr_test = iDataRef:New('(L:VC_OVHD_INTLT_AnnLt_Switch)')    -- 0: DIM 10: BRT 20: test mode
 local dr_power = iDataRef:New('(L:FSL_MCDU_Right_Powered, Bool)') -- 0: OFF 1: ON
 
 function Wwagp_Fsl_Loop_Upd()
@@ -163,11 +166,11 @@ function Wwagp_Fsl_Loop_Upd()
 	local b_test
 	if dr_test:ChangedUpdate() then
 		b_test = dr_test:GetOld()
-		if b_test == 0 then
+		if b_test == 20 then
 			wwagp:setLcdStrTest()
 			wwagp:SetBkl()
 			wwagp:Setleds(0, 1)
-		elseif b_test == 2 then
+		elseif b_test == 0 then
 			-- DIM
 			wwagp:SetLedBkl(30)
 		else
@@ -180,7 +183,7 @@ function Wwagp_Fsl_Loop_Upd()
 		b_test = dr_test:Get()
 	end
 
-	if b_test == 0 then
+	if b_test == 20 then
 		--test mode don't need refresh data
 		return
 	end
