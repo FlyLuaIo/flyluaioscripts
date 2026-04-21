@@ -107,28 +107,28 @@
           "appr": "t53"
         },
         {
-          "Spd_mang": "t54"
+          "SpdMang": "t54"
         },
         {
-          "Spd_dash": "t55"
+          "SpdDash": "t55"
         },
         {
-          "Hdg_mang": "t56"
+          "HdgMang": "t56"
         },
         {
-          "Hdg_dash": "t57"
+          "HdgDash": "t57"
         },
         {
-          "Alt_mang": "t58"
+          "AltMang": "t58"
         },
         {
-          "Vs_dash": "t59"
+          "VsDash": "t59"
         },
         {
-          "Spd_mach": "t60"
+          "SpdMach": "t60"
         },
         {
-          "Hdg_trk": "t61"
+          "HdgTrk": "t61"
         },
         {
           "test": "t62"

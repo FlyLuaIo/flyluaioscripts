@@ -1,6 +1,6 @@
 
 -- *****************************************************************
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-21_09_04_30UTC
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-21_09_15_13UTC
 -- *****************************************************************
 
 -- Do not remove below lines: hardware detection
@@ -18,14 +18,14 @@ wffcuc:GetAp2('')
 wffcuc:GetAthr('')
 wffcuc:GetExped('')
 wffcuc:GetAppr('')
-wffcuc:GetMang('')
-wffcuc:GetDash('')
-wffcuc:GetMang('')
-wffcuc:GetDash('')
-wffcuc:GetMang('')
-wffcuc:GetDash('')
-wffcuc:GetMach('')
-wffcuc:GetTrk('')
+wffcuc:GetSpdmang('')
+wffcuc:GetSpddash('')
+wffcuc:GetHdgmang('')
+wffcuc:GetHdgdash('')
+wffcuc:GetAltmang('')
+wffcuc:GetVsdash('')
+wffcuc:GetSpdmach('')
+wffcuc:GetHdgtrk('')
 wffcuc:GetTest('')
 wffcuc:GetPower('')
 ]]--
