@@ -27,18 +27,26 @@ wwagp:CfgEncFull(13, 15, 'cpuwolf/qmdev/WwAgp/condbtn[10]', 10, 100, 1, 100, 200
 wwagp:GetDigiBkl('cpuwolf/qmdev/WwAgp/condbtn[10]', 1)
 
 local dr_utc_is_date = iDataRef:New('cpuwolf/qmdev/WwAgp/keysmap[14]')
+local dr_is_utc = iDataRef:New('cpuwolf/qmdev/WwAgp/keysmap[17]')
+
 
 --================================ When MSFS is not runinng, offline lua code
 local systemtimestr = os.date("%H:%M:%S")
 function Wwagp_sdk_off_LCD_Loop()
 	wwagp:SetDigiBkl()
-	if dr_utc_is_date:ChangedUpdate() then
-
-	end
-	if dr_utc_is_date:GetOld() > 0 then
-		systemtimestr = os.date("%m.%d.%y")
+	local is_utc = dr_is_utc:Get()
+	if dr_utc_is_date:Get() > 0 then
+		if is_utc > 0 then
+			systemtimestr = os.date("!%m.%d.%y")
+		else
+			systemtimestr = os.date("%m.%d.%y")
+		end
 	else
-		systemtimestr = os.date("%H:%M:%S")
+		if is_utc > 0 then
+			systemtimestr = os.date("!%H:%M:%S")
+		else
+			systemtimestr = os.date("%H:%M:%S")
+		end
 	end
 
 	-- Write to hardware
