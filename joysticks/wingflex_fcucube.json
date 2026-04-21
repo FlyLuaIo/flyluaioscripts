@@ -1,0 +1,142 @@
+{
+  "ProductName": "WfFcuc",
+  "USB_VID": "0xA316",
+  "USB_PID": "0xC787",
+  "LightKey": 16,
+  "LightKeyName": "LOC",
+  "Functions": [
+    {
+      "FunName": "leds",
+      "USB_CMD_length": 23,
+      "HeaderBytes": [
+        "0xF2",
+        "0xE1",
+        "0x03",
+        "0x02",
+        "0x01",
+        "0x02",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x02",
+        "0x02",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x08"
+      ],
+      "FunIndex": 1,
+      "LightBytes": [
+        "0xF2",
+        "0xE1",
+        "0x03",
+        "0x02",
+        "0x01",
+        "0x02",
+        "0x01",
+        "0x00",
+        "0x01",
+        "0x02",
+        "0x02",
+        "0xF0",
+        "0xF0",
+        "0x00",
+        "0x08"
+      ],
+      "TestBytes": [
+        "0xF2",
+        "0xE1",
+        "0x03",
+        "0x02",
+        "0x01",
+        "0x02",
+        "0x01",
+        "0x00",
+        "0x01",
+        "0x02",
+        "0x02",
+        "0xF0",
+        "0xF0",
+        "0x00",
+        "0x08",
+        "0x80"
+      ],
+      "OffBytes": [
+        "0xF2",
+        "0xE1",
+        "0x03",
+        "0x02",
+        "0x01",
+        "0x02",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x02",
+        "0x02",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x08"
+      ],
+      "SubFunctions": [
+        {
+          "bits": "i48:17",
+          "SpdVal": "i120:16",
+          "HdgVal": "i136:16",
+          "AltVal": "i152:16",
+          "VsVal": "i168:16"
+        }
+      ],
+      "SubBitFunctions": [
+        {
+          "loc": "t48"
+        },
+        {
+          "ap1": "t49"
+        },
+        {
+          "ap2": "t50"
+        },
+        {
+          "athr": "t51"
+        },
+        {
+          "exped": "t52"
+        },
+        {
+          "appr": "t53"
+        },
+        {
+          "Spd_mang": "t54"
+        },
+        {
+          "Spd_dash": "t55"
+        },
+        {
+          "Hdg_mang": "t56"
+        },
+        {
+          "Hdg_dash": "t57"
+        },
+        {
+          "Alt_mang": "t58"
+        },
+        {
+          "Vs_dash": "t59"
+        },
+        {
+          "Spd_mach": "t60"
+        },
+        {
+          "Hdg_trk": "t61"
+        },
+        {
+          "test": "t62"
+        },
+        {
+          "power": "t64"
+        }
+      ]
+    }
+  ]
+}
