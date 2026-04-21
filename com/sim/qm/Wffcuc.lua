@@ -2,7 +2,7 @@
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-21_09_15_13UTC
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-21_09_27_02UTC
 -- *****************************************************************
 
 local Wffcuc = oop.class(com.sim.Qmdev)
@@ -19,6 +19,8 @@ function Wffcuc:absent(FastTurnsPerSecond)
 		return true
 	end
 	_G.idr_wffcuc_hid_leds_bits = uluaFind('cpuwolf/qmdev/WfFcuc/leds/bits')
+	_G.idr_wffcuc_hid_leds_bkl = uluaFind('cpuwolf/qmdev/WfFcuc/leds/bkl')
+	_G.idr_wffcuc_hid_leds_lcdbkl = uluaFind('cpuwolf/qmdev/WfFcuc/leds/lcdbkl')
 	_G.idr_wffcuc_hid_leds_spdval = uluaFind('cpuwolf/qmdev/WfFcuc/leds/SpdVal')
 	_G.idr_wffcuc_hid_leds_hdgval = uluaFind('cpuwolf/qmdev/WfFcuc/leds/HdgVal')
 	_G.idr_wffcuc_hid_leds_altval = uluaFind('cpuwolf/qmdev/WfFcuc/leds/AltVal')

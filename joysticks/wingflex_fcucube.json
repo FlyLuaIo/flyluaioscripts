@@ -81,6 +81,8 @@
       "SubFunctions": [
         {
           "bits": "i48:17",
+          "bkl": "i88:8",
+          "lcdbkl": "i96:8",
           "SpdVal": "i120:16",
           "HdgVal": "i136:16",
           "AltVal": "i152:16",
