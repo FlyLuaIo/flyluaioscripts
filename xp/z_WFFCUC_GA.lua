@@ -1,6 +1,6 @@
 
 -- *****************************************************************
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-21_09_15_13UTC
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-22_10_09_50UTC
 -- *****************************************************************
 
 -- Do not remove below lines: hardware detection
@@ -27,6 +27,7 @@ wffcuc:GetVsdash('')
 wffcuc:GetSpdmach('')
 wffcuc:GetHdgtrk('')
 wffcuc:GetTest('')
+wffcuc:GetResv('')
 wffcuc:GetPower('')
 ]]--
 

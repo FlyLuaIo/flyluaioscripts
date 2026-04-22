@@ -18,29 +18,57 @@ end
 
 uluaLog('Wffcuc for Toliss')
 
-wffcuc:GetLoc('AirbusFBW/FCUAvail')
-wffcuc:GetAp1('AirbusFBW/FCUAvail')
-wffcuc:GetAp2('AirbusFBW/FCUAvail')
+-- LCD display
+wffcuc:GetSpd('sim/cockpit2/autopilot/airspeed_dial_kts_mach')
+wffcuc:GetHdg('sim/cockpit/autopilot/heading_mag')
+wffcuc:GetAlt('sim/cockpit/autopilot/altitude')
+wffcuc:GetVs('sim/cockpit/autopilot/vertical_velocity')
+-- LEDs
+wffcuc:GetLoc('AirbusFBW/LOCilluminated')
+wffcuc:GetAp1('AirbusFBW/AP1Engage')
+wffcuc:GetAp2('AirbusFBW/AP2Engage')
 wffcuc:GetAthr('AirbusFBW/FCUAvail')
-wffcuc:GetExped('AirbusFBW/FCUAvail')
+wffcuc:GetExped('AirbusFBW/APVerticalMode')
 wffcuc:GetAppr('AirbusFBW/FCUAvail')
-wffcuc:GetSpdmang('AirbusFBW/FCUAvail')
-wffcuc:GetSpddash('AirbusFBW/FCUAvail')
-wffcuc:GetHdgmang('AirbusFBW/FCUAvail')
-wffcuc:GetHdgdash('AirbusFBW/FCUAvail')
-wffcuc:GetAltmang('AirbusFBW/FCUAvail')
-wffcuc:GetVsdash('AirbusFBW/FCUAvail')
-wffcuc:GetSpdmach('AirbusFBW/FCUAvail')
-wffcuc:GetHdgtrk('AirbusFBW/FCUAvail')
-wffcuc:GetTest('AirbusFBW/AnnunMode')
+wffcuc:GetSpdmang('AirbusFBW/SPDmanaged')
+wffcuc:GetSpddash('AirbusFBW/SPDdashed')
+wffcuc:GetHdgmang('AirbusFBW/HDGmanaged')
+wffcuc:GetHdgdash('AirbusFBW/HDGdashed')
+wffcuc:GetAltmang('AirbusFBW/ALTmanaged')
+wffcuc:GetVsdash('AirbusFBW/VSdashed')
+wffcuc:GetSpdmach('sim/cockpit2/autopilot/airspeed_is_mach')
+wffcuc:GetHdgtrk('AirbusFBW/HDGTRKmode')
+wffcuc:GetTest('cpuwolf/flyluaio/WfFcuc/condbtn[0]')
 wffcuc:GetPower('AirbusFBW/FCUAvail')
 
+-- annun test mode
+local dr_test_set = iDataRef:New('cpuwolf/flyluaio/WfFcuc/condbtn[0]')
+local dr_test = iDataRef:New("AirbusFBW/AnnunMode") -- 0: DIM 1: BRT 2: test mode
 
 local counter = 0
 function Wffcuc_Toliss_Loop_Upd()
+	-- expert code: test mode
+	local b_test
+	if dr_test:ChangedUpdate() then
+		b_test = dr_test:GetOld()
+		if b_test == 2 then
+			dr_test_set:Set(1)
+		elseif b_test == 1 then
+			-- DIM
+			dr_test_set:Set(0)
+		else
+			dr_test_set:Set(0)
+		end
+	else
+		b_test = dr_test:Get()
+	end
 	wffcuc:SetLeds()
-	counter = (counter + 1) % 256
-	uluaSet(_G.idr_wffcuc_hid_invalid, counter)
+	wffcuc:SetSpd()
+	wffcuc:SetHdg()
+	wffcuc:SetAlt()
+	wffcuc:SetVs()
+	counter = (counter + 1) % 2
+	uluaSet(_G.idr_wffcuc_hid_leds_resv, counter)
 end
 
 uluaAddDoLoop('Wffcuc_Toliss_Loop_Upd()')

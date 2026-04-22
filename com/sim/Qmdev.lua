@@ -4,6 +4,7 @@
 -- *****************************************************************
 local Qmdev = oop.class()
 
+local bit = require("bit")
 -- Initialize Qmdev object fields.
 -- No parameters.
 -- No return value.
@@ -405,6 +406,18 @@ end
 -- add a menu in GUI
 function Qmdev:AddTogMenu(menuEn, menuCh, globalvarstr)
     uluaAddToggleMenu(self:getClassName() .. ': ' .. menuEn, self:getClassName() .. ': ' .. menuCh, globalvarstr)
+end
+
+function Qmdev:swap16(val)
+    -- Shift high byte down: bit.rshift(val, 8)
+    -- Shift low byte up: bit.lshift(val, 8)
+    -- Mask to 16-bit: bit.band(..., 0xFFFF)
+
+    local high_to_low = bit.rshift(val, 8)
+    local low_to_high = bit.lshift(val, 8)
+
+    -- Combine them and ensure the result is treated as a 16-bit unsigned integer
+    return bit.band(bit.bor(high_to_low, low_to_high), 0xFFFF)
 end
 
 return Qmdev

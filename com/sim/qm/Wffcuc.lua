@@ -5,6 +5,7 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-21_09_27_02UTC
 -- *****************************************************************
 
+
 local Wffcuc = oop.class(com.sim.Qmdev)
 function Wffcuc:init()
 	self.QmdevId = 0x2AD269AD
@@ -40,6 +41,7 @@ function Wffcuc:absent(FastTurnsPerSecond)
 	_G.idr_wffcuc_hid_leds_spdmach = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/SpdMach')
 	_G.idr_wffcuc_hid_leds_hdgtrk = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/HdgTrk')
 	_G.idr_wffcuc_hid_leds_test = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/test')
+	_G.idr_wffcuc_hid_leds_resv = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/resv')
 	_G.idr_wffcuc_hid_leds_power = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/power')
 	_G.idr_wffcuc_hid_invalid = uluaFind('cpuwolf/flyluaio/WfFcuc/invalid')
 	_G.idr_wffcuc_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WfFcuc/fastkeypersec')
@@ -225,14 +227,25 @@ function Wffcuc:SetTest(valbase, val)
 end
 
 -- ========
--- leds power
+-- leds resv
 
-function Wffcuc:GetPower(dpath)
+function Wffcuc:GetResv(dpath)
 	self:GetBit(16, dpath)
 end
 
+function Wffcuc:SetResv(valbase, val)
+	self:SetBit(16, _G.idr_wffcuc_hid_leds_resv, valbase, val)
+end
+
+-- ========
+-- leds power
+
+function Wffcuc:GetPower(dpath)
+	self:GetBit(17, dpath)
+end
+
 function Wffcuc:SetPower(valbase, val)
-	self:SetBit(16, _G.idr_wffcuc_hid_leds_power, valbase, val)
+	self:SetBit(17, _G.idr_wffcuc_hid_leds_power, valbase, val)
 end
 
 function Wffcuc:SetLeds(valbase, val)
@@ -297,6 +310,91 @@ end
 
 function Wffcuc:FreshLcdBkl()
 	self.d_lcdbkl:Invalid(-1)
+end
+
+
+-- ========
+-- Spd
+function Wffcuc:GetSpd(dpath)
+	self.d_spd = iDataRef:New(dpath)
+end
+
+function Wffcuc:SetSpd(val)
+	if val == nil then
+		val = self.d_spd:Get()
+		if self.d_spd:ChangedUpdate() then
+			uluaSet(idr_wffcuc_hid_leds_spdval, self:swap16(val))
+		end
+	else
+		uluaSet(idr_wffcuc_hid_leds_spdval, self:swap16(val))
+	end
+end
+
+function Wffcuc:FreshSpd()
+	self.d_spd:Invalid(-1)
+end
+
+-- ========
+-- Hdg
+function Wffcuc:GetHdg(dpath)
+	self.d_hdg = iDataRef:New(dpath)
+end
+
+function Wffcuc:SetHdg(val)
+	if val == nil then
+		val = self.d_hdg:Get()
+		if self.d_hdg:ChangedUpdate() then
+			uluaSet(idr_wffcuc_hid_leds_hdgval, self:swap16(val))
+		end
+	else
+		uluaSet(idr_wffcuc_hid_leds_hdgval, self:swap16(val))
+	end
+end
+
+function Wffcuc:FreshHdg()
+	self.d_hdg:Invalid(-1)
+end
+
+-- ========
+-- Alt
+function Wffcuc:GetAlt(dpath)
+	self.d_alt = iDataRef:New(dpath)
+end
+
+function Wffcuc:SetAlt(val)
+	if val == nil then
+		val = self.d_alt:Get()
+		if self.d_alt:ChangedUpdate() then
+			uluaSet(idr_wffcuc_hid_leds_altval, self:swap16(val))
+		end
+	else
+		uluaSet(idr_wffcuc_hid_leds_altval, self:swap16(val))
+	end
+end
+
+function Wffcuc:FreshAlt()
+	self.d_alt:Invalid(-1)
+end
+
+-- ========
+-- Vs
+function Wffcuc:GetVs(dpath)
+	self.d_vs = iDataRef:New(dpath)
+end
+
+function Wffcuc:SetVs(val)
+	if val == nil then
+		val = self.d_vs:Get()
+		if self.d_vs:ChangedUpdate() then
+			uluaSet(idr_wffcuc_hid_leds_vsval, self:swap16(val))
+		end
+	else
+		uluaSet(idr_wffcuc_hid_leds_vsval, self:swap16(val))
+	end
+end
+
+function Wffcuc:FreshVs()
+	self.d_vs:Invalid(-1)
 end
 
 return Wffcuc
