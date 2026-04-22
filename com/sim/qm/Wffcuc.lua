@@ -323,6 +323,9 @@ function Wffcuc:SetSpd(val)
 	if val == nil then
 		val = self.d_spd:Get()
 		if self.d_spd:ChangedUpdate() then
+			if val < 1 then
+				val = val * 100
+			end
 			uluaSet(idr_wffcuc_hid_leds_spdval, self:swap16(val))
 		end
 	else

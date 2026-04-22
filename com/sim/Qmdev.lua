@@ -409,15 +409,17 @@ function Qmdev:AddTogMenu(menuEn, menuCh, globalvarstr)
 end
 
 function Qmdev:swap16(val)
-    -- Shift high byte down: bit.rshift(val, 8)
-    -- Shift low byte up: bit.lshift(val, 8)
-    -- Mask to 16-bit: bit.band(..., 0xFFFF)
+    -- 1. Use bit.band to force the double into a 32-bit integer
+    -- and then mask it to just the lowest 16 bits.
+    -- This handles negative doubles and large doubles correctly.
+    local u16  = bit.band(val, 0xFFFF)
 
-    local high_to_low = bit.rshift(val, 8)
-    local low_to_high = bit.lshift(val, 8)
+    -- 2. Extract and move the bytes
+    local high = bit.rshift(u16, 8)                   -- Move bits 9-16 to 1-8
+    local low  = bit.band(bit.lshift(u16, 8), 0xFFFF) -- Move bits 1-8 to 9-16
 
-    -- Combine them and ensure the result is treated as a 16-bit unsigned integer
-    return bit.band(bit.bor(high_to_low, low_to_high), 0xFFFF)
+    -- 3. Combine them
+    return bit.bor(high, low)
 end
 
 return Qmdev

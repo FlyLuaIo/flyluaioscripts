@@ -23,13 +23,18 @@ wffcuc:GetSpd('sim/cockpit2/autopilot/airspeed_dial_kts_mach')
 wffcuc:GetHdg('sim/cockpit/autopilot/heading_mag')
 wffcuc:GetAlt('sim/cockpit/autopilot/altitude')
 wffcuc:GetVs('sim/cockpit/autopilot/vertical_velocity')
+
+-- brightness
+wffcuc:GetBkl("AirbusFBW/PanelBrightnessLevel", 200) -- 0~1
+wffcuc:GetLcdBkl('AirbusFBW/SupplLightLevelRehostats[1]', 250)
+
 -- LEDs
 wffcuc:GetLoc('AirbusFBW/LOCilluminated')
 wffcuc:GetAp1('AirbusFBW/AP1Engage')
 wffcuc:GetAp2('AirbusFBW/AP2Engage')
-wffcuc:GetAthr('AirbusFBW/FCUAvail')
+wffcuc:GetAthr('AirbusFBW/ATHRmode')
 wffcuc:GetExped('AirbusFBW/APVerticalMode')
-wffcuc:GetAppr('AirbusFBW/FCUAvail')
+wffcuc:GetAppr('AirbusFBW/APPRilluminated')
 wffcuc:GetSpdmang('AirbusFBW/SPDmanaged')
 wffcuc:GetSpddash('AirbusFBW/SPDdashed')
 wffcuc:GetHdgmang('AirbusFBW/HDGmanaged')
@@ -56,17 +61,28 @@ function Wffcuc_Toliss_Loop_Upd()
 		elseif b_test == 1 then
 			-- DIM
 			dr_test_set:Set(0)
+			wffcuc:FreshBits()
 		else
-			dr_test_set:Set(0)
+			wffcuc:FreshBits()
 		end
 	else
 		b_test = dr_test:Get()
 	end
-	wffcuc:SetLeds()
+	if b_test == 2 then
+		--test mode don't need refresh data
+		wffcuc:SetLeds(0, 1)
+	else
+		wffcuc:SetLeds()
+		dr_test_set:Set(0)
+	end
+
 	wffcuc:SetSpd()
 	wffcuc:SetHdg()
 	wffcuc:SetAlt()
 	wffcuc:SetVs()
+	wffcuc:SetBkl()
+	wffcuc:SetLcdBkl()
+
 	counter = (counter + 1) % 2
 	uluaSet(_G.idr_wffcuc_hid_leds_resv, counter)
 end
