@@ -102,13 +102,13 @@ qcduaf:CfgCmd(71, "AirbusFBW/MCDU2SlewDown")
 -- ===========================================================
 -- Read data
 
-qcduaf:GetFm1("cpuwolf/qmdev/QCDU-A3201/condbtn[0]")
-qcduaf:GetInd("cpuwolf/qmdev/QCDU-A3201/condbtn[0]")
-qcduaf:GetRdy("cpuwolf/qmdev/QCDU-A3201/condbtn[0]")
-qcduaf:GetFm2("cpuwolf/qmdev/QCDU-A3201/condbtn[0]")
-qcduaf:GetMenu("cpuwolf/qmdev/QCDU-A3201/condbtn[0]")
-qcduaf:GetFail("cpuwolf/qmdev/QCDU-A3201/condbtn[0]")
-qcduaf:GetFmgc("cpuwolf/qmdev/QCDU-A3201/condbtn[0]")
+qcduaf:GetFm1("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
+qcduaf:GetInd("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
+qcduaf:GetRdy("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
+qcduaf:GetFm2("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
+qcduaf:GetMenu("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
+qcduaf:GetFail("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
+qcduaf:GetFmgc("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
 
 qcduaf:GetBkl("AirbusFBW/PanelBrightnessLevel", 60)
 

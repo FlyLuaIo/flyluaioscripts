@@ -200,7 +200,7 @@ function check_if_dataref_exists()
         dr_qfcu_fcu_power = iDataRef:New("a320/Aircraft/Cockpit/Panel/FCU_AltitudeDigit1/State") -- > 0:off  1:ON
         dr_qfcu_fcu_bkpwr = iDataRef:New("model/material/panel_front") -- > backlight poweron  in dark cold mode
         ----------------------------  Display Dataref Set End ------------------------------------
-        -- cmd_qmdev_reload = uluaFind("cpuwolf/qmdev/reloadcfg")
+        -- cmd_qmdev_reload = uluaFind("cpuwolf/flyluaio/reloadcfg")
         -- uluaCmdOnce(cmd_qmdev_reload)
         uluaAddDoLoop("FF320_digi_disp_every_frame()")
         uluaLog("QFCU for FF320")

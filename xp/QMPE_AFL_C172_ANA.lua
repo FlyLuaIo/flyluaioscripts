@@ -205,82 +205,82 @@ local function xpdr_update()
 end
 -- =====RMP
 qmpe:GetR1vhf1("sim/cockpit2/switches/avionics_power_on")
-qmpe:GetR1vhf2("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetR2vhf1("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetR1vhf2("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetR2vhf1("cpuwolf/flyluaio/QMPE/condbtn[27]")
 qmpe:GetR2vhf2("sim/cockpit2/switches/avionics_power_on")
 -- =====ACP
 -- VHF1 TX LIGHT
 qmpe:GetSVhf1("sim/cockpit2/radios/actuators/audio_com_selection") -- 6:COM1
 -- VHF1 CALL LIGHT
-qmpe:GetCVhf1("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetCVhf1("cpuwolf/flyluaio/QMPE/condbtn[27]")
 -- VHF1 RX LIGHT
 qmpe:GetRVhf1("sim/cockpit2/radios/actuators/audio_selection_com1")
 
 -- VHF2 TX LIGHT
 qmpe:GetSVhf2("sim/cockpit2/radios/actuators/audio_com_selection") -- 7:COM2
 -- VHF2 CALL LIGHT
-qmpe:GetCVhf2("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetCVhf2("cpuwolf/flyluaio/QMPE/condbtn[27]")
 -- VHF2 RX LIGHT
 qmpe:GetRVhf2("sim/cockpit2/radios/actuators/audio_selection_com2")
 
 -- MECH TX LIGHT
 
-qmpe:GetSMech("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetSMech("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
 -- MECH CALL LIGHT
-qmpe:GetCMech("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetCMech("cpuwolf/flyluaio/QMPE/condbtn[27]")
 -- MECH RX LIGHT
 
-qmpe:GetRMech("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetRMech("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
 -- ATT TX LIGHT
 
-qmpe:GetSAtt("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetSAtt("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
 -- ATT CALL LIGHT
-qmpe:GetCAtt("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetCAtt("cpuwolf/flyluaio/QMPE/condbtn[27]")
 -- ATT RX LIGHT
 
-qmpe:GetRAtt("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetRAtt("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
 -- PX TX LIGHT
 
-qmpe:GetSPa("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetSPa("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
 -- ATT RX LIGHT
 
-qmpe:GetRPa("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetRPa("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
 -- =====ECAM
-qmpe:GetEEng("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetEBleed("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetEPress("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetEElec("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetEHyd("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetEFuel("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetEEng("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetEBleed("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetEPress("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetEElec("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetEHyd("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetEFuel("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
-qmpe:GetEApu("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetECond("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetEDoor("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetEWheel("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetEFctl("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetEApu("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetECond("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetEDoor("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetEWheel("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetEFctl("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
-qmpe:GetEClr("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetESts("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetEClr("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetESts("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
 -- =====MISC
-qmpe:GetWarn("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetCaut("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetWarn("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetCaut("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
-qmpe:GetMsg("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetMsg("cpuwolf/flyluaio/QMPE/condbtn[27]")
 qmpe:GetFail("sim/operation/failures/rel_xpndr")
-qmpe:GetLand("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetLand("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
-qmpe:GetTerr("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetTerr("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
-qmpe:GetLo("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetMed("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetMax("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetLo("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetMed("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetMax("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
 qmpe:GetBkl("C172/cockpit/lights/radioLt", 30) --0~1
 
@@ -288,9 +288,9 @@ qmpe:GetLock1("sim/flightmodel2/gear/deploy_ratio[1]")
 qmpe:GetLock2("sim/flightmodel2/gear/deploy_ratio[0]")
 qmpe:GetLock3("sim/flightmodel2/gear/deploy_ratio[2]")
 
-qmpe:GetUnlock1("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetUnlock2("cpuwolf/qmdev/QMPE/condbtn[27]")
-qmpe:GetUnlock3("cpuwolf/qmdev/QMPE/condbtn[27]")
+qmpe:GetUnlock1("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetUnlock2("cpuwolf/flyluaio/QMPE/condbtn[27]")
+qmpe:GetUnlock3("cpuwolf/flyluaio/QMPE/condbtn[27]")
 
 -- =====RMP radio
 qmpe:GetRmp1("sim/cockpit2/radios/actuators/com1_frequency_hz_833",

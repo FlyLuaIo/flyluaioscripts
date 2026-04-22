@@ -30,19 +30,19 @@ wwagp:GetLedBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 2)  -- 0~100
 wwagp:GetUlockL("(L:MSATR_GEAR_LEFT_UNLK_LT)")
 wwagp:GetUlockN("(L:MSATR_GEAR_NOSE_UNLK_LT)")
 wwagp:GetUlockR("(L:MSATR_GEAR_RIGHT_UNLK_LT)")
-wwagp:GetBrakeHot('cpuwolf/qmdev/WwAgp/condbtn[1]')
+wwagp:GetBrakeHot('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetLockL("(A:GEAR LEFT POSITION, percent over 100)")
 wwagp:GetLockN("(A:GEAR CENTER POSITION, percent over 100)")
 wwagp:GetLockR("(A:GEAR RIGHT POSITION, percent over 100)")
-wwagp:GetBrakeOn('cpuwolf/qmdev/WwAgp/condbtn[1]')
-wwagp:GetLowD('cpuwolf/qmdev/WwAgp/condbtn[1]')
-wwagp:GetMedD('cpuwolf/qmdev/WwAgp/condbtn[1]')
-wwagp:GetMaxD('cpuwolf/qmdev/WwAgp/condbtn[1]')
+wwagp:GetBrakeOn('cpuwolf/flyluaio/WwAgp/condbtn[1]')
+wwagp:GetLowD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
+wwagp:GetMedD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
+wwagp:GetMaxD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetLow('(L:A32NX_AUTOBRAKES_ARMED_MODE, Number) 1 ==')
 wwagp:GetMed('(L:A32NX_AUTOBRAKES_ARMED_MODE, Number) 2 ==')
 wwagp:GetMax('(L:A32NX_AUTOBRAKES_ARMED_MODE, Number) 3 ==')
 wwagp:GetTerr('(L:A32NX_EFIS_TERR_L_ACTIVE)')
-wwagp:GetLever('cpuwolf/qmdev/WwAgp/condbtn[1]')
+wwagp:GetLever('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 
 
 
@@ -57,7 +57,7 @@ local dr_utc_sec = iDataRef:New('(E:ZULU TIME, second)')
 
 local dr_et_sec = iDataRef:New('(E:SIMULATION TIME, second)')
 
-local dr_utc_is_date = iDataRef:New('cpuwolf/qmdev/WwAgp/keysmap[14]')
+local dr_utc_is_date = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[14]')
 
 local gChrono = ""
 local gUtc = ""

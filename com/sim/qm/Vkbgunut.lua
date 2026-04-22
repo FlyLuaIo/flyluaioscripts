@@ -15,11 +15,11 @@ function Vkbgunut:init()
 end
 
 function Vkbgunut:absent(FastTurnsPerSecond)
-	if not uluaFind('cpuwolf/qmdev/VkbGunUT/invalid') then
+	if not uluaFind('cpuwolf/flyluaio/VkbGunUT/invalid') then
 		return true
 	end
-	_G.idr_vkbgunut_hid_invalid = uluaFind('cpuwolf/qmdev/VkbGunUT/invalid')
-	_G.idr_vkbgunut_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/VkbGunUT/fastkeypersec')
+	_G.idr_vkbgunut_hid_invalid = uluaFind('cpuwolf/flyluaio/VkbGunUT/invalid')
+	_G.idr_vkbgunut_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/VkbGunUT/fastkeypersec')
 	uluaSet(_G.idr_vkbgunut_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end

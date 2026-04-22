@@ -3,12 +3,12 @@
 -- Author: QuickMade
 -- Email:  409050332@qq.com
 -- Website: https://space.bilibili.com/323386663/
--- GitHub Repository: https://gitee.com/cpuwolf/qmdev
+-- GitHub Repository: https://gitee.com/cpuwolf/FlyLuaIo
 -- Last Modified: 2023-10-31
 -- Version: 3.51.7 (ZIBO)
 --
 -- This script is part of the QCDU project, which interfaces with the ZIBO mod
--- for X-Plane 11. It utilizes the qmdev plugin for hardware interaction.
+-- for X-Plane 11. It utilizes the FlyLuaIo plugin for hardware interaction.
 -- 
 -- Send 3 Bytes:
 -- 1st Byte

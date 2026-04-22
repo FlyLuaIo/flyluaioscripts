@@ -12,7 +12,7 @@ end
 
 -- global call back function
 _G.QmReloadActionCallBackFunc = function(KeyCode)
-    local cmd_qmdev_reload = uluaFind("cpuwolf/qmdev/reload")
+    local cmd_qmdev_reload = uluaFind("cpuwolf/flyluaio/reload")
     if cmd_qmdev_reload ~= nil then
         uluaCmdOnce(cmd_qmdev_reload)
         uluaLog("QmReload: send cmd")

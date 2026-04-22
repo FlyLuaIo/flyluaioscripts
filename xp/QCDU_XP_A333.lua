@@ -102,13 +102,13 @@ qcdua:CfgCmd(71, "sim/FMS/down")
 -- ===========================================================
 -- Read data
 
-qcdua:GetFm1("cpuwolf/qmdev/QCDU-A320/condbtn[0]")
-qcdua:GetInd("cpuwolf/qmdev/QCDU-A320/condbtn[0]")
-qcdua:GetRdy("cpuwolf/qmdev/QCDU-A320/condbtn[0]")
-qcdua:GetFm2("cpuwolf/qmdev/QCDU-A320/condbtn[0]")
-qcdua:GetMenu("cpuwolf/qmdev/QCDU-A320/condbtn[0]")
-qcdua:GetFail("cpuwolf/qmdev/QCDU-A320/condbtn[0]")
-qcdua:GetFmgc("cpuwolf/qmdev/QCDU-A320/condbtn[0]")
+qcdua:GetFm1("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
+qcdua:GetInd("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
+qcdua:GetRdy("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
+qcdua:GetFm2("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
+qcdua:GetMenu("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
+qcdua:GetFail("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
+qcdua:GetFmgc("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
 
 qcdua:GetBkl("laminar/a333/rheostats/integ_light_brightness", 60) -- 0~1
 

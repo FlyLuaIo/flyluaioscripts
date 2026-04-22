@@ -15,18 +15,18 @@ function Stkswitch:init()
 end
 
 function Stkswitch:absent(FastTurnsPerSecond)
-	if not uluaFind('cpuwolf/qmdev/StkSwitch/LED/int') then
+	if not uluaFind('cpuwolf/flyluaio/StkSwitch/LED/int') then
 		return true
 	end
-	_G.idr_stkswitch_hid_led_int = uluaFind('cpuwolf/qmdev/StkSwitch/LED/int')
-	_G.idr_stkswitch_hid_led_greenn = uluaFind('cpuwolf/qmdev/StkSwitch/LED/GreenN')
-	_G.idr_stkswitch_hid_led_greenl = uluaFind('cpuwolf/qmdev/StkSwitch/LED/GreenL')
-	_G.idr_stkswitch_hid_led_greenr = uluaFind('cpuwolf/qmdev/StkSwitch/LED/GreenR')
-	_G.idr_stkswitch_hid_led_redn = uluaFind('cpuwolf/qmdev/StkSwitch/LED/RedN')
-	_G.idr_stkswitch_hid_led_redl = uluaFind('cpuwolf/qmdev/StkSwitch/LED/RedL')
-	_G.idr_stkswitch_hid_led_redr = uluaFind('cpuwolf/qmdev/StkSwitch/LED/RedR')
-	_G.idr_stkswitch_hid_invalid = uluaFind('cpuwolf/qmdev/StkSwitch/invalid')
-	_G.idr_stkswitch_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/StkSwitch/fastkeypersec')
+	_G.idr_stkswitch_hid_led_int = uluaFind('cpuwolf/flyluaio/StkSwitch/LED/int')
+	_G.idr_stkswitch_hid_led_greenn = uluaFind('cpuwolf/flyluaio/StkSwitch/LED/GreenN')
+	_G.idr_stkswitch_hid_led_greenl = uluaFind('cpuwolf/flyluaio/StkSwitch/LED/GreenL')
+	_G.idr_stkswitch_hid_led_greenr = uluaFind('cpuwolf/flyluaio/StkSwitch/LED/GreenR')
+	_G.idr_stkswitch_hid_led_redn = uluaFind('cpuwolf/flyluaio/StkSwitch/LED/RedN')
+	_G.idr_stkswitch_hid_led_redl = uluaFind('cpuwolf/flyluaio/StkSwitch/LED/RedL')
+	_G.idr_stkswitch_hid_led_redr = uluaFind('cpuwolf/flyluaio/StkSwitch/LED/RedR')
+	_G.idr_stkswitch_hid_invalid = uluaFind('cpuwolf/flyluaio/StkSwitch/invalid')
+	_G.idr_stkswitch_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/StkSwitch/fastkeypersec')
 	uluaSet(_G.idr_stkswitch_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end

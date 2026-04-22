@@ -186,13 +186,13 @@ end
 
 function Qmcp737c:BindVhf()
     --small knob
-    self:CfgEncFull(56, 57, "cpuwolf/qmdev/QMCP737C/condbtn[56]", 1, 10, 0, -39500, 39500)
+    self:CfgEncFull(56, 57, "cpuwolf/flyluaio/QMCP737C/condbtn[56]", 1, 10, 0, -39500, 39500)
     --big knob
-    self:CfgEncFull(58, 59, "cpuwolf/qmdev/QMCP737C/condbtn[58]", 1, 10, 0, -39500, 39500)
+    self:CfgEncFull(58, 59, "cpuwolf/flyluaio/QMCP737C/condbtn[58]", 1, 10, 0, -39500, 39500)
     --VHF toggle
-    self:CfgValT(60, "cpuwolf/qmdev/QMCP737C/condbtn[60]")
+    self:CfgValT(60, "cpuwolf/flyluaio/QMCP737C/condbtn[60]")
     --VHF flip
-    self:CfgValT(61, "cpuwolf/qmdev/QMCP737C/condbtn[61]")
+    self:CfgValT(61, "cpuwolf/flyluaio/QMCP737C/condbtn[61]")
 end
 
 function Qmcp737c:RegLoopVhf(cmd_vhf1_d_small, cmd_vhf1_u_small,

@@ -93,9 +93,9 @@ local dr_qfcu_alt_unit = iDataRef:New("AirbusFBW/ALT100_1000") -- 0: 100  1：10
 
 ----------------------------  Display Dataref Set End ------------------------------------
 
-qfcu:CfgEncFull(16, 17, "cpuwolf/qmdev/QFCU/condbtn[16]" , 100, 100, 0, -39500, 39500)
-qfcu:CfgEncFull(46, 47, "cpuwolf/qmdev/QFCU/condbtn[46]" , 1, 10, 0, -39500, 39500)
-qfcu:CfgEncFull(78, 79, "cpuwolf/qmdev/QFCU/condbtn[78]" , 1, 10, 0, -39500, 39500)
+qfcu:CfgEncFull(16, 17, "cpuwolf/flyluaio/QFCU/condbtn[16]" , 100, 100, 0, -39500, 39500)
+qfcu:CfgEncFull(46, 47, "cpuwolf/flyluaio/QFCU/condbtn[46]" , 1, 10, 0, -39500, 39500)
+qfcu:CfgEncFull(78, 79, "cpuwolf/flyluaio/QFCU/condbtn[78]" , 1, 10, 0, -39500, 39500)
 qfcu:CfgCmd(0, "sim/GPS/g430n2_msg", "sim/autopilot/airspeed_down")
 qfcu:CfgCmd(1, "sim/GPS/g430n2_msg", "sim/autopilot/airspeed_up")
 qfcu:CfgCmd(2, "sim/GPS/g430n2_msg", "AirbusFBW/PushSPDSel")

@@ -189,9 +189,9 @@ qcdua:CfgCmd(0, "AirbusFBW/MCDU1LSK1L")
 qcdua:CfgCmd(1, "AirbusFBW/MCDU1LSK2L")
 
 -- Configure LED state
-qcdua:GetFm1("cpuwolf/qmdev/QCDU-A320/condbtn[0]")
-qcdua:GetInd("cpuwolf/qmdev/QCDU-A320/condbtn[0]")
-qcdua:GetRdy("cpuwolf/qmdev/QCDU-A320/condbtn[0]")
+qcdua:GetFm1("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
+qcdua:GetInd("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
+qcdua:GetRdy("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
 
 -- Configure brightness
 qcdua:GetBkl("AirbusFBW/MCDUIntegBrightness[0]", 40)
@@ -209,8 +209,8 @@ qcduaf:CfgCmd(0, "AirbusFBW/MCDU2LSK1L")
 qcduaf:CfgCmd(1, "AirbusFBW/MCDU2LSK2L")
 
 -- Configure LED state
-qcduaf:GetFm1("cpuwolf/qmdev/QCDU-A3201/condbtn[0]")
-qcduaf:GetInd("cpuwolf/qmdev/QCDU-A3201/condbtn[0]")
+qcduaf:GetFm1("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
+qcduaf:GetInd("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
 
 -- Configure brightness
 qcduaf:GetBkl("AirbusFBW/MCDUIntegBrightness[1]", 40)

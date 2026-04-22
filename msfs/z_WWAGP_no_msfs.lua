@@ -19,18 +19,18 @@ end
 
 uluaLog('WinWing AGP offline clock')
 
-local dr_digilight = iDataRef:New('cpuwolf/qmdev/WwAgp/condbtn[10]')
+local dr_digilight = iDataRef:New('cpuwolf/flyluaio/WwAgp/condbtn[10]')
 dr_digilight:Set(200)
 
-wwagp:CfgEncFull(13, 15, 'cpuwolf/qmdev/WwAgp/condbtn[10]', 10, 100, 2, 100, 250)
+wwagp:CfgEncFull(13, 15, 'cpuwolf/flyluaio/WwAgp/condbtn[10]', 10, 100, 2, 100, 250)
 
 
-wwagp:GetBkl('cpuwolf/qmdev/WwAgp/condbtn[9]', 1)
-wwagp:GetDigiBkl('cpuwolf/qmdev/WwAgp/condbtn[10]', 1)
-wwagp:GetLedBkl('cpuwolf/qmdev/WwAgp/condbtn[9]', 1)
+wwagp:GetBkl('cpuwolf/flyluaio/WwAgp/condbtn[9]', 1)
+wwagp:GetDigiBkl('cpuwolf/flyluaio/WwAgp/condbtn[10]', 1)
+wwagp:GetLedBkl('cpuwolf/flyluaio/WwAgp/condbtn[9]', 1)
 
-local dr_utc_is_date = iDataRef:New('cpuwolf/qmdev/WwAgp/keysmap[14]')
-local dr_is_utc = iDataRef:New('cpuwolf/qmdev/WwAgp/keysmap[17]')
+local dr_utc_is_date = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[14]')
+local dr_is_utc = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[17]')
 
 
 --================================ When MSFS is not runinng, offline lua code

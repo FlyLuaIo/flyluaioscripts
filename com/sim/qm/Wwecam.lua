@@ -35,12 +35,12 @@ function Wwecam:init()
 end
 
 function Wwecam:absent(FastTurnsPerSecond)
-	if not uluaFind('cpuwolf/qmdev/WwEcam/leds/ledCmd') then
+	if not uluaFind('cpuwolf/flyluaio/WwEcam/leds/ledCmd') then
 		return true
 	end
-	_G.idr_wwecam_hid_leds_ledcmd = uluaFind('cpuwolf/qmdev/WwEcam/leds/ledCmd')
-	_G.idr_wwecam_hid_invalid = uluaFind('cpuwolf/qmdev/WwEcam/invalid')
-	_G.idr_wwecam_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/WwEcam/fastkeypersec')
+	_G.idr_wwecam_hid_leds_ledcmd = uluaFind('cpuwolf/flyluaio/WwEcam/leds/ledCmd')
+	_G.idr_wwecam_hid_invalid = uluaFind('cpuwolf/flyluaio/WwEcam/invalid')
+	_G.idr_wwecam_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WwEcam/fastkeypersec')
 	uluaSet(_G.idr_wwecam_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end

@@ -83,22 +83,22 @@ function Wwagp:init()
 end
 
 function Wwagp:absent(FastTurnsPerSecond)
-	if not uluaFind('cpuwolf/qmdev/WwAgp/leds/ledCmd') then
+	if not uluaFind('cpuwolf/flyluaio/WwAgp/leds/ledCmd') then
 		return true
 	end
-	_G.idr_wwagp_hid_leds_ledcmd = uluaFind('cpuwolf/qmdev/WwAgp/leds/ledCmd')
-	_G.idr_wwagp_hid_lcd_seqnum = uluaFind('cpuwolf/qmdev/WwAgp/lcd/seqNum')
-	_G.idr_wwagp_hid_lcd_lcd1 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd1')
-	_G.idr_wwagp_hid_lcd_lcd2 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd2')
-	_G.idr_wwagp_hid_lcd_lcd3 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd3')
-	_G.idr_wwagp_hid_lcd_lcd4 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd4')
-	_G.idr_wwagp_hid_lcd_lcd5 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd5')
-	_G.idr_wwagp_hid_lcd_lcd6 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd6')
-	_G.idr_wwagp_hid_lcd_lcd7 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd7')
-	_G.idr_wwagp_hid_lcd_lcd8 = uluaFind('cpuwolf/qmdev/WwAgp/lcd/lcd8')
-	_G.idr_wwagp_hid_finish_seqnum = uluaFind('cpuwolf/qmdev/WwAgp/finish/seqNum')
-	_G.idr_wwagp_hid_invalid = uluaFind('cpuwolf/qmdev/WwAgp/invalid')
-	_G.idr_wwagp_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/WwAgp/fastkeypersec')
+	_G.idr_wwagp_hid_leds_ledcmd = uluaFind('cpuwolf/flyluaio/WwAgp/leds/ledCmd')
+	_G.idr_wwagp_hid_lcd_seqnum = uluaFind('cpuwolf/flyluaio/WwAgp/lcd/seqNum')
+	_G.idr_wwagp_hid_lcd_lcd1 = uluaFind('cpuwolf/flyluaio/WwAgp/lcd/lcd1')
+	_G.idr_wwagp_hid_lcd_lcd2 = uluaFind('cpuwolf/flyluaio/WwAgp/lcd/lcd2')
+	_G.idr_wwagp_hid_lcd_lcd3 = uluaFind('cpuwolf/flyluaio/WwAgp/lcd/lcd3')
+	_G.idr_wwagp_hid_lcd_lcd4 = uluaFind('cpuwolf/flyluaio/WwAgp/lcd/lcd4')
+	_G.idr_wwagp_hid_lcd_lcd5 = uluaFind('cpuwolf/flyluaio/WwAgp/lcd/lcd5')
+	_G.idr_wwagp_hid_lcd_lcd6 = uluaFind('cpuwolf/flyluaio/WwAgp/lcd/lcd6')
+	_G.idr_wwagp_hid_lcd_lcd7 = uluaFind('cpuwolf/flyluaio/WwAgp/lcd/lcd7')
+	_G.idr_wwagp_hid_lcd_lcd8 = uluaFind('cpuwolf/flyluaio/WwAgp/lcd/lcd8')
+	_G.idr_wwagp_hid_finish_seqnum = uluaFind('cpuwolf/flyluaio/WwAgp/finish/seqNum')
+	_G.idr_wwagp_hid_invalid = uluaFind('cpuwolf/flyluaio/WwAgp/invalid')
+	_G.idr_wwagp_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WwAgp/fastkeypersec')
 	uluaSet(_G.idr_wwagp_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end

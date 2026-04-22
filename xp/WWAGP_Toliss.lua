@@ -99,10 +99,10 @@ if not isINIA340 then
 else
 	wwagp:GetLow('AirbusFBW/AutoBrkLo')
 	wwagp:GetMed('AirbusFBW/AutoBrkMed')
-	wwagp:GetMax('cpuwolf/qmdev/WwAgp/condbtn[2]')
+	wwagp:GetMax('cpuwolf/flyluaio/WwAgp/condbtn[2]')
 end
 wwagp:GetTerr('AirbusFBW/OHPLightsATA34[24]')
-wwagp:GetLever('cpuwolf/qmdev/WwAgp/condbtn[1]')
+wwagp:GetLever('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 
 
 
@@ -170,7 +170,7 @@ local dr_test = iDataRef:New('AirbusFBW/AnnunMode')                      -- 0: n
 local dr_power = iDataRef:New('sim/cockpit2/switches/avionics_power_on') -- 0: OFF 1: ON
 local drf_brk_sel
 local drf_brk_max
-local drf_brk_pos = iDataRef:New('cpuwolf/qmdev/WwAgp/condbtn[2]')
+local drf_brk_pos = iDataRef:New('cpuwolf/flyluaio/WwAgp/condbtn[2]')
 if isINIA340 then
 	drf_brk_sel = iDataRef:New('AirbusFBW/AutoBrkSel')
 	drf_brk_max = iDataRef:New('AirbusFBW/AutoBrkMax')

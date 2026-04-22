@@ -7,42 +7,42 @@
 
 local Wffcuc = oop.class(com.sim.Qmdev)
 function Wffcuc:init()
-	self.QmdevId = 0x XXXXXX
-	self.FastTurnsPerSecond = 5
+	self.QmdevId = 0x2AD269AD
+	self.FastTurnsPerSecond = 10
 	if _G.ilua_hw_assigned_wffcuc == nil then
 		_G.ilua_hw_assigned_wffcuc = 0
 	end
 end
 
 function Wffcuc:absent(FastTurnsPerSecond)
-	if not uluaFind('cpuwolf/qmdev/WfFcuc/leds/bits') then
+	if not uluaFind('cpuwolf/flyluaio/WfFcuc/leds/bits') then
 		return true
 	end
-	_G.idr_wffcuc_hid_leds_bits = uluaFind('cpuwolf/qmdev/WfFcuc/leds/bits')
-	_G.idr_wffcuc_hid_leds_bkl = uluaFind('cpuwolf/qmdev/WfFcuc/leds/bkl')
-	_G.idr_wffcuc_hid_leds_lcdbkl = uluaFind('cpuwolf/qmdev/WfFcuc/leds/lcdbkl')
-	_G.idr_wffcuc_hid_leds_spdval = uluaFind('cpuwolf/qmdev/WfFcuc/leds/SpdVal')
-	_G.idr_wffcuc_hid_leds_hdgval = uluaFind('cpuwolf/qmdev/WfFcuc/leds/HdgVal')
-	_G.idr_wffcuc_hid_leds_altval = uluaFind('cpuwolf/qmdev/WfFcuc/leds/AltVal')
-	_G.idr_wffcuc_hid_leds_vsval = uluaFind('cpuwolf/qmdev/WfFcuc/leds/VsVal')
-	_G.idr_wffcuc_hid_leds_loc = uluaFind('cpuwolf/qmdev/WfFcuc/leds/loc')
-	_G.idr_wffcuc_hid_leds_ap1 = uluaFind('cpuwolf/qmdev/WfFcuc/leds/ap1')
-	_G.idr_wffcuc_hid_leds_ap2 = uluaFind('cpuwolf/qmdev/WfFcuc/leds/ap2')
-	_G.idr_wffcuc_hid_leds_athr = uluaFind('cpuwolf/qmdev/WfFcuc/leds/athr')
-	_G.idr_wffcuc_hid_leds_exped = uluaFind('cpuwolf/qmdev/WfFcuc/leds/exped')
-	_G.idr_wffcuc_hid_leds_appr = uluaFind('cpuwolf/qmdev/WfFcuc/leds/appr')
-	_G.idr_wffcuc_hid_leds_spdmang = uluaFind('cpuwolf/qmdev/WfFcuc/leds/SpdMang')
-	_G.idr_wffcuc_hid_leds_spddash = uluaFind('cpuwolf/qmdev/WfFcuc/leds/SpdDash')
-	_G.idr_wffcuc_hid_leds_hdgmang = uluaFind('cpuwolf/qmdev/WfFcuc/leds/HdgMang')
-	_G.idr_wffcuc_hid_leds_hdgdash = uluaFind('cpuwolf/qmdev/WfFcuc/leds/HdgDash')
-	_G.idr_wffcuc_hid_leds_altmang = uluaFind('cpuwolf/qmdev/WfFcuc/leds/AltMang')
-	_G.idr_wffcuc_hid_leds_vsdash = uluaFind('cpuwolf/qmdev/WfFcuc/leds/VsDash')
-	_G.idr_wffcuc_hid_leds_spdmach = uluaFind('cpuwolf/qmdev/WfFcuc/leds/SpdMach')
-	_G.idr_wffcuc_hid_leds_hdgtrk = uluaFind('cpuwolf/qmdev/WfFcuc/leds/HdgTrk')
-	_G.idr_wffcuc_hid_leds_test = uluaFind('cpuwolf/qmdev/WfFcuc/leds/test')
-	_G.idr_wffcuc_hid_leds_power = uluaFind('cpuwolf/qmdev/WfFcuc/leds/power')
-	_G.idr_wffcuc_hid_invalid = uluaFind('cpuwolf/qmdev/WfFcuc/invalid')
-	_G.idr_wffcuc_hid_fastkeypersec = uluaFind('cpuwolf/qmdev/WfFcuc/fastkeypersec')
+	_G.idr_wffcuc_hid_leds_bits = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/bits')
+	_G.idr_wffcuc_hid_leds_bkl = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/bkl')
+	_G.idr_wffcuc_hid_leds_lcdbkl = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/lcdbkl')
+	_G.idr_wffcuc_hid_leds_spdval = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/SpdVal')
+	_G.idr_wffcuc_hid_leds_hdgval = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/HdgVal')
+	_G.idr_wffcuc_hid_leds_altval = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/AltVal')
+	_G.idr_wffcuc_hid_leds_vsval = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/VsVal')
+	_G.idr_wffcuc_hid_leds_loc = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/loc')
+	_G.idr_wffcuc_hid_leds_ap1 = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/ap1')
+	_G.idr_wffcuc_hid_leds_ap2 = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/ap2')
+	_G.idr_wffcuc_hid_leds_athr = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/athr')
+	_G.idr_wffcuc_hid_leds_exped = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/exped')
+	_G.idr_wffcuc_hid_leds_appr = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/appr')
+	_G.idr_wffcuc_hid_leds_spdmang = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/SpdMang')
+	_G.idr_wffcuc_hid_leds_spddash = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/SpdDash')
+	_G.idr_wffcuc_hid_leds_hdgmang = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/HdgMang')
+	_G.idr_wffcuc_hid_leds_hdgdash = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/HdgDash')
+	_G.idr_wffcuc_hid_leds_altmang = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/AltMang')
+	_G.idr_wffcuc_hid_leds_vsdash = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/VsDash')
+	_G.idr_wffcuc_hid_leds_spdmach = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/SpdMach')
+	_G.idr_wffcuc_hid_leds_hdgtrk = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/HdgTrk')
+	_G.idr_wffcuc_hid_leds_test = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/test')
+	_G.idr_wffcuc_hid_leds_power = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/power')
+	_G.idr_wffcuc_hid_invalid = uluaFind('cpuwolf/flyluaio/WfFcuc/invalid')
+	_G.idr_wffcuc_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WfFcuc/fastkeypersec')
 	uluaSet(_G.idr_wffcuc_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end
@@ -252,6 +252,51 @@ function Wffcuc:SetLeds(valbase, val)
 	self:SetHdgtrk(valbase, val)
 	self:SetTest(valbase, val)
 	self:SetPower(valbase, val)
+end
+
+
+-- ========
+-- Backlight
+function Wffcuc:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
+end
+
+function Wffcuc:SetBkl(val)
+	if val == nil then
+		val = self.d_bkl:Get() * self.d_bkl_scale
+		if self.d_bkl:ChangedUpdate() then
+			uluaSet(idr_wffcuc_hid_leds_bkl, val)
+		end
+	else
+		uluaSet(idr_wffcuc_hid_leds_bkl, val)
+	end
+end
+
+function Wffcuc:FreshBkl()
+	self.d_bkl:Invalid(-1)
+end
+
+-- ========
+-- LCD Backlight
+function Wffcuc:GetLcdBkl(dpath, scale)
+	self.d_lcdbkl_scale = scale == nil and 30 or scale
+	self.d_lcdbkl = iDataRef:New(dpath)
+end
+
+function Wffcuc:SetLcdBkl(val)
+	if val == nil then
+		val = self.d_lcdbkl:Get() * self.d_lcdbkl_scale
+		if self.d_lcdbkl:ChangedUpdate() then
+			uluaSet(idr_wffcuc_hid_leds_lcdbkl, val)
+		end
+	else
+		uluaSet(idr_wffcuc_hid_leds_lcdbkl, val)
+	end
+end
+
+function Wffcuc:FreshLcdBkl()
+	self.d_lcdbkl:Invalid(-1)
 end
 
 return Wffcuc

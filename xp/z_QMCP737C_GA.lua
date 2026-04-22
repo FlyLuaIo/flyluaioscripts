@@ -93,10 +93,10 @@ if PLANE_ICAO == 'B350' then
     qmcp737c:CfgCmd(65, 'sim/radios/stby_nav1_fine_up')
     qmcp737c:CfgCmd(66, 'sim/radios/stby_nav1_coarse_down')
     qmcp737c:CfgCmd(67, 'sim/radios/stby_nav1_coarse_up')
-    qmcp737c:CfgVal(68, 'cpuwolf/qmdev/QMCP737C/condbtn[68]', 1, 0)
+    qmcp737c:CfgVal(68, 'cpuwolf/flyluaio/QMCP737C/condbtn[68]', 1, 0)
     qmcp737c:CfgCmd(69, 'laminar/B738/push_button/switch_freq_nav1_press')
     qmcp737c:CfgCmd(70, 'KA350/cmd/cPanel/pilotDisplayCP/crsAct')
-    qmcp737c:CfgVal(71, 'cpuwolf/qmdev/QMCP737C/condbtn[71]', 1, 0)
+    qmcp737c:CfgVal(71, 'cpuwolf/flyluaio/QMCP737C/condbtn[71]', 1, 0)
     qmcp737c:CfgVal(72, 'KA350/ianim/pSubpanel/taxiLights', 1, 0)
     qmcp737c:CfgVal(73, 'laminar/B738/toggle_switch/rwy_light_right', 1, 0)
     qmcp737c:CfgVal(74, 'laminar/B738/toggle_switch/rwy_light_left', 1, 0)
@@ -271,7 +271,7 @@ else
     qmcp737c_ga_com_switch(idr_qmcp737c_hid_condbtn_60:Get())
     -- key 60: VHF1 VHF2 Push Toggle
     -- it will trigger idr_qmcp737c_hid_condbtn_60:ChangedUpdate()
-    qmcp737c:CfgValT(60, 'cpuwolf/qmdev/QMCP737C/condbtn[60]')
+    qmcp737c:CfgValT(60, 'cpuwolf/flyluaio/QMCP737C/condbtn[60]')
 
     qmcp737c:CfgCmd(64, 'sim/radios/stby_nav1_fine_down')
     qmcp737c:CfgCmd(65, 'sim/radios/stby_nav1_fine_up')
