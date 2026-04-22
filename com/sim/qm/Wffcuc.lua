@@ -264,8 +264,6 @@ function Wffcuc:SetLeds(valbase, val)
 	self:SetVsdash(valbase, val)
 	self:SetSpdmach(valbase, val)
 	self:SetHdgtrk(valbase, val)
-	self:SetTest(valbase, val)
-	self:SetPower(valbase, val)
 end
 
 -- ========

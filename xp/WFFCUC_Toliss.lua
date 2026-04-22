@@ -70,16 +70,18 @@ function Wffcuc_Toliss_Loop_Upd()
 	end
 	if b_test == 2 then
 		--test mode don't need refresh data
-		wffcuc:SetLeds(0, 1)
+		wffcuc:SetLeds(0.1, 1)
 	else
-		wffcuc:SetLeds()
-		dr_test_set:Set(0)
+		wffcuc:SetLeds(0.1)
 	end
-
+	wffcuc:SetTest()
+	wffcuc:SetPower()
+	-- LCD display
 	wffcuc:SetSpd()
 	wffcuc:SetHdg()
 	wffcuc:SetAlt()
 	wffcuc:SetVs()
+	-- backlight
 	wffcuc:SetBkl()
 	wffcuc:SetLcdBkl()
 	--force refresh
