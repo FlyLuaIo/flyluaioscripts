@@ -7,26 +7,19 @@
   "Functions": [
     {
       "FunName": "leds",
-      "USB_CMD_length": 23,
+      "USB_FEAT_length": 64,
       "HeaderBytes": [
+        "0x00",
         "0xF2",
         "0xE1",
         "0x03",
         "0x02",
         "0x01",
-        "0x02",
-        "0x00",
-        "0x00",
-        "0x00",
-        "0x02",
-        "0x02",
-        "0x00",
-        "0x00",
-        "0x00",
-        "0x08"
+        "0x02"
       ],
       "FunIndex": 1,
       "LightBytes": [
+        "0x00",
         "0xF2",
         "0xE1",
         "0x03",
@@ -44,6 +37,7 @@
         "0x08"
       ],
       "TestBytes": [
+        "0x00",
         "0xF2",
         "0xE1",
         "0x03",
@@ -51,7 +45,7 @@
         "0x01",
         "0x02",
         "0x01",
-        "0x00",
+        "0x0a",
         "0x01",
         "0x02",
         "0x02",
@@ -62,6 +56,7 @@
         "0x80"
       ],
       "OffBytes": [
+        "0x00",
         "0xF2",
         "0xE1",
         "0x03",
@@ -80,63 +75,63 @@
       ],
       "SubFunctions": [
         {
-          "bits": "i48:17",
-          "bkl": "i88:8",
-          "lcdbkl": "i96:8",
-          "SpdVal": "i120:16",
-          "HdgVal": "i136:16",
-          "AltVal": "i152:16",
-          "VsVal": "i168:16"
+          "bits": "i56:17",
+          "bkl": "i96:8",
+          "lcdbkl": "i104:8",
+          "SpdVal": "i128:16",
+          "HdgVal": "i144:16",
+          "AltVal": "i160:16",
+          "VsVal": "i176:16"
         }
       ],
       "SubBitFunctions": [
         {
-          "loc": "t48"
+          "loc": "t56"
         },
         {
-          "ap1": "t49"
+          "ap1": "t57"
         },
         {
-          "ap2": "t50"
+          "ap2": "t58"
         },
         {
-          "athr": "t51"
+          "athr": "t59"
         },
         {
-          "exped": "t52"
+          "exped": "t60"
         },
         {
-          "appr": "t53"
+          "appr": "t61"
         },
         {
-          "SpdMang": "t54"
+          "SpdMang": "t62"
         },
         {
-          "SpdDash": "t55"
+          "SpdDash": "t63"
         },
         {
-          "HdgMang": "t56"
+          "HdgMang": "t64"
         },
         {
-          "HdgDash": "t57"
+          "HdgDash": "t65"
         },
         {
-          "AltMang": "t58"
+          "AltMang": "t66"
         },
         {
-          "VsDash": "t59"
+          "VsDash": "t67"
         },
         {
-          "SpdMach": "t60"
+          "SpdMach": "t68"
         },
         {
-          "HdgTrk": "t61"
+          "HdgTrk": "t69"
         },
         {
-          "test": "t62"
+          "test": "t70"
         },
         {
-          "power": "t64"
+          "power": "t72"
         }
       ]
     }
