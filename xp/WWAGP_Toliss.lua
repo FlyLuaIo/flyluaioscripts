@@ -68,7 +68,7 @@ wwagp:CfgCmd(11, 'toliss_airbus/chrono/ChronoStartStopPush')
 wwagp:CfgCmd(14, 'toliss_airbus/chrono/datePush')
 
 wwagp:CfgVal(19, 'AirbusFBW/ClockETSwitch', 0, 1)
-wwagp:CfgVal(20, 'AirbusFBW/ClockETSwitch', 2, 1)
+wwagp:CfgVal(21, 'AirbusFBW/ClockETSwitch', 2, 1)
 
 -- Terrain
 wwagp:CfgValT(22, 'AirbusFBW/TerrainSelectedND1')
@@ -238,7 +238,7 @@ function Wwagp_Toliss_Loop_Upd()
 			end
 		end
 	end
-	wwagp:Setleds()
+	wwagp:Setleds(0.1)
 end
 
 uluaAddDoLoop('Wwagp_Toliss_Loop_Upd()')
