@@ -107,7 +107,13 @@ wwagp:GetLever('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 
 
 --====LCD
-local dr_chrono = iDataRef:New('AirbusFBW/ClockChronoValue')
+local dr_chrono
+if nil == uluaFind("AirbusFBW/ClockChronoValue") then
+	-- XP11
+	dr_chrono = iDataRef:New('sim/cockpit2/clock_timer/hobbs_time_seconds')
+else
+	dr_chrono = iDataRef:New('AirbusFBW/ClockChronoValue')
+end
 
 local dr_utc_days = iDataRef:New('sim/time/local_date_days')
 

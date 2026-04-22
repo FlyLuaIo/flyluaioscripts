@@ -1,4 +1,3 @@
-
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
@@ -10,6 +9,8 @@ local Wffcuc = oop.class(com.sim.Qmdev)
 function Wffcuc:init()
 	self.QmdevId = 0x2AD269AD
 	self.FastTurnsPerSecond = 10
+	self.counter = 0
+	self.timestamp = uluagetTimestamp()
 	if _G.ilua_hw_assigned_wffcuc == nil then
 		_G.ilua_hw_assigned_wffcuc = 0
 	end
@@ -267,6 +268,16 @@ function Wffcuc:SetLeds(valbase, val)
 	self:SetPower(valbase, val)
 end
 
+-- ========
+-- wingFlex old firmware force update interval < 1000ms
+function Wffcuc:ForceFresh()
+	local stp = uluagetTimestamp()
+	if stp - self.timestamp > 800 then
+		self.timestamp = stp
+		self.counter = (self.counter + 1) % 2
+		uluaSet(_G.idr_wffcuc_hid_leds_resv, self.counter)
+	end
+end
 
 -- ========
 -- Backlight
@@ -311,7 +322,6 @@ end
 function Wffcuc:FreshLcdBkl()
 	self.d_lcdbkl:Invalid(-1)
 end
-
 
 -- ========
 -- Spd

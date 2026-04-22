@@ -50,7 +50,7 @@ wffcuc:GetPower('AirbusFBW/FCUAvail')
 local dr_test_set = iDataRef:New('cpuwolf/flyluaio/WfFcuc/condbtn[0]')
 local dr_test = iDataRef:New("AirbusFBW/AnnunMode") -- 0: DIM 1: BRT 2: test mode
 
-local counter = 0
+
 function Wffcuc_Toliss_Loop_Upd()
 	-- expert code: test mode
 	local b_test
@@ -82,9 +82,8 @@ function Wffcuc_Toliss_Loop_Upd()
 	wffcuc:SetVs()
 	wffcuc:SetBkl()
 	wffcuc:SetLcdBkl()
-
-	counter = (counter + 1) % 2
-	uluaSet(_G.idr_wffcuc_hid_leds_resv, counter)
+	--force refresh
+	wffcuc:ForceFresh()
 end
 
 uluaAddDoLoop('Wffcuc_Toliss_Loop_Upd()')
