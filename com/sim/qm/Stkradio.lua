@@ -298,43 +298,43 @@ function Stkradio:loopDigi()
 	end
 
 	if self.dr_com1a:ChangedUpdate() then
-		digi_com1a = self:encRadioDigits(self.dr_com1a:GetOld())
+		self.digi_com1a = self:encRadioDigits(self.dr_com1a:GetOld())
 	end
 	if self.dr_com1s:ChangedUpdate() then
-		digi_com1s = self:encRadioDigits(self.dr_com1s:GetOld())
+		self.digi_com1s = self:encRadioDigits(self.dr_com1s:GetOld())
 	end
 	if self.dr_com2a:ChangedUpdate() then
-		digi_com2a = self:encRadioDigits(self.dr_com2a:GetOld())
+		self.digi_com2a = self:encRadioDigits(self.dr_com2a:GetOld())
 	end
 	if self.dr_com2s:ChangedUpdate() then
-		digi_com2s = self:encRadioDigits(self.dr_com2s:GetOld())
+		self.digi_com2s = self:encRadioDigits(self.dr_com2s:GetOld())
 	end
 	if self.dr_nav1a:ChangedUpdate() then
-		digi_nav1a = self:encRadioDigits(self.dr_nav1a:GetOld())
+		self.digi_nav1a = self:encRadioDigits(self.dr_nav1a:GetOld())
 	end
 	if self.dr_nav1s:ChangedUpdate() then
-		digi_nav1s = self:encRadioDigits(self.dr_nav1s:GetOld())
+		self.digi_nav1s = self:encRadioDigits(self.dr_nav1s:GetOld())
 	end
 	if self.dr_nav2a:ChangedUpdate() then
-		digi_nav2a = self:encRadioDigits(self.dr_nav2a:GetOld())
+		self.digi_nav2a = self:encRadioDigits(self.dr_nav2a:GetOld())
 	end
 	if self.dr_nav2s:ChangedUpdate() then
-		digi_nav2s = self:encRadioDigits(self.dr_nav2s:GetOld())
+		self.digi_nav2s = self:encRadioDigits(self.dr_nav2s:GetOld())
 	end
 	if self.dr_adfa:ChangedUpdate() then
-		digi_adfa = self:encRadioDigits(self.dr_adfa:GetOld())
+		self.digi_adfa = self:encRadioDigits(self.dr_adfa:GetOld())
 	end
 	if self.dr_adfs:ChangedUpdate() then
-		digi_adfs = self:encRadioDigits(self.dr_adfs:GetOld())
+		self.digi_adfs = self:encRadioDigits(self.dr_adfs:GetOld())
 	end
 	if self.dr_dmea:ChangedUpdate() then
-		digi_dmea = self:encFloatDigits(self.dr_dmea:GetOld())
+		self.digi_dmea = self:encFloatDigits(self.dr_dmea:GetOld())
 	end
 	if self.dr_dmes:ChangedUpdate() then
-		digi_dmes = self:encFloatDigits(self.dr_dmes:GetOld())
+		self.digi_dmes = self:encFloatDigits(self.dr_dmes:GetOld())
 	end
 	if self.dr_xpdr:ChangedUpdate() then
-		digi_xpdr = self:encIntDigits(self.dr_xpdr:GetOld())
+		self.digi_xpdr = self:encIntDigits(self.dr_xpdr:GetOld())
 	end
 
 	-- update radio up
