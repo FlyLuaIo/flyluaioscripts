@@ -11,8 +11,13 @@ function Wffcuc:init()
 	self.FastTurnsPerSecond = 10
 	self.counter = 0
 	self.timestamp = uluagetTimestamp()
+	self.ms = 800
 	if _G.ilua_hw_assigned_wffcuc == nil then
 		_G.ilua_hw_assigned_wffcuc = 0
+	end
+	-- offline lua running
+	if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") == nil then
+		self.ms = 30
 	end
 end
 
@@ -268,9 +273,10 @@ end
 
 -- ========
 -- wingFlex old firmware force update interval < 1000ms
+
 function Wffcuc:ForceFresh()
 	local stp = uluagetTimestamp()
-	if stp - self.timestamp > 800 then
+	if stp - self.timestamp > self.ms then
 		self.timestamp = stp
 		self.counter = (self.counter + 1) % 2
 		uluaSet(_G.idr_wffcuc_hid_leds_resv, self.counter)
