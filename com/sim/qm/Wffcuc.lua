@@ -15,10 +15,6 @@ function Wffcuc:init()
 	if _G.ilua_hw_assigned_wffcuc == nil then
 		_G.ilua_hw_assigned_wffcuc = 0
 	end
-	-- offline lua running
-	if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") == nil then
-		self.ms = 30
-	end
 end
 
 function Wffcuc:absent(FastTurnsPerSecond)

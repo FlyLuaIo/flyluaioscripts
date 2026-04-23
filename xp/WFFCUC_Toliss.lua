@@ -18,6 +18,25 @@ end
 
 uluaLog('Wffcuc for Toliss')
 
+wffcuc:CfgCmd(0, "sim/GPS/g430n2_msg", "sim/autopilot/knots_mach_toggle")
+wffcuc:CfgCmd(1, "sim/GPS/g430n2_msg", "AirbusFBW/PushSPDSel")
+wffcuc:CfgCmd(2, "sim/GPS/g430n2_msg", "AirbusFBW/PullSPDSel")
+wffcuc:CfgCmd(3, "sim/GPS/g430n2_msg", "toliss_airbus/dispcommands/HeadingTrackModeSwitch")
+wffcuc:CfgCmd(4, "sim/GPS/g430n2_msg", "AirbusFBW/PushHDGSel")
+wffcuc:CfgCmd(5, "sim/GPS/g430n2_msg", "AirbusFBW/PullHDGSel")
+wffcuc:CfgVal(6, "AirbusFBW/ALT100_1000", 0, 1)
+wffcuc:CfgCmd(8, "sim/GPS/g430n2_msg", "AirbusFBW/PushAltitude")
+wffcuc:CfgCmd(9, "sim/GPS/g430n2_msg", "AirbusFBW/PullAltitude")
+wffcuc:CfgCmd(10, "sim/GPS/g430n2_msg", "AirbusFBW/PushVSSel")
+wffcuc:CfgCmd(11, "sim/GPS/g430n2_msg", "AirbusFBW/PullVSSel")
+wffcuc:CfgCmd(12, "sim/GPS/g430n2_msg", "toliss_airbus/dispcommands/MetricAltitudeSwitch")
+wffcuc:CfgCmd(13, "sim/GPS/g430n2_msg", "toliss_airbus/ap1_push")
+wffcuc:CfgCmd(14, "sim/GPS/g430n2_msg", "toliss_airbus/ap2_push")
+wffcuc:CfgCmd(15, "sim/GPS/g430n2_msg", "AirbusFBW/ATHRbutton")
+wffcuc:CfgCmd(16, "sim/GPS/g430n2_msg", "AirbusFBW/LOCbutton")
+wffcuc:CfgCmd(17, "sim/GPS/g430n2_msg", "AirbusFBW/EXPEDbutton")
+wffcuc:CfgCmd(18, "sim/GPS/g430n2_msg", "AirbusFBW/APPRbutton")
+
 -- LCD display
 wffcuc:GetSpd('sim/cockpit2/autopilot/airspeed_dial_kts_mach')
 wffcuc:GetHdg('sim/cockpit/autopilot/heading_mag')

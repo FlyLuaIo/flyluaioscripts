@@ -12,6 +12,11 @@ if not wffcuc:Init() then
 end
 -- Do not remove above lines: hardware detection
 
+-- offline lua running
+if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") == nil then
+	wffcuc.ms = 30
+end
+
 uluaLog('Wffcuc for offline clock')
 
 wffcuc:GetVs('cpuwolf/flyluaio/WfFcuc/condbtn[1]')
