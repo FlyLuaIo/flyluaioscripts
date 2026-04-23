@@ -2,21 +2,15 @@
   "ProductName": "WfFcuc",
   "USB_VID": "0xA316",
   "USB_PID": "0xC787",
+  "USB_KEY_OFFSET": 48,
+  "USB_KEY_MAX": 19,
   "LightKey": 16,
   "LightKeyName": "LOC",
   "Functions": [
     {
       "FunName": "leds",
       "USB_FEAT_length": 24,
-      "HeaderBytes": [
-        "0x00",
-        "0xF2",
-        "0xE1",
-        "0x03",
-        "0x02",
-        "0x01",
-        "0x02"
-      ],
+      "HeaderBytes": ["0x00", "0xF2", "0xE1", "0x03", "0x02", "0x01", "0x02"],
       "FunIndex": 1,
       "LightBytes": [
         "0x00",
