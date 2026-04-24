@@ -19,8 +19,11 @@ uluaLog("HCBravo for Aerosoft A346")
 -- Input Key binding
 hcbravo:CfgRpn(0, '(>K:AP_PANEL_HEADING_HOLD)')
 
+-- use honeycomb axis es
+hcbravo:MapAxis()
 
--- (>K:THROTTLE_REVERSE_THRUST_HOLD)
+
+--[[
 local pswh8 = QmdevPosSwitchInit("(L:TLS_ENG_LEVER1POS)", 0.5, "(>L:TLS_ENG_LEVER1POS)",
     "(>L:TLS_ENG_LEVER1POS)", 1200)
 local pswh9 = QmdevPosSwitchInit("(L:TLS_ENG_LEVER2POS)", 0.5, "(>L:TLS_ENG_LEVER2POS)",
@@ -38,6 +41,9 @@ hcbravo:CfgFc(8, prestr, relstr)
 hcbravo:CfgFc(9, prestr, relstr)
 hcbravo:CfgFc(10, prestr, relstr)
 hcbravo:CfgFc(11, prestr, relstr)
+--]]
+
+hcbravo:CfgRpn(9, '1 (>K:THROTTLE_REVERSE_THRUST_HOLD)')
 
 -- flap down
 hcbravo:CfgRpn(14, '(>K:FLAPS_INCR)')
@@ -131,8 +137,15 @@ hcbravo:GetParkingbrake('(A:BRAKE PARKING POSITION,Position)')
 hcbravo:GetLowvolts('')
 hcbravo:GetDoor('')
 
+
+
 function HCBRAVO_Aero_A346_LED_UPD()
     hcbravo:SetLed()
+
+    hcbravo:LoopAxis(1)
+    hcbravo:LoopAxis(2)
+    hcbravo:LoopAxis(3)
+    hcbravo:LoopAxis(4)
 end
 
 uluaAddDoLoop("HCBRAVO_Aero_A346_LED_UPD()")

@@ -422,4 +422,12 @@ function Qmdev:swap16(val)
     return bit.bor(high, low)
 end
 
+function Qmdev:scaleValue(x)
+    local oldMin, oldMax = 0, 1024
+    local newMin, newMax = -16383, 16384
+
+    -- Linear mapping formula
+    return (x - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin
+end
+
 return Qmdev

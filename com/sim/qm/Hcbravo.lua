@@ -434,4 +434,20 @@ hcbravo:GetLowvolts('')
 hcbravo:GetDoor('')
 ]]--
 
+function Hcbravo:MapAxis()
+	self.dr_axis = {}
+	self.dr_axis[1] = iDataRef:New('cpuwolf/flyluaio/HCBravo/axisesmap[0]')
+	self.dr_axis[2] = iDataRef:New('cpuwolf/flyluaio/HCBravo/axisesmap[4]')
+	self.dr_axis[3] = iDataRef:New('cpuwolf/flyluaio/HCBravo/axisesmap[3]')
+	self.dr_axis[4] = iDataRef:New('cpuwolf/flyluaio/HCBravo/axisesmap[2]')
+end
+
+function Hcbravo:LoopAxis(idx)
+	if self.dr_axis[idx]:ChangedUpdate() then
+		local axis = self:scaleValue(self.dr_axis[idx]:GetOld())
+		--uluaLog(string.format("hc axis %d", axis))
+		uluaWriteCmd(tostring(axis) .. ' (>K:THROTTLE' .. tostring(idx) .. '_AXIS_SET_EX1)')
+	end
+end
+
 return Hcbravo
