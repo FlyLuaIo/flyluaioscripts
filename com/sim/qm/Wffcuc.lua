@@ -3,7 +3,7 @@
 -- Most of the code are auto generated
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-21_09_27_02UTC
 -- *****************************************************************
-
+local bit = require("bit")
 
 local Wffcuc = oop.class(com.sim.Qmdev)
 function Wffcuc:init()
@@ -47,6 +47,12 @@ function Wffcuc:absent(FastTurnsPerSecond)
 	_G.idr_wffcuc_hid_leds_power = uluaFind('cpuwolf/flyluaio/WfFcuc/leds/power')
 	_G.idr_wffcuc_hid_invalid = uluaFind('cpuwolf/flyluaio/WfFcuc/invalid')
 	_G.idr_wffcuc_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WfFcuc/fastkeypersec')
+	-- rotary encorders
+	self.dr_axis = {}
+	self.dr_axis[1] = iDataRef:New('cpuwolf/flyluaio/WfFcuc/axisesmap[0]')
+	self.dr_axis[2] = iDataRef:New('cpuwolf/flyluaio/WfFcuc/axisesmap[1]')
+	self.dr_axis[3] = iDataRef:New('cpuwolf/flyluaio/WfFcuc/axisesmap[2]')
+	self.dr_axis[4] = iDataRef:New('cpuwolf/flyluaio/WfFcuc/axisesmap[3]')
 	uluaSet(_G.idr_wffcuc_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end
@@ -408,6 +414,40 @@ end
 
 function Wffcuc:FreshVs()
 	self.d_vs:Invalid(-1)
+end
+
+-- =========
+-- axis raw data process
+function Wffcuc:DecAxis(val)
+	-- 1. Use bit.band to force the double into a 32-bit integer
+	-- and then mask it to just the lowest 16 bits.
+	-- This handles negative doubles and large doubles correctly.
+	local u16  = bit.band(val, 0xFFFF)
+
+	-- 2. Extract and move the bytes
+	local high = bit.rshift(u16, 8)                -- Move bits 9-16 to 1-8
+	local low  = bit.band(bit.lshift(u16, 8), 0xFFFF) -- Move bits 1-8 to 9-16
+	if low > 0 then
+		-- couter clock rotation
+		return 1, high
+	else
+		return 0, high
+	end
+end
+
+function Wffcuc:LoopAxis(idx)
+	-- axis vs
+	if self.dr_axis[idx]:GetChanged() then
+		local sign, newval = self:DecAxis(self.dr_axis[idx].val)
+		local oldsign, oldval = self:DecAxis(self.dr_axis[idx].val_last)
+		self.dr_axis[idx]:Update()
+		local delta = newval - oldval
+		-- 核心逻辑：将差值映射回 -128 到 127 之间
+		-- 这模拟了 C++ 中 int8_t 的溢出行为
+		local step = (delta + 128) % 256 - 128
+		uluaLog(string.format("cube axis [%d]=%d  %d", idx, newval, step))
+		-- uluaCmdOnce(cmd_ff777_storm_lt)
+	end
 end
 
 return Wffcuc

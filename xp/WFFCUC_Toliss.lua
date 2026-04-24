@@ -70,6 +70,7 @@ local dr_test_set = iDataRef:New('cpuwolf/flyluaio/WfFcuc/condbtn[0]')
 local dr_test = iDataRef:New("AirbusFBW/AnnunMode") -- 0: DIM 1: BRT 2: test mode
 
 
+
 function Wffcuc_Toliss_Loop_Upd()
 	-- expert code: test mode
 	local b_test
@@ -119,6 +120,11 @@ function Wffcuc_Toliss_Loop_Upd()
 	wffcuc:SetLcdBkl()
 	--force refresh
 	wffcuc:ForceFresh()
+
+	wffcuc:LoopAxis(1)
+	wffcuc:LoopAxis(2)
+	wffcuc:LoopAxis(3)
+	wffcuc:LoopAxis(4)
 end
 
 uluaAddDoLoop('Wffcuc_Toliss_Loop_Upd()')

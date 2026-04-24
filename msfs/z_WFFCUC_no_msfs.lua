@@ -12,18 +12,22 @@ if not wffcuc:Init() then
 end
 -- Do not remove above lines: hardware detection
 
--- offline lua running
+-- offline lua running, check MSFS is off
 if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") == nil then
 	wffcuc.ms = 30
 end
 
 uluaLog('Wffcuc for offline clock')
 
+
 wffcuc:GetVs('cpuwolf/flyluaio/WfFcuc/condbtn[1]')
 -- brightness
 wffcuc:GetBkl("cpuwolf/flyluaio/WfFcuc/condbtn[1]", 0.1) -- 0~1
 wffcuc:GetLcdBkl('cpuwolf/flyluaio/WfFcuc/condbtn[2]', 250)
 
+-- LEDs
+wffcuc:GetVsdash('cpuwolf/flyluaio/WfFcuc/condbtn[0]')
+-- power
 wffcuc:GetTest('cpuwolf/flyluaio/WfFcuc/condbtn[1]')
 wffcuc:GetPower('cpuwolf/flyluaio/WfFcuc/condbtn[0]')
 local dr_power = iDataRef:New('cpuwolf/flyluaio/WfFcuc/condbtn[0]')
@@ -35,6 +39,7 @@ function Wffcuc_Off_Loop_Upd()
 	local sec       = dateTable.sec
 	dr_power:Set(1)
 	dr_light:Set(1)
+	wffcuc:SetVsdash()
 	wffcuc:SetTest()
 	wffcuc:SetPower()
 	-- LCD display

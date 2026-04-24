@@ -4,12 +4,15 @@
   "USB_PID": "0xC787",
   "USB_KEY_OFFSET": 48,
   "USB_KEY_MAX": 19,
+  "USB_AXIS_OFFSET": 312,
+  "USB_AXIS_MAX": 64,
+  "USB_AXIS_NUM": 4,
   "LightKey": 16,
   "LightKeyName": "LOC",
   "Functions": [
     {
       "FunName": "leds",
-      "USB_FEAT_length": 24,
+      "USB_FEAT_length": 48,
       "HeaderBytes": ["0x00", "0xF2", "0xE1", "0x03", "0x02", "0x01", "0x02"],
       "FunIndex": 1,
       "LightBytes": [
