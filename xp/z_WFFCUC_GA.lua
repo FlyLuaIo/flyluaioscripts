@@ -12,6 +12,11 @@ end
 
 uluaLog('Wffcuc for GA')
 
+wffcuc:CfgCmdAxis(1, 'sim/autopilot/vertical_speed_down', 'sim/autopilot/vertical_speed_up')
+wffcuc:CfgCmdAxis(2, 'sim/autopilot/altitude_down', 'sim/autopilot/altitude_up')
+wffcuc:CfgCmdAxis(3, 'sim/autopilot/heading_down', 'sim/autopilot/heading_up')
+wffcuc:CfgCmdAxis(4, 'sim/autopilot/airspeed_down', 'sim/autopilot/airspeed_up')
+
 -- LCD display
 wffcuc:GetSpd('sim/cockpit2/autopilot/airspeed_dial_kts_mach')
 wffcuc:GetHdg('sim/cockpit/autopilot/heading_mag')
@@ -56,5 +61,10 @@ function Wffcuc_GA_Loop_Upd()
 	wffcuc:SetLcdBkl()
 	--force refresh
 	wffcuc:ForceFresh()
+
+	wffcuc:LoopAxis(1)
+	wffcuc:LoopAxis(2)
+	wffcuc:LoopAxis(3)
+	wffcuc:LoopAxis(4)
 end
 uluaAddDoLoop('Wffcuc_GA_Loop_Upd()')
