@@ -38,12 +38,13 @@ local relstr = hcbravo:GenPSwStr(pswh8, 0) ..
     hcbravo:GenPSwStr(pswh9, 0) .. hcbravo:GenPSwStr(pswh10, 0) .. hcbravo:GenPSwStr(pswh11, 0)
 
 hcbravo:CfgFc(8, prestr, relstr)
-hcbravo:CfgFc(9, prestr, relstr)
+hcbravo:CfgFc(9, prestr .. "uluaWriteCmd('1 (>K:THROTTLE_REVERSE_THRUST_HOLD)')", relstr)
 hcbravo:CfgFc(10, prestr, relstr)
 hcbravo:CfgFc(11, prestr, relstr)
 --]]
 
-hcbravo:CfgRpn(9, '1 (>K:THROTTLE_REVERSE_THRUST_HOLD)')
+hcbravo:CfgRpn(9, '1 (>K:THROTTLE_REVERSE_THRUST_HOLD)',
+    '0 (>K:THROTTLE_REVERSE_THRUST_HOLD) 1 (>K:THROTTLE_REVERSE_THRUST_TOGGLE)')
 
 -- flap down
 hcbravo:CfgRpn(14, '(>K:FLAPS_INCR)')
