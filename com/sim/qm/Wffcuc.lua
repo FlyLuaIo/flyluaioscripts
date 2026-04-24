@@ -57,6 +57,8 @@ function Wffcuc:absent(FastTurnsPerSecond)
 	self.dr_axis_cmd_inc = {}
 	self.dr_axis_drf_dec = {}
 	self.dr_axis_drf_inc = {}
+	self.dr_axis_rpn_dec = {}
+	self.dr_axis_rpn_inc = {}
 	uluaSet(_G.idr_wffcuc_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end
@@ -444,6 +446,11 @@ function Wffcuc:CfgCmdAxis(idx, cmddec, cmdinc)
 	self.dr_axis_cmd_inc[idx] = uluaFind(cmdinc)
 end
 
+function Wffcuc:CfgRpnAxis(idx, cmddec, cmdinc)
+	self.dr_axis_rpn_dec[idx] = cmddec
+	self.dr_axis_rpn_inc[idx] = cmdinc
+end
+
 function Wffcuc:LoopAxis(idx)
 	-- axis vs
 	if self.dr_axis[idx]:GetChanged() then
@@ -462,11 +469,17 @@ function Wffcuc:LoopAxis(idx)
 				if self.dr_axis_cmd_inc[idx] ~= nil then
 					uluaCmdOnce(self.dr_axis_cmd_inc[idx])
 				end
+				if self.dr_axis_rpn_inc[idx] ~= nil then
+					uluaWriteCmd(self.dr_axis_rpn_inc[idx])
+				end
 			end
 		else
 			for i = 1, (realstep * -1) do
 				if self.dr_axis_cmd_dec[idx] ~= nil then
 					uluaCmdOnce(self.dr_axis_cmd_dec[idx])
+				end
+				if self.dr_axis_rpn_dec[idx] ~= nil then
+					uluaWriteCmd(self.dr_axis_rpn_dec[idx])
 				end
 			end
 		end
