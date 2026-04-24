@@ -18,6 +18,11 @@ end
 
 uluaLog('Wffcuc for Toliss')
 
+wffcuc:CfgCmdAxis(1, 'sim/autopilot/vertical_speed_down', 'sim/autopilot/vertical_speed_up')
+wffcuc:CfgCmdAxis(2, 'sim/autopilot/altitude_down', 'sim/autopilot/altitude_up')
+wffcuc:CfgCmdAxis(3, 'sim/autopilot/heading_down', 'sim/autopilot/heading_up')
+wffcuc:CfgCmdAxis(4, 'sim/autopilot/airspeed_down', 'sim/autopilot/airspeed_up')
+
 wffcuc:CfgCmd(0, "sim/GPS/g430n2_msg", "sim/autopilot/knots_mach_toggle")
 wffcuc:CfgCmd(1, "sim/GPS/g430n2_msg", "AirbusFBW/PushSPDSel")
 wffcuc:CfgCmd(2, "sim/GPS/g430n2_msg", "AirbusFBW/PullSPDSel")

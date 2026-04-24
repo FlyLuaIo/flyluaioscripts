@@ -53,6 +53,10 @@ function Wffcuc:absent(FastTurnsPerSecond)
 	self.dr_axis[2] = iDataRef:New('cpuwolf/flyluaio/WfFcuc/axisesmap[1]')
 	self.dr_axis[3] = iDataRef:New('cpuwolf/flyluaio/WfFcuc/axisesmap[2]')
 	self.dr_axis[4] = iDataRef:New('cpuwolf/flyluaio/WfFcuc/axisesmap[3]')
+	self.dr_axis_cmd_dec = {}
+	self.dr_axis_cmd_inc = {}
+	self.dr_axis_drf_dec = {}
+	self.dr_axis_drf_inc = {}
 	uluaSet(_G.idr_wffcuc_hid_fastkeypersec, FastTurnsPerSecond)
 	return false
 end
@@ -435,6 +439,11 @@ function Wffcuc:DecAxis(val)
 	end
 end
 
+function Wffcuc:CfgCmdAxis(idx, cmddec, cmdinc)
+	self.dr_axis_cmd_dec[idx] = uluaFind(cmddec)
+	self.dr_axis_cmd_inc[idx] = uluaFind(cmdinc)
+end
+
 function Wffcuc:LoopAxis(idx)
 	-- axis vs
 	if self.dr_axis[idx]:GetChanged() then
@@ -445,8 +454,22 @@ function Wffcuc:LoopAxis(idx)
 		-- 核心逻辑：将差值映射回 -128 到 127 之间
 		-- 这模拟了 C++ 中 int8_t 的溢出行为
 		local step = (delta + 128) % 256 - 128
-		uluaLog(string.format("cube axis [%d]=%d  %d", idx, newval, step))
-		-- uluaCmdOnce(cmd_ff777_storm_lt)
+		--WingFlex shitty FW noise filter
+		local realstep = step > 0 and math.floor((step + 1) / 2) or math.floor((step - 1) / 2)
+		-- uluaLog(string.format("cube axis [%d]=%d  %d", idx, newval, realstep))
+		if realstep > 0 then
+			for i = 1, realstep do
+				if self.dr_axis_cmd_inc[idx] ~= nil then
+					uluaCmdOnce(self.dr_axis_cmd_inc[idx])
+				end
+			end
+		else
+			for i = 1, (realstep * -1) do
+				if self.dr_axis_cmd_dec[idx] ~= nil then
+					uluaCmdOnce(self.dr_axis_cmd_dec[idx])
+				end
+			end
+		end
 	end
 end
 
