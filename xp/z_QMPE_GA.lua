@@ -375,4 +375,4 @@ function Qmpe_GA_XP_loop()
     qmpe:SetMisc()
 end
 
-uluaAddDoLoop("Qmpe_GA_XP_loop()")
+GlobalFrameLoopManager:add(Qmpe_GA_XP_loop)

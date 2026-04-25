@@ -104,4 +104,4 @@ function Wffcuc_ini340_Loop_Upd()
 	wffcuc:LoopAxis(4)
 end
 
-uluaAddDoLoop('Wffcuc_ini340_Loop_Upd()')
+GlobalFrameLoopManager:add(Wffcuc_ini340_Loop_Upd)

@@ -332,4 +332,4 @@ function Qmovha_ff320_loop()
     qmovha:SetBkl()
 end
 
-uluaAddDoLoop("Qmovha_ff320_loop()")
+GlobalFrameLoopManager:add(Qmovha_ff320_loop)

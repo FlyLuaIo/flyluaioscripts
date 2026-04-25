@@ -241,4 +241,4 @@ function Wwagp_Toliss_Loop_Upd()
 	wwagp:Setleds(0.1)
 end
 
-uluaAddDoLoop('Wwagp_Toliss_Loop_Upd()')
+GlobalFrameLoopManager:add(Wwagp_Toliss_Loop_Upd)

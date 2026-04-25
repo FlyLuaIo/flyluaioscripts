@@ -229,4 +229,4 @@ function qg1k_mfd_LED_UPD()
     end
 end
 
-uluaAddDoLoop("qg1k_mfd_LED_UPD()")
+GlobalFrameLoopManager:add(qg1k_mfd_LED_UPD)

@@ -354,4 +354,4 @@ function Qmovha_Toliss_loop()
     end
 end
 
-uluaAddDoLoop("Qmovha_Toliss_loop()")
+GlobalFrameLoopManager:add(Qmovha_Toliss_loop)

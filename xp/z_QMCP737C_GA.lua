@@ -607,4 +607,4 @@ function qmcp737c_ga_digi_disp_every_frame()
     end
 end
 
-uluaAddDoLoop('qmcp737c_ga_digi_disp_every_frame()')
+GlobalFrameLoopManager:add(qmcp737c_ga_digi_disp_every_frame)

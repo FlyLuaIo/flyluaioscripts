@@ -109,4 +109,4 @@ function CDU_CL650_LED_UPD()
     qcdub:SetBkl(brightness)
 end
 
-uluaAddDoLoop("CDU_CL650_LED_UPD()")
+GlobalFrameLoopManager:add(CDU_CL650_LED_UPD)

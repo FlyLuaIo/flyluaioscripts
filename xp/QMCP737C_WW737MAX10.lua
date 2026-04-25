@@ -390,8 +390,8 @@ function ZB738M_frame_update()
     end
 end
 
-uluaAddDoLoop("ZB738M_frame_update()")
-uluaAddDoLoop("ZB738M_digi_disp_every_frame()")
+GlobalFrameLoopManager:add(ZB738M_frame_update)
+GlobalFrameLoopManager:add(ZB738M_digi_disp_every_frame)
 
 -------------------  Send Message Process  ------------------------------------
 -- LED Indicator light

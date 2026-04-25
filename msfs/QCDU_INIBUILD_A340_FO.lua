@@ -144,4 +144,4 @@ function CDU_INIA320_FO_LED_UPD()
     qcduaf:SetBkl()
 end
 
-uluaAddDoLoop("CDU_INIA320_FO_LED_UPD()")
+GlobalFrameLoopManager:add(CDU_INIA320_FO_LED_UPD)

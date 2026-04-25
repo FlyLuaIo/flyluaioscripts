@@ -120,5 +120,5 @@ function CDU_LVFR_LED_UPD()
     end
 end
 
-uluaAddDoLoop("CDU_LVFR_LED_UPD()")
+GlobalFrameLoopManager:add(CDU_LVFR_LED_UPD)
 

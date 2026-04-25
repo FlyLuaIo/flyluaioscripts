@@ -153,4 +153,4 @@ function Wwagp_GA_Loop_Upd()
 	wwagp:Setleds()
 end
 
-uluaAddDoLoop('Wwagp_GA_Loop_Upd()')
+GlobalFrameLoopManager:add(Wwagp_GA_Loop_Upd)

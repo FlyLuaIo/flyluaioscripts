@@ -126,4 +126,4 @@ function HCBRAVO_GA_LED_UPD()
     hcbravo:SetLed()
 end
 
-uluaAddDoLoop("HCBRAVO_GA_LED_UPD()")
+GlobalFrameLoopManager:add(HCBRAVO_GA_LED_UPD)

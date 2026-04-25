@@ -568,7 +568,7 @@ function toliss_boot()
         local qfcu_fcu_power = dr_qfcu_fcu_power:Get()
         if os.clock() > start_time + 5 or qfcu_fcu_power > 0 then
             is_load = 1
-            uluaAddDoLoop("Toliss320_digi_disp_every_frame()")
+            GlobalFrameLoopManager:add(Toliss320_digi_disp_every_frame)
         end
     end
 end
@@ -657,4 +657,4 @@ function Toliss320_digi_disp_every_frame()
     end
 end
 
-uluaAddDoLoop("toliss_boot()")
+GlobalFrameLoopManager:add(toliss_boot)

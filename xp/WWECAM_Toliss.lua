@@ -161,4 +161,4 @@ function Wwecam_Toliss_Loop_Upd()
 	wwecam:SetBkl()
 end
 
-uluaAddDoLoop('Wwecam_Toliss_Loop_Upd()')
+GlobalFrameLoopManager:add(Wwecam_Toliss_Loop_Upd)

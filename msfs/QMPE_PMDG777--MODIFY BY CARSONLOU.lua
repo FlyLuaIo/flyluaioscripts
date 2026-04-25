@@ -365,4 +365,4 @@ function Qmpe_pmdg_777_loop()
     qmpe:SetMisc()
 end
 
-uluaAddDoLoop("Qmpe_pmdg_777_loop()")
+GlobalFrameLoopManager:add(Qmpe_pmdg_777_loop)

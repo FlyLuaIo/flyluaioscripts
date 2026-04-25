@@ -119,5 +119,5 @@ function CDU_TFDIMD11_LED_UPD()
     qcdua:SetBkl()
 end
 
-uluaAddDoLoop("CDU_TFDIMD11_LED_UPD()")
+GlobalFrameLoopManager:add(CDU_TFDIMD11_LED_UPD)
 

@@ -105,5 +105,5 @@ function CDU_INIA300_LED_UPD()
     qcdua:SetBkl()
 end
 
-uluaAddDoLoop("CDU_INIA300_LED_UPD()")
+GlobalFrameLoopManager:add(CDU_INIA300_LED_UPD)
 

@@ -27,5 +27,5 @@ function qmcp737c_tbm930_digi_disp_set_HDG()
     uluaSet(idr_qmcp737c_hid_hdgmod, 1)
 end
 
-uluaAddDoLoop("qmcp737c_tbm930_digi_disp_set_HDG()")
+GlobalFrameLoopManager:add(qmcp737c_tbm930_digi_disp_set_HDG)
 --]]

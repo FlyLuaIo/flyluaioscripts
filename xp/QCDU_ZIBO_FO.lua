@@ -124,4 +124,4 @@ function CDU_B737_LED_FO_UPD()
     qcdubf:SetBkl(brightness)
 end
 
-uluaAddDoLoop("CDU_B737_LED_FO_UPD()")
+GlobalFrameLoopManager:add(CDU_B737_LED_FO_UPD)

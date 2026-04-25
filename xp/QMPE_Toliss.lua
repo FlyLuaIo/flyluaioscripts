@@ -637,4 +637,4 @@ function Qmpe_Toliss_loop()
     qmpe:SetBkl()
 end
 
-uluaAddDoLoop("Qmpe_Toliss_loop()")
+GlobalFrameLoopManager:add(Qmpe_Toliss_loop)

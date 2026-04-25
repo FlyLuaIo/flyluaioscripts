@@ -194,4 +194,4 @@ function Wwagp_Aero_A346_Loop_Upd()
 	wwagp:Setleds()
 end
 
-uluaAddDoLoop('Wwagp_Aero_A346_Loop_Upd()')
+GlobalFrameLoopManager:add(Wwagp_Aero_A346_Loop_Upd)

@@ -288,4 +288,4 @@ function Qmovha_Fenix_loop()
     end
 end
 
-uluaAddDoLoop("Qmovha_Fenix_loop()")
+GlobalFrameLoopManager:add(Qmovha_Fenix_loop)

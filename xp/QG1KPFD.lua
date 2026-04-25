@@ -319,4 +319,4 @@ function qg1k_pfd_LED_UPD()
     qg1k_pfd_audio_func()
 end
 
-uluaAddDoLoop("qg1k_pfd_LED_UPD()")
+GlobalFrameLoopManager:add(qg1k_pfd_LED_UPD)

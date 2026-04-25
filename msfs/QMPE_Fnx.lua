@@ -364,4 +364,4 @@ function Qmpe_Fenix_loop()
     qmpe:SetMisc()
 end
 
-uluaAddDoLoop("Qmpe_Fenix_loop()")
+GlobalFrameLoopManager:add(Qmpe_Fenix_loop)

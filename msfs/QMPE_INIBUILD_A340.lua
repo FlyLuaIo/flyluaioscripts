@@ -477,4 +477,4 @@ function Qmpe_IniA340_loop()
     qmpe:SetMisc()
 end
 
-uluaAddDoLoop("Qmpe_IniA340_loop()")
+GlobalFrameLoopManager:add(Qmpe_IniA340_loop)

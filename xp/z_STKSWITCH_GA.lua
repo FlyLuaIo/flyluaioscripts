@@ -38,4 +38,4 @@ function Stkswitch_GA_Loop_Upd()
 	stkswitch:SetLed()
 end
 
-uluaAddDoLoop("Stkswitch_GA_Loop_Upd()")
+GlobalFrameLoopManager:add(Stkswitch_GA_Loop_Upd)

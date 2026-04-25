@@ -195,4 +195,4 @@ function Wwagp_Fsl_Loop_Upd()
 	wwagp:Setleds()
 end
 
-uluaAddDoLoop('Wwagp_Fsl_Loop_Upd()')
+GlobalFrameLoopManager:add(Wwagp_Fsl_Loop_Upd)

@@ -32,5 +32,5 @@ function qfcu_tbm930_digi_disp_set_HDG()
     uluaSet(idr_qfcu_hid_hdgmode, 1)
 end
 
-uluaAddDoLoop("qfcu_tbm930_digi_disp_set_HDG()")
+GlobalFrameLoopManager:add(qfcu_tbm930_digi_disp_set_HDG)
 --]]

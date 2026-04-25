@@ -143,4 +143,4 @@ function CDU_XP_A333_LED_UPD()
     qcdua:SetBkl()
 end
 
-uluaAddDoLoop("CDU_XP_A333_LED_UPD()")
+GlobalFrameLoopManager:add(CDU_XP_A333_LED_UPD)

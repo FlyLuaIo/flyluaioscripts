@@ -105,4 +105,4 @@ function QGMC710_GA_LED_UPD()
     uluaSet(idr_qgmc710_hid_bright, led_br)
 end
 
-uluaAddDoLoop("QGMC710_GA_LED_UPD()")
+GlobalFrameLoopManager:add(QGMC710_GA_LED_UPD)

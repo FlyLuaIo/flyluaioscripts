@@ -14,4 +14,4 @@ uluaLog("Wwecam for GA")
 
 function Wwecam_GA_Loop_Upd()
 end
-uluaAddDoLoop("Wwecam_GA_Loop_Upd()")
+GlobalFrameLoopManager:add(Wwecam_GA_Loop_Upd)

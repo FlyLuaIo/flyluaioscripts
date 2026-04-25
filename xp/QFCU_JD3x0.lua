@@ -577,7 +577,7 @@ function JD330_boot()
     if is_load == 0 then
         if os.clock() > (start_time + 10) or qfcu_fcu_power > 0 then
             is_load = 1
-            uluaAddDoLoop("JD330_digi_disp_every_frame()")
+            GlobalFrameLoopManager:add(JD330_digi_disp_every_frame)
         end
     end
 end
@@ -707,4 +707,4 @@ function JD330_digi_disp_every_frame()
     end
 end
 
-uluaAddDoLoop("JD330_boot()")
+GlobalFrameLoopManager:add(JD330_boot)

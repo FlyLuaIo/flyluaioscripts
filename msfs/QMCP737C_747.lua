@@ -539,4 +539,4 @@ function digi_disp_every_frame()
     digi_disp_com()
     digi_disp_nav()
 end
-uluaAddDoLoop("digi_disp_every_frame()")
+GlobalFrameLoopManager:add(digi_disp_every_frame)

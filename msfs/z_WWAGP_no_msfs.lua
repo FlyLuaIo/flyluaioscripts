@@ -20,9 +20,8 @@ end
 uluaLog('WinWing AGP offline clock')
 
 local dr_digilight = iDataRef:New('cpuwolf/flyluaio/WwAgp/condbtn[10]')
-dr_digilight:Set(200)
 
-wwagp:CfgEncFull(13, 15, 'cpuwolf/flyluaio/WwAgp/condbtn[10]', 10, 100, 2, 100, 250)
+-- wwagp:CfgEncFull(13, 15, 'cpuwolf/flyluaio/WwAgp/condbtn[10]', 10, 100, 2, 100, 250)
 
 
 wwagp:GetBkl('cpuwolf/flyluaio/WwAgp/condbtn[9]', 1)
@@ -35,7 +34,8 @@ local dr_is_utc = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[17]')
 
 --================================ When MSFS is not runinng, offline lua code
 local systemtimestr = os.date("%H:%M:%S")
-function Wwagp_sdk_off_LCD_Loop()
+GlobalFrameLoopManager:add(function() -- USE RENAMED GLOBAL HERE
+	dr_digilight:Set(200)
 	wwagp:SetBkl()
 	wwagp:SetDigiBkl()
 	wwagp:SetLedBkl()
@@ -56,6 +56,4 @@ function Wwagp_sdk_off_LCD_Loop()
 
 	-- Write to hardware
 	wwagp:setLcdStr("     ", systemtimestr, "     ")
-end
-
-uluaAddDoLoop('Wwagp_sdk_off_LCD_Loop()')
+end)

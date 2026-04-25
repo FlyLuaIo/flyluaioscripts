@@ -100,4 +100,4 @@ function Stkmulti_GA_Loop_Upd()
 	stkmulti:SetLeds()
 end
 
-uluaAddDoLoop("Stkmulti_GA_Loop_Upd()")
+GlobalFrameLoopManager:add(Stkmulti_GA_Loop_Upd)

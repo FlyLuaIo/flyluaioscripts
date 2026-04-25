@@ -52,4 +52,4 @@ function Qmovha_GA_loop()
 
 end
 
-uluaAddDoLoop("Qmovha_GA_loop()")
+GlobalFrameLoopManager:add(Qmovha_GA_loop)

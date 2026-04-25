@@ -149,4 +149,4 @@ function HCBRAVO_Aero_A346_LED_UPD()
     hcbravo:LoopAxis(4)
 end
 
-uluaAddDoLoop("HCBRAVO_Aero_A346_LED_UPD()")
+GlobalFrameLoopManager:add(HCBRAVO_Aero_A346_LED_UPD)

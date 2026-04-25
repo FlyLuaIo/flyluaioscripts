@@ -110,4 +110,4 @@ function CDU_ERJ_LED_UPD()
     qcdub:SetBkl(brightness)
 end
 
-uluaAddDoLoop("CDU_ERJ_LED_UPD()")
+GlobalFrameLoopManager:add(CDU_ERJ_LED_UPD)

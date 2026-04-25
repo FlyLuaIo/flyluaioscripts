@@ -133,5 +133,5 @@ function CDU_A320_LED_UPD()
 
 end
 
-uluaAddDoLoop("CDU_A320_LED_UPD()")
+GlobalFrameLoopManager:add(CDU_A320_LED_UPD)
 

@@ -202,7 +202,7 @@ function check_if_dataref_exists()
         ----------------------------  Display Dataref Set End ------------------------------------
         -- cmd_qmdev_reload = uluaFind("cpuwolf/flyluaio/reloadcfg")
         -- uluaCmdOnce(cmd_qmdev_reload)
-        uluaAddDoLoop("FF320_digi_disp_every_frame()")
+        GlobalFrameLoopManager:add(FF320_digi_disp_every_frame)
         uluaLog("QFCU for FF320")
     else
         uluasetTimeout("check_if_dataref_exists()", 1000)

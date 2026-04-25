@@ -138,5 +138,5 @@ function CDU_INIA350_LED_UPD()
 
 end
 
-uluaAddDoLoop("CDU_INIA350_LED_UPD()")
+GlobalFrameLoopManager:add(CDU_INIA350_LED_UPD)
 

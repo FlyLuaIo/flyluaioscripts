@@ -414,7 +414,7 @@ end
 		--uluaSet(idr_qfcu_hid_invalid, 3)
 	
 end
-uluaAddDoLoop("qfcu_PMDG_digi_disp_every_frame()")]]
+GlobalFrameLoopManager:add(qfcu_PMDG_digi_disp_every_frame)]]
 
 function qfcu_PMDG_digi_disp_every_frame()
     local qfcu_mcp_powered = dr_qfcu_mcp_powered:Get()
@@ -450,4 +450,4 @@ function qfcu_PMDG_digi_disp_every_frame()
         uluaSet(idr_qfcu_hid_dispbrightval_i, math.floor(bright * 4))
     end
 end
-uluaAddDoLoop("qfcu_PMDG_digi_disp_every_frame()")
+GlobalFrameLoopManager:add(qfcu_PMDG_digi_disp_every_frame)

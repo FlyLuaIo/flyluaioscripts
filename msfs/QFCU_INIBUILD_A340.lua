@@ -505,4 +505,4 @@ function qfcu_inia340_digi_disp_every_frame()
     end
 end
 
-uluaAddDoLoop("qfcu_inia340_digi_disp_every_frame()")
+GlobalFrameLoopManager:add(qfcu_inia340_digi_disp_every_frame)

@@ -621,7 +621,7 @@ function Qmcp737c_fnx_frame_upd()
     end
 end
 
--- uluaAddDoLoop("Qmcp737c_fnx_frame_upd()")
+-- GlobalFrameLoopManager:add(Qmcp737c_fnx_frame_upd)
 
 -------------------  Send Message Process  ------------------------------------
 -- LED Indicator light
@@ -857,4 +857,4 @@ function fnx_qmcp737c_digi_disp_every_frame()
     end
 end
 
-uluaAddDoLoop("fnx_qmcp737c_digi_disp_every_frame()")
+GlobalFrameLoopManager:add(fnx_qmcp737c_digi_disp_every_frame)

@@ -132,4 +132,4 @@ function Wffcuc_Toliss_Loop_Upd()
 	wffcuc:LoopAxis(4)
 end
 
-uluaAddDoLoop('Wffcuc_Toliss_Loop_Upd()')
+GlobalFrameLoopManager:add(Wffcuc_Toliss_Loop_Upd)

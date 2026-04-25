@@ -161,4 +161,4 @@ function Qmovha_XP_GA_loop()
     qmovha:SetBkl()
 end
 
-uluaAddDoLoop("Qmovha_XP_GA_loop()")
+GlobalFrameLoopManager:add(Qmovha_XP_GA_loop)

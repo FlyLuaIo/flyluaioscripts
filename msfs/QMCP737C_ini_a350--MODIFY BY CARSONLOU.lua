@@ -388,7 +388,7 @@ function Qmcp737c_ga_frame_upd()
     end
 end
 
--- uluaAddDoLoop("Qmcp737c_ga_frame_upd()")
+-- GlobalFrameLoopManager:add(Qmcp737c_ga_frame_upd)
 
 -------------------  Send Message Process  ------------------------------------
 -- LED Indicator light
@@ -608,4 +608,4 @@ function ini_a350_qmcp737c_digi_disp_every_frame()
     end
 end
 
-uluaAddDoLoop("ini_a350_qmcp737c_digi_disp_every_frame()")
+GlobalFrameLoopManager:add(ini_a350_qmcp737c_digi_disp_every_frame)

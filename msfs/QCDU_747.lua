@@ -98,7 +98,7 @@ function CDU_asobo747_LED_dataref_exists()
     qcdub:CfgRpn(69, '(>H:B747_8_FMC_1_BTN_BRT_DIM)', '') -- FMS LEFT BRIGHTNESS CONTROL selector 
     qcdub:CfgRpn(70, '(>H:B747_8_FMC_1_BTN_1)', '(>H:B747_8_FMC_1_BTN_1)') -- FMS LEFT BRIGHTNESS CONTROL selector 
 
-    uluaAddDoLoop("CDU_asobo747_LED_UPD()")
+    GlobalFrameLoopManager:add(CDU_asobo747_LED_UPD)
 end
 
 ---------------------------------------------------------------------------------------------------

@@ -127,4 +127,4 @@ function Stkradio_GA_Loop_Upd()
 	stkradio:loopDigi()
 end
 
-uluaAddDoLoop('Stkradio_GA_Loop_Upd()')
+GlobalFrameLoopManager:add(Stkradio_GA_Loop_Upd)

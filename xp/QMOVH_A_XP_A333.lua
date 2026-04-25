@@ -488,4 +488,4 @@ function Qmovha_XP_A333_loop()
     end
 end
 
-uluaAddDoLoop("Qmovha_XP_A333_loop()")
+GlobalFrameLoopManager:add(Qmovha_XP_A333_loop)

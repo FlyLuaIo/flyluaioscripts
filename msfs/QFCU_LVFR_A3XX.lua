@@ -619,4 +619,4 @@ function qfcu_lvfr_digi_disp_every_frame()
     end
 end
 
-uluaAddDoLoop("qfcu_lvfr_digi_disp_every_frame()")
+GlobalFrameLoopManager:add(qfcu_lvfr_digi_disp_every_frame)

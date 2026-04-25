@@ -54,4 +54,4 @@ function Wffcuc_Off_Loop_Upd()
 	wffcuc:ForceFresh()
 end
 
-uluaAddDoLoop('Wffcuc_Off_Loop_Upd()')
+GlobalFrameLoopManager:add(Wffcuc_Off_Loop_Upd)

@@ -501,4 +501,4 @@ function Qmovha_pmdg_737_loop()
     qmovha:SetBrtDim()
 end
 
-uluaAddDoLoop("Qmovha_pmdg_737_loop()")
+GlobalFrameLoopManager:add(Qmovha_pmdg_737_loop)

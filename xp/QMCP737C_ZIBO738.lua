@@ -381,4 +381,4 @@ function qmcp737c_zibo_loop()
         qmcp737c:OffNav()
     end
 end
-uluaAddDoLoop("qmcp737c_zibo_loop()")
+GlobalFrameLoopManager:add(qmcp737c_zibo_loop)

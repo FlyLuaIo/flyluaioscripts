@@ -67,4 +67,4 @@ function Wffcuc_GA_Loop_Upd()
 	wffcuc:LoopAxis(3)
 	wffcuc:LoopAxis(4)
 end
-uluaAddDoLoop('Wffcuc_GA_Loop_Upd()')
+GlobalFrameLoopManager:add(Wffcuc_GA_Loop_Upd)

@@ -380,4 +380,4 @@ function Qmpe_Afl172_XP_loop()
     qmpe:SetMisc()
 end
 
-uluaAddDoLoop("Qmpe_Afl172_XP_loop()")
+GlobalFrameLoopManager:add(Qmpe_Afl172_XP_loop)

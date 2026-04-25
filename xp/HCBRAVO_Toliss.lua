@@ -129,4 +129,4 @@ function HCBRAVO_Toliss_LED_UPD()
     hcbravo:SetLed()
 end
 
-uluaAddDoLoop('HCBRAVO_Toliss_LED_UPD()')
+GlobalFrameLoopManager:add(HCBRAVO_Toliss_LED_UPD)

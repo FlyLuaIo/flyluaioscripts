@@ -461,4 +461,4 @@ function Qmpe_pmdg_737_loop()
     end
 end
 
-uluaAddDoLoop("Qmpe_pmdg_737_loop()")
+GlobalFrameLoopManager:add(Qmpe_pmdg_737_loop)
