@@ -108,13 +108,11 @@ function Wwagp_GA_LCD_Loop()
 	wwagp:setLcdStr(gChrono, gUtc, elapsed_time)
 end
 
-function Wwagp_GA_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	wwagp:SetBkl()
 	wwagp:SetDigiBkl()
 	wwagp:SetLedBkl()
 	Wwagp_GA_LCD_Loop()
 	-- update LEDs
 	wwagp:Setleds()
-end
-
-GlobalFrameLoopManager:add(Wwagp_GA_Loop_Upd)
+end)

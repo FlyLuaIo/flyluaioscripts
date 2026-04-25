@@ -34,7 +34,7 @@ local dr_is_utc = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[17]')
 
 --================================ When MSFS is not runinng, offline lua code
 local systemtimestr = os.date("%H:%M:%S")
-GlobalFrameLoopManager:add(function() -- USE RENAMED GLOBAL HERE
+GlobalFrameLoopManager:add(function()
 	dr_digilight:Set(200)
 	wwagp:SetBkl()
 	wwagp:SetDigiBkl()

@@ -307,7 +307,7 @@ end
 -- =====Annunciator test
 local dr_test = iDataRef:New("(A:CIRCUIT AVIONICS ON,Bool)") -- 1: ON 0: OFF
 
-function Qmpe_GA_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: test mode
     local b_test = dr_test:Get()
     if dr_test:ChangedUpdate() then
@@ -331,6 +331,4 @@ function Qmpe_GA_loop()
     qmpe:SetAcp()
     qmpe:SetEcam()
     qmpe:SetMisc()
-end
-
-GlobalFrameLoopManager:add(Qmpe_GA_loop)
+end)

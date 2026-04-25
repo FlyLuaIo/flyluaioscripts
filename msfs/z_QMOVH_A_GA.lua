@@ -46,10 +46,9 @@ qmovha:CfgRpn(10, "(>K:LANDING_LIGHTS_ON)")
 qmovha:CfgRpn(43, "(>K:LANDING_LIGHTS_OFF)")
 qmovha:CfgRpn(11, "(>K:LANDING_LIGHTS_OFF)")
 
--- DONT use this name "Qmovha_GA_loop" again
--- it must be unique across all .sec and lua files
-function Qmovha_GA_loop()
+qmovha:GetBkl('(A:LIGHT POTENTIOMETER:3, Percent)', 100)
 
-end
+GlobalFrameLoopManager:add(function()
+    qmovha:SetBkl()
+end)
 
-GlobalFrameLoopManager:add(Qmovha_GA_loop)

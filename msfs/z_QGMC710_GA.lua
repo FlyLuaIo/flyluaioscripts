@@ -80,7 +80,7 @@ qgmc710:CfgRpn(27, "(>K:VOR2_OBI_INC)", "")
 
 uluaLog("QGMC710 for GA")
 
-function QGMC710_GA_LED_UPD()
+GlobalFrameLoopManager:add(function()
     local brightness = uluaGet(qgmv710_xp_cockpit_led)
     local led_br
     uluaSet(idr_qgmc710_hid_ledflc, ilua_01_ternary(qgmv710_xp_flc_led, 0))
@@ -103,6 +103,4 @@ function QGMC710_GA_LED_UPD()
         led_br = 0
     end
     uluaSet(idr_qgmc710_hid_bright, led_br)
-end
-
-GlobalFrameLoopManager:add(QGMC710_GA_LED_UPD)
+end)

@@ -122,8 +122,6 @@ hcbravo:GetParkingbrake('(A:BRAKE PARKING POSITION,Position)')
 hcbravo:GetLowvolts('')
 hcbravo:GetDoor('')
 
-function HCBRAVO_GA_LED_UPD()
+GlobalFrameLoopManager:add(function()
     hcbravo:SetLed()
-end
-
-GlobalFrameLoopManager:add(HCBRAVO_GA_LED_UPD)
+end)

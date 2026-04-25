@@ -32,7 +32,8 @@ wffcuc:GetTest('cpuwolf/flyluaio/WfFcuc/condbtn[1]')
 wffcuc:GetPower('cpuwolf/flyluaio/WfFcuc/condbtn[0]')
 local dr_power = iDataRef:New('cpuwolf/flyluaio/WfFcuc/condbtn[0]')
 local dr_light = iDataRef:New('cpuwolf/flyluaio/WfFcuc/condbtn[2]')
-function Wffcuc_Off_Loop_Upd()
+
+GlobalFrameLoopManager:add(function()
 	local dateTable = os.date("*t")
 	local hour      = dateTable.hour
 	local min       = dateTable.min
@@ -52,6 +53,4 @@ function Wffcuc_Off_Loop_Upd()
 	wffcuc:SetLcdBkl()
 	--force refresh
 	wffcuc:ForceFresh()
-end
-
-GlobalFrameLoopManager:add(Wffcuc_Off_Loop_Upd)
+end)

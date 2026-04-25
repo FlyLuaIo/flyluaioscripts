@@ -50,7 +50,7 @@ wffcuc:GetPower('(A:CIRCUIT AVIONICS ON,Bool)')
 
 
 
-function Wffcuc_GA_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	wffcuc:SetLeds()
 	wffcuc:SetTest()
 	wffcuc:SetPower()
@@ -68,6 +68,5 @@ function Wffcuc_GA_Loop_Upd()
 	wffcuc:LoopAxis(2)
 	wffcuc:LoopAxis(3)
 	wffcuc:LoopAxis(4)
-end
+end)
 
-GlobalFrameLoopManager:add(Wffcuc_GA_Loop_Upd)

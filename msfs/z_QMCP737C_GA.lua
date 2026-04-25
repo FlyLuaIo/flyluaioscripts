@@ -360,7 +360,7 @@ function ga_qmcp737c_digi_disp_nav()
     end
 end
 
-function ga_qmcp737c_digi_disp_every_frame()
+GlobalFrameLoopManager:add(function()
     ga_qmcp737c_digi_disp_set_Bright()
 
     if uluaGet(qmcp737c_avionics_on) > 0 then
@@ -386,6 +386,4 @@ function ga_qmcp737c_digi_disp_every_frame()
     else
         ga_qmcp737c_digi_disp_powoff_nav()
     end
-end
-
-GlobalFrameLoopManager:add(ga_qmcp737c_digi_disp_every_frame)
+end)
