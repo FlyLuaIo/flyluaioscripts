@@ -6,7 +6,7 @@
 
 local Wwecam = oop.class(com.sim.Qmdev)
 function Wwecam:init()
-	self.QmdevId = 0xC305EEB
+	self.QmdevId = 0x3D7A214C
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwecam == nil then
 		_G.ilua_hw_assigned_wwecam = 0
