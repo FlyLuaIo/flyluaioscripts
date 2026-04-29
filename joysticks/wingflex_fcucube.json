@@ -7,6 +7,10 @@
   "USB_AXIS_OFFSET": 312,
   "USB_AXIS_MAX": 64,
   "USB_AXIS_NUM": 4,
+  "USB_ENCODER_KEY_START": 19,
+  "USB_ENCODER_OFFSET": 88,
+  "USB_ENCODER_MAX": 32,
+  "USB_ENCODER_NUM": 4,
   "LightKey": 16,
   "LightKeyName": "LOC",
   "Functions": [

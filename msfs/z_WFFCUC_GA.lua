@@ -19,7 +19,17 @@ wffcuc:CfgRpnAxis(1,
 	"(A:AUTOPILOT VERTICAL HOLD, Bool) if{ (>K:AP_VS_VAR_INC) (>H:AP_DN) } (A:AUTOPILOT FLIGHT LEVEL CHANGE, Bool) if{ (>K:AP_SPD_VAR_DEC) } (A:AUTOPILOT PITCH HOLD, Bool) if{ (>K:AP_PITCH_REF_INC_UP) }")
 wffcuc:CfgRpnAxis(2, '100 (>K:AP_ALT_VAR_DEC)', '100 (>K:AP_ALT_VAR_INC)')
 wffcuc:CfgRpnAxis(3, '(>K:HEADING_BUG_DEC)', '(>K:HEADING_BUG_INC)')
-
+--[[
+wffcuc:CfgRpn(21, '(>K:HEADING_BUG_DEC)')
+wffcuc:CfgRpn(22, '(>K:HEADING_BUG_INC)')
+wffcuc:CfgRpn(23, '100 (>K:AP_ALT_VAR_DEC)')
+wffcuc:CfgRpn(24, '100 (>K:AP_ALT_VAR_INC)')
+wffcuc:CfgRpn(25,
+	"(A:AUTOPILOT VERTICAL HOLD, Bool) if{ (>K:AP_VS_VAR_DEC) (>H:AP_UP) } (A:AUTOPILOT FLIGHT LEVEL CHANGE, Bool) if{ (>K:AP_SPD_VAR_INC) } (A:AUTOPILOT PITCH HOLD, Bool) if{ (>K:AP_PITCH_REF_INC_DN) }")
+wffcuc:CfgRpn(26,
+	"(A:AUTOPILOT VERTICAL HOLD, Bool) if{ (>K:AP_VS_VAR_INC) (>H:AP_DN) } (A:AUTOPILOT FLIGHT LEVEL CHANGE, Bool) if{ (>K:AP_SPD_VAR_DEC) } (A:AUTOPILOT PITCH HOLD, Bool) if{ (>K:AP_PITCH_REF_INC_UP) }")
+]]--
+	
 -- LCD display
 wffcuc:GetSpd('(A:AUTOPILOT AIRSPEED HOLD VAR, knot)')
 wffcuc:GetHdg('(A:AUTOPILOT HEADING LOCK DIR,Degrees)')
@@ -69,4 +79,3 @@ GlobalFrameLoopManager:add(function()
 	wffcuc:LoopAxis(3)
 	wffcuc:LoopAxis(4)
 end)
-
