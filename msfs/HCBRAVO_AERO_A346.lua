@@ -20,7 +20,7 @@ uluaLog("HCBravo for Aerosoft A346")
 hcbravo:CfgRpn(0, '(>K:AP_PANEL_HEADING_HOLD)')
 
 -- use honeycomb axis es
-hcbravo:MapAxis()
+-- hcbravo:MapAxis()
 
 
 --[[
@@ -142,11 +142,12 @@ hcbravo:GetDoor('')
 
 function HCBRAVO_Aero_A346_LED_UPD()
     hcbravo:SetLed()
-
+    --[[
     hcbravo:LoopAxis(1)
     hcbravo:LoopAxis(2)
     hcbravo:LoopAxis(3)
     hcbravo:LoopAxis(4)
+    --]]
 end
 
 GlobalFrameLoopManager:add(HCBRAVO_Aero_A346_LED_UPD)
