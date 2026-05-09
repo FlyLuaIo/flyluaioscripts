@@ -15,15 +15,24 @@ end
 -- Do not remove above lines: hardware detection
 uluaLog("HCBravo for GA")
 
+hcbravo:AddTogMenu("use FLAPS as Spoiler/Parking", "襟翼当减速板/刹车", "g_hcbravo_flap_spoiler_park")
+
 -- Input Key binding
 hcbravo:CfgRpn(0, '(>K:AP_PANEL_HEADING_HOLD)')
 
 
 
--- flap down
-hcbravo:CfgRpn(14, '(>K:FLAPS_INCR)')
--- flap up
-hcbravo:CfgRpn(15, '(>K:FLAPS_DECR)')
+if g_hcbravo_flap_spoiler_park == 0 then
+    -- flap down
+    hcbravo:CfgRpn(14, '(>K:FLAPS_INCR)')
+    -- flap up
+    hcbravo:CfgRpn(15, '(>K:FLAPS_DECR)')
+else
+    -- flap down
+    hcbravo:CfgRpn(14, '(>K:PARKING_BRAKES)')
+    -- flap up
+    hcbravo:CfgRpn(15, '(>K:SPOILERS_ARM_TOGGLE)')
+end
 
 -- trim down
 hcbravo:CfgRpn(21, '(>K:ELEV_TRIM_DN)')
