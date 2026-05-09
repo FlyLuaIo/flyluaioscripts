@@ -28,10 +28,10 @@ uluaLog('Wwagp for FF777 V2')
 
 -- autobrake
 local cmd_auto_rto = uluaFind('1-sim/command/autobrakeSwitch_set_0')
+local cmd_auto_off = uluaFind('1-sim/command/autobrakeSwitch_set_1')
 local cmd_auto_low = uluaFind('1-sim/command/autobrakeSwitch_set_3')
 local cmd_auto_med = uluaFind('1-sim/command/autobrakeSwitch_set_4')
 local cmd_auto_max = uluaFind('1-sim/command/autobrakeSwitch_set_7')
-local cmd_auto_off = uluaFind('1-sim/command/autobrakeSwitch_set_1')
 local drf_brk_pos = iDataRef:New('1-sim/output/autobrakes')
 
 function key_low_func()
@@ -78,6 +78,8 @@ wwagp:CfgCmd(19, '1-sim/command/cptTimerSetSwitch_set_2')
 wwagp:CfgCmd(20, '1-sim/command/cptTimerSetSwitch_set_1')
 wwagp:CfgCmd(21, '1-sim/command/cptTimerSetSwitch_set_0')
 
+-- Terrain
+wwagp:CfgCmd(22, "1-sim/command/cptHsiTerrButton_button")
 wwagp:CfgCmd(23, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/landing_gear_down')
 
 
@@ -86,13 +88,13 @@ wwagp:GetBkl('sim/cockpit/electrical/cockpit_lights', 250)
 wwagp:GetDigiBkl("sim/cockpit2/switches/avionics_power_on", 200) -- 0~1
 wwagp:GetLedBkl("sim/cockpit2/switches/avionics_power_on", 200)  -- 0~1
 --================================ Input LED/LCD ===
-wwagp:GetUlockL("cpuwolf/flyluaio/WwAgp/condbtn[1]")
-wwagp:GetUlockN("cpuwolf/flyluaio/WwAgp/condbtn[1]")
-wwagp:GetUlockR("cpuwolf/flyluaio/WwAgp/condbtn[1]")
+wwagp:GetUlockL("sim/flightmodel2/gear/deploy_ratio[1]")
+wwagp:GetUlockN("sim/flightmodel2/gear/deploy_ratio[0]")
+wwagp:GetUlockR("sim/flightmodel2/gear/deploy_ratio[3]")
 wwagp:GetBrakeHot('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetLockL("sim/flightmodel2/gear/deploy_ratio[1]")
 wwagp:GetLockN("sim/flightmodel2/gear/deploy_ratio[0]")
-wwagp:GetLockR("sim/flightmodel2/gear/deploy_ratio[2]")
+wwagp:GetLockR("sim/flightmodel2/gear/deploy_ratio[3]")
 wwagp:GetBrakeOn('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetLowD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetMedD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
@@ -166,7 +168,7 @@ local drf_brk_low = iDataRef:New('cpuwolf/flyluaio/WwAgp/condbtn[2]')
 local drf_brk_mid = iDataRef:New('cpuwolf/flyluaio/WwAgp/condbtn[3]')
 local drf_brk_max = iDataRef:New('cpuwolf/flyluaio/WwAgp/condbtn[4]')
 
-function Wwagp_GA_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark
 	local b_power
 	if dr_power:ChangedUpdate() then
@@ -236,7 +238,20 @@ function Wwagp_GA_Loop_Upd()
 	wwagp:SetLedBkl()
 	Wwagp_GA_LCD_Loop()
 	-- update LEDs
-	wwagp:Setleds()
-end
-
-GlobalFrameLoopManager:add(Wwagp_GA_Loop_Upd)
+	wwagp:SetUlockL(1)
+	wwagp:SetUlockN(1)
+	wwagp:SetUlockR(1)
+	wwagp:SetBrakeHot()
+	wwagp:SetLockL(0.999)
+	wwagp:SetLockN(0.999)
+	wwagp:SetLockR(0.999)
+	wwagp:SetBrakeOn()
+	wwagp:SetLowD()
+	wwagp:SetMedD()
+	wwagp:SetMaxD()
+	wwagp:SetLow()
+	wwagp:SetMed()
+	wwagp:SetMax()
+	wwagp:SetTerr()
+	wwagp:SetLever()
+end)
