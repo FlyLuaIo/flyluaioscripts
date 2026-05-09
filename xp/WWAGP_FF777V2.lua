@@ -25,8 +25,54 @@ end
 uluaLog('Wwagp for FF777 V2')
 
 --================================ Output key binding
-wwagp:CfgCmd(8, 'sim/instruments/chrono1_reset')
-wwagp:CfgCmd(11, 'sim/instruments/chrono1_start_stop')
+
+-- autobrake
+local cmd_auto_rto = uluaFind('1-sim/command/autobrakeSwitch_set_0')
+local cmd_auto_low = uluaFind('1-sim/command/autobrakeSwitch_set_3')
+local cmd_auto_med = uluaFind('1-sim/command/autobrakeSwitch_set_4')
+local cmd_auto_max = uluaFind('1-sim/command/autobrakeSwitch_set_7')
+local cmd_auto_off = uluaFind('1-sim/command/autobrakeSwitch_set_1')
+local drf_brk_pos = iDataRef:New('1-sim/output/autobrakes')
+
+function key_low_func()
+	if drf_brk_pos:Get() == 3 then
+		uluaCmdOnce(cmd_auto_off)
+	else
+		uluaCmdOnce(cmd_auto_low)
+	end
+end
+
+wwagp:CfgFc(2, "key_low_func()")
+
+function key_med_func()
+	if drf_brk_pos:Get() == 4 then
+		uluaCmdOnce(cmd_auto_off)
+	else
+		uluaCmdOnce(cmd_auto_med)
+	end
+end
+
+wwagp:CfgFc(3, "key_med_func()")
+
+function key_max_long_func()
+	if drf_brk_pos:Get() == 0 then
+		uluaCmdOnce(cmd_auto_off)
+	else
+		uluaCmdOnce(cmd_auto_rto)
+	end
+end
+
+function key_max_short_func()
+	if drf_brk_pos:Get() == 7 then
+		uluaCmdOnce(cmd_auto_off)
+	else
+		uluaCmdOnce(cmd_auto_max)
+	end
+end
+
+wwagp:CfgLongFc(4, 1000, key_max_long_func, key_max_short_func)
+wwagp:CfgCmd(8, '1-sim/command/cptTimerChrButton_button')
+wwagp:CfgCmd(11, '1-sim/command/cptTimerChrButton_button')
 
 wwagp:CfgCmd(19, '1-sim/command/cptTimerSetSwitch_set_2')
 wwagp:CfgCmd(20, '1-sim/command/cptTimerSetSwitch_set_1')
@@ -51,9 +97,9 @@ wwagp:GetBrakeOn('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetLowD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetMedD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetMaxD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
-wwagp:GetLow('cpuwolf/flyluaio/WwAgp/condbtn[1]')
-wwagp:GetMed('cpuwolf/flyluaio/WwAgp/condbtn[1]')
-wwagp:GetMax('cpuwolf/flyluaio/WwAgp/condbtn[1]')
+wwagp:GetLow('cpuwolf/flyluaio/WwAgp/condbtn[2]')
+wwagp:GetMed('cpuwolf/flyluaio/WwAgp/condbtn[3]')
+wwagp:GetMax('cpuwolf/flyluaio/WwAgp/condbtn[4]')
 wwagp:GetTerr('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetLever('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 
@@ -112,8 +158,14 @@ function Wwagp_GA_LCD_Loop()
 	-- Write to hardware
 	wwagp:setLcdStr(gChrono, utc, elapsed_time)
 end
+
 local dr_test = iDataRef:New("sim/cockpit/warnings/annunciator_test_pressed") -- 0: normal 1:test
-local dr_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on") -- 0: OFF 1: ON
+local dr_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on")      -- 0: OFF 1: ON
+
+local drf_brk_low = iDataRef:New('cpuwolf/flyluaio/WwAgp/condbtn[2]')
+local drf_brk_mid = iDataRef:New('cpuwolf/flyluaio/WwAgp/condbtn[3]')
+local drf_brk_max = iDataRef:New('cpuwolf/flyluaio/WwAgp/condbtn[4]')
+
 function Wwagp_GA_Loop_Upd()
 	-- expert code: cold and dark
 	local b_power
@@ -157,6 +209,28 @@ function Wwagp_GA_Loop_Upd()
 		--test mode don't need refresh data
 		return
 	end
+
+	if drf_brk_pos:ChangedUpdate() then
+		local pos = drf_brk_pos:GetOld()
+		if pos == 3 then
+			drf_brk_low:Set(1)
+		else
+			drf_brk_low:Set(0)
+		end
+		if pos == 4 then
+			drf_brk_mid:Set(1)
+		else
+			drf_brk_mid:Set(0)
+		end
+		if pos == 0 then
+			drf_brk_max:Set(1)
+		elseif pos == 7 then
+			drf_brk_max:Set(1)
+		else
+			drf_brk_max:Set(0)
+		end
+	end
+
 	wwagp:SetBkl()
 	wwagp:SetDigiBkl()
 	wwagp:SetLedBkl()
