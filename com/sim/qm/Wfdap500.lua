@@ -6,7 +6,7 @@
 
 local Wfdap500 = oop.class(com.sim.Qmdev)
 function Wfdap500:init()
-	self.QmdevId = 0xXXXXXX
+	self.QmdevId = 0x2C94C7A3
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wfdap500 == nil then
 		_G.ilua_hw_assigned_wfdap500 = 0
