@@ -1,6 +1,6 @@
 
 -- *****************************************************************
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-05-11_08_31_31UTC
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-05-11_08_43_45UTC
 -- *****************************************************************
 
 -- Do not remove below lines: hardware detection
@@ -27,7 +27,6 @@ wfdap500:GetAlt('')
 ]]--
 
 
-function Wfdap500_GA_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	-- wfdap500:SetLeds()
-end
-uluaAddDoLoop('Wfdap500_GA_Loop_Upd()')
+end)
