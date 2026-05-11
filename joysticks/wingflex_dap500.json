@@ -1,0 +1,80 @@
+{
+  "ProductName": "WfDap500",
+  "USB_VID": "0xC687",
+  "USB_PID": "0xB216",
+  "LightKey": 14,
+  "LightKeyName": "IAS",
+  "Functions": [
+    {
+      "FunName": "leds",
+      "USB_CMD_length": 63,
+      "HeaderBytes": ["0x02", "0x01"],
+      "FunIndex": 1,
+      "LightBytes": [
+        "0x02",
+        "0x01",
+        "0xFF",
+        "0xFF",
+        "0xFF"
+      ],
+      "TestBytes": [
+        "0x02",
+        "0x01",
+        "0x00",
+        "0x01",
+        "0xFF"
+      ],
+      "OffBytes": [
+        "0x02",
+        "0x01",
+        "0x00",
+        "0x00",
+        "0x00"
+      ],
+      "SubFunctions": [
+        {
+          "bits": "i16:16",
+          "bkl": "i32:8"
+        }
+      ],
+      "SubBitFunctions": [
+        {
+          "apr": "t16"
+        },
+        {
+          "nav": "t17"
+        },
+        {
+          "trk": "t18"
+        },
+        {
+          "hdg": "t19"
+        },
+        {
+          "ap": "t20"
+        },
+        {
+          "fd": "t21"
+        },
+        {
+          "lvl": "t22"
+        },
+        {
+          "yd": "t23"
+        },
+        {
+          "ias": "t24"
+        },
+        {
+          "vnav": "t25"
+        },
+        {
+          "vs": "t26"
+        },
+        {
+          "alt": "t27"
+        }
+      ]
+    }
+  ]
+}
