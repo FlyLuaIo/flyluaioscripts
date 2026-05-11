@@ -19,12 +19,20 @@ uluaLog('WinWing AGP for PMDG777')
 --================================ Output key binding
 --
 --================================ Output key binding
+
 -- autobrake
-wwagp:CfgRpn(2, '(L:switch_292_a) 0 != if{ 0 (>L:switch_292_a) } els{ 10 (>L:switch_292_a) }')
-wwagp:CfgRpn(3,
-	'(L:switch_292_a) 10 != if{ 10 (>L:switch_292_a) } els{ 40 (>L:switch_292_a) }')
-wwagp:CfgRpn(4,
-	'(L:INI_AUTOBRAKE_LEVEL, number) 4 != if{ 4 (>L:INI_AUTOBRAKE_LEVEL, number) } els{ 0 (>L:INI_AUTOBRAKE_LEVEL, number) }')
+
+wwagp:CfgRpn(2, '(L:switch_292_a) 10 != if{ 10 (>L:switch_292_a) } els{ 30 (>L:switch_292_a) }')
+wwagp:CfgRpn(3, '(L:switch_292_a) 10 != if{ 10 (>L:switch_292_a) } els{ 40 (>L:switch_292_a) }')
+function key_max_long_func()
+	uluaWriteCmd('(L:switch_292_a) 10 != if{ 10 (>L:switch_292_a) } els{ 0 (>L:switch_292_a) }')
+end
+
+function key_max_short_func()
+	uluaWriteCmd('(L:switch_292_a) 10 != if{ 10 (>L:switch_292_a) } els{ 70 (>L:switch_292_a) }')
+end
+
+wwagp:CfgLongFc(4, 1000, key_max_long_func, key_max_short_func)
 
 wwagp:CfgRpn(23, '(>K:GEAR_UP)', '(>K:GEAR_DOWN)')
 
