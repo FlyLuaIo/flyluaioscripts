@@ -2,7 +2,7 @@
   "ProductName": "WfDap500",
   "USB_VID": "0xC687",
   "USB_PID": "0xB216",
-  "LightKey": 14,
+  "LightKey": 16,
   "LightKeyName": "IAS",
   "Functions": [
     {

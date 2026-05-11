@@ -1,4 +1,3 @@
-
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
@@ -7,7 +6,7 @@
 
 local Wfdap500 = oop.class(com.sim.Qmdev)
 function Wfdap500:init()
-	self.QmdevId = 0x XXXXXX
+	self.QmdevId = 0xXXXXXX
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wfdap500 == nil then
 		_G.ilua_hw_assigned_wfdap500 = 0
@@ -195,6 +194,34 @@ function Wfdap500:SetLeds(valbase, val)
 	self:SetVnav(valbase, val)
 	self:SetVs(valbase, val)
 	self:SetAlt(valbase, val)
+end
+
+-- ========
+-- Backlight
+function Wfdap500:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
+end
+
+function Wfdap500:SetBkl(val)
+	if val == nil then
+		val = self.d_bkl:Get() * self.d_bkl_scale
+		if self.d_bkl:ChangedUpdate() then
+			uluaSet(idr_wfdap500_hid_leds_bkl, val)
+		end
+	else
+		uluaSet(idr_wfdap500_hid_leds_bkl, val)
+	end
+end
+
+function Wfdap500:FreshBkl()
+	self.d_bkl:Invalid(-1)
+end
+
+-- ========
+-- Test Mode
+function Wfdap500:SetTest()
+	uluaSet(idr_wfdap500_hid_leds_bits, 255)
 end
 
 return Wfdap500
