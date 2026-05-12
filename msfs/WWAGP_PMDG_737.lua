@@ -30,6 +30,8 @@ end
 
 wwagp:CfgLongFc(4, 1000, key_max_long_func, key_max_short_func)
 
+-- TERR
+wwagp:CfgRpn(22, "37501 (>K:ROTOR_BRAKE)")
 wwagp:CfgRpn(23, '(>K:GEAR_UP)', '(>K:GEAR_DOWN)')
 
 
