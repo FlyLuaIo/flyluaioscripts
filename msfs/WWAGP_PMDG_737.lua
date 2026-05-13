@@ -17,7 +17,12 @@ end
 uluaLog('WinWing AGP for PMDG737')
 
 --================================ Output key binding
---
+---- BRK FAN as TERR
+wwagp:CfgRpn(0,
+	'(L:switch_506_73X, number) 100 != if{ 50601 (>K:ROTOR_BRAKE) } els{ 50604 (>K:ROTOR_BRAKE) } 50500 1 + (>K:ROTOR_BRAKE)',
+	'50500 1 + (>K:ROTOR_BRAKE) (L:switch_506_73X, number) 0 != if{ 50601 (>K:ROTOR_BRAKE) }')
+
+--AUTO BRAKE
 wwagp:CfgRpn(2, '(L:switch_460_73X) 10 != if{ 10 (>L:switch_460_73X) } els{ 20 (>L:switch_460_73X) }')
 wwagp:CfgRpn(3, '(L:switch_460_73X) 10 != if{ 10 (>L:switch_460_73X) } els{ 30 (>L:switch_460_73X) }')
 function key_max_long_func()
@@ -29,6 +34,10 @@ function key_max_short_func()
 end
 
 wwagp:CfgLongFc(4, 1000, key_max_long_func, key_max_short_func)
+
+---- SYS
+wwagp:CfgRpn(5, '50300 1 + (>K:ROTOR_BRAKE) (L:switch_504_73X, number) 0 != if{ 50401 (>K:ROTOR_BRAKE) }',
+	'(L:switch_504_73X, number) 100 != if{ 50401 (>K:ROTOR_BRAKE) } els{ 50404 (>K:ROTOR_BRAKE) } 50300 1 + (>K:ROTOR_BRAKE)')
 
 -- TERR
 wwagp:CfgRpn(22, "37501 (>K:ROTOR_BRAKE)")
@@ -47,7 +56,7 @@ wwagp:GetBrakeHot('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetLockL("(A:GEAR LEFT POSITION, percent over 100)")
 wwagp:GetLockN("(A:GEAR CENTER POSITION, percent over 100)")
 wwagp:GetLockR("(A:GEAR RIGHT POSITION, percent over 100)")
-wwagp:GetBrakeOn('cpuwolf/flyluaio/WwAgp/condbtn[1]')
+wwagp:GetBrakeOn('(L:switch_505_73X) 0 ==')
 wwagp:GetLowD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetMedD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetMaxD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
