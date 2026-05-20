@@ -67,6 +67,14 @@ wwagp:CfgLongFc(4, 1000, key_max_long_func, key_max_short_func)
 -- SKID
 wwagp:CfgRpn(5, '29900 1 + (>K:ROTOR_BRAKE) (L:switch_300_a, number) 0 != if{ 30001 (>K:ROTOR_BRAKE) }',
 	'(L:switch_300_a, number) 100 != if{ 30001 (>K:ROTOR_BRAKE) } els{ 30003 (>K:ROTOR_BRAKE) } 29900 1 + (>K:ROTOR_BRAKE)')
+
+--Chrono
+wwagp:CfgRpn(8, "314102 (>K:ROTOR_BRAKE)")
+wwagp:CfgRpn(11, "17101 (>K:ROTOR_BRAKE)")
+--ET
+wwagp:CfgRpn(19, "17307 (>K:ROTOR_BRAKE)", "17308 (>K:ROTOR_BRAKE)")
+wwagp:CfgRpn(21, "17308 (>K:ROTOR_BRAKE)")
+
 -- TERR
 wwagp:CfgRpn(22, "20101 (>K:ROTOR_BRAKE)", "20104 (>K:ROTOR_BRAKE)")
 
@@ -113,16 +121,12 @@ local dr_utc_is_date = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[14]')
 local gChrono = ""
 local gUtc = ""
 local elapsed_time = ""
+
+wwagp:FakeChrInit()
+wwagp:FakeEtInit()
 function Wwagp_GA_LCD_Loop()
 	--Chrone
-	if dr_chrono:ChangedUpdate() then
-		local chr = dr_chrono:GetOld()
-		if math.floor(chr) == 0 then
-			gChrono = "     "
-		else
-			gChrono = wwagp:formatChronoStr(chr)
-		end
-	end
+	gChrono = wwagp:FakeChrShow()
 
 	-- UTC time
 	if dr_utc_is_date:ChangedUpdate() then
@@ -148,12 +152,7 @@ function Wwagp_GA_LCD_Loop()
 	end
 
 	-- ET
-	if dr_et_sec:ChangedUpdate() then
-		local totalSeconds = math.floor(dr_et_sec:GetOld())
-		local h = math.floor(totalSeconds / 3600)
-		local m = math.floor((totalSeconds % 3600) / 60)
-		elapsed_time = string.format("%02d:%02d", h, m)
-	end
+	elapsed_time = wwagp:FakeEtShow()
 
 	-- Write to hardware
 	wwagp:setLcdStr(gChrono, gUtc, elapsed_time)
