@@ -33,6 +33,8 @@ local dr_is_utc = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[17]')
 
 
 --================================ When MSFS is not runinng, offline lua code
+wwagp:FakeChrInit()
+wwagp:FakeEtInit()
 local systemtimestr = os.date("%H:%M:%S")
 GlobalFrameLoopManager:add(function()
 	dr_digilight:Set(200)
@@ -55,5 +57,5 @@ GlobalFrameLoopManager:add(function()
 	end
 
 	-- Write to hardware
-	wwagp:setLcdStr("     ", systemtimestr, "     ")
+	wwagp:setLcdStr(wwagp:FakeChrShow(), systemtimestr, wwagp:FakeEtShow())
 end)
