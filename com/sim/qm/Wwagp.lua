@@ -619,9 +619,73 @@ function Wwagp:FakeChrShow()
 		local elapsed = os.difftime(currentTime, _G.WwagpFakeChr_StartTime)
 		tmstr = WwagpFakeChr_FormatTime(elapsed)
 	elseif _G.WwagpFakeChr_ChronoMode == 2 and _G.WwagpFakeChr_StopTime ~= nil then
-		local currentTime = os.time()
-		local elapsed = os.difftime(_G.WwagpFakeChr_StopTime, _G.WwagpFakeChr_StartTime)
+		local currentTime = _G.WwagpFakeChr_StopTime
+		local elapsed = os.difftime(currentTime, _G.WwagpFakeChr_StartTime)
 		tmstr = WwagpFakeChr_FormatTime(elapsed)
+	end
+	return tmstr
+end
+
+-- ========================= Fake Elapsed Time
+-- Initialize global variables following the naming convention
+_G.WwagpFakeEt_StartTime = 0
+_G.WwagpFakeEt_StopTime = 0
+_G.WwagpFakeEt_Running = false
+
+-- Global function to format time
+_G.WwagpFakeEt_FormatTime = function(seconds)
+	local hours = math.floor(seconds / 3600)
+	local minutes = math.floor((seconds % 3600) / 60)
+	return string.format("%02d:%02d", hours, minutes)
+end
+
+-- Global function to handle chrono state changes with a single trigger
+_G.WwagpFakeEt_Toggle = function(mode)
+	if mode == 1 then
+		-- Mode 0: Stopped/Reset, ready to start
+		-- First start or after a full reset/stop
+		_G.WwagpFakeEt_StartTime = os.time()
+		_G.WwagpFakeEt_StopTime = 0
+		_G.WwagpFakeEt_Running = true
+		uluaLog("Elapsed time started")
+	elseif mode == 2 then
+		-- Mode 1: Running, ready to stop
+		if _G.WwagpFakeEt_Running then
+			_G.WwagpFakeEt_StopTime = os.time()
+		end
+		_G.WwagpFakeEt_Running = false
+		local elapsed = os.difftime(_G.WwagpFakeEt_StopTime, _G.WwagpFakeEt_StartTime)
+		uluaLog("Elapsed time stopped: " .. WwagpFakeEt_FormatTime(elapsed))
+	elseif mode == 0 then
+		-- Mode 2: Stopped, ready to reset
+		_G.WwagpFakeEt_StartTime = 0
+		_G.WwagpFakeEt_StopTime = 0
+		_G.WwagpFakeEt_Running = false
+		uluaLog("Elapsed time reset")
+	end
+end
+
+function Wwagp:FakeEtInit()
+	_G.WwagpFakeEt_StartTime = 0
+	_G.WwagpFakeEt_StopTime = 0
+	_G.WwagpFakeEt_Running = false
+	self:CfgFc(19, "_G.WwagpFakeEt_Toggle(1)")
+	self:CfgFc(20, "_G.WwagpFakeEt_Toggle(2)")
+	self:CfgFc(21, "_G.WwagpFakeEt_Toggle(0)")
+	uluaLog("Elapsed time Init")
+end
+
+function Wwagp:FakeEtShow()
+	local tmstr = ""
+	-- Only display elapsed time if chrono is currently running
+	if _G.WwagpFakeEt_Running and _G.WwagpFakeEt_StartTime ~= 0 then
+		local currentTime = os.time()
+		local elapsed = os.difftime(currentTime, _G.WwagpFakeEt_StartTime)
+		tmstr = WwagpFakeEt_FormatTime(elapsed)
+	elseif not _G.WwagpFakeEt_Running and _G.WwagpFakeEt_StopTime ~= 0 then
+		local currentTime = _G.WwagpFakeEt_StopTime
+		local elapsed = os.difftime(currentTime, _G.WwagpFakeEt_StartTime)
+		tmstr = WwagpFakeEt_FormatTime(elapsed)
 	end
 	return tmstr
 end

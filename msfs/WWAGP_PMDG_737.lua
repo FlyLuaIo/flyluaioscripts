@@ -40,7 +40,12 @@ wwagp:CfgRpn(5, '50300 1 + (>K:ROTOR_BRAKE) (L:switch_504_73X, number) 0 != if{ 
 	'(L:switch_504_73X, number) 100 != if{ 50401 (>K:ROTOR_BRAKE) } els{ 50404 (>K:ROTOR_BRAKE) } 50300 1 + (>K:ROTOR_BRAKE)')
 
 --Chrono
+wwagp:CfgRpn(8, "314102 (>K:ROTOR_BRAKE)")
 wwagp:CfgRpn(11, "31401 (>K:ROTOR_BRAKE)")
+
+--ET
+wwagp:CfgRpn(19, "32101 (>K:ROTOR_BRAKE)", "32101 (>K:ROTOR_BRAKE)")
+wwagp:CfgRpn(21, "32001 (>K:ROTOR_BRAKE)")
 
 -- TERR
 wwagp:CfgRpn(22, "37501 (>K:ROTOR_BRAKE)")
@@ -89,18 +94,10 @@ local gUtc = ""
 local elapsed_time = ""
 
 wwagp:FakeChrInit()
+wwagp:FakeEtInit()
 
 function Wwagp_GA_LCD_Loop()
 	--Chrone
-	if dr_chrono:ChangedUpdate() then
-		local chr = dr_chrono:GetOld()
-		if math.floor(chr) == 0 then
-			gChrono = "     "
-		else
-			gChrono = wwagp:formatChronoStr(chr)
-		end
-	end
-
 	gChrono = wwagp:FakeChrShow()
 
 	-- UTC time
@@ -127,12 +124,7 @@ function Wwagp_GA_LCD_Loop()
 	end
 
 	-- ET
-	if dr_et_sec:ChangedUpdate() then
-		local totalSeconds = math.floor(dr_et_sec:GetOld())
-		local h = math.floor(totalSeconds / 3600)
-		local m = math.floor((totalSeconds % 3600) / 60)
-		elapsed_time = string.format("%02d:%02d", h, m)
-	end
+	elapsed_time = wwagp:FakeEtShow()
 
 	-- Write to hardware
 	wwagp:setLcdStr(gChrono, gUtc, elapsed_time)
