@@ -39,6 +39,9 @@ wwagp:CfgLongFc(4, 1000, key_max_long_func, key_max_short_func)
 wwagp:CfgRpn(5, '50300 1 + (>K:ROTOR_BRAKE) (L:switch_504_73X, number) 0 != if{ 50401 (>K:ROTOR_BRAKE) }',
 	'(L:switch_504_73X, number) 100 != if{ 50401 (>K:ROTOR_BRAKE) } els{ 50404 (>K:ROTOR_BRAKE) } 50300 1 + (>K:ROTOR_BRAKE)')
 
+--Chrono
+wwagp:CfgRpn(11, "31401 (>K:ROTOR_BRAKE)")
+
 -- TERR
 wwagp:CfgRpn(22, "37501 (>K:ROTOR_BRAKE)")
 wwagp:CfgRpn(23, '(>K:GEAR_UP)', '(>K:GEAR_DOWN)')
@@ -84,6 +87,9 @@ local dr_utc_is_date = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[14]')
 local gChrono = ""
 local gUtc = ""
 local elapsed_time = ""
+
+wwagp:FakeChrInit()
+
 function Wwagp_GA_LCD_Loop()
 	--Chrone
 	if dr_chrono:ChangedUpdate() then
@@ -94,6 +100,8 @@ function Wwagp_GA_LCD_Loop()
 			gChrono = wwagp:formatChronoStr(chr)
 		end
 	end
+
+	gChrono = wwagp:FakeChrShow()
 
 	-- UTC time
 	if dr_utc_is_date:ChangedUpdate() then

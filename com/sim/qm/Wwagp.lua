@@ -484,9 +484,9 @@ end
 -- Example usage:
 local finalPacket = encodeDisplay("12:34", "12:34:56", "00:01", 1)
 
--- Debug print: only show the scattered bytes containing digit data
+-- Debug uluaLog: only show the scattered bytes containing digit data
 for i, v in ipairs(finalPacket) do
-    print(string.format("Byte %02d: 0x%02X", i, v))
+    uluaLog(string.format("Byte %02d: 0x%02X", i, v))
 end
 ]] --
 
@@ -554,6 +554,76 @@ end
 
 function Wwagp:setLcdStrTest()
 	self:setLcdStr("88:88", "88:88:88", "88:88")
+end
+
+-- ========================= Fake Chrono
+-- Initialize global variables following the naming convention
+_G.WwagpFakeChr_StartTime = nil
+_G.WwagpFakeChr_StopTime = nil
+_G.WwagpFakeChr_Running = false
+-- Add a state variable to track the chrono's mode for the single key press
+-- 0: Stopped/Reset, ready to start
+-- 1: Running, ready to stop
+-- 2: Stopped, ready to reset
+_G.WwagpFakeChr_ChronoMode = 0
+
+-- Global function to format time
+_G.WwagpFakeChr_FormatTime = function(seconds)
+	local minutes = math.floor(seconds / 60)
+	local remainingSeconds = math.floor(seconds % 60)
+	return string.format("%02d:%02d", minutes, remainingSeconds)
+end
+
+-- Global function to handle chrono state changes with a single trigger
+_G.WwagpFakeChr_ToggleChrono = function()
+	if _G.WwagpFakeChr_ChronoMode == 0 then
+		-- Mode 0: Stopped/Reset, ready to start
+		-- First start or after a full reset/stop
+		_G.WwagpFakeChr_StartTime = os.time()
+		_G.WwagpFakeChr_StopTime = nil
+
+		_G.WwagpFakeChr_Running = true
+		_G.WwagpFakeChr_ChronoMode = 1 -- Move to running mode
+		uluaLog("Chrono started")
+	elseif _G.WwagpFakeChr_ChronoMode == 1 then
+		-- Mode 1: Running, ready to stop
+		_G.WwagpFakeChr_StopTime = os.time()
+		_G.WwagpFakeChr_Running = false
+		local elapsed = os.difftime(_G.WwagpFakeChr_StopTime, _G.WwagpFakeChr_StartTime)
+		uluaLog("Chrono stopped Elapsed time: " .. WwagpFakeChr_FormatTime(elapsed))
+		_G.WwagpFakeChr_ChronoMode = 2 -- Move to stopped, ready to reset mode
+	elseif _G.WwagpFakeChr_ChronoMode == 2 then
+		-- Mode 2: Stopped, ready to reset
+		_G.WwagpFakeChr_StartTime = nil
+		_G.WwagpFakeChr_StopTime = nil
+		_G.WwagpFakeChr_Running = false
+		uluaLog("Chrono reset")
+		_G.WwagpFakeChr_ChronoMode = 0 -- Move back to stopped/reset, ready to start mode
+	end
+end
+
+function Wwagp:FakeChrInit()
+	_G.WwagpFakeChr_StartTime = nil
+	_G.WwagpFakeChr_StopTime = nil
+	_G.WwagpFakeChr_Running = false
+	_G.WwagpFakeChr_ChronoMode = 0
+	self:CfgFc(11, "_G.WwagpFakeChr_ToggleChrono()")
+	uluaLog("Chrono Init")
+end
+
+function Wwagp:FakeChrShow()
+	local tmstr = ""
+	-- Only display elapsed time if chrono is currently running
+	if _G.WwagpFakeChr_Running and _G.WwagpFakeChr_StartTime ~= nil then
+		local currentTime = os.time()
+		local elapsed = os.difftime(currentTime, _G.WwagpFakeChr_StartTime)
+		tmstr = WwagpFakeChr_FormatTime(elapsed)
+	elseif _G.WwagpFakeChr_ChronoMode == 2 and _G.WwagpFakeChr_StopTime ~= nil then
+		local currentTime = os.time()
+		local elapsed = os.difftime(_G.WwagpFakeChr_StopTime, _G.WwagpFakeChr_StartTime)
+		tmstr = WwagpFakeChr_FormatTime(elapsed)
+	end
+	return tmstr
 end
 
 return Wwagp
