@@ -558,8 +558,8 @@ end
 
 -- ========================= Fake Chrono
 -- Initialize global variables following the naming convention
-_G.WwagpFakeChr_StartTime = nil
-_G.WwagpFakeChr_StopTime = nil
+_G.WwagpFakeChr_StartTime = 0
+_G.WwagpFakeChr_StopTime = 0
 _G.WwagpFakeChr_Running = false
 -- Add a state variable to track the chrono's mode for the single key press
 -- 0: Stopped/Reset, ready to start
@@ -580,7 +580,7 @@ _G.WwagpFakeChr_ToggleChrono = function()
 		-- Mode 0: Stopped/Reset, ready to start
 		-- First start or after a full reset/stop
 		_G.WwagpFakeChr_StartTime = os.time()
-		_G.WwagpFakeChr_StopTime = nil
+		_G.WwagpFakeChr_StopTime = 0
 
 		_G.WwagpFakeChr_Running = true
 		_G.WwagpFakeChr_ChronoMode = 1 -- Move to running mode
@@ -594,31 +594,78 @@ _G.WwagpFakeChr_ToggleChrono = function()
 		_G.WwagpFakeChr_ChronoMode = 2 -- Move to stopped, ready to reset mode
 	elseif _G.WwagpFakeChr_ChronoMode == 2 then
 		-- Mode 2: Stopped, ready to reset
-		_G.WwagpFakeChr_StartTime = nil
-		_G.WwagpFakeChr_StopTime = nil
+		_G.WwagpFakeChr_StartTime = 0
+		_G.WwagpFakeChr_StopTime = 0
 		_G.WwagpFakeChr_Running = false
 		uluaLog("Chrono reset")
 		_G.WwagpFakeChr_ChronoMode = 0 -- Move back to stopped/reset, ready to start mode
 	end
 end
 
-function Wwagp:FakeChrInit()
-	_G.WwagpFakeChr_StartTime = nil
-	_G.WwagpFakeChr_StopTime = nil
+-- Global function to handle chrono state changes with double trigger(CHR/RST) Airbus Style
+_G.WwagpFakeChr_ChrChrono = function()
+	if _G.WwagpFakeChr_ChronoMode == 0 then
+		-- Mode 0: Stopped/Reset, ready to start
+		-- First start or after a full reset/stop
+		_G.WwagpFakeChr_StartTime = os.time()
+		_G.WwagpFakeChr_StopTime = 0
+		_G.WwagpFakeChr_Running = true
+		_G.WwagpFakeChr_ChronoMode = 1 -- Move to running mode
+		uluaLog("Chrono started")
+	elseif _G.WwagpFakeChr_ChronoMode == 1 then
+		-- Mode 1: Running, ready to stop
+		_G.WwagpFakeChr_StopTime = os.time()
+		_G.WwagpFakeChr_Running = false
+		local elapsed = os.difftime(_G.WwagpFakeChr_StopTime, _G.WwagpFakeChr_StartTime)
+		uluaLog("Chrono stopped Elapsed time: " .. WwagpFakeChr_FormatTime(elapsed))
+		_G.WwagpFakeChr_ChronoMode = 2 -- Move to stopped, ready to reset mode
+	else
+		-- Mode 2: Stopped, resume
+		_G.WwagpFakeChr_StopTime = 0
+		_G.WwagpFakeChr_Running = true
+		uluaLog("Chrono resume")
+		_G.WwagpFakeChr_ChronoMode = 1 -- Move back to running
+	end
+end
+
+-- Global function to handle chrono state changes with double trigger(CHR/RST) Airbus Style
+_G.WwagpFakeChr_RstChrono = function()
+	if _G.WwagpFakeChr_ChronoMode == 2 then
+		-- Mode 2: Stopped, ready to reset
+		_G.WwagpFakeChr_StartTime = 0
+		_G.WwagpFakeChr_StopTime = 0
+		_G.WwagpFakeChr_ChronoMode = 0
+	else
+		_G.WwagpFakeChr_StartTime = os.time()
+		_G.WwagpFakeChr_StopTime = 0
+	end
+	uluaLog("Chrono reset")
+end
+-- 1: single trigger(CHR) Boeing Style
+-- 2: double trigger(CHR/RST) Airbus Style
+function Wwagp:FakeChrInit(mode)
+	mode = mode == nil and 1 or mode
+	_G.WwagpFakeChr_StartTime = 0
+	_G.WwagpFakeChr_StopTime = 0
 	_G.WwagpFakeChr_Running = false
 	_G.WwagpFakeChr_ChronoMode = 0
-	self:CfgFc(11, "_G.WwagpFakeChr_ToggleChrono()")
+	if mode == 1 then
+		self:CfgFc(11, "_G.WwagpFakeChr_ToggleChrono()")
+	else
+		self:CfgFc(8, "_G.WwagpFakeChr_RstChrono()")
+		self:CfgFc(11, "_G.WwagpFakeChr_ChrChrono()")
+	end
 	uluaLog("Chrono Init")
 end
 
 function Wwagp:FakeChrShow()
 	local tmstr = ""
 	-- Only display elapsed time if chrono is currently running
-	if _G.WwagpFakeChr_Running and _G.WwagpFakeChr_StartTime ~= nil then
+	if _G.WwagpFakeChr_Running and _G.WwagpFakeChr_StartTime ~= 0 then
 		local currentTime = os.time()
 		local elapsed = os.difftime(currentTime, _G.WwagpFakeChr_StartTime)
 		tmstr = WwagpFakeChr_FormatTime(elapsed)
-	elseif _G.WwagpFakeChr_ChronoMode == 2 and _G.WwagpFakeChr_StopTime ~= nil then
+	elseif _G.WwagpFakeChr_ChronoMode == 2 and _G.WwagpFakeChr_StopTime ~= 0 then
 		local currentTime = _G.WwagpFakeChr_StopTime
 		local elapsed = os.difftime(currentTime, _G.WwagpFakeChr_StartTime)
 		tmstr = WwagpFakeChr_FormatTime(elapsed)
