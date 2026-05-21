@@ -64,16 +64,12 @@ local dr_utc_is_date = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[14]')
 local gChrono = ""
 local utc = ""
 local elapsed_time = ""
+
+wwagp:FakeChrInit(2)
+wwagp:FakeEtInit()
 function Wwagp_GA_LCD_Loop()
 	--Chrone
-	if dr_chrono:ChangedUpdate() then
-		local chr = dr_chrono:GetOld()
-		if math.floor(chr) == 0 then
-			gChrono = "     "
-		else
-			gChrono = wwagp:formatChronoStr(chr)
-		end
-	end
+	gChrono = wwagp:FakeChrShow()
 
 	-- UTC time
 	if dr_utc_is_date:ChangedUpdate() then
@@ -93,9 +89,7 @@ function Wwagp_GA_LCD_Loop()
 	end
 
 	-- ET
-	if dr_et_hr:ChangedUpdate() or dr_et_min:ChangedUpdate() then
-		elapsed_time = string.format("%02d:%02d", dr_et_hr:GetOld(), dr_et_min:GetOld())
-	end
+	elapsed_time = wwagp:FakeEtShow()
 
 	-- Write to hardware
 	wwagp:setLcdStr(gChrono, utc, elapsed_time)
