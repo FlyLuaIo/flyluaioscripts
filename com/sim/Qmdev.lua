@@ -206,8 +206,8 @@ end
 -- No return value.
 function Qmdev:CfgVal(KeyIdx, ValStr, PressInt, ReleaseInt)
     self:AddKey(KeyIdx)
-    PressInt = PressInt == nil and 1 or PressInt
-    ReleaseInt = ReleaseInt == nil and 0 or ReleaseInt
+    --PressInt = PressInt == nil and 1 or PressInt
+    --ReleaseInt = ReleaseInt == nil and 0 or ReleaseInt
     str = 'DFKEY;' .. tostring(KeyIdx) .. ';'
     str = str .. (PressInt == nil and '' or tostring(PressInt)) .. ';'
     str = str .. (ReleaseInt == nil and '' or tostring(ReleaseInt)) .. ';"' .. ValStr .. '"'
