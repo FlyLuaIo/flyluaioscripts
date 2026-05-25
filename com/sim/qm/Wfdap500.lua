@@ -1,7 +1,8 @@
+
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-05-11_08_31_31UTC
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-05-25_10_50_28UTC
 -- *****************************************************************
 
 local Wfdap500 = oop.class(com.sim.qm.Wingflex)
@@ -18,8 +19,10 @@ function Wfdap500:absent(FastTurnsPerSecond)
 	if not uluaFind('cpuwolf/flyluaio/WfDap500/leds/bits') then
 		return true
 	end
+	_G.idr_wfdap500_hid_leds_method = uluaFind('cpuwolf/flyluaio/WfDap500/leds/method')
 	_G.idr_wfdap500_hid_leds_bits = uluaFind('cpuwolf/flyluaio/WfDap500/leds/bits')
 	_G.idr_wfdap500_hid_leds_bkl = uluaFind('cpuwolf/flyluaio/WfDap500/leds/bkl')
+	_G.idr_wfdap500_hid_leds_resv = uluaFind('cpuwolf/flyluaio/WfDap500/leds/resv')
 	_G.idr_wfdap500_hid_leds_apr = uluaFind('cpuwolf/flyluaio/WfDap500/leds/apr')
 	_G.idr_wfdap500_hid_leds_nav = uluaFind('cpuwolf/flyluaio/WfDap500/leds/nav')
 	_G.idr_wfdap500_hid_leds_trk = uluaFind('cpuwolf/flyluaio/WfDap500/leds/trk')
@@ -230,7 +233,7 @@ end
 -- wingFlex new firmware force update interval < 60s
 function Wfdap500:ForceFresh()
 	if self:NeedFresh() then
-		--uluaSet(_G.idr_wffcuc_hid_leds_resv, self.counter)
+		uluaSet(_G.idr_wfdap500_hid_leds_resv, self.counter)
 	end
 end
 

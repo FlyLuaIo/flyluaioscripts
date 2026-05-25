@@ -33,8 +33,10 @@
       ],
       "SubFunctions": [
         {
+          "method": "i8:8",
           "bits": "i16:16",
-          "bkl": "i32:8"
+          "bkl": "i32:8",
+          "resv": "i40:8"
         }
       ],
       "SubBitFunctions": [
