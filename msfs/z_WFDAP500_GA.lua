@@ -71,4 +71,6 @@ GlobalFrameLoopManager:add(function()
 	wfdap500:SetLeds()
 	--set backlight
 	wfdap500:SetBkl()
+	--force refresh
+	wfdap500:ForceFresh()
 end)
