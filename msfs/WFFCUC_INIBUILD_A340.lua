@@ -6,7 +6,7 @@ if ilua_is_acfpath_excluded('a340') or ilua_is_acfpath_excluded('inibuild') then
 end
 
 -- Do not remove below lines: hardware detection
-local wffcuc = com.sim.qm.Wffcuc:new()
+local wffcuc = com.sim.wf.Wffcuc:new()
 if not wffcuc:Init() then
 	return
 end

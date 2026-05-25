@@ -5,7 +5,7 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-05-25_10_50_28UTC
 -- *****************************************************************
 
-local Wfdap500 = oop.class(com.sim.qm.Wingflex)
+local Wfdap500 = oop.class(com.sim.wf.Wingflex)
 function Wfdap500:init()
 	self.QmdevId = 0x2C94C7A3
 	self.FastTurnsPerSecond = 5
