@@ -15,7 +15,6 @@ end
 
 -- ========
 -- wingFlex old firmware force update interval < 1000ms
-
 function Wingflex:NeedFresh()
 	local stp = uluagetTimestamp()
 	if stp - self.timestamp > self.ms then

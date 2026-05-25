@@ -10,7 +10,7 @@ if ilua_is_acftitle_excluded("A3") or ilua_is_acfpath_excluded("toliss") then
 end
 
 -- Do not remove below lines: hardware detection
-local wffcuc = com.sim.qm.Wffcuc:new()
+local wffcuc = com.sim.qm.Wingflex.Wffcuc:new()
 if not wffcuc:Init() then
 	return
 end

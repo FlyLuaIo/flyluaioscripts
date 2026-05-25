@@ -5,7 +5,7 @@
 -- *****************************************************************
 local bit = require("bit")
 
-local Wffcuc = oop.class(com.sim.wf.Wingflex)
+local Wffcuc = oop.class(com.sim.qm.Wingflex)
 function Wffcuc:init()
 	self.QmdevId = 0x2AD269AD
 	self.FastTurnsPerSecond = 10

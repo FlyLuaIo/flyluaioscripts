@@ -3,7 +3,7 @@
 -- *****************************************************************
 
 -- Do not remove below lines: hardware detection
-local wfdap500 = com.sim.qm.Wfdap500:new()
+local wfdap500 = com.sim.qm.Wingflex.Wfdap500:new()
 if not wfdap500:Init() then
 	return
 end
