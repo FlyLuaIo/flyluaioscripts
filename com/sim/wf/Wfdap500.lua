@@ -4,10 +4,11 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-05-11_08_31_31UTC
 -- *****************************************************************
 
-local Wfdap500 = oop.class(com.sim.Qmdev)
+local Wfdap500 = oop.class(com.sim.wf.Wingflex)
 function Wfdap500:init()
 	self.QmdevId = 0x2C94C7A3
 	self.FastTurnsPerSecond = 5
+	self.ms = 30000
 	if _G.ilua_hw_assigned_wfdap500 == nil then
 		_G.ilua_hw_assigned_wfdap500 = 0
 	end
@@ -222,6 +223,15 @@ end
 -- Test Mode
 function Wfdap500:SetTest()
 	uluaSet(idr_wfdap500_hid_leds_bits, 255)
+end
+
+
+-- ========
+-- wingFlex new firmware force update interval < 60s
+function Wfdap500:ForceFresh()
+	if self:NeedFresh() then
+		--uluaSet(_G.idr_wffcuc_hid_leds_resv, self.counter)
+	end
 end
 
 return Wfdap500
