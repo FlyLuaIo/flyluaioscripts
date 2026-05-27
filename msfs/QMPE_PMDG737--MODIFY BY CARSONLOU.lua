@@ -156,11 +156,19 @@ qmpe:CfgRpn(19, "(L:XMLVAR_COM_1_Volume_VHF_C) 0.01 + 1 min (>L:XMLVAR_COM_1_Vol
 -- PA volume
 -- qmpe:CfgRpn(8, "(L:A_ASP_PA_VOLUME) 0.05 - 0 max (>L:A_ASP_PA_VOLUME)")
 -- qmpe:CfgRpn(9, "(L:A_ASP_PA_VOLUME) 0.05 + 1 min (>L:A_ASP_PA_VOLUME)")
--- RMP2
--- VHF1
-qmpe:CfgRpn(34, "(>H:A32NX_RMP_R_VHF1_BUTTON_PRESSED)")
--- VHF2
-qmpe:CfgRpn(35, "(>H:A32NX_RMP_R_VHF2_BUTTON_PRESSED)")
+if g_qmpe_pmdg737_use_nav == 0 then
+    -- RMP2
+    -- VHF1
+    qmpe:CfgRpn(34, "(>H:A32NX_RMP_R_VHF1_BUTTON_PRESSED)")
+    -- VHF2
+    qmpe:CfgRpn(35, "(>H:A32NX_RMP_R_VHF2_BUTTON_PRESSED)")
+else
+    -- RMP2
+    -- VHF1
+    qmpe:CfgRpn(34, "0 (>L:A32NX_RMP_R_SELECTED_MODE)")
+    -- VHF2
+    qmpe:CfgRpn(35, "1 (>L:A32NX_RMP_R_SELECTED_MODE)")
+end
 
 -- weather SYS 1/OFF/2
 qmpe:CfgRpn(36, "0 (>L:XMLVAR_A320_WeatherRadar_Sys)")
