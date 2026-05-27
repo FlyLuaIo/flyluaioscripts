@@ -23,14 +23,41 @@ wwagp:CfgRpn(0,
 	'50500 1 + (>K:ROTOR_BRAKE) (L:switch_506_73X, number) 0 != if{ 50601 (>K:ROTOR_BRAKE) }')
 
 --AUTO BRAKE
-wwagp:CfgRpn(2, '(L:switch_460_73X) 10 != if{ 10 (>L:switch_460_73X) } els{ 20 (>L:switch_460_73X) }')
-wwagp:CfgRpn(3, '(L:switch_460_73X) 10 != if{ 10 (>L:switch_460_73X) } els{ 30 (>L:switch_460_73X) }')
+local dr_autobrake = iDataRef:New('(L:switch_460_73X, number)')
+local pswh_autobrake = QmdevPosSwitchInit("(L:switch_460_73X, number)", 10, "46007 (>K:ROTOR_BRAKE)",
+	"46008 (>K:ROTOR_BRAKE)", 100)
+function autobrake_low()
+	if dr_autobrake:Get() == 10 then
+		QmdevPosSwitchSet(pswh_autobrake, 20)
+	else
+		QmdevPosSwitchSet(pswh_autobrake, 10)
+	end
+end
+
+function autobrake_med()
+	if dr_autobrake:Get() == 10 then
+		QmdevPosSwitchSet(pswh_autobrake, 30)
+	else
+		QmdevPosSwitchSet(pswh_autobrake, 10)
+	end
+end
+
+wwagp:CfgFc(2, 'autobrake_low()')
+wwagp:CfgFc(3, 'autobrake_med()')
 function key_max_long_func()
-	uluaWriteCmd('(L:switch_460_73X) 10 != if{ 10 (>L:switch_460_73X) } els{ 0 (>L:switch_460_73X) }')
+	if dr_autobrake:Get() == 10 then
+		QmdevPosSwitchSet(pswh_autobrake, 0)
+	else
+		QmdevPosSwitchSet(pswh_autobrake, 10)
+	end
 end
 
 function key_max_short_func()
-	uluaWriteCmd('(L:switch_460_73X) 10 != if{ 10 (>L:switch_460_73X) } els{ 70 (>L:switch_460_73X) }')
+	if dr_autobrake:Get() == 10 then
+		QmdevPosSwitchSet(pswh_autobrake, 70)
+	else
+		QmdevPosSwitchSet(pswh_autobrake, 10)
+	end
 end
 
 wwagp:CfgLongFc(4, 1000, key_max_long_func, key_max_short_func)
