@@ -15,6 +15,8 @@ end
 
 uluaLog("QMPE for PMDG737")
 
+qmpe:AddTogMenu("RMP2 as NAV", "RMP2用于NAV", "g_qmpe_pmdg737_use_nav")
+
 -- ===========================================================
 -- button binding
 -- TCAS STBY
@@ -72,9 +74,44 @@ else
         "(L:PED_PANEL_LIGHT_CONTROL, number) 6 + 300 min (>L:PED_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 6 + 300 min (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number)")
 end
 -- RMP
+
 -- Power On/Off
 qmpe:CfgRpn(4, "(L:A32NX_RMP_L_TOGGLE_SWITCH) ! (>L:A32NX_RMP_L_TOGGLE_SWITCH)")
-qmpe:CfgRpn(32, "(L:A32NX_RMP_R_TOGGLE_SWITCH) ! (>L:A32NX_RMP_R_TOGGLE_SWITCH)")
+
+if g_qmpe_pmdg737_use_nav ~= 0 then
+    --NAV1/NAV2
+    qmpe:CfgRpn(28, "(>K:NAV1_RADIO_FRACT_DEC)")
+    qmpe:CfgRpn(29, "(>K:NAV1_RADIO_FRACT_INC)")
+
+    qmpe:CfgRpn(30, "(>K:NAV1_RADIO_WHOLE_DEC)")
+    qmpe:CfgRpn(31, "(>K:NAV1_RADIO_WHOLE_INC)")
+    qmpe:CfgRpn(33, "(>K:NAV1_RADIO_SWAP)")
+    local lua_nav1_or_nav2 = 0 -- NAV1 default value
+    uluaWriteCmd(tostring(lua_nav1_or_nav2) .. " (>L:A32NX_RMP_R_SELECTED_MODE)")
+    function flip_nav1_nav2()
+        lua_nav1_or_nav2 = 1 - lua_nav1_or_nav2
+        uluaWriteCmd(tostring(lua_nav1_or_nav2) .. " (>L:A32NX_RMP_R_SELECTED_MODE)")
+        if lua_nav1_or_nav2 == 0 then
+            qmpe:CfgRpn(28, "(>K:NAV1_RADIO_FRACT_DEC)")
+            qmpe:CfgRpn(29, "(>K:NAV1_RADIO_FRACT_INC)")
+
+            qmpe:CfgRpn(30, "(>K:NAV1_RADIO_WHOLE_DEC)")
+            qmpe:CfgRpn(31, "(>K:NAV1_RADIO_WHOLE_INC)")
+            qmpe:CfgRpn(33, "(>K:NAV1_RADIO_SWAP)")
+        else
+            qmpe:CfgRpn(28, "(>K:NAV2_RADIO_FRACT_DEC)")
+            qmpe:CfgRpn(29, "(>K:NAV2_RADIO_FRACT_INC)")
+
+            qmpe:CfgRpn(30, "(>K:NAV2_RADIO_WHOLE_DEC)")
+            qmpe:CfgRpn(31, "(>K:NAV2_RADIO_WHOLE_INC)")
+            qmpe:CfgRpn(33, "(>K:NAV2_RADIO_SWAP)")
+        end
+    end
+
+    qmpe:CfgFc(32, "flip_nav1_nav2()")
+else
+    qmpe:CfgRpn(32, "(L:A32NX_RMP_R_TOGGLE_SWITCH) ! (>L:A32NX_RMP_R_TOGGLE_SWITCH)")
+end
 -- VHF1
 qmpe:CfgRpn(7, "(>H:A32NX_RMP_L_VHF1_BUTTON_PRESSED)")
 -- VHF2
@@ -238,15 +275,17 @@ qmpe:CfgRpn(3, "(>K:COM_RADIO_WHOLE_INC)")
 qmpe:CfgRpn(5, "(>K:COM_STBY_RADIO_SWAP)")
 
 ---- RMP2
--- inner
-qmpe:CfgRpn(28, "(>K:COM2_RADIO_FRACT_DEC)")
-qmpe:CfgRpn(29, "(>K:COM2_RADIO_FRACT_INC)")
--- outer
-qmpe:CfgRpn(30, "(>K:COM2_RADIO_WHOLE_DEC)")
-qmpe:CfgRpn(31, "(>K:COM2_RADIO_WHOLE_INC)")
--- flip
+if g_qmpe_pmdg737_use_nav == 0 then
+    -- inner
+    qmpe:CfgRpn(28, "(>K:COM2_RADIO_FRACT_DEC)")
+    qmpe:CfgRpn(29, "(>K:COM2_RADIO_FRACT_INC)")
+    -- outer
+    qmpe:CfgRpn(30, "(>K:COM2_RADIO_WHOLE_DEC)")
+    qmpe:CfgRpn(31, "(>K:COM2_RADIO_WHOLE_INC)")
+    -- flip
 
-qmpe:CfgRpn(33, "(>K:COM2_RADIO_SWAP)")
+    qmpe:CfgRpn(33, "(>K:COM2_RADIO_SWAP)")
+end
 -- qmpe:CfgRpn(33, "(>K:COM2_STBY_RADIO_SWAP)")
 
 -- ===========================================================
@@ -277,8 +316,13 @@ end
 -- =====RMP
 qmpe:GetR1vhf1("(A:CIRCUIT AVIONICS ON,Bool)")
 qmpe:GetR1vhf2("(L:A32NX_RMP_L_SELECTED_MODE) 2 ==")
-qmpe:GetR2vhf1("(L:A32NX_RMP_R_SELECTED_MODE) 1 ==")
-qmpe:GetR2vhf2("(A:CIRCUIT AVIONICS ON,Bool)")
+if g_qmpe_pmdg737_use_nav == 0 then
+    qmpe:GetR2vhf1("(L:A32NX_RMP_R_SELECTED_MODE) 1 ==")
+    qmpe:GetR2vhf2("(A:CIRCUIT AVIONICS ON,Bool)")
+else
+    qmpe:GetR2vhf1("(L:A32NX_RMP_R_SELECTED_MODE) 0 ==")
+    qmpe:GetR2vhf2("(L:A32NX_RMP_R_SELECTED_MODE) 1 ==")
+end
 -- =====ACP
 -- VHF1 TX LIGHT
 qmpe:GetSVhf1("(A:COM TRANSMIT:1, Bool)")
@@ -362,11 +406,20 @@ qmpe:GetUnlock3("(L:MSATR_GEAR_RIGHT_UNLK_LT)")
 
 -- =====RMP radio
 qmpe:GetRmp1("(A:COM ACTIVE FREQUENCY:1,KHz)", "(A:COM STANDBY FREQUENCY:1, KHz) near")
-qmpe:GetRmp2("(A:COM ACTIVE FREQUENCY:2,KHz)", "(A:COM STANDBY FREQUENCY:2, KHz) near")
+if g_qmpe_pmdg737_use_nav ~= 0 then
+    qmpe:GetRmp2("(A:NAV ACTIVE FREQUENCY:1,KHz)", "(A:NAV STANDBY FREQUENCY:1,KHz)")
+else
+    qmpe:GetRmp2("(A:COM ACTIVE FREQUENCY:2,KHz)", "(A:COM STANDBY FREQUENCY:2, KHz) near")
+end
 
 -- Expert: FBW own logic
 -- RMP1 expert mode
 local b_rmp1_power = iDataRef:New("(A:CIRCUIT AVIONICS ON,Bool)")
+local b_rmp2_sel = iDataRef:New("(L:A32NX_RMP_R_SELECTED_MODE)")
+local v_com1_a = iDataRef:New("(A:NAV ACTIVE FREQUENCY:1,KHz)")
+local v_com2_a = iDataRef:New("(A:NAV ACTIVE FREQUENCY:2,KHz)")
+local v_com1_s = iDataRef:New("(A:NAV STANDBY FREQUENCY:1,KHz)")
+local v_com2_s = iDataRef:New("(A:NAV STANDBY FREQUENCY:2,KHz)")
 local function rmp1_update()
     -- power control
     local rmp1_pow = b_rmp1_power:Get()
@@ -376,6 +429,17 @@ local function rmp1_update()
     end
 
     qmpe:SetRmp1()
+    if g_qmpe_pmdg737_use_nav ~= 0 then
+        if b_rmp2_sel:Get() == 1 then
+            qmpe:SetRmp2(v_com2_a:Get(), v_com2_s:Get())
+            b_rmp2_sel:Update()
+        else
+            if b_rmp2_sel:ChangedUpdate() then
+                qmpe:FreshRmp2()
+            end
+            qmpe:SetRmp2()
+        end
+    end
 end
 -- RMP2 expert mode
 local b_rmp2_power = iDataRef:New("(A:CIRCUIT AVIONICS ON,Bool)")
