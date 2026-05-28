@@ -78,6 +78,7 @@ end
 -- Power On/Off
 qmpe:CfgRpn(4, "(L:A32NX_RMP_L_TOGGLE_SWITCH) ! (>L:A32NX_RMP_L_TOGGLE_SWITCH)")
 
+local lua_nav1_or_nav2 = 0 -- NAV1 default value
 if g_qmpe_pmdg737_use_nav ~= 0 then
     --NAV1/NAV2
     qmpe:CfgRpn(28, "(>K:NAV1_RADIO_FRACT_DEC)")
@@ -86,10 +87,8 @@ if g_qmpe_pmdg737_use_nav ~= 0 then
     qmpe:CfgRpn(30, "(>K:NAV1_RADIO_WHOLE_DEC)")
     qmpe:CfgRpn(31, "(>K:NAV1_RADIO_WHOLE_INC)")
     qmpe:CfgRpn(33, "(>K:NAV1_RADIO_SWAP)")
-    local lua_nav1_or_nav2 = 0 -- NAV1 default value
     uluaWriteCmd(tostring(lua_nav1_or_nav2) .. " (>L:A32NX_RMP_R_SELECTED_MODE)")
-    function flip_nav1_nav2()
-        lua_nav1_or_nav2 = 1 - lua_nav1_or_nav2
+    function set_nav1_nav2()
         uluaWriteCmd(tostring(lua_nav1_or_nav2) .. " (>L:A32NX_RMP_R_SELECTED_MODE)")
         if lua_nav1_or_nav2 == 0 then
             qmpe:CfgRpn(28, "(>K:NAV1_RADIO_FRACT_DEC)")
@@ -106,6 +105,11 @@ if g_qmpe_pmdg737_use_nav ~= 0 then
             qmpe:CfgRpn(31, "(>K:NAV2_RADIO_WHOLE_INC)")
             qmpe:CfgRpn(33, "(>K:NAV2_RADIO_SWAP)")
         end
+    end
+
+    function flip_nav1_nav2()
+        lua_nav1_or_nav2 = 1 - lua_nav1_or_nav2
+        set_nav1_nav2()
     end
 
     qmpe:CfgFc(32, "flip_nav1_nav2()")
@@ -163,11 +167,13 @@ if g_qmpe_pmdg737_use_nav == 0 then
     -- VHF2
     qmpe:CfgRpn(35, "(>H:A32NX_RMP_R_VHF2_BUTTON_PRESSED)")
 else
-    -- RMP2
-    -- VHF1
-    qmpe:CfgRpn(34, "0 (>L:A32NX_RMP_R_SELECTED_MODE)")
-    -- VHF2
-    qmpe:CfgRpn(35, "1 (>L:A32NX_RMP_R_SELECTED_MODE)")
+    function force_nav1_nav2(val)
+        lua_nav1_or_nav2 = val
+        set_nav1_nav2()
+    end
+
+    qmpe:CfgFc(34, "force_nav1_nav2(0)")
+    qmpe:CfgFc(35, "force_nav1_nav2(1)")
 end
 
 -- weather SYS 1/OFF/2
