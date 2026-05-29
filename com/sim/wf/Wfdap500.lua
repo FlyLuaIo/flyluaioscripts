@@ -7,7 +7,7 @@
 
 local Wfdap500 = oop.class(com.sim.wf.Wingflex)
 function Wfdap500:init()
-	self.QmdevId = 0x2C94C7A3
+	self.QmdevId = 0x1810A567
 	self.FastTurnsPerSecond = 5
 	self.ms = 30000
 	if _G.ilua_hw_assigned_wfdap500 == nil then
