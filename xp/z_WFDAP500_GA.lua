@@ -58,7 +58,7 @@ wfdap500:GetVs('sim/cockpit2/autopilot/vvi_status')
 wfdap500:GetAlt('sim/cockpit2/autopilot/altitude_hold_status')
 
 -- backlight
-wfdap500:GetBkl('sim/cockpit/electrical/cockpit_lights', 250)
+wfdap500:GetBkl('sim/cockpit/electrical/instrument_brightness', 250)
 
 GlobalFrameLoopManager:add(function()
 	wfdap500:SetLeds()
