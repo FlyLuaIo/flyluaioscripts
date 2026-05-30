@@ -97,7 +97,7 @@ wwagp:GetMedD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetMaxD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 wwagp:GetLow('(L:switch_460_73X) 20 ==')
 wwagp:GetMed('(L:switch_460_73X) 30 ==')
-wwagp:GetMax('(L:switch_460_73X) 70 == (L:switch_460_73X) 0 == or')
+wwagp:GetMax('(L:switch_460_73X) 50 == (L:switch_460_73X) 0 == or')
 wwagp:GetTerr('(L:A32NX_EFIS_TERR_L_ACTIVE)')
 wwagp:GetLever('cpuwolf/flyluaio/WwAgp/condbtn[1]')
 

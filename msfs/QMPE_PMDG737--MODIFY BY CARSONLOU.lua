@@ -68,15 +68,22 @@ if MSFS_VERSION == 0 then
     qmpe:CfgRpn(46, "75608 (>K:ROTOR_BRAKE) , 33808 (>K:ROTOR_BRAKE) , 33708 (>K:ROTOR_BRAKE) , 9408 (>K:ROTOR_BRAKE)")
     qmpe:CfgRpn(47, "75607 (>K:ROTOR_BRAKE) , 33807 (>K:ROTOR_BRAKE) , 33707 (>K:ROTOR_BRAKE) , 9407 (>K:ROTOR_BRAKE)")
 else
-    qmpe:CfgRpn(46,
-        "(L:PED_PANEL_LIGHT_CONTROL, number) 6 - 0 max (>L:PED_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 6 - 0 max (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number)")
-    qmpe:CfgRpn(47,
-        "(L:PED_PANEL_LIGHT_CONTROL, number) 6 + 300 min (>L:PED_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 6 + 300 min (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number)")
+    if g_qmpe_pmdg737_use_nav ~= 0 then
+        qmpe:CfgRpn(46,
+            "(L:OH_CB_PANEL_LIGHT_CONTROL, number) 20 - 0 max (>L:OH_CB_PANEL_LIGHT_CONTROL, number) (L:CA_BACKGROUND_BRT_CONTROL, number) 20 - 0 max (>L:CA_BACKGROUND_BRT_CONTROL, number) (L:CA_AFDS_FLOOD_LIGHT_CONTROL, number) 20 - 0 max (>L:CA_AFDS_FLOOD_LIGHT_CONTROL, number) (L:PED_FLOOD_LIGHT_CONTROL, number) 20 - 0 max (>L:PED_FLOOD_LIGHT_CONTROL, number)")
+        qmpe:CfgRpn(47,
+            "(L:OH_CB_PANEL_LIGHT_CONTROL, number) 3 + 300 min (>L:OH_CB_PANEL_LIGHT_CON, number) (L:CA_BACKGROUND_BRT_CONTROL, number) 3 + 300 min (>L:CA_BACKGROUND_BRT_CONTROL, number) (L:CA_AFDS_FLOOD_LIGHT_CONTROL, number) 3 + 300 min (>L:CA_AFDS_FLOOD_LIGHT_CONTROL, number) (L:PED_FLOOD_LIGHT_CONTROL, number) 3 + 300 min (>L:PED_FLOOD_LIGHT_CONTROL, number)")
+    else
+        qmpe:CfgRpn(46,
+            "(L:PED_PANEL_LIGHT_CONTROL, number) 6 - 0 max (>L:PED_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 6 - 0 max (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number)")
+        qmpe:CfgRpn(47,
+            "(L:PED_PANEL_LIGHT_CONTROL, number) 6 + 300 min (>L:PED_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 6 + 300 min (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number)")
+    end
 end
 -- RMP
 
 -- Power On/Off
-qmpe:CfgRpn(4, "(L:A32NX_RMP_L_TOGGLE_SWITCH) ! (>L:A32NX_RMP_L_TOGGLE_SWITCH)")
+qmpe:CfgRpn(4, "90301 (>K:ROTOR_BRAKE)")
 
 local lua_nav1_or_nav2 = 0 -- NAV1 default value
 if g_qmpe_pmdg737_use_nav ~= 0 then
@@ -117,9 +124,9 @@ else
     qmpe:CfgRpn(32, "(L:A32NX_RMP_R_TOGGLE_SWITCH) ! (>L:A32NX_RMP_R_TOGGLE_SWITCH)")
 end
 -- VHF1
-qmpe:CfgRpn(7, "(>H:A32NX_RMP_L_VHF1_BUTTON_PRESSED)")
+qmpe:CfgRpn(7, "90401 (>K:ROTOR_BRAKE)")
 -- VHF2
-qmpe:CfgRpn(6, "(>H:A32NX_RMP_L_VHF2_BUTTON_PRESSED)")
+qmpe:CfgRpn(6, "90601 (>K:ROTOR_BRAKE)")
 -- VHF1 RX
 -- qmpe:CfgRpn(10, "(A:COM RECEIVE:1, Bool) ! (>K:COM1_RECEIVE_SELECT)")
 qmpe:CfgRpn(10, "73901 (>K:ROTOR_BRAKE)")
@@ -280,13 +287,13 @@ qmpe:CfgRpn(77, "34101 (>K:ROTOR_BRAKE)")
 
 ---- RMP1
 -- inner
-qmpe:CfgRpn(0, "(>K:COM_RADIO_FRACT_DEC)")
-qmpe:CfgRpn(1, "(>K:COM_RADIO_FRACT_INC)")
+qmpe:CfgRpn(0, "72708 (>K:ROTOR_BRAKE)")
+qmpe:CfgRpn(1, "72707 (>K:ROTOR_BRAKE)")
 -- outer
-qmpe:CfgRpn(2, "(>K:COM_RADIO_WHOLE_DEC)")
-qmpe:CfgRpn(3, "(>K:COM_RADIO_WHOLE_INC)")
+qmpe:CfgRpn(2, "72608 (>K:ROTOR_BRAKE)")
+qmpe:CfgRpn(3, "72607 (>K:ROTOR_BRAKE)")
 -- flip
-qmpe:CfgRpn(5, "(>K:COM_STBY_RADIO_SWAP)")
+qmpe:CfgRpn(5, "72101 (>K:ROTOR_BRAKE)")
 
 ---- RMP2
 if g_qmpe_pmdg737_use_nav == 0 then
@@ -328,8 +335,8 @@ local function xpdr_update()
     end
 end
 -- =====RMP
-qmpe:GetR1vhf1("(A:CIRCUIT AVIONICS ON,Bool)")
-qmpe:GetR1vhf2("(L:A32NX_RMP_L_SELECTED_MODE) 2 ==")
+qmpe:GetR1vhf1("(L:switch_9041_73X,number)")
+qmpe:GetR1vhf2("(L:switch_9042_73X,number)")
 if g_qmpe_pmdg737_use_nav == 0 then
     qmpe:GetR2vhf1("(L:A32NX_RMP_R_SELECTED_MODE) 1 ==")
     qmpe:GetR2vhf2("(A:CIRCUIT AVIONICS ON,Bool)")
@@ -339,31 +346,31 @@ else
 end
 -- =====ACP
 -- VHF1 TX LIGHT
-qmpe:GetSVhf1("(A:COM TRANSMIT:1, Bool)")
+qmpe:GetSVhf1("(L:switch_7341_73X)")
 -- VHF1 CALL LIGHT
 qmpe:GetCVhf1("(L:I_ASP_VHF_1_CALL)")
 -- VHF1 RX LIGHT
 qmpe:GetRVhf1("(A:COM RECEIVE:1, Bool)")
 -- VHF2 TX LIGHT
-qmpe:GetSVhf2("(A:COM TRANSMIT:2, Bool)")
+qmpe:GetSVhf2("(L:switch_7351_73X)")
 -- VHF2 CALL LIGHT
 qmpe:GetCVhf2("(L:I_ASP_VHF_2_CALL)")
 -- VHF2 RX LIGHT
 qmpe:GetRVhf2("(A:COM RECEIVE:2, Bool)")
 -- MECH TX LIGHT
-qmpe:GetSMech("(L:I_ASP_INT_SEND)")
+qmpe:GetSMech("(L:switch_7371_73X)")
 -- MECH CALL LIGHT
 qmpe:GetCMech("(L:I_ASP_INT_CALL)")
 -- MECH RX LIGHT
 qmpe:GetRMech("(L:I_ASP_INT_REC)")
 -- ATT TX LIGHT
-qmpe:GetSAtt("(L:I_ASP_CAB_SEND)")
+qmpe:GetSAtt("(L:switch_7361_73X)")
 -- ATT CALL LIGHT
 qmpe:GetCAtt("(L:I_ASP_CAB_CALL)")
 -- ATT RX LIGHT
 qmpe:GetRAtt("(L:I_ASP_CAB_REC)")
 -- PX TX LIGHT
-qmpe:GetSPa("(L:I_ASP_PA_SEND)")
+qmpe:GetSPa("(L:switch_7381_73X)")
 -- ATT RX LIGHT
 qmpe:GetRPa("(L:I_ASP_PA_REC)")
 
@@ -385,8 +392,8 @@ qmpe:GetEClr("(L:A32NX_ECAM_SD_CURRENT_PAGE_INDEX) 12 ==")
 qmpe:GetESts("(L:A32NX_ECAM_SD_CURRENT_PAGE_INDEX) 11 ==")
 
 -- =====MISC
-qmpe:GetWarn("(L:A32NX_MASTER_WARNING)")
-qmpe:GetCaut("(L:Generic_Master_Caution_Active)")
+qmpe:GetWarn("(L:switch_3471_73X, number)")
+qmpe:GetCaut("(L:switch_3481_73X, number)")
 
 qmpe:GetMsg("(L:A32NX_DCDU_ATC_MSG_WAITING, bool)")
 qmpe:GetFail("(L:I_XPDR_FAIL)")
@@ -394,15 +401,9 @@ qmpe:GetLand("(L:I_MIP_AUTOLAND_CAPT)")
 
 qmpe:GetTerr("(L:A32NX_EFIS_TERR_L_ACTIVE)")
 
-if uluaFind("pmdg/ng3/data/MAIN_annunFMC") == nil then
-    qmpe:GetLo("(L:A32NX_AUTOBRAKES_ARMED_MODE, Number) 1 ==")
-    qmpe:GetMed("(L:A32NX_AUTOBRAKES_ARMED_MODE, Number) 2 ==")
-    qmpe:GetMax("(L:A32NX_AUTOBRAKES_ARMED_MODE, Number) 3 ==")
-else
-    qmpe:GetLo("pmdg/ng3/data/MAIN_annunAP_Amber[0]")
-    qmpe:GetMed("pmdg/ng3/data/MAIN_annunAT_Amber[0]")
-    qmpe:GetMax("pmdg/ng3/data/MAIN_annunFMC")
-end
+qmpe:GetLo('(L:switch_460_73X) 20 ==')
+qmpe:GetMed('(L:switch_460_73X) 30 ==')
+qmpe:GetMax('(L:switch_460_73X) 50 == (L:switch_460_73X) 0 == or')
 -- brightness
 if MSFS_VERSION == 0 then
     qmpe:GetBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 0.3) -- 0~100
@@ -429,11 +430,17 @@ end
 -- Expert: FBW own logic
 -- RMP1 expert mode
 local b_rmp1_power = iDataRef:New("(A:CIRCUIT AVIONICS ON,Bool)")
+local b_rmp1_sel = iDataRef:New("(L:switch_9042_73X,number)")
 local b_rmp2_sel = iDataRef:New("(L:A32NX_RMP_R_SELECTED_MODE)")
-local v_com1_a = iDataRef:New("(A:NAV ACTIVE FREQUENCY:1,KHz)")
-local v_com2_a = iDataRef:New("(A:NAV ACTIVE FREQUENCY:2,KHz)")
-local v_com1_s = iDataRef:New("(A:NAV STANDBY FREQUENCY:1,KHz)")
-local v_com2_s = iDataRef:New("(A:NAV STANDBY FREQUENCY:2,KHz)")
+local v_nav1_a = iDataRef:New("(A:NAV ACTIVE FREQUENCY:1,KHz)")
+local v_nav2_a = iDataRef:New("(A:NAV ACTIVE FREQUENCY:2,KHz)")
+local v_nav1_s = iDataRef:New("(A:NAV STANDBY FREQUENCY:1,KHz)")
+local v_nav2_s = iDataRef:New("(A:NAV STANDBY FREQUENCY:2,KHz)")
+
+local v_com1_a = iDataRef:New("(A:COM ACTIVE FREQUENCY:1,KHz)")
+local v_com2_a = iDataRef:New("(A:COM ACTIVE FREQUENCY:2,KHz)")
+local v_com1_s = iDataRef:New("(A:COM STANDBY FREQUENCY:1,KHz)")
+local v_com2_s = iDataRef:New("(A:COM STANDBY FREQUENCY:2,KHz)")
 local function rmp1_update()
     -- power control
     local rmp1_pow = b_rmp1_power:Get()
@@ -442,17 +449,14 @@ local function rmp1_update()
         return
     end
 
-    qmpe:SetRmp1()
-    if g_qmpe_pmdg737_use_nav ~= 0 then
-        if b_rmp2_sel:Get() == 1 then
-            qmpe:SetRmp2(v_com2_a:Get(), v_com2_s:Get())
-            b_rmp2_sel:Update()
-        else
-            if b_rmp2_sel:ChangedUpdate() then
-                qmpe:FreshRmp2()
-            end
-            qmpe:SetRmp2()
+    if b_rmp1_sel:Get() > 0 then
+        qmpe:SetRmp1(v_com2_a:Get(), v_com2_s:Get())
+        b_rmp1_sel:Update()
+    else
+        if b_rmp1_sel:ChangedUpdate() then
+            qmpe:FreshRmp1()
         end
+        qmpe:SetRmp1()
     end
 end
 -- RMP2 expert mode
@@ -465,7 +469,19 @@ local function rmp2_update()
         return
     end
 
-    qmpe:SetRmp2()
+    if g_qmpe_pmdg737_use_nav ~= 0 then
+        if b_rmp2_sel:Get() == 1 then
+            qmpe:SetRmp2(v_nav2_a:Get(), v_nav2_s:Get())
+            b_rmp2_sel:Update()
+        else
+            if b_rmp2_sel:ChangedUpdate() then
+                qmpe:FreshRmp2()
+            end
+            qmpe:SetRmp2()
+        end
+    else
+        qmpe:SetRmp2()
+    end
 end
 
 -- =====Annunciator test
@@ -528,8 +544,8 @@ function Qmpe_pmdg_737_loop()
         qmpe:SetMsg()
         qmpe:SetFail()
 
-        uluaSet(idr_qmpe_hid_misc_lo, ilua_bool_ternary(dr_ann_ap:Get() + dr_ann_ap_amber:Get(), 0))
-        uluaSet(idr_qmpe_hid_misc_med, ilua_bool_ternary(dr_ann_at:Get() + dr_ann_at_amber:Get(), 0))
+        qmpe:SetLo()
+        qmpe:SetMed()
         qmpe:SetMax()
         qmpe:SetTerr()
         qmpe:SetLand()
