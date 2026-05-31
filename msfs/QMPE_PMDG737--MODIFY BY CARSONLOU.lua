@@ -147,31 +147,17 @@ qmpe:CfgRpn(38, "0 (>L:A32NX_SWITCH_RADAR_PWS_POSITION)")
 qmpe:CfgRpn(39, "1 (>L:A32NX_SWITCH_RADAR_PWS_POSITION)")
 
 -- XPDR STBY/TA/TARA
--- qmpe:CfgRpn(40, "0 (>L:A32NX_SWITCH_TCAS_POSITION)")
--- qmpe:CfgRpn(41, "1 (>L:A32NX_SWITCH_TCAS_POSITION)")
--- qmpe:CfgRpn(81, "2 (>L:A32NX_SWITCH_TCAS_POSITION)")
-qmpe:CfgRpn(40,
-    "20 (L:switch_800_73X) - 10 div s0 :1 l0 0 > if{ 80007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 80008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }")
--- TCAS TA ONLY
-qmpe:CfgRpn(41,
-    "30 (L:switch_800_73X) - 10 div s0 :1 l0 0 > if{ 80007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 80008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }")
--- TCAS TA/RA
-qmpe:CfgRpn(81,
-    "40 (L:switch_800_73X) - 10 div s0 :1 l0 0 > if{ 80007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 80008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }")
+local xpdr_tara = QmdevPosSwitchInit("(L:switch_800_73X, number)", 10, "80007 (>K:ROTOR_BRAKE)",
+    "80008 (>K:ROTOR_BRAKE)", 100)
+qmpe:CfgPSw(40, xpdr_tara, 10)
+qmpe:CfgPSw(41, xpdr_tara, 30)
+qmpe:CfgPSw(81, xpdr_tara, 40)
 -- XPDR STBY/AUTO/ON
--- qmpe:CfgRpn(42, "1 (>A:TRANSPONDER STATE:1, Enum)")
--- qmpe:CfgRpn(43, "3 (>A:TRANSPONDER STATE:1, Enum)")
--- qmpe:CfgRpn(82, "4 (>A:TRANSPONDER STATE:1, Enum)")
--- TCAS STBY
-qmpe:CfgRpn(42,
-    "0 (L:switch_800_73X) - 10 div s0 :1 l0 0 > if{ 80007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 80008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }")
--- TCAS ALT RPIG OFF
-qmpe:CfgRpn(43,
-    "10 (L:switch_800_73X) - 10 div s0 :1l0 0 > if{ 80007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 80008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }")
--- TCAS XPNDR
-qmpe:CfgRpn(82,
-    "20 (L:switch_800_73X) - 10 div s0 :1 l0 0 > if{ 80007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 80008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }")
-
+local xpdr_onmode = QmdevPosSwitchInit("(L:switch_1299_73X, number)", 50, "129907 (>K:ROTOR_BRAKE)",
+    "129908 (>K:ROTOR_BRAKE)", 100)
+qmpe:CfgPSw(42, xpdr_onmode, 0)
+qmpe:CfgPSw(43, xpdr_onmode, 100)
+qmpe:CfgPSw(82, xpdr_onmode, 50)
 
 -- CAUT
 -- MASTER CAUTION
