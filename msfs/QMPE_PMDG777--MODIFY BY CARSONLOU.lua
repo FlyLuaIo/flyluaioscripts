@@ -280,9 +280,9 @@ qmpe:GetLand("(L:I_MIP_AUTOLAND_CAPT)")
 
 qmpe:GetTerr("(L:A32NX_EFIS_TERR_L_ACTIVE)")
 
-qmpe:GetLo("(L:A32NX_AUTOBRAKES_ARMED_MODE, Number) 1 ==")
-qmpe:GetMed("(L:A32NX_AUTOBRAKES_ARMED_MODE, Number) 2 ==")
-qmpe:GetMax("(L:A32NX_AUTOBRAKES_ARMED_MODE, Number) 3 ==")
+qmpe:GetLo("(L:switch_2311_a)")
+qmpe:GetMed("(L:switch_2331_a)")
+qmpe:GetMax("(L:switch_2321_a)")
 
 qmpe:GetBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 0.3) -- 0~100
 
