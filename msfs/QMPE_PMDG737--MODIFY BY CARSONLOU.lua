@@ -252,8 +252,8 @@ qmpe:CfgRpn(71, "130601 (>K:ROTOR_BRAKE)", "130604 (>K:ROTOR_BRAKE)")
 qmpe:CfgRpn(72, "130701 (>K:ROTOR_BRAKE)", "130704 (>K:ROTOR_BRAKE)")
 qmpe:CfgRpn(73, "130801 (>K:ROTOR_BRAKE)", "130804 (>K:ROTOR_BRAKE)")
 qmpe:CfgRpn(74, "130901 (>K:ROTOR_BRAKE)", "130904 (>K:ROTOR_BRAKE)")
--- autobrake
 
+-- autobrake
 local dr_autobrake = iDataRef:New('(L:switch_460_73X, number)')
 local pswh_autobrake = QmdevPosSwitchInit("(L:switch_460_73X, number)", 10, "46007 (>K:ROTOR_BRAKE)",
     "46008 (>K:ROTOR_BRAKE)", 100)
@@ -273,8 +273,6 @@ function autobrake_med()
     end
 end
 
-qmpe:CfgFc(75, 'autobrake_low()')
-qmpe:CfgFc(76, 'autobrake_med()')
 function key_max_long_func()
     if dr_autobrake:Get() == 10 then
         QmdevPosSwitchSet(pswh_autobrake, 0)
@@ -291,8 +289,16 @@ function key_max_short_func()
     end
 end
 
-qmpe:CfgLongFc(77, 1000, key_max_long_func, key_max_short_func)
-
+if g_qmpe_pmdg737_use_nav == 0 then
+    qmpe:CfgFc(75, 'autobrake_low()')
+    qmpe:CfgFc(76, 'autobrake_med()')
+    qmpe:CfgLongFc(77, 1000, key_max_long_func, key_max_short_func)
+else
+    --AP RST A/T RST FMC RST
+    qmpe:CfgRpn(75, "33901 (>K:ROTOR_BRAKE)")
+    qmpe:CfgRpn(76, "34001 (>K:ROTOR_BRAKE)")
+    qmpe:CfgRpn(77, "34101 (>K:ROTOR_BRAKE)")
+end
 ---- RMP1
 -- inner
 qmpe:CfgRpn(0, "72708 (>K:ROTOR_BRAKE)")
@@ -408,9 +414,16 @@ qmpe:GetLand("(L:I_MIP_AUTOLAND_CAPT)")
 
 qmpe:GetTerr("(L:A32NX_EFIS_TERR_L_ACTIVE)")
 
-qmpe:GetLo('(L:switch_460_73X) 20 ==')
-qmpe:GetMed('(L:switch_460_73X) 30 ==')
-qmpe:GetMax('(L:switch_460_73X) 50 == (L:switch_460_73X) 0 == or')
+if g_qmpe_pmdg737_use_nav == 0 then
+    qmpe:GetLo('(L:switch_460_73X) 20 ==')
+    qmpe:GetMed('(L:switch_460_73X) 30 ==')
+    qmpe:GetMax('(L:switch_460_73X) 50 == (L:switch_460_73X) 0 == or')
+else
+    --AP RST A/T RST FMC RST
+    qmpe:GetLo("pmdg/ng3/data/MAIN_annunAP_Amber[0]")
+    qmpe:GetMed("pmdg/ng3/data/MAIN_annunAT_Amber[0]")
+    qmpe:GetMax("pmdg/ng3/data/MAIN_annunFMC")
+end
 -- brightness
 if MSFS_VERSION == 0 then
     qmpe:GetBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 0.3) -- 0~100
