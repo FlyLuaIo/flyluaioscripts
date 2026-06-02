@@ -101,7 +101,9 @@ local pswhignition2 = QmdevPosSwitchInit("(L:switch_95_a, number)", 100, "9502 (
     500)
 function ir3_for_ir12_action(val)
     uluasetTimeout(qmovha:GenPSwStr(pswh73, val), 0)
-    uluasetTimeout(qmovha:GenPSwStr(pswh76, val), 100)
+    uluasetTimeout(qmovha:GenPSwStr(pswh79, val), 100)
+    uluasetTimeout(qmovha:GenPSwStr(pswh76, val), 200)
+    uluasetTimeout(qmovha:GenPSwStr(pswh80, val), 300)
 end
 
 if g_qmovha_pmdg777_adirs_as_ignition == 0 then
@@ -129,7 +131,7 @@ if g_qmovha_pmdg777_adirs_as_ignition == 0 then
 else
     qmovha:CfgFc(79, "ir3_for_ir12_action(0)")
     qmovha:CfgFc(80, "ir3_for_ir12_action(50)")
-    qmovha:CfgFc(81, "ir3_for_ir12_action(10)")
+    qmovha:CfgFc(81, "ir3_for_ir12_action(100)")
 end
 --NO SMOKING
 local pswh15 = QmdevPosSwitchInit("(L:switch_29_a, number)", 50, "2907 (>K:ROTOR_BRAKE)", "2908 (>K:ROTOR_BRAKE)", 100)
@@ -280,7 +282,7 @@ qmovha:CfgRpn(87, "8901 (>K:ROTOR_BRAKE)", "8904 (>K:ROTOR_BRAKE)")
 
 qmovha:GetStartUp('(L:APUStartup) 1 == (L:7X7XAPUInlet) 100 == and')
 qmovha:GetStartDn('(L:APUStartup) 1 >=')
-qmovha:GetMswUp('(L:APU, number)')
+qmovha:GetMswUp('(L:switch_04_a, number)')
 qmovha:GetMswDn('(L:switch_03_a) 50 ==')
 
 qmovha:GetUpled2Gen1Up('(L:switch_09_c)')
