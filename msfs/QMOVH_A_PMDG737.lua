@@ -15,7 +15,7 @@ end
 uluaLog("QMOVH-A of PMDG B737")
 
 qmovha:AddTogMenu("need GPWS", "需要GPWS功能", "g_need_qmovha_pmdg737_gpws")
-
+qmovha:AddTogMenu("ADIRS as Ignition", "ADIRS作为点火开关", "g_qmovha_pmdg737_adirs_as_ignition")
 -- A330
 local isPMDG800 = false
 if not ilua_is_acfpath_excluded("738") then
@@ -210,22 +210,53 @@ qmovha:CfgRpn(57, "6301 (>K:ROTOR_BRAKE)")
 -- IR1
 local pswh73 = QmdevPosSwitchInit("(L:switch_255_73X, number)", 10, "25502 (>K:ROTOR_BRAKE)", "25501 (>K:ROTOR_BRAKE)",
     500)
-qmovha:CfgPSw(73, pswh73, 0)
-qmovha:CfgPSw(74, pswh73, 20)
-qmovha:CfgPSw(75, pswh73, 30)
+local pswhignition1 = QmdevPosSwitchInit("(L:switch_119_73X, number)", 10, "11902 (>K:ROTOR_BRAKE)",
+    "11901 (>K:ROTOR_BRAKE)",
+    500)
 
 -- IR3
 local pswh81 = QmdevPosSwitchInit("(L:switch_58_73X, number)", 10, "5802 (>K:ROTOR_BRAKE)", "5801 (>K:ROTOR_BRAKE)", 500)
-qmovha:CfgPSw(79, pswh81, 0)
-qmovha:CfgPSw(80, pswh81, 10)
-qmovha:CfgPSw(81, pswh81, 20)
+
 
 -- IR2
 local pswh76 = QmdevPosSwitchInit("(L:switch_256_73X, number)", 10, "25602 (>K:ROTOR_BRAKE)", "25601 (>K:ROTOR_BRAKE)",
     500)
-qmovha:CfgPSw(76, pswh76, 0)
-qmovha:CfgPSw(77, pswh76, 20)
-qmovha:CfgPSw(78, pswh76, 30)
+local pswhignition2 = QmdevPosSwitchInit("(L:switch_121_73X, number)", 10, "12102 (>K:ROTOR_BRAKE)",
+    "12101 (>K:ROTOR_BRAKE)",
+    500)
+
+function ir3_for_ir12_action(val)
+    uluasetTimeout(qmovha:GenPSwStr(pswh73, val), 0)
+    uluasetTimeout(qmovha:GenPSwStr(pswh76, val), 100)
+end
+
+if g_qmovha_pmdg737_adirs_as_ignition == 0 then
+    qmovha:CfgPSw(73, pswh73, 0)
+    qmovha:CfgPSw(74, pswh73, 20)
+    qmovha:CfgPSw(75, pswh73, 30)
+else
+    qmovha:CfgPSw(73, pswhignition1, 0)
+    qmovha:CfgPSw(74, pswhignition1, 10)
+    qmovha:CfgPSw(75, pswhignition1, 20)
+end
+if g_qmovha_pmdg737_adirs_as_ignition == 0 then
+    qmovha:CfgPSw(79, pswh81, 0)
+    qmovha:CfgPSw(80, pswh81, 10)
+    qmovha:CfgPSw(81, pswh81, 20)
+else
+    qmovha:CfgFc(79, "ir3_for_ir12_action(0)")
+    qmovha:CfgFc(80, "ir3_for_ir12_action(20)")
+    qmovha:CfgFc(81, "ir3_for_ir12_action(30)")
+end
+if g_qmovha_pmdg737_adirs_as_ignition == 0 then
+    qmovha:CfgPSw(76, pswh76, 0)
+    qmovha:CfgPSw(77, pswh76, 20)
+    qmovha:CfgPSw(78, pswh76, 30)
+else
+    qmovha:CfgPSw(76, pswhignition2, 0)
+    qmovha:CfgPSw(77, pswhignition2, 10)
+    qmovha:CfgPSw(78, pswhignition2, 20)
+end
 
 -- BAT 1&2
 ---- GEN1
@@ -238,9 +269,11 @@ qmovha:CfgFc(58,
 function key_59_long_func()
     uluaWriteCmd("101 (>K:ROTOR_BRAKE)")
 end
+
 function key_59_short_func()
     uluaWriteCmd("201 (>K:ROTOR_BRAKE)")
 end
+
 qmovha:CfgLongFc(59, 1000, key_59_long_func, key_59_short_func)
 
 
