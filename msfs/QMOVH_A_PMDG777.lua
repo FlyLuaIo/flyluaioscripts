@@ -15,7 +15,7 @@ end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QMOVH-A for PMDG777")
-
+qmovha:AddTogMenu("ADIRS as Ignition", "ADIRS作为点火开关", "g_qmovha_pmdg777_adirs_as_ignition")
 -- ===========================================================
 
 ---- GEN1
@@ -32,9 +32,9 @@ qmovha:CfgRpn(62, "1001 (>K:ROTOR_BRAKE)")
 --EMER LIGHTS _50_is Cap 0:closed, 100:open, _49_ is knob 0:OFF 50:ARMED 100:ON
 local pswh22 = QmdevPosSwitchInit("(L:switch_49_a, number)", 50, "4908 (>K:ROTOR_BRAKE)", "4907 (>K:ROTOR_BRAKE)")
 local pswh23 = QmdevPosSwitchInit("(L:switch_50_a, number)", 50, "5001 (>K:ROTOR_BRAKE)", "5001 (>K:ROTOR_BRAKE)", 1000)
-qmovha:CfgFc(22, qmovha:GenPSwStr(pswh23, 100) .. ";" .. qmovha:GenPSwStr(pswh22, 100) )
-qmovha:CfgFc(49, qmovha:GenPSwStr(pswh23, 0) .. ";" .. qmovha:GenPSwStr(pswh22, 50) )
-qmovha:CfgFc(23, qmovha:GenPSwStr(pswh23, 100) .. ";" .. qmovha:GenPSwStr(pswh22, 0) )
+qmovha:CfgFc(22, qmovha:GenPSwStr(pswh23, 100) .. ";" .. qmovha:GenPSwStr(pswh22, 100))
+qmovha:CfgFc(49, qmovha:GenPSwStr(pswh23, 0) .. ";" .. qmovha:GenPSwStr(pswh22, 50))
+qmovha:CfgFc(23, qmovha:GenPSwStr(pswh23, 100) .. ";" .. qmovha:GenPSwStr(pswh22, 0))
 
 --ADIRU
 qmovha:CfgRpn(57, "5901 (>K:ROTOR_BRAKE)")
@@ -51,7 +51,8 @@ local pswh61 = QmdevPosSwitchInit("(L:switch_07_b, number)", 1, "701 (>K:ROTOR_B
 local pswh62 = QmdevPosSwitchInit("(L:switch_08_b, number)", 1, "801 (>K:ROTOR_BRAKE)", "801 (>K:ROTOR_BRAKE)", 500)
 dr_qmovh_pmdg777_ext_on = iDataRef:New("(L:switch_08_b, number)")
 qmovha:CfgFc(61,
-    "local pos = 1 - dr_qmovh_pmdg777_ext_on:Get();QmdevPosSwitchSet(" .. tostring(pswh61) .. ",  pos);QmdevPosSwitchSet(" .. tostring(pswh62) .. ",  pos)")
+    "local pos = 1 - dr_qmovh_pmdg777_ext_on:Get();QmdevPosSwitchSet(" ..
+    tostring(pswh61) .. ",  pos);QmdevPosSwitchSet(" .. tostring(pswh62) .. ",  pos)")
 
 --FUEL PUMPS
 qmovha:CfgRpn(54, "10301 (>K:ROTOR_BRAKE)")
@@ -72,32 +73,64 @@ qmovha:CfgRpn(50, "3901 (>K:ROTOR_BRAKE) 4201 (>K:ROTOR_BRAKE)")
 qmovha:CfgRpn(51, "4001 (>K:ROTOR_BRAKE) 4101 (>K:ROTOR_BRAKE)")
 
 --LDG FLAP3: FLAP OVRD
-local pswh52 = QmdevPosSwitchInit("(L:switch_301_a, number)", 100, "30101 (>K:ROTOR_BRAKE)", "30101 (>K:ROTOR_BRAKE)", 1000)
-local pswh53 = QmdevPosSwitchInit("(L:switch_302_a, number)", 100, "30201 (>K:ROTOR_BRAKE)", "30201 (>K:ROTOR_BRAKE)", 1000)
+local pswh52 = QmdevPosSwitchInit("(L:switch_301_a, number)", 100, "30101 (>K:ROTOR_BRAKE)", "30101 (>K:ROTOR_BRAKE)",
+    1000)
+local pswh53 = QmdevPosSwitchInit("(L:switch_302_a, number)", 100, "30201 (>K:ROTOR_BRAKE)", "30201 (>K:ROTOR_BRAKE)",
+    1000)
 dr_qmovh_pmdg777_flap_ovrd = iDataRef:New("(L:switch_301_a, number)")
 qmovha:CfgFc(52,
-    "local pos = 100 - dr_qmovh_pmdg777_flap_ovrd:Get();QmdevPosSwitchSet(" .. tostring(pswh53) .. ", 100);QmdevPosSwitchSet(" .. tostring(pswh52) .. ",  pos)")
+    "local pos = 100 - dr_qmovh_pmdg777_flap_ovrd:Get();QmdevPosSwitchSet(" ..
+    tostring(pswh53) .. ", 100);QmdevPosSwitchSet(" .. tostring(pswh52) .. ",  pos)")
 
 --GND CTL:
 qmovha:CfgRpn(53, "(L:switch_152_a, number) 100 != if{ 15201 (>K:ROTOR_BRAKE) } els{ 15202 (>K:ROTOR_BRAKE) }")
 
 --L ELEC
 local pswh73 = QmdevPosSwitchInit("(L:switch_35_a, number)", 50, "3507 (>K:ROTOR_BRAKE)", "3508 (>K:ROTOR_BRAKE)", 100)
-qmovha:CfgPSw(73, pswh73, 0)
-qmovha:CfgPSw(74, pswh73, 50)
-qmovha:CfgPSw(75, pswh73, 100)
+local pswhignition1 = QmdevPosSwitchInit("(L:switch_94_a, number)", 100, "9402 (>K:ROTOR_BRAKE)",
+    "9401 (>K:ROTOR_BRAKE)",
+    500)
 --R ELEC
 local pswh76 = QmdevPosSwitchInit("(L:switch_38_a, number)", 50, "3807 (>K:ROTOR_BRAKE)", "3808 (>K:ROTOR_BRAKE)", 100)
-qmovha:CfgPSw(76, pswh76, 0)
-qmovha:CfgPSw(77, pswh76, 50)
-qmovha:CfgPSw(78, pswh76, 100)
+
 --C1 AIR
 local pswh79 = QmdevPosSwitchInit("(L:switch_36_a, number)", 50, "3607 (>K:ROTOR_BRAKE)", "3608 (>K:ROTOR_BRAKE)", 100)
 local pswh80 = QmdevPosSwitchInit("(L:switch_37_a, number)", 50, "3707 (>K:ROTOR_BRAKE)", "3708 (>K:ROTOR_BRAKE)", 100)
-qmovha:CfgFc(79, qmovha:GenPSwStr(pswh79, 0) .. ";" .. qmovha:GenPSwStr(pswh80, 0) )
-qmovha:CfgFc(80, qmovha:GenPSwStr(pswh79, 50) .. ";" .. qmovha:GenPSwStr(pswh80, 50) )
-qmovha:CfgFc(81, qmovha:GenPSwStr(pswh79, 100) .. ";" .. qmovha:GenPSwStr(pswh80, 100) )
+local pswhignition2 = QmdevPosSwitchInit("(L:switch_95_a, number)", 100, "9502 (>K:ROTOR_BRAKE)",
+    "9501 (>K:ROTOR_BRAKE)",
+    500)
+function ir3_for_ir12_action(val)
+    uluasetTimeout(qmovha:GenPSwStr(pswh73, val), 0)
+    uluasetTimeout(qmovha:GenPSwStr(pswh76, val), 100)
+end
 
+if g_qmovha_pmdg777_adirs_as_ignition == 0 then
+    qmovha:CfgPSw(73, pswh73, 0)
+    qmovha:CfgPSw(74, pswh73, 50)
+    qmovha:CfgPSw(75, pswh73, 100)
+else
+    qmovha:CfgPSw(73, pswhignition1, 0)
+    qmovha:CfgPSw(74, pswhignition1, 100)
+    qmovha:CfgPSw(75, pswhignition1, 100)
+end
+if g_qmovha_pmdg777_adirs_as_ignition == 0 then
+    qmovha:CfgPSw(76, pswh76, 0)
+    qmovha:CfgPSw(77, pswh76, 50)
+    qmovha:CfgPSw(78, pswh76, 100)
+else
+    qmovha:CfgPSw(76, pswhignition2, 0)
+    qmovha:CfgPSw(77, pswhignition2, 100)
+    qmovha:CfgPSw(78, pswhignition2, 100)
+end
+if g_qmovha_pmdg777_adirs_as_ignition == 0 then
+    qmovha:CfgFc(79, qmovha:GenPSwStr(pswh79, 0) .. ";" .. qmovha:GenPSwStr(pswh80, 0))
+    qmovha:CfgFc(80, qmovha:GenPSwStr(pswh79, 50) .. ";" .. qmovha:GenPSwStr(pswh80, 50))
+    qmovha:CfgFc(81, qmovha:GenPSwStr(pswh79, 100) .. ";" .. qmovha:GenPSwStr(pswh80, 100))
+else
+    qmovha:CfgFc(79, "ir3_for_ir12_action(0)")
+    qmovha:CfgFc(80, "ir3_for_ir12_action(50)")
+    qmovha:CfgFc(81, "ir3_for_ir12_action(10)")
+end
 --NO SMOKING
 local pswh15 = QmdevPosSwitchInit("(L:switch_29_a, number)", 50, "2907 (>K:ROTOR_BRAKE)", "2908 (>K:ROTOR_BRAKE)", 100)
 qmovha:CfgPSw(15, pswh15, 0)
@@ -123,17 +156,20 @@ qmovha:CfgRpn(31, "(L:switch_03_a, number) 0 ==  if{ 307 (>K:ROTOR_BRAKE) } els{
 local pswh32 = QmdevPosSwitchInit("(L:switch_113_a, number)", 50, "11307 (>K:ROTOR_BRAKE)", "11308 (>K:ROTOR_BRAKE)", 500)
 dr_qmovh_pmdg777_anti_eng2 = iDataRef:New("(L:switch_113_a, number)")
 qmovha:CfgFc(32,
-    "local pos = 100 == dr_qmovh_pmdg777_anti_eng2:Get() and 50 or 100;QmdevPosSwitchSet(" .. tostring(pswh32) .. ",  pos)")
+    "local pos = 100 == dr_qmovh_pmdg777_anti_eng2:Get() and 50 or 100;QmdevPosSwitchSet(" ..
+    tostring(pswh32) .. ",  pos)")
 ---- ENG1
 local pswh33 = QmdevPosSwitchInit("(L:switch_112_a, number)", 50, "11207 (>K:ROTOR_BRAKE)", "11208 (>K:ROTOR_BRAKE)", 500)
 dr_qmovh_pmdg777_anti_eng1 = iDataRef:New("(L:switch_112_a, number)")
 qmovha:CfgFc(33,
-    "local pos = 100 == dr_qmovh_pmdg777_anti_eng1:Get() and 50 or 100;QmdevPosSwitchSet(" .. tostring(pswh33) .. ",  pos)")
+    "local pos = 100 == dr_qmovh_pmdg777_anti_eng1:Get() and 50 or 100;QmdevPosSwitchSet(" ..
+    tostring(pswh33) .. ",  pos)")
 ---- WING
 local pswh37 = QmdevPosSwitchInit("(L:switch_111_a, number)", 50, "11107 (>K:ROTOR_BRAKE)", "11108 (>K:ROTOR_BRAKE)", 500)
 dr_qmovh_pmdg777_anti_wing = iDataRef:New("(L:switch_111_a, number)")
 qmovha:CfgFc(37,
-    "local pos = 100 == dr_qmovh_pmdg777_anti_wing:Get() and 50 or 100;QmdevPosSwitchSet(" .. tostring(pswh37) .. ",  pos)")
+    "local pos = 100 == dr_qmovh_pmdg777_anti_wing:Get() and 50 or 100;QmdevPosSwitchSet(" ..
+    tostring(pswh37) .. ",  pos)")
 
 --BLEED AIR
 --L PACK
@@ -146,9 +182,9 @@ qmovha:CfgRpn(35, "13101 (>K:ROTOR_BRAKE)")
 --NAV&LOGO 0:OFF 100:ON
 local pswh4 = QmdevPosSwitchInit("(L:switch_115_a, number)", 100, "11501 (>K:ROTOR_BRAKE)", "11501 (>K:ROTOR_BRAKE)", 500)
 local pswh5 = QmdevPosSwitchInit("(L:switch_116_a, number)", 100, "11601 (>K:ROTOR_BRAKE)", "11601 (>K:ROTOR_BRAKE)", 500)
-qmovha:CfgFc(4, qmovha:GenPSwStr(pswh4, 100) .. ";" .. qmovha:GenPSwStr(pswh5, 100) )
-qmovha:CfgFc(42, qmovha:GenPSwStr(pswh4, 100) .. ";" .. qmovha:GenPSwStr(pswh5, 0) )
-qmovha:CfgFc(5, qmovha:GenPSwStr(pswh4, 0) .. ";" .. qmovha:GenPSwStr(pswh5, 0) )
+qmovha:CfgFc(4, qmovha:GenPSwStr(pswh4, 100) .. ";" .. qmovha:GenPSwStr(pswh5, 100))
+qmovha:CfgFc(42, qmovha:GenPSwStr(pswh4, 100) .. ";" .. qmovha:GenPSwStr(pswh5, 0))
+qmovha:CfgFc(5, qmovha:GenPSwStr(pswh4, 0) .. ";" .. qmovha:GenPSwStr(pswh5, 0))
 
 --BEACON
 qmovha:CfgRpn(2, "(L:switch_114_a, number) 0 == if{ 11401 (>K:ROTOR_BRAKE) }",
@@ -199,9 +235,9 @@ qmovha:CfgPSw(28, pswh27, 100)
 --WIPER
 local pswh24 = QmdevPosSwitchInit("(L:switch_20_a, number)", 10, "2007 (>K:ROTOR_BRAKE)", "2008 (>K:ROTOR_BRAKE)", 30)
 local pswh25 = QmdevPosSwitchInit("(L:switch_123_a, number)", 10, "12307 (>K:ROTOR_BRAKE)", "12308 (>K:ROTOR_BRAKE)", 30)
-qmovha:CfgFc(24, qmovha:GenPSwStr(pswh24, 0) .. ";" .. qmovha:GenPSwStr(pswh25, 0) )
-qmovha:CfgFc(25, qmovha:GenPSwStr(pswh24, 10) .. ";" .. qmovha:GenPSwStr(pswh25, 10) )
-qmovha:CfgFc(26, qmovha:GenPSwStr(pswh24, 30) .. ";" .. qmovha:GenPSwStr(pswh25, 30) )
+qmovha:CfgFc(24, qmovha:GenPSwStr(pswh24, 0) .. ";" .. qmovha:GenPSwStr(pswh25, 0))
+qmovha:CfgFc(25, qmovha:GenPSwStr(pswh24, 10) .. ";" .. qmovha:GenPSwStr(pswh25, 10))
+qmovha:CfgFc(26, qmovha:GenPSwStr(pswh24, 30) .. ";" .. qmovha:GenPSwStr(pswh25, 30))
 
 -- OXYGEN CREW SUPPLY
 qmovha:CfgRpn(38, "107701 (>K:ROTOR_BRAKE)")
