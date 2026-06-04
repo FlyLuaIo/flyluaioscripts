@@ -1,8 +1,12 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-05-22
 -- *****************************************************************
-if PLANE_ICAO ~= "B738" and PLANE_ICAO ~= "B736" and PLANE_ICAO ~= "B737" and PLANE_ICAO ~= "B739" and PLANE_TAILNUMBER ~=
-    "ZB738" and PLANE_TAILNUMBER ~= "ZB736" and PLANE_TAILNUMBER ~= "ZB737" and PLANE_TAILNUMBER ~= "ZB739" then
+if ilua_is_acftitle_excluded("B73") then
+    return
+end
+
+if uluaFind("laminar/B738/EFIS_control/cpt/minimums_dn") == nil or uluaFind("laminar/B738/EFIS_control/cpt/minimums") == nil then
+    uluaLog("this is not zibo 738")
     return
 end
 
