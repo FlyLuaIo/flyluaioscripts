@@ -86,80 +86,88 @@ qmovha:CfgValT(66, "sim/cockpit2/engine/actuators/fuel_pump_on[7]")
 
 -- ===========================================================
 -- Read data
+qmovha:GetMswUp('laminar/B738/annunciator/apu_low_oil')
+qmovha:GetMswDn('laminar/B738/spring_toggle_switch/APU_start_pos')
 
-qmovha:GetStartUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetStartDn('sim/cockpit2/electrical/cross_tie')
-qmovha:GetMswUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetMswDn('sim/cockpit/electrical/avionics_on')
+qmovha:GetStartUp('laminar/B738/electrical/apu_bus_enable')
+qmovha:GetStartDn('sim/cockpit/engine/APU_running')
 
-qmovha:GetUpled2Gen1Up('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetUpled2Gen1Up('laminar/B738/annunciator/source_off1')
 qmovha:GetUpled2Gen1Dn('sim/cockpit/electrical/generator_on[0]', true)
-qmovha:GetUpled2Bat1Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2Bat1Dn('sim/cockpit/electrical/battery_on', true)
+
+qmovha:GetUpled2Bat1Up('laminar/B738/annunciator/bat_discharge')
+qmovha:GetUpled2Bat1Dn('laminar/B738/electric/batbus_status', true)
 qmovha:GetUpled2Bat2Up('sim/cockpit2/annunciators/electric_trim_off')
 qmovha:GetUpled2Bat2Dn('sim/cockpit2/annunciators/electric_trim_off')
 
-qmovha:GetUpled2ExtUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2ExtDn('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetUpled2ExtUp('laminar/B738/gpu_available')
+qmovha:GetUpled2ExtDn('sim/cockpit2/electrical/GPU_generator_on')
 
-qmovha:GetUpled2Gen2Up('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetUpled2Gen2Up('laminar/B738/annunciator/source_off2')
 qmovha:GetUpled2Gen2Dn('sim/cockpit/electrical/generator_on[1]', true)
 
 qmovha:GetEng2Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetEng2Dn('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetEng2Dn('laminar/B738/annunciator/cowl_ice_on_1_annun')
 qmovha:GetEng1Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetEng1Dn('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetEng1Dn('laminar/B738/annunciator/cowl_ice_on_0_annun')
 qmovha:GetWingUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetWingDn('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetWingDn('laminar/B738/annunciator/wing_ice_on_L_annun')
 
 qmovha:GetPack1Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetPack1Dn('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetPack1Dn('laminar/B738/air/l_pack_pos', true)
 qmovha:GetApubUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetApubDn('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetApubDn('laminar/B738/toggle_switch/bleed_air_apu_pos')
 qmovha:GetPack2Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetPack2Dn('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetPack2Dn('laminar/B738/air/r_pack_pos', true)
 
 qmovha:GetCrew('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1Gndctl('sim/cockpit2/annunciators/electric_trim_off')
+-- GND CTL as APU electric bus
+qmovha:GetUpled1Gndctl('laminar/B738/electrical/apu_power_bus1')
 
-qmovha:GetUpled1TerrUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1TerrDn('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1SysUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1SysDn('sim/cockpit2/annunciators/electric_trim_off')
+-- GPWS: TERR as HYD ELEC, SYS as HYD eng
+qmovha:GetUpled1TerrUp('laminar/B738/annunciator/hyd_el_press_a')
+qmovha:GetUpled1TerrDn('laminar/B738/toggle_switch/electric_hydro_pumps1_pos', true)
+qmovha:GetUpled1SysUp('laminar/B738/annunciator/hyd_press_a')
+qmovha:GetUpled1SysDn('laminar/B738/toggle_switch/hydro_pumps1_pos', true)
 qmovha:GetUpled1Flap3('sim/cockpit2/annunciators/electric_trim_off')
 
-qmovha:GetUpled1Adr1Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1Adr1Dn('sim/cockpit2/annunciators/electric_trim_off')
+-- ADR1 as Yaw Damper
+qmovha:GetUpled1Adr1Up('sim/cockpit2/annunciators/yaw_damper', true)
+qmovha:GetUpled1Adr1Dn('laminar/B738/toggle_switch/yaw_dumper_pos', true)
+-- ADR3 as window heat
 qmovha:GetUpled1Adr3Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1Adr3Dn('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1Adr2Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1Adr2Dn('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetUpled1Adr3Dn('laminar/B738/ice/window_heat_l_side_pos', true)
+-- ADR2 as PROBE
+qmovha:GetUpled1Adr2Up('laminar/B738/annunciator/capt_pitot_off')
+qmovha:GetUpled1Adr2Dn('laminar/B738/toggle_switch/capt_probes_pos', true)
+
 qmovha:GetUpled1Onbat('sim/cockpit2/annunciators/electric_trim_off')
 
-qmovha:GetUpled1Ltk1Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1Ltk1Dn('sim/cockpit/engine/fuel_pump_on[0]', true)
-qmovha:GetUpled1Ltk2Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1Ltk2Dn('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1CtklUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1CtklDn('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1CtkrUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1CtkrDn('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2Rtk1Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2Rtk1Dn('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2Rtk2Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2Rtk2Dn('sim/cockpit/engine/fuel_pump_on[1]', true)
-qmovha:GetUpled2XfeedUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2XfeedDn('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetUpled1Ltk1Up('laminar/B738/annunciator/low_fuel_press_l1')
+qmovha:GetUpled1Ltk1Dn('laminar/B738/fuel/fuel_tank_pos_lft1', true)
+qmovha:GetUpled1Ltk2Up('laminar/B738/annunciator/low_fuel_press_l2')
+qmovha:GetUpled1Ltk2Dn('laminar/B738/fuel/fuel_tank_pos_lft2', true)
+qmovha:GetUpled1CtklUp('laminar/B738/annunciator/low_fuel_press_c1')
+qmovha:GetUpled1CtklDn('laminar/B738/fuel/fuel_tank_pos_ctr1', true)
+qmovha:GetUpled1CtkrUp('laminar/B738/annunciator/low_fuel_press_c2')
+qmovha:GetUpled1CtkrDn('laminar/B738/fuel/fuel_tank_pos_ctr2', true)
+qmovha:GetUpled2Rtk1Up('laminar/B738/annunciator/low_fuel_press_r2')
+qmovha:GetUpled2Rtk1Dn('laminar/B738/fuel/fuel_tank_pos_rgt2', true)
+qmovha:GetUpled2Rtk2Up('laminar/B738/annunciator/low_fuel_press_r1')
+qmovha:GetUpled2Rtk2Dn('laminar/B738/fuel/fuel_tank_pos_rgt1', true)
 
-qmovha:GetUpled1Fire2('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1Firea('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled1Fire1('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2Eng1ag1('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2Eng1ag2('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2Eng2ag1('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetUpled2Eng2ag2('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetUpled2XfeedUp('laminar/B738/fuel/cross_feed_valve')
+qmovha:GetUpled2XfeedDn('laminar/B738/knobs/cross_feed_pos')
 
-qmovha:GetBkl('sim/cockpit/electrical/instrument_brightness', 100) -- 0~1
+qmovha:GetUpled1Fire2('laminar/B738/annunciator/engine2_fire')
+qmovha:GetUpled1Firea('laminar/B738/annunciator/apu_fire')
+qmovha:GetUpled1Fire1('laminar/B738/annunciator/engine1_fire')
+qmovha:GetUpled2Eng1ag1('laminar/B738/fire/engine01/ext_switch/pos_arm')
+qmovha:GetUpled2Eng1ag2('laminar/B738/fire/engine01/ext_switch/pos_arm')
+qmovha:GetUpled2Eng2ag1('laminar/B738/fire/engine02/ext_switch/pos_arm')
+qmovha:GetUpled2Eng2ag2('laminar/B738/fire/engine02/ext_switch/pos_arm')
+
+qmovha:GetBkl('laminar/B738/electric/panel_brightness[2]', 100) -- 0~1
 
 
 GlobalFrameLoopManager:add(function()
