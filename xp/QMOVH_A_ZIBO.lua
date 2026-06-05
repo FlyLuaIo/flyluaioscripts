@@ -20,6 +20,12 @@ end
 
 uluaLog("QMOVH-A for ZIBO 738")
 
+local zibo_xp11 = false
+if uluaFind("sim/cockpit2/electrical/GPU_generator_on") == nil then
+    -- X-Plane 11
+    zibo_xp11 = true
+end
+
 -- ===========================================================
 -- button binding
 -- Strobe
@@ -241,6 +247,39 @@ qmovha:CfgFc(56, "winheat_action()")
 --- ADR1: yaw damper
 qmovha:CfgValT(57, "laminar/B738/toggle_switch/yaw_dumper_pos")
 
+---- IR1
+local pswh73 = QmdevPosSwitchInit("laminar/B738/engine/starter1_pos", 1,
+    "laminar/B738/knob/eng1_start_right",
+    "laminar/B738/knob/eng1_start_left", 500)
+qmovha:CfgPSw(73, pswh73, 0)
+qmovha:CfgPSw(74, pswh73, 1)
+qmovha:CfgPSw(75, pswh73, 2)
+
+---- IR3
+local pswh79 = QmdevPosSwitchInit("laminar/B738/toggle_switch/irs_left", 1,
+    "laminar/B738/toggle_switch/irs_L_right",
+    "laminar/B738/toggle_switch/irs_L_left", 500)
+local pswh80 = QmdevPosSwitchInit("laminar/B738/toggle_switch/irs_right", 1,
+    "laminar/B738/toggle_switch/irs_R_right",
+    "laminar/B738/toggle_switch/irs_R_left", 500)
+
+function irs_action(val)
+    qmovha:PSwDelay(pswh79, 0, val)
+    qmovha:PSwDelay(pswh80, 100, val)
+end
+
+qmovha:CfgFc(79, "irs_action(0)")
+qmovha:CfgFc(80, "irs_action(2)")
+qmovha:CfgFc(81, "irs_action(3)")
+
+---- IR2
+local pswh76 = QmdevPosSwitchInit("laminar/B738/engine/starter2_pos", 1,
+    "laminar/B738/knob/eng2_start_right",
+    "laminar/B738/knob/eng2_start_left", 500)
+qmovha:CfgPSw(76, pswh76, 0)
+qmovha:CfgPSw(77, pswh76, 1)
+qmovha:CfgPSw(78, pswh76, 2)
+
 -- BAT 1&2
 ---- GEN1
 local pswh58 = QmdevPosSwitchInit("sim/cockpit2/electrical/generator_on[0]", 1,
@@ -323,18 +362,37 @@ qmovha:GetUpled2Bat2Up('sim/cockpit2/annunciators/electric_trim_off')
 qmovha:GetUpled2Bat2Dn('sim/cockpit2/annunciators/electric_trim_off')
 
 qmovha:GetUpled2ExtUp('laminar/B738/gpu_available')
-qmovha:GetUpled2ExtDn('sim/cockpit2/electrical/GPU_generator_on')
+if zibo_xp11 then
+    -- X-Plane 11
+    qmovha:GetUpled2ExtDn('sim/cockpit/electrical/gpu_on')
+else
+    qmovha:GetUpled2ExtDn('sim/cockpit2/electrical/GPU_generator_on')
+end
 
 qmovha:GetUpled2Gen2Up('laminar/B738/annunciator/source_off2')
 qmovha:GetUpled2Gen2Dn('sim/cockpit/electrical/generator_on[1]', true)
 
 qmovha:GetEng2Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetEng2Dn('laminar/B738/annunciator/cowl_ice_on_1_annun')
+if zibo_xp11 then
+    -- X-Plane 11
+    qmovha:GetEng2Dn('laminar/B738/antiice_sw[1]')
+else
+    qmovha:GetEng2Dn('laminar/B738/annunciator/cowl_ice_on_1_annun')
+end
 qmovha:GetEng1Up('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetEng1Dn('laminar/B738/annunciator/cowl_ice_on_0_annun')
+if zibo_xp11 then
+    -- X-Plane 11
+    qmovha:GetEng1Dn('laminar/B738/antiice_sw[0]')
+else
+    qmovha:GetEng1Dn('laminar/B738/annunciator/cowl_ice_on_0_annun')
+end
 qmovha:GetWingUp('sim/cockpit2/annunciators/electric_trim_off')
-qmovha:GetWingDn('laminar/B738/annunciator/wing_ice_on_L_annun')
-
+if zibo_xp11 then
+    -- X-Plane 11
+    qmovha:GetWingDn('laminar/B738/antiice_sw[2]')
+else
+    qmovha:GetWingDn('laminar/B738/annunciator/wing_ice_on_L_annun')
+end
 qmovha:GetPack1Up('sim/cockpit2/annunciators/electric_trim_off')
 qmovha:GetPack1Dn('laminar/B738/air/l_pack_pos', true)
 qmovha:GetApubUp('sim/cockpit2/annunciators/electric_trim_off')
@@ -363,7 +421,7 @@ qmovha:GetUpled1Adr3Dn('laminar/B738/ice/window_heat_l_side_pos', true)
 qmovha:GetUpled1Adr2Up('laminar/B738/annunciator/capt_pitot_off')
 qmovha:GetUpled1Adr2Dn('laminar/B738/toggle_switch/capt_probes_pos', true)
 
-qmovha:GetUpled1Onbat('sim/cockpit2/annunciators/electric_trim_off')
+qmovha:GetUpled1Onbat('laminar/B738/annunciator/irs_on_dc_left')
 
 qmovha:GetUpled1Ltk1Up('laminar/B738/annunciator/low_fuel_press_l1')
 qmovha:GetUpled1Ltk1Dn('laminar/B738/fuel/fuel_tank_pos_lft1', true)
