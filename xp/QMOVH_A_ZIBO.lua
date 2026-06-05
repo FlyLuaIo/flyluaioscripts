@@ -284,6 +284,27 @@ local pswh66 = QmdevPosSwitchInit("laminar/B738/fuel/cross_feed_valve", 1,
     "laminar/B738/toggle_switch/crossfeed_valve_off", 800)
 qmovha:CfgPSwTog(66, pswh66, 0, 1)
 
+-- FIRE
+---- eng1 agent2
+qmovha:CfgValT(71, "laminar/B738/fire/engine01/ext_switch_arm", 1, 0)
+---- eng1 agent1
+qmovha:CfgValT(72, "laminar/B738/fire/engine01/ext_switch_arm", -1, 0)
+---- eng1
+local pswh82 = QmdevPosSwitchInit("laminar/B738/fire/engine01/ext_switch/pos_arm", 1,
+    "laminar/B738/fire/engine01/ext_switch_arm",
+    "laminar/B738/fire/engine01/ext_switch_arm", 5000)
+qmovha:CfgPSw(82, pswh82, 1, 0)
+---- APU fire
+local pswh83 = QmdevPosSwitchInit("laminar/B738/fire/apu/ext_switch/pos_arm", 1,
+    "laminar/B738/fire/apu/ext_switch_arm",
+    "laminar/B738/fire/apu/ext_switch_arm", 7000)
+qmovha:CfgPSw(83, pswh83, 1, 0)
+---- eng2
+local pswh84 = QmdevPosSwitchInit("laminar/B738/fire/engine02/ext_switch/pos_arm", 1,
+    "laminar/B738/fire/engine02/ext_switch_arm",
+    "laminar/B738/fire/engine02/ext_switch_arm", 5000)
+qmovha:CfgPSw(84, pswh84, 1, 0)
+
 
 -- ===========================================================
 -- Read data
@@ -368,10 +389,35 @@ qmovha:GetUpled2Eng1ag2('laminar/B738/fire/engine01/ext_switch/pos_arm')
 qmovha:GetUpled2Eng2ag1('laminar/B738/fire/engine02/ext_switch/pos_arm')
 qmovha:GetUpled2Eng2ag2('laminar/B738/fire/engine02/ext_switch/pos_arm')
 
-qmovha:GetBkl('laminar/B738/electric/panel_brightness[2]', 100) -- 0~1
+qmovha:GetBkl('laminar/B738/electric/panel_brightness[2]', 100)                            -- 0~1
 
+qmovha:GetBrtDim("laminar/B738/toggle_switch/bright_test", 1)                              -- 0: DIM 1: BRT 2: test mode
+qmovha:GetAirCond("laminar/B738/indicators/duct_press_L", "laminar/B738/cabin_temp", 1, 2) --0~1, 16~28
+local dr_test = iDataRef:New("laminar/B738/toggle_switch/bright_test")
 
 GlobalFrameLoopManager:add(function()
+    local b_test = dr_test:Get()
+    if dr_test:ChangedUpdate() then
+        if b_test == 1 then
+            -- TEST
+            uluaSet(idr_qmovh_a_hid_mode_off, 0)
+            uluaSet(idr_qmovh_a_hid_mode_test, 1)
+        else
+            uluaSet(idr_qmovh_a_hid_mode_test, 0)
+        end
+        if b_test == -1 then
+            -- DIM
+            uluaSet(idr_qmovh_a_hid_dim_brtdim, 1)
+            uluaSet(idr_qmovh_a_hid_mode_off, 0)
+        elseif b_test == 0 then
+            -- BRT
+            uluaSet(idr_qmovh_a_hid_dim_brtdim, 0)
+        end
+    end
+    if b_test == 1 then
+        -- TEST
+        return
+    end
     qmovha:SetDnled()
     qmovha:SetUpled1()
     qmovha:SetUpled2()
