@@ -76,6 +76,28 @@ local pswh14 = QmdevPosSwitchInit("laminar/B738/toggle_switch/no_smoking_pos", 1
     "laminar/B738/toggle_switch/no_smoking_up")
 qmovha:CfgPSw(14, pswh14, 2, 1)
 qmovha:CfgPSw(15, pswh14, 0, 1)
+-- DOME
+-- ANN LT
+local pswh20 = QmdevPosSwitchInit("laminar/B738/toggle_switch/bright_test", 1,
+    "laminar/B738/toggle_switch/bright_test_up",
+    "laminar/B738/toggle_switch/bright_test_dn")
+qmovha:CfgPSw(20, pswh20, 1, 0)
+qmovha:CfgPSw(21, pswh20, -1, 0)
+
+-- EMER EXIT LT
+local pswhemercover = QmdevPosSwitchInit("laminar/B738/button_switch/cover_position[9]", 1,
+    "laminar/B738/button_switch_cover09",
+    "laminar/B738/button_switch_cover09", 1000)
+local pswhemer = QmdevPosSwitchInit("laminar/B738/toggle_switch/emer_exit_lights", 1,
+    "laminar/B738/toggle_switch/emer_exit_lights_dn",
+    "laminar/B738/toggle_switch/emer_exit_lights_up")
+function emer_action(cover, val)
+    qmovha:PSwDelay(pswhemercover, 0, cover)
+    qmovha:PSwDelay(pswhemer, 200, val)
+end
+
+qmovha:CfgFc(22, "emer_action(1, 2)", "emer_action(0, 1)")
+qmovha:CfgFc(23, "emer_action(1, 0)", "emer_action(0, 1)")
 
 -- APU
 local pswh30 = QmdevPosSwitchInit("laminar/B738/spring_toggle_switch/APU_start_pos", 1,
