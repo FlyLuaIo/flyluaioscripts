@@ -12,7 +12,7 @@
 -- 2021-12-30 ZIBO 3.51.7
 local FastTurnsPerSecond = 40 -- How many spins per second  is considered FAST?
 --
-local MaxBightness = 30 -- Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
+local MaxBightness = 30       -- Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
 --
 -- ########################################################
 if ilua_is_acftitle_excluded("B73") then
@@ -91,6 +91,7 @@ local drf_hsi_min_pos = iDataRef:New("laminar/B738/EFIS_control/cpt/minimums")
 function key_36_init_func()
     drf_hsi_min_pos:Get()
 end
+
 function key_36_long_func()
     if drf_hsi_min_pos:Get() == 0 then
         uluaCmdOnce(cmd_hsi_min_dec)
@@ -169,8 +170,20 @@ qmcp737c:CfgVal(74, "laminar/B738/toggle_switch/rwy_light_left", 1, 0)
 qmcp737c:CfgVal(75, "laminar/B738/toggle_switch/wheel_light", 1, 0)
 qmcp737c:CfgVal(76, "laminar/B738/toggle_switch/wing_light", 1, 0)
 qmcp737c:CfgVal(77, "sim/cockpit/electrical/beacon_lights_on", 1, 0)
-qmcp737c:CfgCmd(78, "laminar/B738/toggle_switch/position_light_steady", "laminar/B738/toggle_switch/position_light_off")
-qmcp737c:CfgCmd(79, "laminar/B738/toggle_switch/position_light_strobe", "laminar/B738/toggle_switch/position_light_off")
+
+if uluaFind("laminar/B738/toggle_switch/position_light_up") == nil then
+    qmcp737c:CfgCmd(78, "laminar/B738/toggle_switch/position_light_steady",
+        "laminar/B738/toggle_switch/position_light_off")
+    qmcp737c:CfgCmd(79, "laminar/B738/toggle_switch/position_light_strobe",
+        "laminar/B738/toggle_switch/position_light_off")
+else
+    local pswh78 = QmdevPosSwitchInit("laminar/B738/toggle_switch/position_light_pos", 1,
+        "laminar/B738/toggle_switch/position_light_up",
+        "laminar/B738/toggle_switch/position_light_down")
+    qmcp737c:CfgPSw(78, pswh78, -1, 0)
+    qmcp737c:CfgPSw(79, pswh78, 1, 0)
+end
+
 qmcp737c:CfgVal(80, "laminar/B738/switch/land_lights_right_pos", 1, 0)
 qmcp737c:CfgCmd(80, "laminar/B738/switch/land_lights_ret_right_on", "laminar/B738/switch/land_lights_ret_right_off")
 qmcp737c:CfgVal(81, "laminar/B738/switch/land_lights_left_pos", 1, 0)
@@ -234,15 +247,11 @@ qmcp737c:GetNav("sim/cockpit/radios/nav1_freq_hz", "sim/cockpit/radios/nav1_stdb
 
 -- LED Indicator light
 qmcp737c:GetLed("laminar/B738/comm/rtp_L/vhf_1_status", "laminar/B738/comm/rtp_L/vhf_2_status",
-
     "laminar/B738/autopilot/master_capt_status", "laminar/B738/autopilot/autothrottle_arm_pos",
-
     "laminar/B738/autopilot/n1_status", "laminar/B738/autopilot/speed_status1", "laminar/B738/autopilot/lvl_chg_status",
-
     "laminar/B738/autopilot/vnav_status1", "laminar/B738/autopilot/hdg_sel_status",
 
     "laminar/B738/autopilot/lnav_status", "laminar/B738/autopilot/vorloc_status", "laminar/B738/autopilot/app_status",
-
     "laminar/B738/autopilot/alt_hld_status", "laminar/B738/autopilot/vs_status", "laminar/B738/autopilot/cmd_a_status",
     "laminar/B738/autopilot/cmd_b_status", "laminar/B738/annunciator/left_gear_safe",
     "laminar/B738/annunciator/nose_gear_safe", "laminar/B738/annunciator/right_gear_safe")
@@ -312,7 +321,7 @@ end
 
 qmcp737c:RegLoopVhf(fcb_vhf1_d_small, fcb_vhf1_u_small, fcb_vhf1_d_big, fcb_vhf1_u_big, fcb_vhf2_d_small,
     fcb_vhf2_u_small, fcb_vhf2_d_big, fcb_vhf2_u_big, fcb_vhf1_mode, fcb_vhf2_mode)
---[=====[ 
+--[=====[
 --fix the ap_disconnect switch
 function qmcp737c_zibo738_cmd_disconnect(ispress)
     local zibo_ap_disc_pos_val = uluaGet(zibo_ap_disc_pos)
@@ -381,4 +390,5 @@ function qmcp737c_zibo_loop()
         qmcp737c:OffNav()
     end
 end
+
 GlobalFrameLoopManager:add(qmcp737c_zibo_loop)
