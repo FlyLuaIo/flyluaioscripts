@@ -61,9 +61,21 @@ qmovha:CfgCmd(8, "laminar/B738/switch/land_lights_ret_right_on", "laminar/B738/s
 --qmovha:CfgCmd(11, "sim/lights/landing_01_light_off")
 qmovha:CfgVal(10, "laminar/B738/switch/land_lights_left_pos", 1, 0)
 qmovha:CfgCmd(10, "laminar/B738/switch/land_lights_ret_left_on", "laminar/B738/switch/land_lights_ret_left_off")
-
+-- Runway Turn Off lights
+qmovha:CfgVal(12, "laminar/B738/toggle_switch/rwy_light_left", 1, 0)
 -- OVHD INTEG LT
 qmovha:CfgEncFull(17, 16, "laminar/B738/electric/panel_brightness[2]", 0.05, 0.05, 1, 0.0, 1.0)
+-- SEAT BELTS
+local pswh13 = QmdevPosSwitchInit("laminar/B738/toggle_switch/seatbelt_sign_pos", 1,
+    "laminar/B738/toggle_switch/seatbelt_sign_dn",
+    "laminar/B738/toggle_switch/seatbelt_sign_up")
+qmovha:CfgPSw(13, pswh13, 1, 2)
+-- NO SMOKING
+local pswh14 = QmdevPosSwitchInit("laminar/B738/toggle_switch/no_smoking_pos", 1,
+    "laminar/B738/toggle_switch/no_smoking_dn",
+    "laminar/B738/toggle_switch/no_smoking_up")
+qmovha:CfgPSw(14, pswh14, 2, 1)
+qmovha:CfgPSw(15, pswh14, 0, 1)
 
 -- APU
 local pswh30 = QmdevPosSwitchInit("laminar/B738/spring_toggle_switch/APU_start_pos", 1,
@@ -76,7 +88,10 @@ qmovha:CfgPSwTog(31, pswh30, 0, 1)
 
 -- BAT 1&2
 ---- GEN1
-qmovha:CfgValT(58, "sim/cockpit2/electrical/generator_on[0]")
+local pswh58 = QmdevPosSwitchInit("sim/cockpit2/electrical/generator_on[0]", 1,
+    "laminar/B738/toggle_switch/gen1_dn",
+    "laminar/B738/toggle_switch/gen1_up", 800)
+qmovha:CfgPSw(58, pswh58, 0, 1)
 ---- BAT1
 local pswhbatcover = QmdevPosSwitchInit("laminar/B738/button_switch/cover_position[2]", 1,
     "laminar/B738/button_switch_cover02",
@@ -93,20 +108,26 @@ qmovha:CfgFc(59, "bat1_action()")
 ---- BAT2
 qmovha:CfgValT(60, "sim/cockpit/electrical/battery_on")
 ---- GEN2
-qmovha:CfgValT(62, "sim/cockpit2/electrical/generator_on[1]")
-
+local pswh62 = QmdevPosSwitchInit("sim/cockpit2/electrical/generator_on[1]", 1,
+    "laminar/B738/toggle_switch/gen2_dn",
+    "laminar/B738/toggle_switch/gen2_up", 800)
+qmovha:CfgPSw(62, pswh62, 0, 1)
 
 -- FUEL
-qmovha:CfgValT(54, "sim/cockpit2/engine/actuators/fuel_pump_on[0]")
-qmovha:CfgValT(68, "sim/cockpit2/engine/actuators/fuel_pump_on[1]")
+qmovha:CfgValT(54, "laminar/B738/fuel/fuel_tank_pos_lft1")
+qmovha:CfgValT(68, "laminar/B738/fuel/fuel_tank_pos_lft2")
 
-qmovha:CfgValT(67, "sim/cockpit2/engine/actuators/fuel_pump_on[2]")
-qmovha:CfgValT(65, "sim/cockpit2/engine/actuators/fuel_pump_on[3]")
+qmovha:CfgValT(67, "laminar/B738/fuel/fuel_tank_pos_ctr1")
+qmovha:CfgValT(65, "laminar/B738/fuel/fuel_tank_pos_ctr2")
 
-qmovha:CfgValT(64, "sim/cockpit2/engine/actuators/fuel_pump_on[4]")
-qmovha:CfgValT(63, "sim/cockpit2/engine/actuators/fuel_pump_on[5]")
+qmovha:CfgValT(64, "laminar/B738/fuel/fuel_tank_pos_rgt2")
+qmovha:CfgValT(63, "laminar/B738/fuel/fuel_tank_pos_rgt1")
 
-qmovha:CfgValT(66, "sim/cockpit2/engine/actuators/fuel_pump_on[7]")
+-- cross feed
+local pswh66 = QmdevPosSwitchInit("laminar/B738/fuel/cross_feed_valve", 1,
+    "laminar/B738/toggle_switch/crossfeed_valve_on",
+    "laminar/B738/toggle_switch/crossfeed_valve_off", 800)
+qmovha:CfgPSwTog(66, pswh66, 0, 1)
 
 
 -- ===========================================================
