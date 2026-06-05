@@ -404,6 +404,9 @@ function Qmdev:CfgPSw(KeyIdx, idx, presexpect, resexpect)
 end
 
 -- PID position switch Toggle
+function Qmdev:GetPSw(idx)
+    return uluaGet(_G.QmdevPosSwitch.PosStatusDr[idx])
+end
 _G.QmdevPosSwitchToggle = function(idx, presexpect, resexpect)
     local pos = uluaGet(_G.QmdevPosSwitch.PosStatusDr[idx])
     local val = pos == presexpect and resexpect or presexpect

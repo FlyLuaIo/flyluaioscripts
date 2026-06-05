@@ -84,12 +84,10 @@ local pswhbatcover = QmdevPosSwitchInit("laminar/B738/button_switch/cover_positi
 local pswhbat1 = QmdevPosSwitchInit("sim/cockpit2/switches/avionics_power_on", 1,
     "laminar/B738/switch/battery_dn",
     "laminar/B738/switch/battery_up")
-local dr_batcover = iDataRef:New('laminar/B738/button_switch/cover_position[2]')
-local dr_bat1 = iDataRef:New('sim/cockpit2/switches/avionics_power_on')
 function bat1_action()
-    local val = dr_batcover:Get() == 1 and 0 or 1
+    local val = qmovha:GetPSw(pswhbatcover) == 1 and 0 or 1
     uluasetTimeout(qmovha:GenPSwStr(pswhbatcover, val), 0)
-    val = dr_bat1:Get() == 1 and 0 or 1
+    val = qmovha:GetPSw(pswhbat1) == 1 and 0 or 1
     uluasetTimeout(qmovha:GenPSwStr(pswhbat1, val), 200)
 end
 
