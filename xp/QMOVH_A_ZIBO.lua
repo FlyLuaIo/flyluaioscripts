@@ -87,13 +87,13 @@ qmovha:CfgPSw(21, pswh20, -1, 0)
 -- EMER EXIT LT
 local pswhemercover = QmdevPosSwitchInit("laminar/B738/button_switch/cover_position[9]", 1,
     "laminar/B738/button_switch_cover09",
-    "laminar/B738/button_switch_cover09", 1000)
+    "laminar/B738/button_switch_cover09", 2000)
 local pswhemer = QmdevPosSwitchInit("laminar/B738/toggle_switch/emer_exit_lights", 1,
     "laminar/B738/toggle_switch/emer_exit_lights_dn",
     "laminar/B738/toggle_switch/emer_exit_lights_up")
 function emer_action(cover, val)
     qmovha:PSwDelay(pswhemercover, 0, cover)
-    qmovha:PSwDelay(pswhemer, 200, val)
+    qmovha:PSwDelay(pswhemer, 800, val)
 end
 
 qmovha:CfgFc(22, "emer_action(1, 2)", "emer_action(0, 1)")
@@ -107,6 +107,139 @@ local pswh30 = QmdevPosSwitchInit("laminar/B738/spring_toggle_switch/APU_start_p
 qmovha:CfgPSwTog(30, pswh30, 1, 2)
 -- APU Master
 qmovha:CfgPSwTog(31, pswh30, 0, 1)
+
+
+-- ANTI ICE
+qmovha:CfgValT(32, "laminar/B738/ice/eng2_heat_pos")
+qmovha:CfgValT(33, "laminar/B738/ice/eng1_heat_pos")
+qmovha:CfgValT(37, "laminar/B738/ice/wing_heat_pos")
+
+-- AIR COND
+local pswh34 = QmdevPosSwitchInit("laminar/B738/air/l_pack_pos", 1,
+    "laminar/B738/toggle_switch/l_pack_dn",
+    "laminar/B738/toggle_switch/l_pack_up")
+qmovha:CfgPSwTog(34, pswh34, 0, 1)
+
+--- APU BLEED
+qmovha:CfgValT(35, "laminar/B738/toggle_switch/bleed_air_apu_pos", 0, 1)
+
+local pswh36 = QmdevPosSwitchInit("laminar/B738/air/r_pack_pos", 1,
+    "laminar/B738/toggle_switch/r_pack_dn",
+    "laminar/B738/toggle_switch/r_pack_up")
+qmovha:CfgPSwTog(36, pswh36, 0, 1)
+
+--- isolation valve
+qmovha:CfgVal(27, "laminar/B738/air/isolation_valve_pos", 0, nil)
+qmovha:CfgVal(28, "laminar/B738/air/isolation_valve_pos", 1, nil)
+qmovha:CfgVal(29, "laminar/B738/air/isolation_valve_pos", 2, nil)
+
+-- WIPER
+local pswwiperl = QmdevPosSwitchInit("laminar/B738/switches/left_wiper_pos", 1,
+    "laminar/B738/knob/left_wiper_up",
+    "laminar/B738/knob/left_wiper_dn")
+local pswwiperr = QmdevPosSwitchInit("laminar/B738/switches/right_wiper_pos", 1,
+    "laminar/B738/knob/right_wiper_up",
+    "laminar/B738/knob/right_wiper_dn")
+function wiper_action(val)
+    qmovha:PSwDelay(pswwiperl, 0, val)
+    qmovha:PSwDelay(pswwiperr, 100, val)
+end
+
+qmovha:CfgFc(24, "wiper_action(0)")
+qmovha:CfgFc(25, "wiper_action(2)")
+qmovha:CfgFc(26, "wiper_action(3)")
+
+-- OXYGEN
+--- as cecirc fan
+local pswfanl = QmdevPosSwitchInit("laminar/B738/air/l_recirc_fan_pos", 1,
+    "laminar/B738/toggle_switch/l_recirc_fan",
+    "laminar/B738/toggle_switch/l_recirc_fan")
+local pswfanr = QmdevPosSwitchInit("laminar/B738/air/r_recirc_fan_pos", 1,
+    "laminar/B738/toggle_switch/r_recirc_fan",
+    "laminar/B738/toggle_switch/r_recirc_fan")
+function fan_action()
+    qmovha:PSwTog(pswfanl, 0, 0, 1)
+    qmovha:PSwTog(pswfanr, 500, 0, 1)
+end
+
+qmovha:CfgFc(38, "fan_action()")
+-- CALLS
+qmovha:CfgCmd(40, "laminar/B738/push_button/attend")
+
+-- GPWS
+--- hyd elec 1&2
+local pswhydelecl = QmdevPosSwitchInit("laminar/B738/toggle_switch/electric_hydro_pumps1_pos", 1,
+    "laminar/B738/toggle_switch/electric_hydro_pumps1",
+    "laminar/B738/toggle_switch/electric_hydro_pumps1")
+local pswhydelecr = QmdevPosSwitchInit("laminar/B738/toggle_switch/electric_hydro_pumps2_pos", 1,
+    "laminar/B738/toggle_switch/electric_hydro_pumps2",
+    "laminar/B738/toggle_switch/electric_hydro_pumps2")
+function hydelec_action()
+    qmovha:PSwTog(pswhydelecl, 0, 0, 1)
+    qmovha:PSwTog(pswhydelecr, 500, 0, 1)
+end
+
+qmovha:CfgFc(50, "hydelec_action()")
+
+--- hyd engine 1&2
+local pswhydengl = QmdevPosSwitchInit("laminar/B738/annunciator/hyd_press_a", 1,
+    "laminar/B738/toggle_switch/hydro_pumps1",
+    "laminar/B738/toggle_switch/hydro_pumps1", 2000)
+local pswhydengr = QmdevPosSwitchInit("laminar/B738/annunciator/hyd_press_b", 1,
+    "laminar/B738/toggle_switch/hydro_pumps2",
+    "laminar/B738/toggle_switch/hydro_pumps2", 2000)
+function hydeng_action()
+    qmovha:PSwTog(pswhydengl, 0, 0, 1)
+    qmovha:PSwTog(pswhydengr, 500, 0, 1)
+end
+
+qmovha:CfgFc(51, "hydeng_action()")
+
+qmovha:CfgValT(52, "AirbusFBW/GPWSSwitchArray[3]")
+-- GND CTL CVR
+--- as APU GEN
+local pswapugenl = QmdevPosSwitchInit("laminar/B738/electrical/apu_power_bus1", 1,
+    "laminar/B738/toggle_switch/apu_gen1_dn",
+    "laminar/B738/toggle_switch/apu_gen1_up", 2000)
+local pswapugenr = QmdevPosSwitchInit("laminar/B738/electrical/apu_power_bus2", 1,
+    "laminar/B738/toggle_switch/apu_gen2_dn",
+    "laminar/B738/toggle_switch/apu_gen2_up", 2000)
+function apugen_action()
+    qmovha:PSwTog(pswapugenl, 0, 0, 1)
+    qmovha:PSwTog(pswapugenr, 500, 0, 1)
+end
+
+qmovha:CfgFc(53, "apugen_action()")
+
+-- ADIRS 2,3,1
+--- ADR2 as probe
+local dr_qmovh_zibo_pitot1 = iDataRef:New("laminar/B738/toggle_switch/capt_probes_pos")
+local dr_qmovh_zibo_pitot2 = iDataRef:New("laminar/B738/toggle_switch/fo_probes_pos")
+function pitot_action()
+    local val = 1 - dr_qmovh_zibo_pitot1:Get()
+    dr_qmovh_zibo_pitot1:Set(val)
+    dr_qmovh_zibo_pitot2:Set(val)
+end
+
+qmovha:CfgFc(55, "pitot_action()")
+
+--- ADR3 as window heat
+local dr_qmovh_zibo_winheat1 = iDataRef:New("laminar/B738/ice/window_heat_l_side_pos")
+local dr_qmovh_zibo_winheat2 = iDataRef:New("laminar/B738/ice/window_heat_l_fwd_pos")
+local dr_qmovh_zibo_winheat3 = iDataRef:New("laminar/B738/ice/window_heat_r_side_pos")
+local dr_qmovh_zibo_winheat4 = iDataRef:New("laminar/B738/ice/window_heat_r_fwd_pos")
+function winheat_action()
+    local val = 1 - dr_qmovh_zibo_winheat1:Get()
+    dr_qmovh_zibo_winheat1:Set(val)
+    dr_qmovh_zibo_winheat2:Set(val)
+    dr_qmovh_zibo_winheat3:Set(val)
+    dr_qmovh_zibo_winheat4:Set(val)
+end
+
+qmovha:CfgFc(56, "winheat_action()")
+
+--- ADR1: yaw damper
+qmovha:CfgValT(57, "laminar/B738/toggle_switch/yaw_dumper_pos")
 
 -- BAT 1&2
 ---- GEN1
