@@ -78,7 +78,22 @@ qmovha:CfgPSwTog(31, pswh30, 0, 1)
 ---- GEN1
 qmovha:CfgValT(58, "sim/cockpit2/electrical/generator_on[0]")
 ---- BAT1
-qmovha:CfgValT(59, "sim/cockpit/electrical/battery_on")
+local pswhbatcover = QmdevPosSwitchInit("laminar/B738/button_switch/cover_position[2]", 1,
+    "laminar/B738/button_switch_cover02",
+    "laminar/B738/button_switch_cover02", 1000)
+local pswhbat1 = QmdevPosSwitchInit("sim/cockpit2/switches/avionics_power_on", 1,
+    "laminar/B738/switch/battery_dn",
+    "laminar/B738/switch/battery_up")
+local dr_batcover = iDataRef:New('laminar/B738/button_switch/cover_position[2]')
+local dr_bat1 = iDataRef:New('sim/cockpit2/switches/avionics_power_on')
+function bat1_action()
+    local val = dr_batcover:Get() == 1 and 0 or 1
+    uluasetTimeout(qmovha:GenPSwStr(pswhbatcover, val), 0)
+    val = dr_bat1:Get() == 1 and 0 or 1
+    uluasetTimeout(qmovha:GenPSwStr(pswhbat1, val), 200)
+end
+
+qmovha:CfgFc(59, "bat1_action()")
 ---- BAT2
 qmovha:CfgValT(60, "sim/cockpit/electrical/battery_on")
 ---- GEN2
