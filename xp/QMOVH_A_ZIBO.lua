@@ -28,37 +28,51 @@ qmovha:CfgCmd(41, "sim/lights/strobe_lights_on")
 qmovha:CfgCmd(1, "sim/lights/strobe_lights_off")
 
 -- beacon  lights
-qmovha:CfgCmd(2, "sim/lights/beacon_lights_on", "sim/lights/beacon_lights_off")
+qmovha:CfgVal(2, "sim/cockpit/electrical/beacon_lights_on", 1, 0)
 
 -- Wing lights
-qmovha:CfgCmd(3, "sim/lights/strobe_lights_on", "sim/lights/strobe_lights_off")
+qmovha:CfgVal(3, "laminar/B738/toggle_switch/wing_light", 1, 0)
 
 -- NAV lights
-qmovha:CfgCmd(4, "sim/lights/nav_lights_on")
-qmovha:CfgCmd(42, "sim/lights/nav_lights_on")
-qmovha:CfgCmd(5, "sim/lights/nav_lights_off")
+local pswh4 = QmdevPosSwitchInit("laminar/B738/toggle_switch/position_light_pos", 1,
+    "laminar/B738/toggle_switch/position_light_up",
+    "laminar/B738/toggle_switch/position_light_down")
+qmovha:CfgPSw(4, pswh4, 1)
+qmovha:CfgPSw(42, pswh4, -1)
+qmovha:CfgPSw(5, pswh4, 0)
 
 -- Taxi lights
-qmovha:CfgCmd(6, "sim/lights/taxi_lights_on")
-qmovha:CfgCmd(45, "sim/lights/taxi_lights_on")
-qmovha:CfgCmd(7, "sim/lights/taxi_lights_off")
+qmovha:CfgCmd(6, "laminar/B738/toggle_switch/taxi_light_brightness_on")
+qmovha:CfgCmd(45, "laminar/B738/toggle_switch/taxi_light_brightness_on")
+qmovha:CfgCmd(7, "laminar/B738/toggle_switch/taxi_light_brightness_off")
+
 
 -- R Landing lights
-qmovha:CfgCmd(8, "sim/lights/landing_02_light_on")
-qmovha:CfgCmd(44, "sim/lights/landing_02_light_off")
-qmovha:CfgCmd(9, "sim/lights/landing_02_light_off")
+--qmovha:CfgCmd(8, "sim/lights/landing_02_light_on")
+--qmovha:CfgCmd(44, "sim/lights/landing_02_light_off")
+--qmovha:CfgCmd(9, "sim/lights/landing_02_light_off")
+
+qmovha:CfgVal(8, "laminar/B738/switch/land_lights_right_pos", 1, 0)
+qmovha:CfgCmd(8, "laminar/B738/switch/land_lights_ret_right_on", "laminar/B738/switch/land_lights_ret_right_off")
+
 -- L Landing lights
-qmovha:CfgCmd(10, "sim/lights/landing_01_light_on")
-qmovha:CfgCmd(43, "sim/lights/landing_01_light_off")
-qmovha:CfgCmd(11, "sim/lights/landing_01_light_off")
+--qmovha:CfgCmd(10, "sim/lights/landing_01_light_on")
+--qmovha:CfgCmd(43, "sim/lights/landing_01_light_off")
+--qmovha:CfgCmd(11, "sim/lights/landing_01_light_off")
+qmovha:CfgVal(10, "laminar/B738/switch/land_lights_left_pos", 1, 0)
+qmovha:CfgCmd(10, "laminar/B738/switch/land_lights_ret_left_on", "laminar/B738/switch/land_lights_ret_left_off")
 
 -- OVHD INTEG LT
-qmovha:CfgEncFull(17, 16, "sim/cockpit/electrical/instrument_brightness", 0.05, 0.05, 1, 0.05, 1.0)
+qmovha:CfgEncFull(17, 16, "laminar/B738/electric/panel_brightness[2]", 0.05, 0.05, 1, 0.0, 1.0)
 
+-- APU
+local pswh30 = QmdevPosSwitchInit("laminar/B738/spring_toggle_switch/APU_start_pos", 1,
+    "laminar/B738/spring_toggle_switch/APU_start_pos_dn",
+    "laminar/B738/spring_toggle_switch/APU_start_pos_up")
 -- APU Start
-qmovha:CfgValT(30, "sim/cockpit2/electrical/cross_tie")
+qmovha:CfgPSwTog(30, pswh30, 1, 2)
 -- APU Master
-qmovha:CfgCmd(31, "sim/systems/avionics_toggle")
+qmovha:CfgPSwTog(31, pswh30, 0, 1)
 
 -- BAT 1&2
 ---- GEN1
