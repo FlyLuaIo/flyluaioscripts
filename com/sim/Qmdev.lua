@@ -407,6 +407,17 @@ end
 function Qmdev:GetPSw(idx)
     return uluaGet(_G.QmdevPosSwitch.PosStatusDr[idx])
 end
+
+function Qmdev:_PSwDelay(idx, intexpect, timeout)
+    local str = "QmdevPosSwitchSet(" .. tostring(idx) .. ", " .. tostring(intexpect) .. ")"
+    uluasetTimeout(str, timeout)
+end
+
+function Qmdev:PSwTog(idx, timeout, presexpect, resexpect)
+    local val = self:GetPSw(idx) == presexpect and resexpect or presexpect
+    self:_PSwDelay(idx, val, timeout)
+end
+
 _G.QmdevPosSwitchToggle = function(idx, presexpect, resexpect)
     local pos = uluaGet(_G.QmdevPosSwitch.PosStatusDr[idx])
     local val = pos == presexpect and resexpect or presexpect
