@@ -68,7 +68,15 @@ qmovha:CfgCmd(8, "laminar/B738/switch/land_lights_ret_right_on", "laminar/B738/s
 qmovha:CfgVal(10, "laminar/B738/switch/land_lights_left_pos", 1, 0)
 qmovha:CfgCmd(10, "laminar/B738/switch/land_lights_ret_left_on", "laminar/B738/switch/land_lights_ret_left_off")
 -- Runway Turn Off lights
-qmovha:CfgVal(12, "laminar/B738/toggle_switch/rwy_light_left", 1, 0)
+local dr_qmovh_zibo_rwy1 = iDataRef:New("laminar/B738/toggle_switch/rwy_light_left")
+local dr_qmovh_zibo_rwy2 = iDataRef:New("laminar/B738/toggle_switch/rwy_light_right")
+function rwy_action(val)
+    dr_qmovh_zibo_rwy1:Set(val)
+    dr_qmovh_zibo_rwy2:Set(val)
+end
+
+qmovha:CfgFc(12, "rwy_action(1)", "rwy_action(0)")
+
 -- OVHD INTEG LT
 qmovha:CfgEncFull(17, 16, "laminar/B738/electric/panel_brightness[2]", 0.05, 0.05, 1, 0.0, 1.0)
 -- SEAT BELTS
@@ -299,6 +307,8 @@ function bat1_action()
 end
 
 qmovha:CfgFc(59, "bat1_action()")
+
+
 ---- BAT2
 qmovha:CfgValT(60, "sim/cockpit/electrical/battery_on")
 ---- GEN2
@@ -306,6 +316,12 @@ local pswh62 = QmdevPosSwitchInit("sim/cockpit2/electrical/generator_on[1]", 1,
     "laminar/B738/toggle_switch/gen2_dn",
     "laminar/B738/toggle_switch/gen2_up", 800)
 qmovha:CfgPSw(62, pswh62, 0, 1)
+
+-- EXT PWR
+local pswh61 = QmdevPosSwitchInit("sim/cockpit/electrical/gpu_on", 1,
+    "laminar/B738/toggle_switch/gpu_dn",
+    "laminar/B738/toggle_switch/gpu_up", 1000)
+qmovha:CfgPSw(61, pswh61, 0, 1)
 
 -- FUEL
 qmovha:CfgValT(54, "laminar/B738/fuel/fuel_tank_pos_lft1")
