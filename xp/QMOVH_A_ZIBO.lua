@@ -341,9 +341,14 @@ qmovha:CfgPSwTog(66, pswh66, 0, 1)
 
 -- FIRE
 ---- eng1 agent2
-qmovha:CfgValT(71, "laminar/B738/fire/engine01/ext_switch_arm", 1, 0)
+qmovha:CfgCmd(71, "laminar/B738/fire/engine01/ext_switch_R")
 ---- eng1 agent1
-qmovha:CfgValT(72, "laminar/B738/fire/engine01/ext_switch_arm", -1, 0)
+qmovha:CfgCmd(72, "laminar/B738/fire/engine01/ext_switch_L")
+---- eng2 agent2
+qmovha:CfgCmd(69, "laminar/B738/fire/engine02/ext_switch_R")
+---- eng2 agent1
+qmovha:CfgCmd(70, "laminar/B738/fire/engine02/ext_switch_L")
+
 ---- eng1
 local pswh82 = QmdevPosSwitchInit("laminar/B738/fire/engine01/ext_switch/pos_arm", 1,
     "laminar/B738/fire/engine01/ext_switch_arm",
@@ -458,16 +463,25 @@ qmovha:GetUpled2XfeedDn('laminar/B738/knobs/cross_feed_pos')
 qmovha:GetUpled1Fire2('laminar/B738/annunciator/engine2_fire')
 qmovha:GetUpled1Firea('laminar/B738/annunciator/apu_fire')
 qmovha:GetUpled1Fire1('laminar/B738/annunciator/engine1_fire')
-qmovha:GetUpled2Eng1ag1('laminar/B738/fire/engine01/ext_switch/pos_arm')
-qmovha:GetUpled2Eng1ag2('laminar/B738/fire/engine01/ext_switch/pos_arm')
-qmovha:GetUpled2Eng2ag1('laminar/B738/fire/engine02/ext_switch/pos_arm')
-qmovha:GetUpled2Eng2ag2('laminar/B738/fire/engine02/ext_switch/pos_arm')
+qmovha:GetUpled2Eng1ag1('cpuwolf/flyluaio/QMOVH-A/condbtn[71]')
+qmovha:GetUpled2Eng1ag2('cpuwolf/flyluaio/QMOVH-A/condbtn[72]')
+qmovha:GetUpled2Eng2ag1('cpuwolf/flyluaio/QMOVH-A/condbtn[73]')
+qmovha:GetUpled2Eng2ag2('cpuwolf/flyluaio/QMOVH-A/condbtn[74]')
 
 qmovha:GetBkl('laminar/B738/electric/panel_brightness[2]', 100)                            -- 0~1
 
 qmovha:GetBrtDim("laminar/B738/toggle_switch/bright_test", 1)                              -- 0: DIM 1: BRT 2: test mode
 qmovha:GetAirCond("laminar/B738/indicators/duct_press_L", "laminar/B738/cabin_temp", 1, 2) --0~1, 16~28
 local dr_test = iDataRef:New("laminar/B738/toggle_switch/bright_test")
+
+local dr_fire_ext_eng1 = iDataRef:New("laminar/B738/fire/engine01/ext_switch/pos_arm")
+local dr_fire_ext_eng2 = iDataRef:New("laminar/B738/fire/engine02/ext_switch/pos_arm")
+local dr_fire_ext_bot_l = iDataRef:New("laminar/B738/fire/engine01_02L/ext_bottle/psi")
+local dr_fire_ext_bot_r = iDataRef:New("laminar/B738/fire/engine01_02R/ext_bottle/psi")
+local dr_fire_cond_eng1ag1 = iDataRef:New("cpuwolf/flyluaio/QMOVH-A/condbtn[71]")
+local dr_fire_cond_eng1ag2 = iDataRef:New("cpuwolf/flyluaio/QMOVH-A/condbtn[72]")
+local dr_fire_cond_eng2ag1 = iDataRef:New("cpuwolf/flyluaio/QMOVH-A/condbtn[73]")
+local dr_fire_cond_eng2ag2 = iDataRef:New("cpuwolf/flyluaio/QMOVH-A/condbtn[74]")
 
 GlobalFrameLoopManager:add(function()
     local b_test = dr_test:Get()
@@ -491,6 +505,16 @@ GlobalFrameLoopManager:add(function()
     if b_test == 1 then
         -- TEST
         return
+    end
+
+    --engine fire agents
+    if dr_fire_ext_eng1:ChangedUpdate() or dr_fire_ext_bot_l:ChangedUpdate() or dr_fire_ext_bot_r:ChangedUpdate() then
+        dr_fire_cond_eng1ag1:Set(dr_fire_ext_eng1:GetOld() > 0 and dr_fire_ext_bot_l:Get() > 0 and 1 or 0)
+        dr_fire_cond_eng1ag2:Set(dr_fire_ext_eng1:GetOld() > 0 and dr_fire_ext_bot_r:Get() > 0 and 1 or 0)
+    end
+    if dr_fire_ext_eng2:ChangedUpdate() or dr_fire_ext_bot_l:ChangedUpdate() or dr_fire_ext_bot_r:ChangedUpdate() then
+        dr_fire_cond_eng2ag1:Set(dr_fire_ext_eng2:GetOld() > 0 and dr_fire_ext_bot_l:Get() > 0 and 1 or 0)
+        dr_fire_cond_eng2ag2:Set(dr_fire_ext_eng2:GetOld() > 0 and dr_fire_ext_bot_r:Get() > 0 and 1 or 0)
     end
     qmovha:SetDnled()
     qmovha:SetUpled1()
