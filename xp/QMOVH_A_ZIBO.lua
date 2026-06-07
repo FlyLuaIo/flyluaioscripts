@@ -509,12 +509,12 @@ GlobalFrameLoopManager:add(function()
 
     --engine fire agents
     if dr_fire_ext_eng1:ChangedUpdate() or dr_fire_ext_bot_l:ChangedUpdate() or dr_fire_ext_bot_r:ChangedUpdate() then
-        dr_fire_cond_eng1ag1:Set(dr_fire_ext_eng1:GetOld() > 0 and dr_fire_ext_bot_l:Get() > 0 and 1 or 0)
-        dr_fire_cond_eng1ag2:Set(dr_fire_ext_eng1:GetOld() > 0 and dr_fire_ext_bot_r:Get() > 0 and 1 or 0)
+        dr_fire_cond_eng1ag1:Set(dr_fire_ext_eng1:GetOld() > 0 and dr_fire_ext_bot_l:GetOld() > 0 and 1 or 0)
+        dr_fire_cond_eng1ag2:Set(dr_fire_ext_eng1:GetOld() > 0 and dr_fire_ext_bot_r:GetOld() > 0 and 1 or 0)
     end
     if dr_fire_ext_eng2:ChangedUpdate() or dr_fire_ext_bot_l:ChangedUpdate() or dr_fire_ext_bot_r:ChangedUpdate() then
-        dr_fire_cond_eng2ag1:Set(dr_fire_ext_eng2:GetOld() > 0 and dr_fire_ext_bot_l:Get() > 0 and 1 or 0)
-        dr_fire_cond_eng2ag2:Set(dr_fire_ext_eng2:GetOld() > 0 and dr_fire_ext_bot_r:Get() > 0 and 1 or 0)
+        dr_fire_cond_eng2ag1:Set(dr_fire_ext_eng2:GetOld() > 0 and dr_fire_ext_bot_l:GetOld() > 0 and 1 or 0)
+        dr_fire_cond_eng2ag2:Set(dr_fire_ext_eng2:GetOld() > 0 and dr_fire_ext_bot_r:GetOld() > 0 and 1 or 0)
     end
     qmovha:SetDnled()
     qmovha:SetUpled1()
