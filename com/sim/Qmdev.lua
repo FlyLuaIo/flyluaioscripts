@@ -416,6 +416,7 @@ end
 function Qmdev:PSwTog(idx, timeout, presexpect, resexpect)
     local val = self:GetPSw(idx) == presexpect and resexpect or presexpect
     self:PSwDelay(idx, timeout, val)
+    return val
 end
 
 _G.QmdevPosSwitchToggle = function(idx, presexpect, resexpect)
