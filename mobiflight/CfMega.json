@@ -17,28 +17,38 @@
       "DeviceType": "Encoder",
       "Pin": 0,
       "Name": "G1000 FMS inner",
-      "MapToBit": 0
+      "MapToBits": [
+        0,
+        1,
+        2,
+        3
+      ]
     },
     {
       "DeviceName": "Encoder_big",
       "DeviceType": "Encoder",
-      "Pin": 1,
+      "Pin": 4,
       "Name": "G1000 FMS outer",
-      "MapToBit": 1
+      "MapToBits": [
+        4,
+        5,
+        6,
+        7
+      ]
     },
     {
       "DeviceName": "FMS push",
       "DeviceType": "Button",
-      "Pin": 2,
+      "Pin": 8,
       "Name": "G1000 FMS push",
-      "MapToBit": 2
+      "MapToBit": 8
     },
     {
       "DeviceName": "ENT",
       "DeviceType": "Button",
-      "Pin": 3,
+      "Pin": 9,
       "Name": "G1000 ENT",
-      "MapToBit": 3
+      "MapToBit": 9
     }
   ]
 }
