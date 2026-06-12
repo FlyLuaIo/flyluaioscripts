@@ -1,6 +1,7 @@
 {
   "ProductName": "RfA107",
-  "ModuleSerial": "Rowsfire A107 V3/ SN-58F-185",
+  "ModuleName": "Rowsfire A107 V3",
+  "ModuleSerial": "SN-58F-185",
   "outputs": [
     {
       "DeviceName": "ShiftRegister 1",

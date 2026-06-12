@@ -1,6 +1,7 @@
 {
   "ProductName": "CfMega",
-  "ModuleSerial": "MF Mega Pro/ SN-3F1-FDD",
+  "ModuleName": "MF Mega Pro",
+  "ModuleSerial": "SN-3F1-FDD",
   "outputs": [
     {
       "DeviceName": "Stepper",
