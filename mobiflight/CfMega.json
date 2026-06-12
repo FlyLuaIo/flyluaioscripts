@@ -1,0 +1,43 @@
+{
+  "ProductName": "CfMega",
+  "ModuleSerial": "MF Mega Pro/ SN-3F1-FDD",
+  "outputs": [
+    {
+      "DeviceName": "Stepper",
+      "DeviceType": "Stepper",
+      "Pin": 0,
+      "Name": "GA ENG RPM",
+      "MapToBit": 0
+    }
+  ],
+  "inputs": [
+    {
+      "DeviceName": "Encoder_small",
+      "DeviceType": "Encoder",
+      "Pin": 0,
+      "Name": "G1000 FMS inner",
+      "MapToBit": 0
+    },
+    {
+      "DeviceName": "Encoder_big",
+      "DeviceType": "Encoder",
+      "Pin": 1,
+      "Name": "G1000 FMS outer",
+      "MapToBit": 1
+    },
+    {
+      "DeviceName": "FMS push",
+      "DeviceType": "Button",
+      "Pin": 2,
+      "Name": "G1000 FMS push",
+      "MapToBit": 2
+    },
+    {
+      "DeviceName": "ENT",
+      "DeviceType": "Button",
+      "Pin": 3,
+      "Name": "G1000 ENT",
+      "MapToBit": 3
+    }
+  ]
+}
