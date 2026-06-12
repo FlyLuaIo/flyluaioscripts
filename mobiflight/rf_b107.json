@@ -1,0 +1,946 @@
+{
+  "ProductName": "RfB107",
+  "ModuleSerial": "Rowsfire B107 V1/ SN-G88-57F",
+  "outputs": [
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 0,
+      "Name": "Fuel Pump Aft 1 Low Pressure",
+      "MapToBit": 0
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 1,
+      "Name": "Fuel Pump Fwd 1 Low Pressure",
+      "MapToBit": 1
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 2,
+      "Name": "Fuel Pump Fwd 2 Low Pressure",
+      "MapToBit": 2
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 3,
+      "Name": "Fuel Pump Aft 2 Low Pressure",
+      "MapToBit": 3
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 4,
+      "Name": "Fuel Pump Center Left Low Pressure",
+      "MapToBit": 4
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 5,
+      "Name": "Fuel Pump Center Right Low Pressure",
+      "MapToBit": 5
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 6,
+      "Name": "Maint blue led",
+      "MapToBit": 6
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 7,
+      "Name": "Low Oil Pressure",
+      "MapToBit": 7
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 8,
+      "Name": "APU Fault",
+      "MapToBit": 8
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 9,
+      "Name": "APU Overspeed",
+      "MapToBit": 9
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 10,
+      "Name": "Left Source Off",
+      "MapToBit": 10
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 11,
+      "Name": "Left Transfer Bus Off",
+      "MapToBit": 11
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 12,
+      "Name": "Right Source Off",
+      "MapToBit": 12
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 13,
+      "Name": "Right Transfer Bus Off",
+      "MapToBit": 13
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 14,
+      "Name": "Drive 1 Disconnect",
+      "MapToBit": 14
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 15,
+      "Name": "Standby Power Off LED",
+      "MapToBit": 15
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 16,
+      "Name": "Drive 2 Disconnect",
+      "MapToBit": 16
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 17,
+      "Name": "Left Gen Off Bus",
+      "MapToBit": 17
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 18,
+      "Name": "Right Gen Off Bus",
+      "MapToBit": 18
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 19,
+      "Name": "Apu Gen Off Bus",
+      "MapToBit": 19
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 20,
+      "Name": "Yaw Damper OH led",
+      "MapToBit": 20
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 0,
+      "Name": "Hyd Pump A Eng1 Low Pressure",
+      "MapToBit": 21
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 1,
+      "Name": "Hyd Pump A Elec2 Low Pressure",
+      "MapToBit": 22
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 2,
+      "Name": "Hyd Pump B Elec1 Low Pressure",
+      "MapToBit": 23
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 3,
+      "Name": "Hyd Pump B Eng2 Low Pressure",
+      "MapToBit": 24
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 4,
+      "Name": "Hyd Pump A Overheat",
+      "MapToBit": 25
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 5,
+      "Name": "Hyd Pump B Overheat",
+      "MapToBit": 26
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 6,
+      "Name": "Wing Anti Ice Left Valve Open",
+      "MapToBit": 27
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 7,
+      "Name": "Wing Anti Ice Right Valve Open",
+      "MapToBit": 28
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 8,
+      "Name": "Eng Anti-Ice L Cowl Valve Open",
+      "MapToBit": 29
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 9,
+      "Name": "Eng Anti-Ice R Cowl Valve Open",
+      "MapToBit": 30
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 10,
+      "Name": "Eng Anti-Ice L Cowl Anti-Ice",
+      "MapToBit": 31
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 11,
+      "Name": "Eng Anti-Ice R Cowl Anti-Ice",
+      "MapToBit": 32
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 12,
+      "Name": "Window Heat Left Side On",
+      "MapToBit": 33
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 13,
+      "Name": "Window Heat Left Fwd On",
+      "MapToBit": 34
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 14,
+      "Name": "Window Heat Right Fwd On",
+      "MapToBit": 35
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 15,
+      "Name": "Window Heat Right Side On",
+      "MapToBit": 36
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 16,
+      "Name": "Window Heat Left Fwd Overheat",
+      "MapToBit": 37
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 19,
+      "Name": "Window Heat Left Side Overheat",
+      "MapToBit": 38
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 17,
+      "Name": "Window Heat Right Fwd Overheat",
+      "MapToBit": 39
+    },
+    {
+      "DeviceName": "ShiftRegister",
+      "DeviceType": "ShiftRegister",
+      "Pin": 18,
+      "Name": "Window Heat Right Side Overheat",
+      "MapToBit": 40
+    }
+  ],
+  "inputs": [
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 12,
+      "Name": "FUEL PUMPS CTR L",
+      "MapToBit": 0
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 13,
+      "Name": "FUEL PUMPS CTR R",
+      "MapToBit": 1
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 0,
+      "Name": "FUEL PUMPS AFT L",
+      "MapToBit": 2
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 8,
+      "Name": "FUEL PUMPS FWD L",
+      "MapToBit": 3
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 10,
+      "Name": "FUEL PUMPS AFT R",
+      "MapToBit": 4
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 9,
+      "Name": "FUEL PUMPS FWD R",
+      "MapToBit": 5
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 15,
+      "Name": "FUEL PUMPS CROSSFEED",
+      "MapToBit": 6
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 14,
+      "Name": "ELEC GEN1 ON",
+      "MapToBit": 7
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 15,
+      "Name": "ELEC GEN1 OFF",
+      "MapToBit": 8
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 6,
+      "Name": "ELEC APU GEN1 ON",
+      "MapToBit": 9
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 7,
+      "Name": "ELEC APU GEN1 OFF",
+      "MapToBit": 10
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 4,
+      "Name": "ELEC APU GEN2 OFF",
+      "MapToBit": 11
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 5,
+      "Name": "ELEC APU GEN2 ON",
+      "MapToBit": 12
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 3,
+      "Name": "ELEC GEN2 ON",
+      "MapToBit": 13
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 2,
+      "Name": "ELEC GEN2 OFF",
+      "MapToBit": 14
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 0,
+      "Name": "MASTER BAT ",
+      "MapToBit": 15
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 15,
+      "Name": "Pressurization Mode AUTO",
+      "MapToBit": 16
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 14,
+      "Name": "Pressurization Mode MAN",
+      "MapToBit": 17
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 14,
+      "Name": "Outflow Valve Close",
+      "MapToBit": 18
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 15,
+      "Name": "Outflow Valve Open",
+      "MapToBit": 19
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 7,
+      "Name": "LANDING L",
+      "MapToBit": 20
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 6,
+      "Name": "LANDING R",
+      "MapToBit": 21
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 5,
+      "Name": "RUNWAY TURNOFF L",
+      "MapToBit": 22
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 4,
+      "Name": "RUNWAY TURNOFF R",
+      "MapToBit": 23
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 3,
+      "Name": "TAXI LT",
+      "MapToBit": 24
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 1,
+      "Name": "APU START OFF",
+      "MapToBit": 25
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 2,
+      "Name": "APU START",
+      "MapToBit": 26
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 11,
+      "Name": "ENGINE START 1- GRD",
+      "MapToBit": 27
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 12,
+      "Name": "ENGINE START 1- CONT",
+      "MapToBit": 28
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 13,
+      "Name": "ENGINE START 1- OFF",
+      "MapToBit": 29
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 8,
+      "Name": "ENGINE START 2- GRD",
+      "MapToBit": 30
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 10,
+      "Name": "ENGINE START 2- OFF",
+      "MapToBit": 31
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 9,
+      "Name": "ENGINE START 2- CONT",
+      "MapToBit": 32
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 7,
+      "Name": "ENGINE START  BOTH - L",
+      "MapToBit": 33
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 6,
+      "Name": "ENGINE START  BOTH - R",
+      "MapToBit": 34
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 5,
+      "Name": "LOGO LT",
+      "MapToBit": 35
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 4,
+      "Name": "Position Light STEADY",
+      "MapToBit": 36
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 3,
+      "Name": "Position Light STROBE STEADY",
+      "MapToBit": 37
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 2,
+      "Name": "Anti-collision lights",
+      "MapToBit": 38
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 1,
+      "Name": "WING LT",
+      "MapToBit": 39
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 0,
+      "Name": "WHEEL WELL LT",
+      "MapToBit": 40
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 10,
+      "Name": "IRS R NAV",
+      "MapToBit": 41
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 14,
+      "Name": "AC CAB/UTIL",
+      "MapToBit": 42
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 2,
+      "Name": "Standby Power Bat",
+      "MapToBit": 43
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 1,
+      "Name": "Standby Power Auto",
+      "MapToBit": 44
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 15,
+      "Name": "Gen Drive Disc Left",
+      "MapToBit": 45
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 7,
+      "Name": "Gen Drive Disc Right Guard",
+      "MapToBit": 46
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 10,
+      "Name": "GND PWR OFF",
+      "MapToBit": 47
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 9,
+      "Name": "GND PWR ON",
+      "MapToBit": 48
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 1,
+      "Name": "Bus Transfer",
+      "MapToBit": 49
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 6,
+      "Name": "VHF NAV BOTH ON 1",
+      "MapToBit": 50
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 5,
+      "Name": "VHF NAV BOTH ON 2",
+      "MapToBit": 51
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 4,
+      "Name": "IRS BOTH ON L",
+      "MapToBit": 52
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 3,
+      "Name": "IRS BOTH ON R",
+      "MapToBit": 53
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 13,
+      "Name": "FMC BOTH ON L",
+      "MapToBit": 54
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 14,
+      "Name": "FMC BOTH ON R",
+      "MapToBit": 55
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 12,
+      "Name": "YAW DAMPER",
+      "MapToBit": 56
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 11,
+      "Name": "Equipment Cooling Supply",
+      "MapToBit": 57
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 4,
+      "Name": "Equipment Cooling Exhaust",
+      "MapToBit": 58
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 8,
+      "Name": "EMER EXIT LT OFF",
+      "MapToBit": 59
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 0,
+      "Name": "EMER EXIT LT ON",
+      "MapToBit": 60
+    },
+    {
+      "DeviceName": "Multiplexer",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 11,
+      "Name": "NO SMOKING",
+      "MapToBit": 61
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 9,
+      "Name": "Fasten Belts OFF",
+      "MapToBit": 62
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 8,
+      "Name": "Fasten Belts ON",
+      "MapToBit": 63
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 10,
+      "Name": "HYD PUMPS ENG1",
+      "MapToBit": 64
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 11,
+      "Name": "HYD PUMPS ELEC2",
+      "MapToBit": 65
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 12,
+      "Name": "HYD PUMPS ELEC1",
+      "MapToBit": 66
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 13,
+      "Name": "HYD PUMPS ENG2",
+      "MapToBit": 67
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 5,
+      "Name": "WING ANTI-ICE",
+      "MapToBit": 68
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 6,
+      "Name": "ENG1 ANTI-ICE",
+      "MapToBit": 69
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 7,
+      "Name": "ENG2 ANTI-ICE ",
+      "MapToBit": 70
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 15,
+      "Name": "WINDOW HEAT L SIDE",
+      "MapToBit": 71
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 7,
+      "Name": "WINDOW HEAT L FWD",
+      "MapToBit": 72
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 5,
+      "Name": "WINDOW HEAT OVHT (UP)",
+      "MapToBit": 73
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 6,
+      "Name": "WINDOW HEAT OVHT",
+      "MapToBit": 74
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 4,
+      "Name": "WINDOW HEAT R FWD",
+      "MapToBit": 75
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 3,
+      "Name": "WINDOW HEAT R SIDE",
+      "MapToBit": 76
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 1,
+      "Name": "TRIM AIR",
+      "MapToBit": 77
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 3,
+      "Name": "BLEED ENG1",
+      "MapToBit": 78
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 2,
+      "Name": "BLEED APU",
+      "MapToBit": 79
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 1,
+      "Name": "BLEED ENG2",
+      "MapToBit": 80
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 12,
+      "Name": "BLEED L PACK OFF",
+      "MapToBit": 81
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 11,
+      "Name": "BLEED L PACK HIGH",
+      "MapToBit": 82
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 8,
+      "Name": "BLEED R PACK OFF",
+      "MapToBit": 83
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 0,
+      "Name": "BLEED R PACK HIGH",
+      "MapToBit": 84
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 10,
+      "Name": "BLEED ISOLATION VALVE CLOSE",
+      "MapToBit": 85
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 9,
+      "Name": "BLEED ISOLATION VALVE OPEN",
+      "MapToBit": 86
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 2,
+      "Name": "BLEED L RECIRC FAN",
+      "MapToBit": 87
+    },
+    {
+      "DeviceName": "Multiplexer 5",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 0,
+      "Name": "BLEED R RECIRC FAN",
+      "MapToBit": 88
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 8,
+      "Name": "IRS R OFF",
+      "MapToBit": 89
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 9,
+      "Name": "IRS R ALIGN",
+      "MapToBit": 90
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 14,
+      "Name": "PROBE A",
+      "MapToBit": 91
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 13,
+      "Name": "PROBE B",
+      "MapToBit": 92
+    }
+  ]
+}
