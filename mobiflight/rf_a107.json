@@ -1,0 +1,792 @@
+{
+  "ProductName": "RfA107",
+  "ModuleSerial": "Rowsfire A107 V3/ SN-58F-185",
+  "outputs": [
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 24,
+      "Name": "EXTERNAL PWR-1",
+      "MapToBit": 0
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 1,
+      "Name": "EXTERNAL PWR-2",
+      "MapToBit": 1
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 3,
+      "Name": "AUP-FIRE-LED",
+      "MapToBit": 2
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 2,
+      "Name": "ENG1-FIRE-1",
+      "MapToBit": 3
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 4,
+      "Name": "ENG2-FIRE-1",
+      "MapToBit": 4
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 10,
+      "Name": "APU MASTERSW-1",
+      "MapToBit": 5
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 11,
+      "Name": "APU MASTERSW-2",
+      "MapToBit": 6
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 18,
+      "Name": "APU START-1",
+      "MapToBit": 7
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 19,
+      "Name": "APU START-2",
+      "MapToBit": 8
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 6,
+      "Name": "APU BLEED-1",
+      "MapToBit": 9
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 7,
+      "Name": "APU BLEED-2",
+      "MapToBit": 10
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 29,
+      "Name": "BAT1-1",
+      "MapToBit": 11
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 28,
+      "Name": "BAT1-2",
+      "MapToBit": 12
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 31,
+      "Name": "BAT2-1",
+      "MapToBit": 13
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 30,
+      "Name": "BAT2-2",
+      "MapToBit": 14
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 1,
+      "Name": "ADIRS ON BAT",
+      "MapToBit": 15
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 0,
+      "Name": "IR1-1",
+      "MapToBit": 16
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 9,
+      "Name": "IR1-2",
+      "MapToBit": 17
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 10,
+      "Name": "IR3-1",
+      "MapToBit": 18
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 11,
+      "Name": "IR3-2",
+      "MapToBit": 19
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 12,
+      "Name": "IR2-1",
+      "MapToBit": 20
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 13,
+      "Name": "IR2-2",
+      "MapToBit": 21
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 6,
+      "Name": "RCDR GND CTL-2",
+      "MapToBit": 22
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 7,
+      "Name": "OXYGEN CREW SUPPLY-2",
+      "MapToBit": 23
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 4,
+      "Name": "PACK1-1",
+      "MapToBit": 24
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 5,
+      "Name": "PACK1-2",
+      "MapToBit": 25
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 0,
+      "Name": "PACK2-1",
+      "MapToBit": 26
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 9,
+      "Name": "PACK2-2",
+      "MapToBit": 27
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 12,
+      "Name": "ANTI ICE WING-1",
+      "MapToBit": 28
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 13,
+      "Name": "ANTI ICE WING-2",
+      "MapToBit": 29
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 14,
+      "Name": "ANTI ICE ENG1-1",
+      "MapToBit": 30
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 15,
+      "Name": "ANTI ICE ENG1-2",
+      "MapToBit": 31
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 8,
+      "Name": "ANTI ICE ENG2-1",
+      "MapToBit": 32
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 17,
+      "Name": "ANTI ICE ENG2-2",
+      "MapToBit": 33
+    },
+    {
+      "DeviceName": "ShiftRegister 2",
+      "DeviceType": "ShiftRegister",
+      "Pin": 3,
+      "Name": "PROBE WINDOW HEAT-2",
+      "MapToBit": 34
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 14,
+      "Name": "PUMP-L-MAIN-1",
+      "MapToBit": 35
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 15,
+      "Name": "PUMP-L-MAIN-2",
+      "MapToBit": 36
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 8,
+      "Name": "PUMP-L-STBY-1",
+      "MapToBit": 37
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 17,
+      "Name": "PUMP-L-STBY-2",
+      "MapToBit": 38
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 18,
+      "Name": "PUMP-L-1",
+      "MapToBit": 39
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 19,
+      "Name": "PUMP-L-2",
+      "MapToBit": 40
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 20,
+      "Name": "PUMP-CENTER-TANK-1",
+      "MapToBit": 41
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 21,
+      "Name": "PUMP-CENTER-TANK-2",
+      "MapToBit": 42
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 22,
+      "Name": "PUMP-R-1",
+      "MapToBit": 43
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 23,
+      "Name": "PUMP-R-2",
+      "MapToBit": 44
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 16,
+      "Name": "PUMP-R-MAIN-1",
+      "MapToBit": 45
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 25,
+      "Name": "PUMP-R-MAIN-2 ",
+      "MapToBit": 46
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 26,
+      "Name": "PUMP-R-STBY-1",
+      "MapToBit": 47
+    },
+    {
+      "DeviceName": "ShiftRegister 1",
+      "DeviceType": "ShiftRegister",
+      "Pin": 27,
+      "Name": "PUMP-R-STBY-2",
+      "MapToBit": 48
+    }
+  ],
+  "inputs": [
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 13,
+      "Name": "EXT POWER",
+      "MapToBit": 0
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 4,
+      "Name": "FIRE TEST APU",
+      "MapToBit": 1
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 5,
+      "Name": "FIRE TEST ENG1",
+      "MapToBit": 2
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 3,
+      "Name": "FIRE TEST ENG2",
+      "MapToBit": 3
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 0,
+      "Name": "FIRE-APU",
+      "MapToBit": 4
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 1,
+      "Name": "FIRE-ENG1",
+      "MapToBit": 5
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 15,
+      "Name": "FIRE-ENG2",
+      "MapToBit": 6
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 15,
+      "Name": "BAT1",
+      "MapToBit": 7
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 14,
+      "Name": "BAT2",
+      "MapToBit": 8
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 4,
+      "Name": "APU MASTERSW",
+      "MapToBit": 9
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 6,
+      "Name": "APU BLEED",
+      "MapToBit": 10
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 3,
+      "Name": "APU START",
+      "MapToBit": 11
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 0,
+      "Name": "STROBE OFF/AUTO",
+      "MapToBit": 12
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 1,
+      "Name": "STROBE AUTO/ON",
+      "MapToBit": 13
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 2,
+      "Name": "BEACON",
+      "MapToBit": 14
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 3,
+      "Name": "WING",
+      "MapToBit": 15
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 4,
+      "Name": "NAV&LOGO OFF/1",
+      "MapToBit": 16
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 5,
+      "Name": "NAV&LOGO 1/2",
+      "MapToBit": 17
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 6,
+      "Name": "RWY TURN OFF ON",
+      "MapToBit": 18
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 7,
+      "Name": "LAND-L RTRCT/OFF",
+      "MapToBit": 19
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 8,
+      "Name": "LAND-L OFF/ON",
+      "MapToBit": 20
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 9,
+      "Name": "LAND-R RTRCT/OFF",
+      "MapToBit": 21
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 10,
+      "Name": "LAND-R OFF/ON",
+      "MapToBit": 22
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 12,
+      "Name": "NOSE OFF/TAXI",
+      "MapToBit": 23
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 11,
+      "Name": "NOSE TAXI/TO",
+      "MapToBit": 24
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 1,
+      "Name": "ICE ENG1",
+      "MapToBit": 25
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 0,
+      "Name": "ICE ENG2",
+      "MapToBit": 26
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 2,
+      "Name": "ICE WING",
+      "MapToBit": 27
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 8,
+      "Name": "PROBE WINDOW HEAT",
+      "MapToBit": 28
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 7,
+      "Name": "PACK1",
+      "MapToBit": 29
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 5,
+      "Name": "PACK2",
+      "MapToBit": 30
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 14,
+      "Name": "TERR",
+      "MapToBit": 31
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 13,
+      "Name": "SEATBELTS ON",
+      "MapToBit": 32
+    },
+    {
+      "DeviceName": "Multiplexer 3",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 14,
+      "Name": "NO SMOKING OFF/AUTO",
+      "MapToBit": 33
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 3,
+      "Name": "NO SMOKING AUTO/ON",
+      "MapToBit": 34
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 2,
+      "Name": "CALLS ALL",
+      "MapToBit": 35
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 6,
+      "Name": "ADIRS-1 OFF/NAV",
+      "MapToBit": 36
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 10,
+      "Name": "ADIRS-2 OFF/NAV",
+      "MapToBit": 37
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 8,
+      "Name": "ADIRS-3 OFF/NAV",
+      "MapToBit": 38
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 7,
+      "Name": "ADIRS-1 ATT",
+      "MapToBit": 39
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 11,
+      "Name": "ADIRS-2 ATT",
+      "MapToBit": 40
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 9,
+      "Name": "ADIRS-3 ATT",
+      "MapToBit": 41
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 13,
+      "Name": "IR1",
+      "MapToBit": 42
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 12,
+      "Name": "IR2",
+      "MapToBit": 43
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 11,
+      "Name": "IR3",
+      "MapToBit": 44
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 10,
+      "Name": "GROUND CTL",
+      "MapToBit": 45
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 9,
+      "Name": "CREW OXYGEN SUPPLY",
+      "MapToBit": 46
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 9,
+      "Name": "PUMP-CENTER TANK",
+      "MapToBit": 47
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 10,
+      "Name": "PUMPS-L",
+      "MapToBit": 48
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 8,
+      "Name": "PUMPS-R",
+      "MapToBit": 49
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 12,
+      "Name": "PUMPS -L  MAIN",
+      "MapToBit": 50
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 11,
+      "Name": "PUMPS -L STBY",
+      "MapToBit": 51
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 7,
+      "Name": "PUMPS-R MAIN",
+      "MapToBit": 52
+    },
+    {
+      "DeviceName": "Multiplexer 2",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 6,
+      "Name": "PUMPS-R STBY",
+      "MapToBit": 53
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 13,
+      "Name": "AIR XBLEED AUTO/OPEN",
+      "MapToBit": 54
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 12,
+      "Name": "AIR XBLEED CLOSE?AUTO",
+      "MapToBit": 55
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 5,
+      "Name": "EMERGENCY EXIT ON",
+      "MapToBit": 56
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 4,
+      "Name": "EMERGENCY EXIT OFF",
+      "MapToBit": 57
+    },
+    {
+      "DeviceName": "Multiplexer 1",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 15,
+      "Name": "LDGFLAP3",
+      "MapToBit": 58
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 15,
+      "Name": "WIPER-OFF",
+      "MapToBit": 59
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 14,
+      "Name": "WIPER-FAST",
+      "MapToBit": 60
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 1,
+      "Name": "DOME LIGHT DIM",
+      "MapToBit": 61
+    },
+    {
+      "DeviceName": "Multiplexer 4",
+      "DeviceType": "InputMultiplexer",
+      "Pin": 0,
+      "Name": "DOME LIGHT BRT",
+      "MapToBit": 62
+    }
+  ]
+}
