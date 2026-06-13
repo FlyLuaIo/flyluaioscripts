@@ -8,287 +8,287 @@
       "DeviceType": "ShiftRegister",
       "Pin": 0,
       "Name": "Fuel Pump Aft 1 Low Pressure",
-      "MapToBit": 0
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 1,
       "Name": "Fuel Pump Fwd 1 Low Pressure",
-      "MapToBit": 1
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 2,
       "Name": "Fuel Pump Fwd 2 Low Pressure",
-      "MapToBit": 2
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 3,
       "Name": "Fuel Pump Aft 2 Low Pressure",
-      "MapToBit": 3
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 4,
       "Name": "Fuel Pump Center Left Low Pressure",
-      "MapToBit": 4
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 5,
       "Name": "Fuel Pump Center Right Low Pressure",
-      "MapToBit": 5
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 6,
       "Name": "Maint blue led",
-      "MapToBit": 6
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 7,
       "Name": "Low Oil Pressure",
-      "MapToBit": 7
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 8,
       "Name": "APU Fault",
-      "MapToBit": 8
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 9,
       "Name": "APU Overspeed",
-      "MapToBit": 9
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 10,
       "Name": "Left Source Off",
-      "MapToBit": 10
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 11,
       "Name": "Left Transfer Bus Off",
-      "MapToBit": 11
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 12,
       "Name": "Right Source Off",
-      "MapToBit": 12
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 13,
       "Name": "Right Transfer Bus Off",
-      "MapToBit": 13
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 14,
       "Name": "Drive 1 Disconnect",
-      "MapToBit": 14
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 15,
       "Name": "Standby Power Off LED",
-      "MapToBit": 15
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 16,
       "Name": "Drive 2 Disconnect",
-      "MapToBit": 16
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 17,
       "Name": "Left Gen Off Bus",
-      "MapToBit": 17
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 18,
       "Name": "Right Gen Off Bus",
-      "MapToBit": 18
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 19,
       "Name": "Apu Gen Off Bus",
-      "MapToBit": 19
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
       "Pin": 20,
       "Name": "Yaw Damper OH led",
-      "MapToBit": 20
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 0,
       "Name": "Hyd Pump A Eng1 Low Pressure",
-      "MapToBit": 21
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 1,
       "Name": "Hyd Pump A Elec2 Low Pressure",
-      "MapToBit": 22
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 2,
       "Name": "Hyd Pump B Elec1 Low Pressure",
-      "MapToBit": 23
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 3,
       "Name": "Hyd Pump B Eng2 Low Pressure",
-      "MapToBit": 24
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 4,
       "Name": "Hyd Pump A Overheat",
-      "MapToBit": 25
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 5,
       "Name": "Hyd Pump B Overheat",
-      "MapToBit": 26
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 6,
       "Name": "Wing Anti Ice Left Valve Open",
-      "MapToBit": 27
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 7,
       "Name": "Wing Anti Ice Right Valve Open",
-      "MapToBit": 28
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 8,
       "Name": "Eng Anti-Ice L Cowl Valve Open",
-      "MapToBit": 29
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 9,
       "Name": "Eng Anti-Ice R Cowl Valve Open",
-      "MapToBit": 30
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 10,
       "Name": "Eng Anti-Ice L Cowl Anti-Ice",
-      "MapToBit": 31
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 11,
       "Name": "Eng Anti-Ice R Cowl Anti-Ice",
-      "MapToBit": 32
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 12,
       "Name": "Window Heat Left Side On",
-      "MapToBit": 33
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 13,
       "Name": "Window Heat Left Fwd On",
-      "MapToBit": 34
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 14,
       "Name": "Window Heat Right Fwd On",
-      "MapToBit": 35
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 15,
       "Name": "Window Heat Right Side On",
-      "MapToBit": 36
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 16,
       "Name": "Window Heat Left Fwd Overheat",
-      "MapToBit": 37
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 19,
       "Name": "Window Heat Left Side Overheat",
-      "MapToBit": 38
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 17,
       "Name": "Window Heat Right Fwd Overheat",
-      "MapToBit": 39
+      "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister",
       "DeviceType": "ShiftRegister",
       "Pin": 18,
       "Name": "Window Heat Right Side Overheat",
-      "MapToBit": 40
+      "MapType": "int"
     }
   ],
   "inputs": [
