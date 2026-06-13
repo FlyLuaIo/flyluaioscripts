@@ -563,9 +563,13 @@ function Qmpe_pmdg_737_loop()
 
         qmpe:SetMsg()
         qmpe:SetFail()
-
-        qmpe:SetLo()
-        qmpe:SetMed()
+        if g_qmpe_pmdg737_use_nav == 0 then
+            qmpe:SetLo()
+            qmpe:SetMed()
+        else
+            uluaSet(idr_qmpe_hid_misc_lo, ilua_bool_ternary(dr_ann_ap:Get() + dr_ann_ap_amber:Get(), 0))
+            uluaSet(idr_qmpe_hid_misc_med, ilua_bool_ternary(dr_ann_at:Get() + dr_ann_at_amber:Get(), 0))
+        end
         qmpe:SetMax()
         qmpe:SetTerr()
         qmpe:SetLand()
