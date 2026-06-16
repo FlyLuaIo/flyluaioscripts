@@ -1,4 +1,5 @@
 {
+  "$schema": "./joystick-config.schema.json",
   "ProductName": "HCBravo",
   "USB_VID": "0x294B",
   "USB_PID": "0x1901",

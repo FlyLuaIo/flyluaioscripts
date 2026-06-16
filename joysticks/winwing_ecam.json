@@ -1,4 +1,5 @@
 {
+  "$schema": "./joystick-config.schema.json",
   "ProductName": "WwEcam",
   "USB_VID": "0x4098",
   "USB_PID": "0xBB70",

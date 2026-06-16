@@ -1,4 +1,5 @@
 {
+  "$schema": "./joystick-config.schema.json",
   "ProductName": "WfDap500",
   "USB_VID": "0xC687",
   "USB_PID": "0xB216",

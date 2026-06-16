@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "joystick-config.schema.json",
+  "title": "Joystick HID Config",
+  "description": "FlyLuaIo USB HID joystick and panel configuration.",
+  "type": "object",
+  "required": ["ProductName", "USB_VID", "USB_PID"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "./joystick-config.schema.json"
+    },
+    "ProductName": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9]*$",
+      "minLength": 2,
+      "maxLength": 12,
+      "description": "Short alphanumeric device id for C++ class and DataRef namespace (e.g. WwAgp, WfDap500). Must start with a letter; no spaces or symbols."
+    },
+    "USB_VID": {
+      "oneOf": [
+        { "type": "string", "pattern": "^(0[xX][0-9A-Fa-f]+|[0-9]+)$" },
+        { "type": "integer", "minimum": 0, "maximum": 65535 }
+      ],
+      "description": "USB Vendor ID (hex string or integer)."
+    },
+    "USB_PID": {
+      "oneOf": [
+        { "type": "string", "pattern": "^(0[xX][0-9A-Fa-f]+|[0-9]+)$" },
+        { "type": "integer", "minimum": 0, "maximum": 65535 }
+      ],
+      "description": "USB Product ID (hex string or integer)."
+    },
+    "USBDelayMs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Delay between HID writes in milliseconds."
+    },
+    "LightKey": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "HID button index for N1 / backlight test mode."
+    },
+    "LightKeyName": {
+      "type": "string",
+      "description": "Display name for the LightKey button."
+    },
+    "USB_KEY_OFFSET": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Custom HID button field byte offset."
+    },
+    "USB_KEY_MAX": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Maximum number of buttons."
+    },
+    "USB_AXIS_OFFSET": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Axis data byte offset in the HID report."
+    },
+    "USB_AXIS_MAX": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Bytes per axis field."
+    },
+    "USB_AXIS_NUM": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of axis fields."
+    },
+    "USB_ENCODER_KEY_START": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "First button index mapped to encoders."
+    },
+    "USB_ENCODER_OFFSET": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Encoder data byte offset."
+    },
+    "USB_ENCODER_MAX": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Bytes per encoder field."
+    },
+    "USB_ENCODER_NUM": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of encoder fields."
+    },
+    "Functions": {
+      "type": "array",
+      "description": "HID function groups. May be omitted for identity-only configs.",
+      "items": { "$ref": "#/$defs/Function" }
+    }
+  },
+  "$defs": {
+    "HexByte": {
+      "type": "string",
+      "description": "Single byte as 0xNN hex or decimal 0-255.",
+      "pattern": "^(0[xX][0-9A-Fa-f]{1,2}|[0-9]{1,3})$"
+    },
+    "HexByteArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/HexByte" }
+    },
+    "OffBytesArray": {
+      "type": "array",
+      "description": "Power-off payloads: per-byte array or long hex strings for multi-frame writes.",
+      "items": {
+        "type": "string",
+        "pattern": "^(0[xX][0-9A-Fa-f]+|[0-9]+)$"
+      }
+    },
+    "BitEncoding": {
+      "type": "string",
+      "description": "Bit-field encoding for SubFunctions values.",
+      "oneOf": [
+        {
+          "pattern": "^i[0-9]+:[0-9]+$",
+          "description": "Standard format i<bitOffset>:<bitLength>, e.g. i8:8."
+        },
+        {
+          "enum": ["b1b2b3", "b1b2b3raw", "b1b2", "b4"],
+          "description": "Legacy encodings used by jsontoheader code generation."
+        },
+        {
+          "pattern": "^b[0-9]+$",
+          "description": "Single-bit legacy encoding, e.g. b4."
+        }
+      ]
+    },
+    "BitToken": {
+      "type": "string",
+      "pattern": "^(t|b)[0-9]+$",
+      "description": "Single-bit token: t<N> toggle or b<N> bit."
+    },
+    "SubFunctionsItem": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[A-Za-z][A-Za-z0-9]*$": { "$ref": "#/$defs/BitEncoding" }
+      },
+      "description": "One or more sub-function bit encodings. Keys are alphanumeric only (e.g. lcd1, SpdVal); no spaces or symbols."
+    },
+    "SubBitFunctionsItem": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[A-Za-z_][A-Za-z0-9_]*$": { "$ref": "#/$defs/BitToken" }
+      },
+      "description": "Single-bit sub-function. Key allows letters, digits, and underscore (e.g. AP_hdg, Gear_LeftGreen)."
+    },
+    "SubIndexFunctionsItem": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[A-Za-z_][A-Za-z0-9_.]*$": {
+          "oneOf": [
+            { "type": "integer" },
+            { "type": "string", "pattern": "^[0-9]+$" }
+          ]
+        }
+      },
+      "description": "LED hardware index map; used by jsontoheader Lua generation only."
+    },
+    "Function": {
+      "type": "object",
+      "required": ["FunName"],
+      "additionalProperties": false,
+      "properties": {
+        "FunName": {
+          "type": "string",
+          "description": "Function group name and DataRef path prefix."
+        },
+        "FunIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Function index for generated enums; runtime uses array order."
+        },
+        "USB_CMD_length": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "HID output report length (writetype CMD)."
+        },
+        "USB_FEAT_length": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "HID feature report length (writetype FEAT)."
+        },
+        "HeaderBytes": { "$ref": "#/$defs/HexByteArray" },
+        "TestBytes": { "$ref": "#/$defs/HexByteArray" },
+        "LightBytes": { "$ref": "#/$defs/HexByteArray" },
+        "SkipBytes": {
+          "$ref": "#/$defs/HexByteArray",
+          "description": "Write mask bytes; runtime applies bitwise NOT before use."
+        },
+        "OffBytes": { "$ref": "#/$defs/OffBytesArray" },
+        "SubFunctions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SubFunctionsItem" }
+        },
+        "SubBitFunctions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SubBitFunctionsItem" }
+        },
+        "SubIndexFunctions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SubIndexFunctionsItem" }
+        }
+      },
+      "oneOf": [
+        { "required": ["USB_CMD_length"] },
+        { "required": ["USB_FEAT_length"] },
+        {
+          "not": {
+            "anyOf": [
+              { "required": ["USB_CMD_length"] },
+              { "required": ["USB_FEAT_length"] }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

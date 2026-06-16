@@ -1,4 +1,5 @@
 {
+  "$schema": "./joystick-config.schema.json",
   "ProductName": "WfFcuc",
   "USB_VID": "0xA316",
   "USB_PID": "0xC787",
