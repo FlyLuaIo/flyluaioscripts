@@ -249,9 +249,9 @@ function Qmdev:SetBit(idx, idr, valbase, val)
     if val == nil then
         hdl = self.Bits[idx + 1]
         if hdl:ChangedUpdate() then
-            local val = hdl:GetOldBit()
-            -- uluaLog(string.format("SetBit=%f", val))
-            uluaSet(idr, val)
+            local bitval = hdl:GetOldBit()
+            -- uluaLog(string.format("SetBit=%f", bitval))
+            uluaSet(idr, bitval)
         end
     else
         uluaSet(idr, ilua_bool_ternary(val, valbase))
