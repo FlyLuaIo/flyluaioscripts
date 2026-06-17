@@ -76,8 +76,8 @@ end
 -- ========
 -- DN LED Start Up
 
-function Qmovha:GetStartUp(dpath, revert)
-    self:GetBit(0, dpath, revert)
+function Qmovha:GetStartUp(dpath, revert, base)
+    self:GetBit(0, dpath, revert, base)
 end
 
 function Qmovha:SetStartUp(valbase, val)
@@ -87,8 +87,8 @@ end
 -- ========
 -- DN LED Start Down
 
-function Qmovha:GetStartDn(dpath, revert)
-    self:GetBit(1, dpath, revert)
+function Qmovha:GetStartDn(dpath, revert, base)
+    self:GetBit(1, dpath, revert, base)
 end
 
 function Qmovha:SetStartDn(valbase, val)
@@ -98,8 +98,8 @@ end
 -- ========
 -- DN LED MSW Up
 
-function Qmovha:GetMswUp(dpath, revert)
-    self:GetBit(2, dpath, revert)
+function Qmovha:GetMswUp(dpath, revert, base)
+    self:GetBit(2, dpath, revert, base)
 end
 
 function Qmovha:SetMswUp(valbase, val)
@@ -109,8 +109,8 @@ end
 -- ========
 -- DN LED MSW Down
 
-function Qmovha:GetMswDn(dpath, revert)
-    self:GetBit(3, dpath, revert)
+function Qmovha:GetMswDn(dpath, revert, base)
+    self:GetBit(3, dpath, revert, base)
 end
 
 function Qmovha:SetMswDn(valbase, val)
@@ -120,8 +120,8 @@ end
 -- ========
 -- DN LED Eng2 Up
 
-function Qmovha:GetEng2Up(dpath, revert)
-    self:GetBit(4, dpath, revert)
+function Qmovha:GetEng2Up(dpath, revert, base)
+    self:GetBit(4, dpath, revert, base)
 end
 
 function Qmovha:SetEng2Up(valbase, val)
@@ -131,8 +131,8 @@ end
 -- ========
 -- DN LED Eng2 Down
 
-function Qmovha:GetEng2Dn(dpath, revert)
-    self:GetBit(5, dpath, revert)
+function Qmovha:GetEng2Dn(dpath, revert, base)
+    self:GetBit(5, dpath, revert, base)
 end
 
 function Qmovha:SetEng2Dn(valbase, val)
@@ -142,8 +142,8 @@ end
 -- ========
 -- DN LED Eng1 Up
 
-function Qmovha:GetEng1Up(dpath, revert)
-    self:GetBit(6, dpath, revert)
+function Qmovha:GetEng1Up(dpath, revert, base)
+    self:GetBit(6, dpath, revert, base)
 end
 
 function Qmovha:SetEng1Up(valbase, val)
@@ -153,8 +153,8 @@ end
 -- ========
 -- DN LED Eng1 Down
 
-function Qmovha:GetEng1Dn(dpath, revert)
-    self:GetBit(7, dpath, revert)
+function Qmovha:GetEng1Dn(dpath, revert, base)
+    self:GetBit(7, dpath, revert, base)
 end
 
 function Qmovha:SetEng1Dn(valbase, val)
@@ -164,8 +164,8 @@ end
 -- ========
 -- DN LED Pack1 Up
 
-function Qmovha:GetPack1Up(dpath, revert)
-    self:GetBit(8, dpath, revert)
+function Qmovha:GetPack1Up(dpath, revert, base)
+    self:GetBit(8, dpath, revert, base)
 end
 
 function Qmovha:SetPack1Up(valbase, val)
@@ -175,8 +175,8 @@ end
 -- ========
 -- DN LED Pack1 Down
 
-function Qmovha:GetPack1Dn(dpath, revert)
-    self:GetBit(9, dpath, revert)
+function Qmovha:GetPack1Dn(dpath, revert, base)
+    self:GetBit(9, dpath, revert, base)
 end
 
 function Qmovha:SetPack1Dn(valbase, val)
@@ -186,8 +186,8 @@ end
 -- ========
 -- DN LED APU B Up
 
-function Qmovha:GetApubUp(dpath, revert)
-    self:GetBit(10, dpath, revert)
+function Qmovha:GetApubUp(dpath, revert, base)
+    self:GetBit(10, dpath, revert, base)
 end
 
 function Qmovha:SetApubUp(valbase, val)
@@ -197,8 +197,8 @@ end
 -- ========
 -- DN LED APU B Down
 
-function Qmovha:GetApubDn(dpath, revert)
-    self:GetBit(11, dpath, revert)
+function Qmovha:GetApubDn(dpath, revert, base)
+    self:GetBit(11, dpath, revert, base)
 end
 
 function Qmovha:SetApubDn(valbase, val)
@@ -208,8 +208,8 @@ end
 -- ========
 -- DN LED Pack2 Up
 
-function Qmovha:GetPack2Up(dpath, revert)
-    self:GetBit(12, dpath, revert)
+function Qmovha:GetPack2Up(dpath, revert, base)
+    self:GetBit(12, dpath, revert, base)
 end
 
 function Qmovha:SetPack2Up(valbase, val)
@@ -219,8 +219,8 @@ end
 -- ========
 -- DN LED Pack2 Down
 
-function Qmovha:GetPack2Dn(dpath, revert)
-    self:GetBit(13, dpath, revert)
+function Qmovha:GetPack2Dn(dpath, revert, base)
+    self:GetBit(13, dpath, revert, base)
 end
 
 function Qmovha:SetPack2Dn(valbase, val)
@@ -230,8 +230,8 @@ end
 -- ========
 -- DN LED Wing Up
 
-function Qmovha:GetWingUp(dpath, revert)
-    self:GetBit(14, dpath, revert)
+function Qmovha:GetWingUp(dpath, revert, base)
+    self:GetBit(14, dpath, revert, base)
 end
 
 function Qmovha:SetWingUp(valbase, val)
@@ -241,8 +241,8 @@ end
 -- ========
 -- DN LED Wing Down
 
-function Qmovha:GetWingDn(dpath, revert)
-    self:GetBit(15, dpath, revert)
+function Qmovha:GetWingDn(dpath, revert, base)
+    self:GetBit(15, dpath, revert, base)
 end
 
 function Qmovha:SetWingDn(valbase, val)
@@ -252,8 +252,8 @@ end
 -- ========
 -- DN LED Crew
 
-function Qmovha:GetCrew(dpath, revert)
-    self:GetBit(16, dpath, revert)
+function Qmovha:GetCrew(dpath, revert, base)
+    self:GetBit(16, dpath, revert, base)
 end
 
 function Qmovha:SetCrew(valbase, val)
@@ -263,8 +263,8 @@ end
 -- ========
 -- UP LED1 Terr Up
 
-function Qmovha:GetUpled1TerrUp(dpath, revert)
-    self:GetBit(17, dpath, revert)
+function Qmovha:GetUpled1TerrUp(dpath, revert, base)
+    self:GetBit(17, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1TerrUp(valbase, val)
@@ -274,8 +274,8 @@ end
 -- ========
 -- UP LED1 Terr Down
 
-function Qmovha:GetUpled1TerrDn(dpath, revert)
-    self:GetBit(18, dpath, revert)
+function Qmovha:GetUpled1TerrDn(dpath, revert, base)
+    self:GetBit(18, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1TerrDn(valbase, val)
@@ -285,8 +285,8 @@ end
 -- ========
 -- UP LED1 Sys Up
 
-function Qmovha:GetUpled1SysUp(dpath, revert)
-    self:GetBit(19, dpath, revert)
+function Qmovha:GetUpled1SysUp(dpath, revert, base)
+    self:GetBit(19, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1SysUp(valbase, val)
@@ -296,8 +296,8 @@ end
 -- ========
 -- UP LED1 Sys Down
 
-function Qmovha:GetUpled1SysDn(dpath, revert)
-    self:GetBit(20, dpath, revert)
+function Qmovha:GetUpled1SysDn(dpath, revert, base)
+    self:GetBit(20, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1SysDn(valbase, val)
@@ -307,8 +307,8 @@ end
 -- ========
 -- UP LED1 Flap3
 
-function Qmovha:GetUpled1Flap3(dpath, revert)
-    self:GetBit(21, dpath, revert)
+function Qmovha:GetUpled1Flap3(dpath, revert, base)
+    self:GetBit(21, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Flap3(valbase, val)
@@ -318,8 +318,8 @@ end
 -- ========
 -- UP LED1 Gnd Ctl
 
-function Qmovha:GetUpled1Gndctl(dpath, revert)
-    self:GetBit(22, dpath, revert)
+function Qmovha:GetUpled1Gndctl(dpath, revert, base)
+    self:GetBit(22, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Gndctl(valbase, val)
@@ -329,8 +329,8 @@ end
 -- ========
 -- UP LED1 LTK1 Up
 
-function Qmovha:GetUpled1Ltk1Up(dpath, revert)
-    self:GetBit(23, dpath, revert)
+function Qmovha:GetUpled1Ltk1Up(dpath, revert, base)
+    self:GetBit(23, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Ltk1Up(valbase, val)
@@ -340,8 +340,8 @@ end
 -- ========
 -- UP LED1 LTK1 Down
 
-function Qmovha:GetUpled1Ltk1Dn(dpath, revert)
-    self:GetBit(24, dpath, revert)
+function Qmovha:GetUpled1Ltk1Dn(dpath, revert, base)
+    self:GetBit(24, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Ltk1Dn(valbase, val)
@@ -351,8 +351,8 @@ end
 -- ========
 -- UP LED1 ADR1 Up
 
-function Qmovha:GetUpled1Adr1Up(dpath, revert)
-    self:GetBit(25, dpath, revert)
+function Qmovha:GetUpled1Adr1Up(dpath, revert, base)
+    self:GetBit(25, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Adr1Up(valbase, val)
@@ -362,8 +362,8 @@ end
 -- ========
 -- UP LED1 ADR1 Down
 
-function Qmovha:GetUpled1Adr1Dn(dpath, revert)
-    self:GetBit(26, dpath, revert)
+function Qmovha:GetUpled1Adr1Dn(dpath, revert, base)
+    self:GetBit(26, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Adr1Dn(valbase, val)
@@ -373,8 +373,8 @@ end
 -- ========
 -- UP LED1 ADR3 Up
 
-function Qmovha:GetUpled1Adr3Up(dpath, revert)
-    self:GetBit(27, dpath, revert)
+function Qmovha:GetUpled1Adr3Up(dpath, revert, base)
+    self:GetBit(27, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Adr3Up(valbase, val)
@@ -384,8 +384,8 @@ end
 -- ========
 -- UP LED1 ADR3 Down
 
-function Qmovha:GetUpled1Adr3Dn(dpath, revert)
-    self:GetBit(28, dpath, revert)
+function Qmovha:GetUpled1Adr3Dn(dpath, revert, base)
+    self:GetBit(28, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Adr3Dn(valbase, val)
@@ -395,8 +395,8 @@ end
 -- ========
 -- UP LED1 ADR2 Up
 
-function Qmovha:GetUpled1Adr2Up(dpath, revert)
-    self:GetBit(29, dpath, revert)
+function Qmovha:GetUpled1Adr2Up(dpath, revert, base)
+    self:GetBit(29, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Adr2Up(valbase, val)
@@ -406,8 +406,8 @@ end
 -- ========
 -- UP LED1 ADR2 Down
 
-function Qmovha:GetUpled1Adr2Dn(dpath, revert)
-    self:GetBit(30, dpath, revert)
+function Qmovha:GetUpled1Adr2Dn(dpath, revert, base)
+    self:GetBit(30, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Adr2Dn(valbase, val)
@@ -417,8 +417,8 @@ end
 -- ========
 -- UP LED1 LTK2 Up
 
-function Qmovha:GetUpled1Ltk2Up(dpath, revert)
-    self:GetBit(31, dpath, revert)
+function Qmovha:GetUpled1Ltk2Up(dpath, revert, base)
+    self:GetBit(31, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Ltk2Up(valbase, val)
@@ -428,8 +428,8 @@ end
 -- ========
 -- UP LED1 LTK2 Down
 
-function Qmovha:GetUpled1Ltk2Dn(dpath, revert)
-    self:GetBit(32, dpath, revert)
+function Qmovha:GetUpled1Ltk2Dn(dpath, revert, base)
+    self:GetBit(32, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Ltk2Dn(valbase, val)
@@ -439,8 +439,8 @@ end
 -- ========
 -- UP LED1 CTKL Up
 
-function Qmovha:GetUpled1CtklUp(dpath, revert)
-    self:GetBit(33, dpath, revert)
+function Qmovha:GetUpled1CtklUp(dpath, revert, base)
+    self:GetBit(33, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1CtklUp(valbase, val)
@@ -450,8 +450,8 @@ end
 -- ========
 -- UP LED1 CTKL Down
 
-function Qmovha:GetUpled1CtklDn(dpath, revert)
-    self:GetBit(34, dpath, revert)
+function Qmovha:GetUpled1CtklDn(dpath, revert, base)
+    self:GetBit(34, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1CtklDn(valbase, val)
@@ -461,8 +461,8 @@ end
 -- ========
 -- UP LED1 CTKR Up
 
-function Qmovha:GetUpled1CtkrUp(dpath, revert)
-    self:GetBit(35, dpath, revert)
+function Qmovha:GetUpled1CtkrUp(dpath, revert, base)
+    self:GetBit(35, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1CtkrUp(valbase, val)
@@ -472,8 +472,8 @@ end
 -- ========
 -- UP LED1 CTKR Down
 
-function Qmovha:GetUpled1CtkrDn(dpath, revert)
-    self:GetBit(36, dpath, revert)
+function Qmovha:GetUpled1CtkrDn(dpath, revert, base)
+    self:GetBit(36, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1CtkrDn(valbase, val)
@@ -483,8 +483,8 @@ end
 -- ========
 -- UP LED1 Fire2
 
-function Qmovha:GetUpled1Fire2(dpath, revert)
-    self:GetBit(37, dpath, revert)
+function Qmovha:GetUpled1Fire2(dpath, revert, base)
+    self:GetBit(37, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Fire2(valbase, val)
@@ -494,8 +494,8 @@ end
 -- ========
 -- UP LED1 FireA
 
-function Qmovha:GetUpled1Firea(dpath, revert)
-    self:GetBit(38, dpath, revert)
+function Qmovha:GetUpled1Firea(dpath, revert, base)
+    self:GetBit(38, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Firea(valbase, val)
@@ -505,8 +505,8 @@ end
 -- ========
 -- UP LED1 Fire1
 
-function Qmovha:GetUpled1Fire1(dpath, revert)
-    self:GetBit(39, dpath, revert)
+function Qmovha:GetUpled1Fire1(dpath, revert, base)
+    self:GetBit(39, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Fire1(valbase, val)
@@ -516,8 +516,8 @@ end
 -- ========
 -- UP LED1 On Bat
 
-function Qmovha:GetUpled1Onbat(dpath, revert)
-    self:GetBit(40, dpath, revert)
+function Qmovha:GetUpled1Onbat(dpath, revert, base)
+    self:GetBit(40, dpath, revert, base)
 end
 
 function Qmovha:SetUpled1Onbat(valbase, val)
@@ -527,8 +527,8 @@ end
 -- ========
 -- UP LED2 RTK1 Up
 
-function Qmovha:GetUpled2Rtk1Up(dpath, revert)
-    self:GetBit(41, dpath, revert)
+function Qmovha:GetUpled2Rtk1Up(dpath, revert, base)
+    self:GetBit(41, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Rtk1Up(valbase, val)
@@ -538,8 +538,8 @@ end
 -- ========
 -- UP LED2 RTK1 Down
 
-function Qmovha:GetUpled2Rtk1Dn(dpath, revert)
-    self:GetBit(42, dpath, revert)
+function Qmovha:GetUpled2Rtk1Dn(dpath, revert, base)
+    self:GetBit(42, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Rtk1Dn(valbase, val)
@@ -549,8 +549,8 @@ end
 -- ========
 -- UP LED2 RTK2 Up
 
-function Qmovha:GetUpled2Rtk2Up(dpath, revert)
-    self:GetBit(43, dpath, revert)
+function Qmovha:GetUpled2Rtk2Up(dpath, revert, base)
+    self:GetBit(43, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Rtk2Up(valbase, val)
@@ -560,8 +560,8 @@ end
 -- ========
 -- UP LED2 RTK2 Down
 
-function Qmovha:GetUpled2Rtk2Dn(dpath, revert)
-    self:GetBit(44, dpath, revert)
+function Qmovha:GetUpled2Rtk2Dn(dpath, revert, base)
+    self:GetBit(44, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Rtk2Dn(valbase, val)
@@ -571,8 +571,8 @@ end
 -- ========
 -- UP LED2 Gen1 Up
 
-function Qmovha:GetUpled2Gen1Up(dpath, revert)
-    self:GetBit(45, dpath, revert)
+function Qmovha:GetUpled2Gen1Up(dpath, revert, base)
+    self:GetBit(45, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Gen1Up(valbase, val)
@@ -582,8 +582,8 @@ end
 -- ========
 -- UP LED2 Gen1 Down
 
-function Qmovha:GetUpled2Gen1Dn(dpath, revert)
-    self:GetBit(46, dpath, revert)
+function Qmovha:GetUpled2Gen1Dn(dpath, revert, base)
+    self:GetBit(46, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Gen1Dn(valbase, val)
@@ -593,8 +593,8 @@ end
 -- ========
 -- UP LED2 Xfeed Up
 
-function Qmovha:GetUpled2XfeedUp(dpath, revert)
-    self:GetBit(47, dpath, revert)
+function Qmovha:GetUpled2XfeedUp(dpath, revert, base)
+    self:GetBit(47, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2XfeedUp(valbase, val)
@@ -604,8 +604,8 @@ end
 -- ========
 -- UP LED2 Xfeed Down
 
-function Qmovha:GetUpled2XfeedDn(dpath, revert)
-    self:GetBit(48, dpath, revert)
+function Qmovha:GetUpled2XfeedDn(dpath, revert, base)
+    self:GetBit(48, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2XfeedDn(valbase, val)
@@ -615,8 +615,8 @@ end
 -- ========
 -- UP LED2 Bat1 Up
 
-function Qmovha:GetUpled2Bat1Up(dpath, revert)
-    self:GetBit(49, dpath, revert)
+function Qmovha:GetUpled2Bat1Up(dpath, revert, base)
+    self:GetBit(49, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Bat1Up(valbase, val)
@@ -626,8 +626,8 @@ end
 -- ========
 -- UP LED2 Bat1 Down
 
-function Qmovha:GetUpled2Bat1Dn(dpath, revert)
-    self:GetBit(50, dpath, revert)
+function Qmovha:GetUpled2Bat1Dn(dpath, revert, base)
+    self:GetBit(50, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Bat1Dn(valbase, val)
@@ -637,8 +637,8 @@ end
 -- ========
 -- UP LED2 Bat2 Up
 
-function Qmovha:GetUpled2Bat2Up(dpath, revert)
-    self:GetBit(51, dpath, revert)
+function Qmovha:GetUpled2Bat2Up(dpath, revert, base)
+    self:GetBit(51, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Bat2Up(valbase, val)
@@ -648,8 +648,8 @@ end
 -- ========
 -- UP LED2 Bat2 Down
 
-function Qmovha:GetUpled2Bat2Dn(dpath, revert)
-    self:GetBit(52, dpath, revert)
+function Qmovha:GetUpled2Bat2Dn(dpath, revert, base)
+    self:GetBit(52, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Bat2Dn(valbase, val)
@@ -659,8 +659,8 @@ end
 -- ========
 -- UP LED2 Ext Up
 
-function Qmovha:GetUpled2ExtUp(dpath, revert)
-    self:GetBit(53, dpath, revert)
+function Qmovha:GetUpled2ExtUp(dpath, revert, base)
+    self:GetBit(53, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2ExtUp(valbase, val)
@@ -670,8 +670,8 @@ end
 -- ========
 -- UP LED2 Ext Down
 
-function Qmovha:GetUpled2ExtDn(dpath, revert)
-    self:GetBit(54, dpath, revert)
+function Qmovha:GetUpled2ExtDn(dpath, revert, base)
+    self:GetBit(54, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2ExtDn(valbase, val)
@@ -681,8 +681,8 @@ end
 -- ========
 -- UP LED2 Gen2 Up
 
-function Qmovha:GetUpled2Gen2Up(dpath, revert)
-    self:GetBit(55, dpath, revert)
+function Qmovha:GetUpled2Gen2Up(dpath, revert, base)
+    self:GetBit(55, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Gen2Up(valbase, val)
@@ -692,8 +692,8 @@ end
 -- ========
 -- UP LED2 Gen2 Down
 
-function Qmovha:GetUpled2Gen2Dn(dpath, revert)
-    self:GetBit(56, dpath, revert)
+function Qmovha:GetUpled2Gen2Dn(dpath, revert, base)
+    self:GetBit(56, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Gen2Dn(valbase, val)
@@ -703,8 +703,8 @@ end
 -- ========
 -- UP LED2 Eng1AG1
 
-function Qmovha:GetUpled2Eng1ag1(dpath, revert)
-    self:GetBit(57, dpath, revert)
+function Qmovha:GetUpled2Eng1ag1(dpath, revert, base)
+    self:GetBit(57, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Eng1ag1(valbase, val)
@@ -714,8 +714,8 @@ end
 -- ========
 -- UP LED2 Eng1AG2
 
-function Qmovha:GetUpled2Eng1ag2(dpath, revert)
-    self:GetBit(58, dpath, revert)
+function Qmovha:GetUpled2Eng1ag2(dpath, revert, base)
+    self:GetBit(58, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Eng1ag2(valbase, val)
@@ -725,8 +725,8 @@ end
 -- ========
 -- UP LED2 Eng2AG1
 
-function Qmovha:GetUpled2Eng2ag1(dpath, revert)
-    self:GetBit(59, dpath, revert)
+function Qmovha:GetUpled2Eng2ag1(dpath, revert, base)
+    self:GetBit(59, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Eng2ag1(valbase, val)
@@ -736,8 +736,8 @@ end
 -- ========
 -- UP LED2 Eng2AG2
 
-function Qmovha:GetUpled2Eng2ag2(dpath, revert)
-    self:GetBit(60, dpath, revert)
+function Qmovha:GetUpled2Eng2ag2(dpath, revert, base)
+    self:GetBit(60, dpath, revert, base)
 end
 
 function Qmovha:SetUpled2Eng2ag2(valbase, val)

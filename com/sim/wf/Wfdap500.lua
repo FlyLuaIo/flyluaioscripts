@@ -56,8 +56,8 @@ end
 -- ========
 -- leds apr
 
-function Wfdap500:GetApr(dpath)
-	self:GetBit(1, dpath)
+function Wfdap500:GetApr(dpath, revert, base)
+	self:GetBit(1, dpath, revert, base)
 end
 
 function Wfdap500:SetApr(valbase, val)
@@ -67,8 +67,8 @@ end
 -- ========
 -- leds nav
 
-function Wfdap500:GetNav(dpath)
-	self:GetBit(2, dpath)
+function Wfdap500:GetNav(dpath, revert, base)
+	self:GetBit(2, dpath, revert, base)
 end
 
 function Wfdap500:SetNav(valbase, val)
@@ -78,8 +78,8 @@ end
 -- ========
 -- leds trk
 
-function Wfdap500:GetTrk(dpath)
-	self:GetBit(3, dpath)
+function Wfdap500:GetTrk(dpath, revert, base)
+	self:GetBit(3, dpath, revert, base)
 end
 
 function Wfdap500:SetTrk(valbase, val)
@@ -89,8 +89,8 @@ end
 -- ========
 -- leds hdg
 
-function Wfdap500:GetHdg(dpath)
-	self:GetBit(4, dpath)
+function Wfdap500:GetHdg(dpath, revert, base)
+	self:GetBit(4, dpath, revert, base)
 end
 
 function Wfdap500:SetHdg(valbase, val)
@@ -100,8 +100,8 @@ end
 -- ========
 -- leds ap
 
-function Wfdap500:GetAp(dpath)
-	self:GetBit(5, dpath)
+function Wfdap500:GetAp(dpath, revert, base)
+	self:GetBit(5, dpath, revert, base)
 end
 
 function Wfdap500:SetAp(valbase, val)
@@ -111,8 +111,8 @@ end
 -- ========
 -- leds fd
 
-function Wfdap500:GetFd(dpath)
-	self:GetBit(6, dpath)
+function Wfdap500:GetFd(dpath, revert, base)
+	self:GetBit(6, dpath, revert, base)
 end
 
 function Wfdap500:SetFd(valbase, val)
@@ -122,8 +122,8 @@ end
 -- ========
 -- leds lvl
 
-function Wfdap500:GetLvl(dpath)
-	self:GetBit(7, dpath)
+function Wfdap500:GetLvl(dpath, revert, base)
+	self:GetBit(7, dpath, revert, base)
 end
 
 function Wfdap500:SetLvl(valbase, val)
@@ -133,8 +133,8 @@ end
 -- ========
 -- leds yd
 
-function Wfdap500:GetYd(dpath)
-	self:GetBit(8, dpath)
+function Wfdap500:GetYd(dpath, revert, base)
+	self:GetBit(8, dpath, revert, base)
 end
 
 function Wfdap500:SetYd(valbase, val)
@@ -144,8 +144,8 @@ end
 -- ========
 -- leds ias
 
-function Wfdap500:GetIas(dpath)
-	self:GetBit(9, dpath)
+function Wfdap500:GetIas(dpath, revert, base)
+	self:GetBit(9, dpath, revert, base)
 end
 
 function Wfdap500:SetIas(valbase, val)
@@ -155,8 +155,8 @@ end
 -- ========
 -- leds vnav
 
-function Wfdap500:GetVnav(dpath)
-	self:GetBit(10, dpath)
+function Wfdap500:GetVnav(dpath, revert, base)
+	self:GetBit(10, dpath, revert, base)
 end
 
 function Wfdap500:SetVnav(valbase, val)
@@ -166,8 +166,8 @@ end
 -- ========
 -- leds vs
 
-function Wfdap500:GetVs(dpath)
-	self:GetBit(11, dpath)
+function Wfdap500:GetVs(dpath, revert, base)
+	self:GetBit(11, dpath, revert, base)
 end
 
 function Wfdap500:SetVs(valbase, val)
@@ -177,8 +177,8 @@ end
 -- ========
 -- leds alt
 
-function Wfdap500:GetAlt(dpath)
-	self:GetBit(12, dpath)
+function Wfdap500:GetAlt(dpath, revert, base)
+	self:GetBit(12, dpath, revert, base)
 end
 
 function Wfdap500:SetAlt(valbase, val)

@@ -30,8 +30,8 @@ end
 -- =========================Leds
 -- ========
 -- Leds Menu
-function Qcdua:GetMenu(dpath)
-    self:GetBit(0, dpath)
+function Qcdua:GetMenu(dpath, revert, base)
+    self:GetBit(0, dpath, revert, base)
 end
 
 function Qcdua:SetMenu(valbase, val)
@@ -39,8 +39,8 @@ function Qcdua:SetMenu(valbase, val)
 end
 -- ========
 -- Leds Fail
-function Qcdua:GetFail(dpath)
-    self:GetBit(2, dpath)
+function Qcdua:GetFail(dpath, revert, base)
+    self:GetBit(2, dpath, revert, base)
 end
 
 function Qcdua:SetFail(valbase, val)
@@ -48,8 +48,8 @@ function Qcdua:SetFail(valbase, val)
 end
 -- ========
 -- Leds Fmgc
-function Qcdua:GetFmgc(dpath)
-    self:GetBit(3, dpath)
+function Qcdua:GetFmgc(dpath, revert, base)
+    self:GetBit(3, dpath, revert, base)
 end
 
 function Qcdua:SetFmgc(valbase, val)
@@ -58,8 +58,8 @@ end
 
 -- ========
 -- Leds Fm1
-function Qcdua:GetFm1(dpath)
-    self:GetBit(8, dpath)
+function Qcdua:GetFm1(dpath, revert, base)
+    self:GetBit(8, dpath, revert, base)
 end
 
 function Qcdua:SetFm1(valbase, val)
@@ -68,8 +68,8 @@ end
 
 -- ========
 -- Leds Ind
-function Qcdua:GetInd(dpath)
-    self:GetBit(9, dpath)
+function Qcdua:GetInd(dpath, revert, base)
+    self:GetBit(9, dpath, revert, base)
 end
 
 function Qcdua:SetInd(valbase, val)
@@ -78,8 +78,8 @@ end
 
 -- ========
 -- Leds Rdy
-function Qcdua:GetRdy(dpath)
-    self:GetBit(10, dpath)
+function Qcdua:GetRdy(dpath, revert, base)
+    self:GetBit(10, dpath, revert, base)
 end
 
 function Qcdua:SetRdy(valbase, val)
@@ -88,8 +88,8 @@ end
 
 -- ========
 -- Leds Fm2
-function Qcdua:GetFm2(dpath)
-    self:GetBit(12, dpath)
+function Qcdua:GetFm2(dpath, revert, base)
+    self:GetBit(12, dpath, revert, base)
 end
 
 function Qcdua:SetFm2(valbase, val)

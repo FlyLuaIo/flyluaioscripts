@@ -231,6 +231,8 @@ end
 -- Bits Get/Set
 -- @idx: (number) Index in Bits array
 -- @dpath: (string) Dataref path string
+-- @revert: (boolean, optional) invert bool threshold result
+-- @base: (number, optional) threshold for ilua_bool_ternary (default 0)
 -- No return value.
 function Qmdev:GetBit(idx, dpath, revert, base)
     self.Bits[idx + 1] = iDataRef:New(dpath, nil, revert, base)

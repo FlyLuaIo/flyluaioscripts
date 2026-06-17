@@ -75,8 +75,8 @@ end
 -- ========
 -- leds loc
 
-function Wffcuc:GetLoc(dpath)
-	self:GetBit(1, dpath)
+function Wffcuc:GetLoc(dpath, revert, base)
+	self:GetBit(1, dpath, revert, base)
 end
 
 function Wffcuc:SetLoc(valbase, val)
@@ -86,8 +86,8 @@ end
 -- ========
 -- leds ap1
 
-function Wffcuc:GetAp1(dpath)
-	self:GetBit(2, dpath)
+function Wffcuc:GetAp1(dpath, revert, base)
+	self:GetBit(2, dpath, revert, base)
 end
 
 function Wffcuc:SetAp1(valbase, val)
@@ -97,8 +97,8 @@ end
 -- ========
 -- leds ap2
 
-function Wffcuc:GetAp2(dpath)
-	self:GetBit(3, dpath)
+function Wffcuc:GetAp2(dpath, revert, base)
+	self:GetBit(3, dpath, revert, base)
 end
 
 function Wffcuc:SetAp2(valbase, val)
@@ -108,8 +108,8 @@ end
 -- ========
 -- leds athr
 
-function Wffcuc:GetAthr(dpath)
-	self:GetBit(4, dpath)
+function Wffcuc:GetAthr(dpath, revert, base)
+	self:GetBit(4, dpath, revert, base)
 end
 
 function Wffcuc:SetAthr(valbase, val)
@@ -119,8 +119,8 @@ end
 -- ========
 -- leds exped
 
-function Wffcuc:GetExped(dpath)
-	self:GetBit(5, dpath)
+function Wffcuc:GetExped(dpath, revert, base)
+	self:GetBit(5, dpath, revert, base)
 end
 
 function Wffcuc:SetExped(valbase, val)
@@ -130,8 +130,8 @@ end
 -- ========
 -- leds appr
 
-function Wffcuc:GetAppr(dpath)
-	self:GetBit(6, dpath)
+function Wffcuc:GetAppr(dpath, revert, base)
+	self:GetBit(6, dpath, revert, base)
 end
 
 function Wffcuc:SetAppr(valbase, val)
@@ -141,8 +141,8 @@ end
 -- ========
 -- leds SpdMang
 
-function Wffcuc:GetSpdmang(dpath)
-	self:GetBit(7, dpath)
+function Wffcuc:GetSpdmang(dpath, revert, base)
+	self:GetBit(7, dpath, revert, base)
 end
 
 function Wffcuc:SetSpdmang(valbase, val)
@@ -152,8 +152,8 @@ end
 -- ========
 -- leds SpdDash
 
-function Wffcuc:GetSpddash(dpath)
-	self:GetBit(8, dpath)
+function Wffcuc:GetSpddash(dpath, revert, base)
+	self:GetBit(8, dpath, revert, base)
 end
 
 function Wffcuc:SetSpddash(valbase, val)
@@ -163,8 +163,8 @@ end
 -- ========
 -- leds HdgMang
 
-function Wffcuc:GetHdgmang(dpath)
-	self:GetBit(9, dpath)
+function Wffcuc:GetHdgmang(dpath, revert, base)
+	self:GetBit(9, dpath, revert, base)
 end
 
 function Wffcuc:SetHdgmang(valbase, val)
@@ -174,8 +174,8 @@ end
 -- ========
 -- leds HdgDash
 
-function Wffcuc:GetHdgdash(dpath)
-	self:GetBit(10, dpath)
+function Wffcuc:GetHdgdash(dpath, revert, base)
+	self:GetBit(10, dpath, revert, base)
 end
 
 function Wffcuc:SetHdgdash(valbase, val)
@@ -185,8 +185,8 @@ end
 -- ========
 -- leds AltMang
 
-function Wffcuc:GetAltmang(dpath)
-	self:GetBit(11, dpath)
+function Wffcuc:GetAltmang(dpath, revert, base)
+	self:GetBit(11, dpath, revert, base)
 end
 
 function Wffcuc:SetAltmang(valbase, val)
@@ -196,8 +196,8 @@ end
 -- ========
 -- leds VsDash
 
-function Wffcuc:GetVsdash(dpath)
-	self:GetBit(12, dpath)
+function Wffcuc:GetVsdash(dpath, revert, base)
+	self:GetBit(12, dpath, revert, base)
 end
 
 function Wffcuc:SetVsdash(valbase, val)
@@ -207,8 +207,8 @@ end
 -- ========
 -- leds SpdMach
 
-function Wffcuc:GetSpdmach(dpath)
-	self:GetBit(13, dpath)
+function Wffcuc:GetSpdmach(dpath, revert, base)
+	self:GetBit(13, dpath, revert, base)
 end
 
 function Wffcuc:SetSpdmach(valbase, val)
@@ -218,8 +218,8 @@ end
 -- ========
 -- leds HdgTrk
 
-function Wffcuc:GetHdgtrk(dpath)
-	self:GetBit(14, dpath)
+function Wffcuc:GetHdgtrk(dpath, revert, base)
+	self:GetBit(14, dpath, revert, base)
 end
 
 function Wffcuc:SetHdgtrk(valbase, val)
@@ -229,8 +229,8 @@ end
 -- ========
 -- leds test
 
-function Wffcuc:GetTest(dpath)
-	self:GetBit(15, dpath)
+function Wffcuc:GetTest(dpath, revert, base)
+	self:GetBit(15, dpath, revert, base)
 end
 
 function Wffcuc:SetTest(valbase, val)
@@ -240,8 +240,8 @@ end
 -- ========
 -- leds resv
 
-function Wffcuc:GetResv(dpath)
-	self:GetBit(16, dpath)
+function Wffcuc:GetResv(dpath, revert, base)
+	self:GetBit(16, dpath, revert, base)
 end
 
 function Wffcuc:SetResv(valbase, val)
@@ -251,8 +251,8 @@ end
 -- ========
 -- leds power
 
-function Wffcuc:GetPower(dpath)
-	self:GetBit(17, dpath)
+function Wffcuc:GetPower(dpath, revert, base)
+	self:GetBit(17, dpath, revert, base)
 end
 
 function Wffcuc:SetPower(valbase, val)

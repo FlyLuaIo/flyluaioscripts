@@ -44,8 +44,8 @@ end
 --- =========================Leds
 -- ========
 -- Leds Msg
-function Qcdub:GetMsg(dpath)
-    self:GetBit(0, dpath)
+function Qcdub:GetMsg(dpath, revert, base)
+    self:GetBit(0, dpath, revert, base)
 end
 
 function Qcdub:SetMsg(valbase, val)
@@ -54,8 +54,8 @@ end
 
 -- ========
 -- Leds Ofst
-function Qcdub:GetOfst(dpath)
-    self:GetBit(1, dpath)
+function Qcdub:GetOfst(dpath, revert, base)
+    self:GetBit(1, dpath, revert, base)
 end
 
 function Qcdub:SetOfst(valbase, val)
@@ -64,8 +64,8 @@ end
 
 -- ========
 -- Leds Call
-function Qcdub:GetCall(dpath)
-    self:GetBit(2, dpath)
+function Qcdub:GetCall(dpath, revert, base)
+    self:GetBit(2, dpath, revert, base)
 end
 
 function Qcdub:SetCall(valbase, val)
@@ -74,8 +74,8 @@ end
 
 -- ========
 -- Leds Fail
-function Qcdub:GetFail(dpath)
-    self:GetBit(3, dpath)
+function Qcdub:GetFail(dpath, revert, base)
+    self:GetBit(3, dpath, revert, base)
 end
 
 function Qcdub:SetFail(valbase, val)
@@ -83,8 +83,8 @@ function Qcdub:SetFail(valbase, val)
 end
 -- ========
 -- Leds Exec
-function Qcdub:GetExec(dpath)
-    self:GetBit(4, dpath)
+function Qcdub:GetExec(dpath, revert, base)
+    self:GetBit(4, dpath, revert, base)
 end
 
 function Qcdub:SetExec(valbase, val)

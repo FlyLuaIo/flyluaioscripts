@@ -82,8 +82,8 @@ end
 -- =========================Leds
 -- ========
 -- Leds Appr
-function Qfcu:GetAppr(dpath)
-    self:GetBit(2, dpath)
+function Qfcu:GetAppr(dpath, revert, base)
+    self:GetBit(2, dpath, revert, base)
 end
 
 function Qfcu:SetAppr(valbase, val)
@@ -92,8 +92,8 @@ end
 
 -- ========
 -- Leds Exped
-function Qfcu:GetExped(dpath)
-    self:GetBit(3, dpath)
+function Qfcu:GetExped(dpath, revert, base)
+    self:GetBit(3, dpath, revert, base)
 end
 
 function Qfcu:SetExped(valbase, val)
@@ -102,8 +102,8 @@ end
 
 -- ========
 -- Leds Athr
-function Qfcu:GetAthr(dpath)
-    self:GetBit(4, dpath)
+function Qfcu:GetAthr(dpath, revert, base)
+    self:GetBit(4, dpath, revert, base)
 end
 
 function Qfcu:SetAthr(valbase, val)
@@ -112,8 +112,8 @@ end
 
 -- ========
 -- Leds Ap2
-function Qfcu:GetAp2(dpath)
-    self:GetBit(5, dpath)
+function Qfcu:GetAp2(dpath, revert, base)
+    self:GetBit(5, dpath, revert, base)
 end
 
 function Qfcu:SetAp2(valbase, val)
@@ -122,8 +122,8 @@ end
 
 -- ========
 -- Leds Ap1
-function Qfcu:GetAp1(dpath)
-    self:GetBit(6, dpath)
+function Qfcu:GetAp1(dpath, revert, base)
+    self:GetBit(6, dpath, revert, base)
 end
 
 function Qfcu:SetAp1(valbase, val)
@@ -132,8 +132,8 @@ end
 
 -- ========
 -- Leds Loc
-function Qfcu:GetLoc(dpath)
-    self:GetBit(7, dpath)
+function Qfcu:GetLoc(dpath, revert, base)
+    self:GetBit(7, dpath, revert, base)
 end
 
 function Qfcu:SetLoc(valbase, val)
@@ -164,8 +164,8 @@ end
 
 -- ======== L EFIS
 -- Leds LCstr
-function Qfcu:GetLCstr(dpath)
-    self:GetBit(24, dpath)
+function Qfcu:GetLCstr(dpath, revert, base)
+    self:GetBit(24, dpath, revert, base)
 end
 
 function Qfcu:SetLCstr(valbase, val)
@@ -174,8 +174,8 @@ end
 
 -- ======== L EFIS
 -- Leds LWpt
-function Qfcu:GetLWpt(dpath)
-    self:GetBit(25, dpath)
+function Qfcu:GetLWpt(dpath, revert, base)
+    self:GetBit(25, dpath, revert, base)
 end
 
 function Qfcu:SetLWpt(valbase, val)
@@ -184,8 +184,8 @@ end
 
 -- ======== L EFIS
 -- Leds LVord
-function Qfcu:GetLVord(dpath)
-    self:GetBit(26, dpath)
+function Qfcu:GetLVord(dpath, revert, base)
+    self:GetBit(26, dpath, revert, base)
 end
 
 function Qfcu:SetLVord(valbase, val)
@@ -194,8 +194,8 @@ end
 
 -- ======== L EFIS
 -- Leds LNdb
-function Qfcu:GetLNdb(dpath)
-    self:GetBit(27, dpath)
+function Qfcu:GetLNdb(dpath, revert, base)
+    self:GetBit(27, dpath, revert, base)
 end
 
 function Qfcu:SetLNdb(valbase, val)
@@ -204,8 +204,8 @@ end
 
 -- ======== L EFIS
 -- Leds LArpt
-function Qfcu:GetLArpt(dpath)
-    self:GetBit(28, dpath)
+function Qfcu:GetLArpt(dpath, revert, base)
+    self:GetBit(28, dpath, revert, base)
 end
 
 function Qfcu:SetLArpt(valbase, val)
@@ -214,8 +214,8 @@ end
 
 -- ======== L EFIS
 -- Leds LFd
-function Qfcu:GetLFd(dpath)
-    self:GetBit(29, dpath)
+function Qfcu:GetLFd(dpath, revert, base)
+    self:GetBit(29, dpath, revert, base)
 end
 
 function Qfcu:SetLFd(valbase, val)
@@ -224,8 +224,8 @@ end
 
 -- ======== L EFIS
 -- Leds LIls
-function Qfcu:GetLIls(dpath)
-    self:GetBit(30, dpath)
+function Qfcu:GetLIls(dpath, revert, base)
+    self:GetBit(30, dpath, revert, base)
 end
 
 function Qfcu:SetLIls(valbase, val)
@@ -273,8 +273,8 @@ end
 
 -- ======== R EFIS
 -- Leds RCstr
-function Qfcu:GetRCstr(dpath)
-    self:GetBit(40, dpath)
+function Qfcu:GetRCstr(dpath, revert, base)
+    self:GetBit(40, dpath, revert, base)
 end
 
 function Qfcu:SetRCstr(valbase, val)
@@ -283,8 +283,8 @@ end
 
 -- ======== R EFIS
 -- Leds RWpt
-function Qfcu:GetRWpt(dpath)
-    self:GetBit(41, dpath)
+function Qfcu:GetRWpt(dpath, revert, base)
+    self:GetBit(41, dpath, revert, base)
 end
 
 function Qfcu:SetRWpt(valbase, val)
@@ -293,8 +293,8 @@ end
 
 -- ======== R EFIS
 -- Leds RVord
-function Qfcu:GetRVord(dpath)
-    self:GetBit(42, dpath)
+function Qfcu:GetRVord(dpath, revert, base)
+    self:GetBit(42, dpath, revert, base)
 end
 
 function Qfcu:SetRVord(valbase, val)
@@ -303,8 +303,8 @@ end
 
 -- ======== R EFIS
 -- Leds RNdb
-function Qfcu:GetRNdb(dpath)
-    self:GetBit(43, dpath)
+function Qfcu:GetRNdb(dpath, revert, base)
+    self:GetBit(43, dpath, revert, base)
 end
 
 function Qfcu:SetRNdb(valbase, val)
@@ -313,8 +313,8 @@ end
 
 -- ======== R EFIS
 -- Leds RArpt
-function Qfcu:GetRArpt(dpath)
-    self:GetBit(44, dpath)
+function Qfcu:GetRArpt(dpath, revert, base)
+    self:GetBit(44, dpath, revert, base)
 end
 
 function Qfcu:SetRArpt(valbase, val)
@@ -323,8 +323,8 @@ end
 
 -- ======== R EFIS
 -- Leds RFd
-function Qfcu:GetRFd(dpath)
-    self:GetBit(45, dpath)
+function Qfcu:GetRFd(dpath, revert, base)
+    self:GetBit(45, dpath, revert, base)
 end
 
 function Qfcu:SetRFd(valbase, val)
@@ -333,8 +333,8 @@ end
 
 -- ======== R EFIS
 -- Leds RIls
-function Qfcu:GetRIls(dpath)
-    self:GetBit(46, dpath)
+function Qfcu:GetRIls(dpath, revert, base)
+    self:GetBit(46, dpath, revert, base)
 end
 
 function Qfcu:SetRIls(valbase, val)

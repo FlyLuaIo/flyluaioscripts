@@ -63,8 +63,8 @@ end
 -- ========
 -- leds AP_ap
 
-function Stkmulti:GetAp(dpath)
-	self:GetBit(1, dpath)
+function Stkmulti:GetAp(dpath, revert, base)
+	self:GetBit(1, dpath, revert, base)
 end
 
 function Stkmulti:SetAp(valbase, val)
@@ -74,8 +74,8 @@ end
 -- ========
 -- leds AP_hdg
 
-function Stkmulti:GetHdg(dpath)
-	self:GetBit(2, dpath)
+function Stkmulti:GetHdg(dpath, revert, base)
+	self:GetBit(2, dpath, revert, base)
 end
 
 function Stkmulti:SetHdg(valbase, val)
@@ -85,8 +85,8 @@ end
 -- ========
 -- leds AP_nav
 
-function Stkmulti:GetNav(dpath)
-	self:GetBit(3, dpath)
+function Stkmulti:GetNav(dpath, revert, base)
+	self:GetBit(3, dpath, revert, base)
 end
 
 function Stkmulti:SetNav(valbase, val)
@@ -96,8 +96,8 @@ end
 -- ========
 -- leds AP_ias
 
-function Stkmulti:GetIas(dpath)
-	self:GetBit(4, dpath)
+function Stkmulti:GetIas(dpath, revert, base)
+	self:GetBit(4, dpath, revert, base)
 end
 
 function Stkmulti:SetIas(valbase, val)
@@ -107,8 +107,8 @@ end
 -- ========
 -- leds AP_alt
 
-function Stkmulti:GetAlt(dpath)
-	self:GetBit(5, dpath)
+function Stkmulti:GetAlt(dpath, revert, base)
+	self:GetBit(5, dpath, revert, base)
 end
 
 function Stkmulti:SetAlt(valbase, val)
@@ -118,8 +118,8 @@ end
 -- ========
 -- leds AP_vs
 
-function Stkmulti:GetVs(dpath)
-	self:GetBit(6, dpath)
+function Stkmulti:GetVs(dpath, revert, base)
+	self:GetBit(6, dpath, revert, base)
 end
 
 function Stkmulti:SetVs(valbase, val)
@@ -129,8 +129,8 @@ end
 -- ========
 -- leds AP_apr
 
-function Stkmulti:GetApr(dpath)
-	self:GetBit(7, dpath)
+function Stkmulti:GetApr(dpath, revert, base)
+	self:GetBit(7, dpath, revert, base)
 end
 
 function Stkmulti:SetApr(valbase, val)
@@ -140,8 +140,8 @@ end
 -- ========
 -- leds AP_rev
 
-function Stkmulti:GetRev(dpath)
-	self:GetBit(8, dpath)
+function Stkmulti:GetRev(dpath, revert, base)
+	self:GetBit(8, dpath, revert, base)
 end
 
 function Stkmulti:SetRev(valbase, val)

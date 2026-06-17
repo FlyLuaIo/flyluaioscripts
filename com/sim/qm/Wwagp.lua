@@ -218,8 +218,8 @@ end
 
 -- ========
 -- LEDS ULOCKL
-function Wwagp:GetUlockL(dpath)
-	self:GetBit(self.LEDS_ULOCKL, dpath)
+function Wwagp:GetUlockL(dpath, revert, base)
+	self:GetBit(self.LEDS_ULOCKL, dpath, revert, base)
 end
 
 function Wwagp:SetUlockL(valbase, val)
@@ -228,8 +228,8 @@ end
 
 -- ========
 -- LEDS ULOCKN
-function Wwagp:GetUlockN(dpath)
-	self:GetBit(self.LEDS_ULOCKN, dpath)
+function Wwagp:GetUlockN(dpath, revert, base)
+	self:GetBit(self.LEDS_ULOCKN, dpath, revert, base)
 end
 
 function Wwagp:SetUlockN(valbase, val)
@@ -238,8 +238,8 @@ end
 
 -- ========
 -- LEDS ULOCKR
-function Wwagp:GetUlockR(dpath)
-	self:GetBit(self.LEDS_ULOCKR, dpath)
+function Wwagp:GetUlockR(dpath, revert, base)
+	self:GetBit(self.LEDS_ULOCKR, dpath, revert, base)
 end
 
 function Wwagp:SetUlockR(valbase, val)
@@ -248,8 +248,8 @@ end
 
 -- ========
 -- LEDS BRAKEHOT
-function Wwagp:GetBrakeHot(dpath)
-	self:GetBit(self.LEDS_BRAKEHOT, dpath)
+function Wwagp:GetBrakeHot(dpath, revert, base)
+	self:GetBit(self.LEDS_BRAKEHOT, dpath, revert, base)
 end
 
 function Wwagp:SetBrakeHot(valbase, val)
@@ -258,8 +258,8 @@ end
 
 -- ========
 -- LEDS LOCKL
-function Wwagp:GetLockL(dpath)
-	self:GetBit(self.LEDS_LOCKL, dpath)
+function Wwagp:GetLockL(dpath, revert, base)
+	self:GetBit(self.LEDS_LOCKL, dpath, revert, base)
 end
 
 function Wwagp:SetLockL(valbase, val)
@@ -268,8 +268,8 @@ end
 
 -- ========
 -- LEDS LOCKN
-function Wwagp:GetLockN(dpath)
-	self:GetBit(self.LEDS_LOCKN, dpath)
+function Wwagp:GetLockN(dpath, revert, base)
+	self:GetBit(self.LEDS_LOCKN, dpath, revert, base)
 end
 
 function Wwagp:SetLockN(valbase, val)
@@ -278,8 +278,8 @@ end
 
 -- ========
 -- LEDS LOCKR
-function Wwagp:GetLockR(dpath)
-	self:GetBit(self.LEDS_LOCKR, dpath)
+function Wwagp:GetLockR(dpath, revert, base)
+	self:GetBit(self.LEDS_LOCKR, dpath, revert, base)
 end
 
 function Wwagp:SetLockR(valbase, val)
@@ -288,8 +288,8 @@ end
 
 -- ========
 -- LEDS BRAKEON
-function Wwagp:GetBrakeOn(dpath)
-	self:GetBit(self.LEDS_BRAKEON, dpath)
+function Wwagp:GetBrakeOn(dpath, revert, base)
+	self:GetBit(self.LEDS_BRAKEON, dpath, revert, base)
 end
 
 function Wwagp:SetBrakeOn(valbase, val)
@@ -298,8 +298,8 @@ end
 
 -- ========
 -- LEDS LOWD
-function Wwagp:GetLowD(dpath)
-	self:GetBit(self.LEDS_LOWD, dpath)
+function Wwagp:GetLowD(dpath, revert, base)
+	self:GetBit(self.LEDS_LOWD, dpath, revert, base)
 end
 
 function Wwagp:SetLowD(valbase, val)
@@ -308,8 +308,8 @@ end
 
 -- ========
 -- LEDS MEDD
-function Wwagp:GetMedD(dpath)
-	self:GetBit(self.LEDS_MEDD, dpath)
+function Wwagp:GetMedD(dpath, revert, base)
+	self:GetBit(self.LEDS_MEDD, dpath, revert, base)
 end
 
 function Wwagp:SetMedD(valbase, val)
@@ -318,8 +318,8 @@ end
 
 -- ========
 -- LEDS MAXD
-function Wwagp:GetMaxD(dpath)
-	self:GetBit(self.LEDS_MAXD, dpath)
+function Wwagp:GetMaxD(dpath, revert, base)
+	self:GetBit(self.LEDS_MAXD, dpath, revert, base)
 end
 
 function Wwagp:SetMaxD(valbase, val)
@@ -328,8 +328,8 @@ end
 
 -- ========
 -- LEDS LOW
-function Wwagp:GetLow(dpath)
-	self:GetBit(self.LEDS_LOW, dpath)
+function Wwagp:GetLow(dpath, revert, base)
+	self:GetBit(self.LEDS_LOW, dpath, revert, base)
 end
 
 function Wwagp:SetLow(valbase, val)
@@ -338,8 +338,8 @@ end
 
 -- ========
 -- LEDS MED
-function Wwagp:GetMed(dpath)
-	self:GetBit(self.LEDS_MED, dpath)
+function Wwagp:GetMed(dpath, revert, base)
+	self:GetBit(self.LEDS_MED, dpath, revert, base)
 end
 
 function Wwagp:SetMed(valbase, val)
@@ -348,8 +348,8 @@ end
 
 -- ========
 -- LEDS MAX
-function Wwagp:GetMax(dpath)
-	self:GetBit(self.LEDS_MAX, dpath)
+function Wwagp:GetMax(dpath, revert, base)
+	self:GetBit(self.LEDS_MAX, dpath, revert, base)
 end
 
 function Wwagp:SetMax(valbase, val)
@@ -358,8 +358,8 @@ end
 
 -- ========
 -- LEDS TERR
-function Wwagp:GetTerr(dpath)
-	self:GetBit(self.LEDS_TERR, dpath)
+function Wwagp:GetTerr(dpath, revert, base)
+	self:GetBit(self.LEDS_TERR, dpath, revert, base)
 end
 
 function Wwagp:SetTerr(valbase, val)
@@ -368,8 +368,8 @@ end
 
 -- ========
 -- LEDS LEVER
-function Wwagp:GetLever(dpath)
-	self:GetBit(self.LEDS_LEVER, dpath)
+function Wwagp:GetLever(dpath, revert, base)
+	self:GetBit(self.LEDS_LEVER, dpath, revert, base)
 end
 
 function Wwagp:SetLever(valbase, val)

@@ -67,8 +67,8 @@ end
 -- ========
 -- LED AP_hdg
 
-function Hcbravo:GetHdg(dpath)
-	self:GetBit(1, dpath)
+function Hcbravo:GetHdg(dpath, revert, base)
+	self:GetBit(1, dpath, revert, base)
 end
 
 function Hcbravo:SetHdg(valbase, val)
@@ -78,8 +78,8 @@ end
 -- ========
 -- LED AP_nav
 
-function Hcbravo:GetNav(dpath)
-	self:GetBit(2, dpath)
+function Hcbravo:GetNav(dpath, revert, base)
+	self:GetBit(2, dpath, revert, base)
 end
 
 function Hcbravo:SetNav(valbase, val)
@@ -89,8 +89,8 @@ end
 -- ========
 -- LED AP_apr
 
-function Hcbravo:GetApr(dpath)
-	self:GetBit(3, dpath)
+function Hcbravo:GetApr(dpath, revert, base)
+	self:GetBit(3, dpath, revert, base)
 end
 
 function Hcbravo:SetApr(valbase, val)
@@ -100,8 +100,8 @@ end
 -- ========
 -- LED AP_rev
 
-function Hcbravo:GetRev(dpath)
-	self:GetBit(4, dpath)
+function Hcbravo:GetRev(dpath, revert, base)
+	self:GetBit(4, dpath, revert, base)
 end
 
 function Hcbravo:SetRev(valbase, val)
@@ -111,8 +111,8 @@ end
 -- ========
 -- LED AP_alt
 
-function Hcbravo:GetAlt(dpath)
-	self:GetBit(5, dpath)
+function Hcbravo:GetAlt(dpath, revert, base)
+	self:GetBit(5, dpath, revert, base)
 end
 
 function Hcbravo:SetAlt(valbase, val)
@@ -122,8 +122,8 @@ end
 -- ========
 -- LED AP_vs
 
-function Hcbravo:GetVs(dpath)
-	self:GetBit(6, dpath)
+function Hcbravo:GetVs(dpath, revert, base)
+	self:GetBit(6, dpath, revert, base)
 end
 
 function Hcbravo:SetVs(valbase, val)
@@ -133,8 +133,8 @@ end
 -- ========
 -- LED AP_ias
 
-function Hcbravo:GetIas(dpath)
-	self:GetBit(7, dpath)
+function Hcbravo:GetIas(dpath, revert, base)
+	self:GetBit(7, dpath, revert, base)
 end
 
 function Hcbravo:SetIas(valbase, val)
@@ -144,8 +144,8 @@ end
 -- ========
 -- LED AP_autopilot
 
-function Hcbravo:GetAutopilot(dpath)
-	self:GetBit(8, dpath)
+function Hcbravo:GetAutopilot(dpath, revert, base)
+	self:GetBit(8, dpath, revert, base)
 end
 
 function Hcbravo:SetAutopilot(valbase, val)
@@ -155,8 +155,8 @@ end
 -- ========
 -- LED Gear_LeftGreen
 
-function Hcbravo:GetLeftgreen(dpath)
-	self:GetBit(9, dpath)
+function Hcbravo:GetLeftgreen(dpath, revert, base)
+	self:GetBit(9, dpath, revert, base)
 end
 
 function Hcbravo:SetLeftgreen(valbase, val)
@@ -166,8 +166,8 @@ end
 -- ========
 -- LED Gear_LeftRed
 
-function Hcbravo:GetLeftred(dpath)
-	self:GetBit(10, dpath)
+function Hcbravo:GetLeftred(dpath, revert, base)
+	self:GetBit(10, dpath, revert, base)
 end
 
 function Hcbravo:SetLeftred(valbase, val)
@@ -177,8 +177,8 @@ end
 -- ========
 -- LED Gear_CenterGreen
 
-function Hcbravo:GetCentergreen(dpath)
-	self:GetBit(11, dpath)
+function Hcbravo:GetCentergreen(dpath, revert, base)
+	self:GetBit(11, dpath, revert, base)
 end
 
 function Hcbravo:SetCentergreen(valbase, val)
@@ -188,8 +188,8 @@ end
 -- ========
 -- LED Gear_CenterRed
 
-function Hcbravo:GetCenterred(dpath)
-	self:GetBit(12, dpath)
+function Hcbravo:GetCenterred(dpath, revert, base)
+	self:GetBit(12, dpath, revert, base)
 end
 
 function Hcbravo:SetCenterred(valbase, val)
@@ -199,8 +199,8 @@ end
 -- ========
 -- LED Gear_RightGreen
 
-function Hcbravo:GetRightgreen(dpath)
-	self:GetBit(13, dpath)
+function Hcbravo:GetRightgreen(dpath, revert, base)
+	self:GetBit(13, dpath, revert, base)
 end
 
 function Hcbravo:SetRightgreen(valbase, val)
@@ -210,8 +210,8 @@ end
 -- ========
 -- LED Gear_RightRed
 
-function Hcbravo:GetRightred(dpath)
-	self:GetBit(14, dpath)
+function Hcbravo:GetRightred(dpath, revert, base)
+	self:GetBit(14, dpath, revert, base)
 end
 
 function Hcbravo:SetRightred(valbase, val)
@@ -221,8 +221,8 @@ end
 -- ========
 -- LED Light_MasterWarn
 
-function Hcbravo:GetMasterwarn(dpath)
-	self:GetBit(15, dpath)
+function Hcbravo:GetMasterwarn(dpath, revert, base)
+	self:GetBit(15, dpath, revert, base)
 end
 
 function Hcbravo:SetMasterwarn(valbase, val)
@@ -232,8 +232,8 @@ end
 -- ========
 -- LED Light_EngineFire
 
-function Hcbravo:GetEnginefire(dpath)
-	self:GetBit(16, dpath)
+function Hcbravo:GetEnginefire(dpath, revert, base)
+	self:GetBit(16, dpath, revert, base)
 end
 
 function Hcbravo:SetEnginefire(valbase, val)
@@ -243,8 +243,8 @@ end
 -- ========
 -- LED Light_LowOil
 
-function Hcbravo:GetLowoil(dpath)
-	self:GetBit(17, dpath)
+function Hcbravo:GetLowoil(dpath, revert, base)
+	self:GetBit(17, dpath, revert, base)
 end
 
 function Hcbravo:SetLowoil(valbase, val)
@@ -254,8 +254,8 @@ end
 -- ========
 -- LED Light_LowFuel
 
-function Hcbravo:GetLowfuel(dpath)
-	self:GetBit(18, dpath)
+function Hcbravo:GetLowfuel(dpath, revert, base)
+	self:GetBit(18, dpath, revert, base)
 end
 
 function Hcbravo:SetLowfuel(valbase, val)
@@ -265,8 +265,8 @@ end
 -- ========
 -- LED Light_Antiice
 
-function Hcbravo:GetAntiice(dpath)
-	self:GetBit(19, dpath)
+function Hcbravo:GetAntiice(dpath, revert, base)
+	self:GetBit(19, dpath, revert, base)
 end
 
 function Hcbravo:SetAntiice(valbase, val)
@@ -276,8 +276,8 @@ end
 -- ========
 -- LED Light_Starter
 
-function Hcbravo:GetStarter(dpath)
-	self:GetBit(20, dpath)
+function Hcbravo:GetStarter(dpath, revert, base)
+	self:GetBit(20, dpath, revert, base)
 end
 
 function Hcbravo:SetStarter(valbase, val)
@@ -287,8 +287,8 @@ end
 -- ========
 -- LED Light_APU
 
-function Hcbravo:GetApu(dpath)
-	self:GetBit(21, dpath)
+function Hcbravo:GetApu(dpath, revert, base)
+	self:GetBit(21, dpath, revert, base)
 end
 
 function Hcbravo:SetApu(valbase, val)
@@ -298,8 +298,8 @@ end
 -- ========
 -- LED Light_MasterCaution
 
-function Hcbravo:GetMastercaution(dpath)
-	self:GetBit(22, dpath)
+function Hcbravo:GetMastercaution(dpath, revert, base)
+	self:GetBit(22, dpath, revert, base)
 end
 
 function Hcbravo:SetMastercaution(valbase, val)
@@ -309,8 +309,8 @@ end
 -- ========
 -- LED Light_Vacuum
 
-function Hcbravo:GetVacuum(dpath)
-	self:GetBit(23, dpath)
+function Hcbravo:GetVacuum(dpath, revert, base)
+	self:GetBit(23, dpath, revert, base)
 end
 
 function Hcbravo:SetVacuum(valbase, val)
@@ -320,8 +320,8 @@ end
 -- ========
 -- LED Light_LowHydPressURE
 
-function Hcbravo:GetLowhydpressure(dpath)
-	self:GetBit(24, dpath)
+function Hcbravo:GetLowhydpressure(dpath, revert, base)
+	self:GetBit(24, dpath, revert, base)
 end
 
 function Hcbravo:SetLowhydpressure(valbase, val)
@@ -331,8 +331,8 @@ end
 -- ========
 -- LED Lights_AuxFuelPump
 
-function Hcbravo:GetAuxfuelpump(dpath)
-	self:GetBit(25, dpath)
+function Hcbravo:GetAuxfuelpump(dpath, revert, base)
+	self:GetBit(25, dpath, revert, base)
 end
 
 function Hcbravo:SetAuxfuelpump(valbase, val)
@@ -342,8 +342,8 @@ end
 -- ========
 -- LED Lights_ParkingBrake
 
-function Hcbravo:GetParkingbrake(dpath)
-	self:GetBit(26, dpath)
+function Hcbravo:GetParkingbrake(dpath, revert, base)
+	self:GetBit(26, dpath, revert, base)
 end
 
 function Hcbravo:SetParkingbrake(valbase, val)
@@ -353,8 +353,8 @@ end
 -- ========
 -- LED Lights_LowVolts
 
-function Hcbravo:GetLowvolts(dpath)
-	self:GetBit(27, dpath)
+function Hcbravo:GetLowvolts(dpath, revert, base)
+	self:GetBit(27, dpath, revert, base)
 end
 
 function Hcbravo:SetLowvolts(valbase, val)
@@ -364,8 +364,8 @@ end
 -- ========
 -- LED Lights_door
 
-function Hcbravo:GetDoor(dpath)
-	self:GetBit(28, dpath)
+function Hcbravo:GetDoor(dpath, revert, base)
+	self:GetBit(28, dpath, revert, base)
 end
 
 function Hcbravo:SetDoor(valbase, val)

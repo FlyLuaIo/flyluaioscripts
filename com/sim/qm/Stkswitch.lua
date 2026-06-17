@@ -46,8 +46,8 @@ end
 -- ========
 -- LED GreenN
 
-function Stkswitch:GetGreenn(dpath)
-	self:GetBit(1, dpath)
+function Stkswitch:GetGreenn(dpath, revert, base)
+	self:GetBit(1, dpath, revert, base)
 end
 
 function Stkswitch:SetGreenn(valbase, val)
@@ -57,8 +57,8 @@ end
 -- ========
 -- LED GreenL
 
-function Stkswitch:GetGreenl(dpath)
-	self:GetBit(2, dpath)
+function Stkswitch:GetGreenl(dpath, revert, base)
+	self:GetBit(2, dpath, revert, base)
 end
 
 function Stkswitch:SetGreenl(valbase, val)
@@ -68,8 +68,8 @@ end
 -- ========
 -- LED GreenR
 
-function Stkswitch:GetGreenr(dpath)
-	self:GetBit(3, dpath)
+function Stkswitch:GetGreenr(dpath, revert, base)
+	self:GetBit(3, dpath, revert, base)
 end
 
 function Stkswitch:SetGreenr(valbase, val)
@@ -79,8 +79,8 @@ end
 -- ========
 -- LED RedN
 
-function Stkswitch:GetRedn(dpath)
-	self:GetBit(4, dpath)
+function Stkswitch:GetRedn(dpath, revert, base)
+	self:GetBit(4, dpath, revert, base)
 end
 
 function Stkswitch:SetRedn(valbase, val)
@@ -90,8 +90,8 @@ end
 -- ========
 -- LED RedL
 
-function Stkswitch:GetRedl(dpath)
-	self:GetBit(5, dpath)
+function Stkswitch:GetRedl(dpath, revert, base)
+	self:GetBit(5, dpath, revert, base)
 end
 
 function Stkswitch:SetRedl(valbase, val)
@@ -101,8 +101,8 @@ end
 -- ========
 -- LED RedR
 
-function Stkswitch:GetRedr(dpath)
-	self:GetBit(6, dpath)
+function Stkswitch:GetRedr(dpath, revert, base)
+	self:GetBit(6, dpath, revert, base)
 end
 
 function Stkswitch:SetRedr(valbase, val)
