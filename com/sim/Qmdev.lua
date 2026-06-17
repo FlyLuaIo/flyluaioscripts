@@ -14,7 +14,6 @@ function Qmdev:init()
     self.MaxBrightness = 100
     self.KeyTable = {}
     self.Bits = {}
-    self.RevertBits = {}
 
     -- uluaLog('Qmdev:init')
 end
@@ -233,14 +232,11 @@ end
 -- @idx: (number) Index in Bits array
 -- @dpath: (string) Dataref path string
 -- No return value.
-function Qmdev:GetBit(idx, dpath, revert)
-    revert = revert == nil and false or revert
-
-    self.Bits[idx + 1] = iDataRef:New(dpath)
+function Qmdev:GetBit(idx, dpath, revert, base)
+    self.Bits[idx + 1] = iDataRef:New(dpath, nil, revert, base)
     if self.Bits[idx + 1] == nil then
         error("Qmdev:GetBit Error " .. dpath)
     end
-    self.RevertBits[idx + 1] = revert
 end
 
 -- @idx: (number) Index in Bits array
@@ -253,9 +249,9 @@ function Qmdev:SetBit(idx, idr, valbase, val)
     if val == nil then
         hdl = self.Bits[idx + 1]
         if hdl:ChangedUpdate() then
-            val = hdl:GetOld()
+            local val = hdl:GetOldBit()
             -- uluaLog(string.format("SetBit=%f", val))
-            uluaSet(idr, ilua_bool_ternary(val, valbase, self.RevertBits[idx + 1]))
+            uluaSet(idr, val)
         end
     else
         uluaSet(idr, ilua_bool_ternary(val, valbase))
