@@ -60,7 +60,7 @@ else
 
 	wwagp:CfgLongFc(4, 1000, key_max_long_func, key_max_short_func)
 end
-wwagp:CfgVal(5, 'AirbusFBW/NWSnAntiSkid')
+wwagp:CfgVal(5, 'AirbusFBW/NWSnAntiSkid', 1, 0)
 
 wwagp:CfgCmd(8, 'toliss_airbus/chrono/ChronoResetPush')
 wwagp:CfgCmd(11, 'toliss_airbus/chrono/ChronoStartStopPush')
