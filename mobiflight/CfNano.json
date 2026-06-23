@@ -6,7 +6,6 @@
     {
       "DeviceName": "LedModule",
       "DeviceType": "Display Module",
-      "Pin": 0,
       "Name": "GA ENG RPM",
       "MapType": "int"
     }

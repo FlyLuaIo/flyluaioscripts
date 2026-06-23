@@ -6,343 +6,294 @@
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 24,
       "Name": "EXTERNAL PWR-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 1,
       "Name": "EXTERNAL PWR-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 3,
       "Name": "AUP-FIRE-LED",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 2,
       "Name": "ENG1-FIRE-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 4,
       "Name": "ENG2-FIRE-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 10,
       "Name": "APU MASTERSW-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 11,
       "Name": "APU MASTERSW-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 18,
       "Name": "APU START-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 19,
       "Name": "APU START-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 6,
       "Name": "APU BLEED-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 7,
       "Name": "APU BLEED-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 29,
       "Name": "BAT1-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 28,
       "Name": "BAT1-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 31,
       "Name": "BAT2-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 30,
       "Name": "BAT2-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 1,
       "Name": "ADIRS ON BAT",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 0,
       "Name": "IR1-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 9,
       "Name": "IR1-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 10,
       "Name": "IR3-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 11,
       "Name": "IR3-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 12,
       "Name": "IR2-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 13,
       "Name": "IR2-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 6,
       "Name": "RCDR GND CTL-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 7,
       "Name": "OXYGEN CREW SUPPLY-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 4,
       "Name": "PACK1-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 5,
       "Name": "PACK1-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 0,
       "Name": "PACK2-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 9,
       "Name": "PACK2-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 12,
       "Name": "ANTI ICE WING-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 13,
       "Name": "ANTI ICE WING-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 14,
       "Name": "ANTI ICE ENG1-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 15,
       "Name": "ANTI ICE ENG1-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 8,
       "Name": "ANTI ICE ENG2-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 17,
       "Name": "ANTI ICE ENG2-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 2",
       "DeviceType": "ShiftRegister",
-      "Pin": 3,
       "Name": "PROBE WINDOW HEAT-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 14,
       "Name": "PUMP-L-MAIN-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 15,
       "Name": "PUMP-L-MAIN-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 8,
       "Name": "PUMP-L-STBY-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 17,
       "Name": "PUMP-L-STBY-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 18,
       "Name": "PUMP-L-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 19,
       "Name": "PUMP-L-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 20,
       "Name": "PUMP-CENTER-TANK-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 21,
       "Name": "PUMP-CENTER-TANK-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 22,
       "Name": "PUMP-R-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 23,
       "Name": "PUMP-R-2",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 16,
       "Name": "PUMP-R-MAIN-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 25,
       "Name": "PUMP-R-MAIN-2 ",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 26,
       "Name": "PUMP-R-STBY-1",
       "MapType": "int"
     },
     {
       "DeviceName": "ShiftRegister 1",
       "DeviceType": "ShiftRegister",
-      "Pin": 27,
       "Name": "PUMP-R-STBY-2",
       "MapType": "int"
     }
