@@ -28,10 +28,10 @@
           "Name": "G1000 Heading",
           "Pin": 0,
           "MapToBits": [
-            10,
-            11,
-            12,
-            13
+            4,
+            5,
+            6,
+            7
           ]
         }
       ],
@@ -40,10 +40,10 @@
           "Name": "G1000 FMS outer",
           "Pin": 0,
           "MapToBits": [
-            4,
-            5,
-            6,
-            7
+            8,
+            9,
+            10,
+            11
           ]
         }
       ]
@@ -53,14 +53,14 @@
         {
           "Name": "G1000 FMS push",
           "Pin": 0,
-          "MapToBit": 8
+          "MapToBit": 12
         }
       ],
       "ENT": [
         {
           "Name": "G1000 ENT",
           "Pin": 0,
-          "MapToBit": 9
+          "MapToBit": 13
         }
       ]
     }

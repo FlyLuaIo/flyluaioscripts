@@ -220,17 +220,17 @@
         {
           "Name": "FIRE-APU",
           "Pin": 0,
-          "MapToBit": 4
+          "MapToBit": 0
         },
         {
           "Name": "FIRE-ENG1",
           "Pin": 1,
-          "MapToBit": 5
+          "MapToBit": 1
         },
         {
           "Name": "CALLS ALL",
           "Pin": 2,
-          "MapToBit": 35
+          "MapToBit": 2
         },
         {
           "Name": "FIRE TEST ENG2",
@@ -240,303 +240,303 @@
         {
           "Name": "FIRE TEST APU",
           "Pin": 4,
-          "MapToBit": 1
+          "MapToBit": 4
         },
         {
           "Name": "FIRE TEST ENG1",
           "Pin": 5,
-          "MapToBit": 2
+          "MapToBit": 5
         },
         {
           "Name": "PUMPS-R STBY",
           "Pin": 6,
-          "MapToBit": 53
+          "MapToBit": 6
         },
         {
           "Name": "PUMPS-R MAIN",
           "Pin": 7,
-          "MapToBit": 52
+          "MapToBit": 7
         },
         {
           "Name": "PUMPS-R",
           "Pin": 8,
-          "MapToBit": 49
+          "MapToBit": 8
         },
         {
           "Name": "PUMP-CENTER TANK",
           "Pin": 9,
-          "MapToBit": 47
+          "MapToBit": 9
         },
         {
           "Name": "PUMPS-L",
           "Pin": 10,
-          "MapToBit": 48
+          "MapToBit": 10
         },
         {
           "Name": "PUMPS -L STBY",
           "Pin": 11,
-          "MapToBit": 51
+          "MapToBit": 11
         },
         {
           "Name": "PUMPS -L  MAIN",
           "Pin": 12,
-          "MapToBit": 50
+          "MapToBit": 12
         },
         {
           "Name": "EXT POWER",
           "Pin": 13,
-          "MapToBit": 0
+          "MapToBit": 13
         },
         {
           "Name": "BAT2",
           "Pin": 14,
-          "MapToBit": 8
+          "MapToBit": 14
         },
         {
           "Name": "BAT1",
           "Pin": 15,
-          "MapToBit": 7
+          "MapToBit": 15
         }
       ],
       "Multiplexer 3": [
         {
           "Name": "STROBE OFF/AUTO",
           "Pin": 0,
-          "MapToBit": 12
+          "MapToBit": 16
         },
         {
           "Name": "STROBE AUTO/ON",
           "Pin": 1,
-          "MapToBit": 13
+          "MapToBit": 17
         },
         {
           "Name": "BEACON",
           "Pin": 2,
-          "MapToBit": 14
+          "MapToBit": 18
         },
         {
           "Name": "WING",
           "Pin": 3,
-          "MapToBit": 15
+          "MapToBit": 19
         },
         {
           "Name": "NAV&LOGO OFF/1",
           "Pin": 4,
-          "MapToBit": 16
+          "MapToBit": 20
         },
         {
           "Name": "NAV&LOGO 1/2",
           "Pin": 5,
-          "MapToBit": 17
+          "MapToBit": 21
         },
         {
           "Name": "RWY TURN OFF ON",
           "Pin": 6,
-          "MapToBit": 18
+          "MapToBit": 22
         },
         {
           "Name": "LAND-L RTRCT/OFF",
           "Pin": 7,
-          "MapToBit": 19
+          "MapToBit": 23
         },
         {
           "Name": "LAND-L OFF/ON",
           "Pin": 8,
-          "MapToBit": 20
+          "MapToBit": 24
         },
         {
           "Name": "LAND-R RTRCT/OFF",
           "Pin": 9,
-          "MapToBit": 21
+          "MapToBit": 25
         },
         {
           "Name": "LAND-R OFF/ON",
           "Pin": 10,
-          "MapToBit": 22
+          "MapToBit": 26
         },
         {
           "Name": "NOSE TAXI/TO",
           "Pin": 11,
-          "MapToBit": 24
+          "MapToBit": 27
         },
         {
           "Name": "NOSE OFF/TAXI",
           "Pin": 12,
-          "MapToBit": 23
+          "MapToBit": 28
         },
         {
           "Name": "SEATBELTS ON",
           "Pin": 13,
-          "MapToBit": 32
+          "MapToBit": 29
         },
         {
           "Name": "NO SMOKING OFF/AUTO",
           "Pin": 14,
-          "MapToBit": 33
+          "MapToBit": 30
         },
         {
           "Name": "FIRE-ENG2",
           "Pin": 15,
-          "MapToBit": 6
+          "MapToBit": 31
         }
       ],
       "Multiplexer 1": [
         {
           "Name": "ICE ENG2",
           "Pin": 0,
-          "MapToBit": 26
+          "MapToBit": 32
         },
         {
           "Name": "ICE ENG1",
           "Pin": 1,
-          "MapToBit": 25
+          "MapToBit": 33
         },
         {
           "Name": "ICE WING",
           "Pin": 2,
-          "MapToBit": 27
+          "MapToBit": 34
         },
         {
           "Name": "APU START",
           "Pin": 3,
-          "MapToBit": 11
+          "MapToBit": 35
         },
         {
           "Name": "APU MASTERSW",
           "Pin": 4,
-          "MapToBit": 9
+          "MapToBit": 36
         },
         {
           "Name": "PACK2",
           "Pin": 5,
-          "MapToBit": 30
+          "MapToBit": 37
         },
         {
           "Name": "APU BLEED",
           "Pin": 6,
-          "MapToBit": 10
+          "MapToBit": 38
         },
         {
           "Name": "PACK1",
           "Pin": 7,
-          "MapToBit": 29
+          "MapToBit": 39
         },
         {
           "Name": "PROBE WINDOW HEAT",
           "Pin": 8,
-          "MapToBit": 28
+          "MapToBit": 40
         },
         {
           "Name": "CREW OXYGEN SUPPLY",
           "Pin": 9,
-          "MapToBit": 46
+          "MapToBit": 41
         },
         {
           "Name": "GROUND CTL",
           "Pin": 10,
-          "MapToBit": 45
+          "MapToBit": 42
         },
         {
           "Name": "IR3",
           "Pin": 11,
-          "MapToBit": 44
+          "MapToBit": 43
         },
         {
           "Name": "IR2",
           "Pin": 12,
-          "MapToBit": 43
+          "MapToBit": 44
         },
         {
           "Name": "IR1",
           "Pin": 13,
-          "MapToBit": 42
+          "MapToBit": 45
         },
         {
           "Name": "TERR",
           "Pin": 14,
-          "MapToBit": 31
+          "MapToBit": 46
         },
         {
           "Name": "LDGFLAP3",
           "Pin": 15,
-          "MapToBit": 58
+          "MapToBit": 47
         }
       ],
       "Multiplexer 4": [
         {
           "Name": "DOME LIGHT BRT",
           "Pin": 0,
-          "MapToBit": 62
+          "MapToBit": 48
         },
         {
           "Name": "DOME LIGHT DIM",
           "Pin": 1,
-          "MapToBit": 61
+          "MapToBit": 49
         },
         {
           "Name": "NO SMOKING AUTO/ON",
           "Pin": 3,
-          "MapToBit": 34
+          "MapToBit": 50
         },
         {
           "Name": "EMERGENCY EXIT OFF",
           "Pin": 4,
-          "MapToBit": 57
+          "MapToBit": 51
         },
         {
           "Name": "EMERGENCY EXIT ON",
           "Pin": 5,
-          "MapToBit": 56
+          "MapToBit": 52
         },
         {
           "Name": "ADIRS-1 OFF/NAV",
           "Pin": 6,
-          "MapToBit": 36
+          "MapToBit": 53
         },
         {
           "Name": "ADIRS-1 ATT",
           "Pin": 7,
-          "MapToBit": 39
+          "MapToBit": 54
         },
         {
           "Name": "ADIRS-3 OFF/NAV",
           "Pin": 8,
-          "MapToBit": 38
+          "MapToBit": 55
         },
         {
           "Name": "ADIRS-3 ATT",
           "Pin": 9,
-          "MapToBit": 41
+          "MapToBit": 56
         },
         {
           "Name": "ADIRS-2 OFF/NAV",
           "Pin": 10,
-          "MapToBit": 37
+          "MapToBit": 57
         },
         {
           "Name": "ADIRS-2 ATT",
           "Pin": 11,
-          "MapToBit": 40
+          "MapToBit": 58
         },
         {
           "Name": "AIR XBLEED CLOSE?AUTO",
           "Pin": 12,
-          "MapToBit": 55
+          "MapToBit": 59
         },
         {
           "Name": "AIR XBLEED AUTO/OPEN",
           "Pin": 13,
-          "MapToBit": 54
+          "MapToBit": 60
         },
         {
           "Name": "WIPER-FAST",
           "Pin": 14,
-          "MapToBit": 60
+          "MapToBit": 61
         },
         {
           "Name": "WIPER-OFF",
           "Pin": 15,
-          "MapToBit": 59
+          "MapToBit": 62
         }
       ]
     }
