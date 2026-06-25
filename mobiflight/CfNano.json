@@ -1,22 +1,15 @@
-{
+﻿{
   "ProductName": "CfNano",
   "ModuleName": "cfmfnano",
   "ModuleSerial": "SN-61D-31A",
-  "outputs": [
-    {
-      "DeviceName": "LedModule",
-      "DeviceType": "Display Module",
-      "Name": "GA ENG RPM",
-      "MapType": "int"
+  "outputs": {
+    "Display Module": {
+      "LedModule": [
+        {
+          "Name": "GA ENG RPM",
+          "MapType": "int"
+        }
+      ]
     }
-  ],
-  "inputs": [
-    {
-      "DeviceName": "click",
-      "DeviceType": "Button",
-      "Pin": 9,
-      "Name": "G1000 ENT",
-      "MapToBit": 9
-    }
-  ]
+  }
 }

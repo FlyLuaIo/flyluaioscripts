@@ -1,53 +1,54 @@
-{
+﻿{
   "ProductName": "CfMega",
   "ModuleName": "MF Mega Pro",
   "ModuleSerial": "SN-3F1-FDD",
-  "outputs": [
-    {
-      "DeviceName": "Stepper",
-      "DeviceType": "Stepper",
-      "Name": "GA ENG RPM",
-      "MapType": "int"
+  "outputs": {
+    "Stepper": {
+      "Stepper": [
+        {
+          "Name": "ENG RPM",
+          "MapType": "int"
+        }
+      ]
     }
-  ],
-  "inputs": [
-    {
-      "DeviceName": "Encoder_small",
-      "DeviceType": "Encoder",
-      "Pin": 0,
-      "Name": "G1000 FMS inner",
-      "MapToBits": [
-        0,
-        1,
-        2,
-        3
+  },
+  "inputs": {
+    "Encoder": {
+      "Encoder_small": [
+        {
+          "Name": "G1000 FMS inner",
+          "Pin": 0,
+          "MapToBits": [0, 1, 2, 3]
+        },
+        {
+          "Name": "G1000 Heading",
+          "Pin": 0,
+          "MapToBits": [10, 11, 12, 13]
+        }
+      ],
+      "Encoder_big": [
+        {
+          "Name": "G1000 FMS outer",
+          "Pin": 0,
+          "MapToBits": [4, 5, 6, 7]
+        }
       ]
     },
-    {
-      "DeviceName": "Encoder_big",
-      "DeviceType": "Encoder",
-      "Pin": 4,
-      "Name": "G1000 FMS outer",
-      "MapToBits": [
-        4,
-        5,
-        6,
-        7
+    "Button": {
+      "FMS push": [
+        {
+          "Name": "G1000 FMS push",
+          "Pin": 0,
+          "MapToBit": 8
+        }
+      ],
+      "ENT": [
+        {
+          "Name": "G1000 ENT",
+          "Pin": 0,
+          "MapToBit": 9
+        }
       ]
-    },
-    {
-      "DeviceName": "FMS push",
-      "DeviceType": "Button",
-      "Pin": 8,
-      "Name": "G1000 FMS push",
-      "MapToBit": 8
-    },
-    {
-      "DeviceName": "ENT",
-      "DeviceType": "Button",
-      "Pin": 9,
-      "Name": "G1000 ENT",
-      "MapToBit": 9
     }
-  ]
+  }
 }
