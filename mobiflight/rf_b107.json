@@ -160,16 +160,16 @@
           "Pin": 16
         },
         {
-          "Name": "Window Heat Left Side Overheat",
-          "Pin": 19
-        },
-        {
           "Name": "Window Heat Right Fwd Overheat",
           "Pin": 17
         },
         {
           "Name": "Window Heat Right Side Overheat",
           "Pin": 18
+        },
+        {
+          "Name": "Window Heat Left Side Overheat",
+          "Pin": 19
         }
       ]
     },
@@ -185,69 +185,9 @@
     "InputMultiplexer": {
       "Multiplexer": [
         {
-          "Name": "FUEL PUMPS CTR L",
-          "Pin": 12,
-          "MapToBit": 0
-        },
-        {
-          "Name": "FUEL PUMPS CTR R",
-          "Pin": 13,
-          "MapToBit": 1
-        },
-        {
           "Name": "FUEL PUMPS AFT L",
           "Pin": 0,
           "MapToBit": 4
-        },
-        {
-          "Name": "FUEL PUMPS FWD L",
-          "Pin": 8,
-          "MapToBit": 5
-        },
-        {
-          "Name": "FUEL PUMPS AFT R",
-          "Pin": 10,
-          "MapToBit": 6
-        },
-        {
-          "Name": "FUEL PUMPS FWD R",
-          "Pin": 9,
-          "MapToBit": 7
-        },
-        {
-          "Name": "ELEC GEN1 ON",
-          "Pin": 14,
-          "MapToBit": 9
-        },
-        {
-          "Name": "ELEC GEN1 OFF",
-          "Pin": 15,
-          "MapToBit": 10
-        },
-        {
-          "Name": "LANDING L",
-          "Pin": 7,
-          "MapToBit": 35
-        },
-        {
-          "Name": "LANDING R",
-          "Pin": 6,
-          "MapToBit": 36
-        },
-        {
-          "Name": "RUNWAY TURNOFF L",
-          "Pin": 5,
-          "MapToBit": 37
-        },
-        {
-          "Name": "RUNWAY TURNOFF R",
-          "Pin": 4,
-          "MapToBit": 38
-        },
-        {
-          "Name": "TAXI LT",
-          "Pin": 3,
-          "MapToBit": 39
         },
         {
           "Name": "APU START OFF",
@@ -260,21 +200,126 @@
           "MapToBit": 41
         },
         {
+          "Name": "TAXI LT",
+          "Pin": 3,
+          "MapToBit": 39
+        },
+        {
+          "Name": "RUNWAY TURNOFF R",
+          "Pin": 4,
+          "MapToBit": 38
+        },
+        {
+          "Name": "RUNWAY TURNOFF L",
+          "Pin": 5,
+          "MapToBit": 37
+        },
+        {
+          "Name": "LANDING R",
+          "Pin": 6,
+          "MapToBit": 36
+        },
+        {
+          "Name": "LANDING L",
+          "Pin": 7,
+          "MapToBit": 35
+        },
+        {
+          "Name": "FUEL PUMPS FWD L",
+          "Pin": 8,
+          "MapToBit": 5
+        },
+        {
+          "Name": "FUEL PUMPS FWD R",
+          "Pin": 9,
+          "MapToBit": 7
+        },
+        {
+          "Name": "FUEL PUMPS AFT R",
+          "Pin": 10,
+          "MapToBit": 6
+        },
+        {
           "Name": "NO SMOKING",
           "Pin": 11,
           "MapToBit": 82
+        },
+        {
+          "Name": "FUEL PUMPS CTR L",
+          "Pin": 12,
+          "MapToBit": 0
+        },
+        {
+          "Name": "FUEL PUMPS CTR R",
+          "Pin": 13,
+          "MapToBit": 1
+        },
+        {
+          "Name": "ELEC GEN1 ON",
+          "Pin": 14,
+          "MapToBit": 9
+        },
+        {
+          "Name": "ELEC GEN1 OFF",
+          "Pin": 15,
+          "MapToBit": 10
         }
       ],
       "Multiplexer 2": [
         {
-          "Name": "FUEL PUMPS CROSSFEED",
-          "Pin": 15,
-          "MapToBit": 8
-        },
-        {
           "Name": "MASTER BAT ",
           "Pin": 0,
           "MapToBit": 18
+        },
+        {
+          "Name": "Standby Power Auto",
+          "Pin": 1,
+          "MapToBit": 65
+        },
+        {
+          "Name": "Standby Power Bat",
+          "Pin": 2,
+          "MapToBit": 64
+        },
+        {
+          "Name": "IRS BOTH ON R",
+          "Pin": 3,
+          "MapToBit": 74
+        },
+        {
+          "Name": "IRS BOTH ON L",
+          "Pin": 4,
+          "MapToBit": 73
+        },
+        {
+          "Name": "VHF NAV BOTH ON 2",
+          "Pin": 5,
+          "MapToBit": 72
+        },
+        {
+          "Name": "VHF NAV BOTH ON 1",
+          "Pin": 6,
+          "MapToBit": 71
+        },
+        {
+          "Name": "Gen Drive Disc Right Guard",
+          "Pin": 7,
+          "MapToBit": 67
+        },
+        {
+          "Name": "IRS R OFF",
+          "Pin": 8,
+          "MapToBit": 121
+        },
+        {
+          "Name": "IRS R ALIGN",
+          "Pin": 9,
+          "MapToBit": 122
+        },
+        {
+          "Name": "IRS R NAV",
+          "Pin": 10,
+          "MapToBit": 58
         },
         {
           "Name": "ENGINE START 1- GRD",
@@ -292,71 +337,36 @@
           "MapToBit": 44
         },
         {
-          "Name": "IRS R NAV",
-          "Pin": 10,
-          "MapToBit": 58
-        },
-        {
           "Name": "AC CAB/UTIL",
           "Pin": 14,
           "MapToBit": 63
         },
         {
-          "Name": "Standby Power Bat",
-          "Pin": 2,
-          "MapToBit": 64
-        },
-        {
-          "Name": "Standby Power Auto",
-          "Pin": 1,
-          "MapToBit": 65
-        },
-        {
-          "Name": "Gen Drive Disc Right Guard",
-          "Pin": 7,
-          "MapToBit": 67
-        },
-        {
-          "Name": "VHF NAV BOTH ON 1",
-          "Pin": 6,
-          "MapToBit": 71
-        },
-        {
-          "Name": "VHF NAV BOTH ON 2",
-          "Pin": 5,
-          "MapToBit": 72
-        },
-        {
-          "Name": "IRS BOTH ON L",
-          "Pin": 4,
-          "MapToBit": 73
-        },
-        {
-          "Name": "IRS BOTH ON R",
-          "Pin": 3,
-          "MapToBit": 74
-        },
-        {
-          "Name": "IRS R OFF",
-          "Pin": 8,
-          "MapToBit": 121
-        },
-        {
-          "Name": "IRS R ALIGN",
-          "Pin": 9,
-          "MapToBit": 122
+          "Name": "FUEL PUMPS CROSSFEED",
+          "Pin": 15,
+          "MapToBit": 8
         }
       ],
       "Multiplexer 1": [
         {
-          "Name": "ELEC APU GEN1 ON",
-          "Pin": 6,
-          "MapToBit": 11
+          "Name": "EMER EXIT LT ON",
+          "Pin": 0,
+          "MapToBit": 81
         },
         {
-          "Name": "ELEC APU GEN1 OFF",
-          "Pin": 7,
-          "MapToBit": 12
+          "Name": "Bus Transfer",
+          "Pin": 1,
+          "MapToBit": 70
+        },
+        {
+          "Name": "ELEC GEN2 OFF",
+          "Pin": 2,
+          "MapToBit": 17
+        },
+        {
+          "Name": "ELEC GEN2 ON",
+          "Pin": 3,
+          "MapToBit": 16
         },
         {
           "Name": "ELEC APU GEN2 OFF",
@@ -369,24 +379,19 @@
           "MapToBit": 15
         },
         {
-          "Name": "ELEC GEN2 ON",
-          "Pin": 3,
-          "MapToBit": 16
+          "Name": "ELEC APU GEN1 ON",
+          "Pin": 6,
+          "MapToBit": 11
         },
         {
-          "Name": "ELEC GEN2 OFF",
-          "Pin": 2,
-          "MapToBit": 17
+          "Name": "ELEC APU GEN1 OFF",
+          "Pin": 7,
+          "MapToBit": 12
         },
         {
-          "Name": "Gen Drive Disc Left",
-          "Pin": 15,
-          "MapToBit": 66
-        },
-        {
-          "Name": "GND PWR OFF",
-          "Pin": 10,
-          "MapToBit": 68
+          "Name": "EMER EXIT LT OFF",
+          "Pin": 8,
+          "MapToBit": 80
         },
         {
           "Name": "GND PWR ON",
@@ -394,9 +399,19 @@
           "MapToBit": 69
         },
         {
-          "Name": "Bus Transfer",
-          "Pin": 1,
-          "MapToBit": 70
+          "Name": "GND PWR OFF",
+          "Pin": 10,
+          "MapToBit": 68
+        },
+        {
+          "Name": "Equipment Cooling Supply",
+          "Pin": 11,
+          "MapToBit": 78
+        },
+        {
+          "Name": "YAW DAMPER",
+          "Pin": 12,
+          "MapToBit": 77
         },
         {
           "Name": "FMC BOTH ON L",
@@ -409,36 +424,51 @@
           "MapToBit": 76
         },
         {
-          "Name": "YAW DAMPER",
-          "Pin": 12,
-          "MapToBit": 77
-        },
-        {
-          "Name": "Equipment Cooling Supply",
-          "Pin": 11,
-          "MapToBit": 78
-        },
-        {
-          "Name": "EMER EXIT LT OFF",
-          "Pin": 8,
-          "MapToBit": 80
-        },
-        {
-          "Name": "EMER EXIT LT ON",
-          "Pin": 0,
-          "MapToBit": 81
+          "Name": "Gen Drive Disc Left",
+          "Pin": 15,
+          "MapToBit": 66
         }
       ],
       "Multiplexer 5": [
         {
-          "Name": "Pressurization Mode AUTO",
-          "Pin": 15,
-          "MapToBit": 31
+          "Name": "BLEED R RECIRC FAN",
+          "Pin": 0,
+          "MapToBit": 117
         },
         {
-          "Name": "Pressurization Mode MAN",
-          "Pin": 14,
-          "MapToBit": 32
+          "Name": "TRIM AIR",
+          "Pin": 1,
+          "MapToBit": 106
+        },
+        {
+          "Name": "BLEED L RECIRC FAN",
+          "Pin": 2,
+          "MapToBit": 116
+        },
+        {
+          "Name": "WINDOW HEAT R SIDE",
+          "Pin": 3,
+          "MapToBit": 105
+        },
+        {
+          "Name": "WINDOW HEAT R FWD",
+          "Pin": 4,
+          "MapToBit": 104
+        },
+        {
+          "Name": "WINDOW HEAT OVHT (UP)",
+          "Pin": 5,
+          "MapToBit": 102
+        },
+        {
+          "Name": "WINDOW HEAT OVHT",
+          "Pin": 6,
+          "MapToBit": 103
+        },
+        {
+          "Name": "WINDOW HEAT L FWD",
+          "Pin": 7,
+          "MapToBit": 101
         },
         {
           "Name": "ENGINE START 2- GRD",
@@ -446,14 +476,14 @@
           "MapToBit": 45
         },
         {
-          "Name": "ENGINE START 2- OFF",
-          "Pin": 10,
-          "MapToBit": 46
-        },
-        {
           "Name": "ENGINE START 2- CONT",
           "Pin": 9,
           "MapToBit": 47
+        },
+        {
+          "Name": "ENGINE START 2- OFF",
+          "Pin": 10,
+          "MapToBit": 46
         },
         {
           "Name": "L WIPER PARK",
@@ -471,86 +501,21 @@
           "MapToBit": 91
         },
         {
-          "Name": "WINDOW HEAT L FWD",
-          "Pin": 7,
-          "MapToBit": 101
+          "Name": "Pressurization Mode MAN",
+          "Pin": 14,
+          "MapToBit": 32
         },
         {
-          "Name": "WINDOW HEAT OVHT (UP)",
-          "Pin": 5,
-          "MapToBit": 102
-        },
-        {
-          "Name": "WINDOW HEAT OVHT",
-          "Pin": 6,
-          "MapToBit": 103
-        },
-        {
-          "Name": "WINDOW HEAT R FWD",
-          "Pin": 4,
-          "MapToBit": 104
-        },
-        {
-          "Name": "WINDOW HEAT R SIDE",
-          "Pin": 3,
-          "MapToBit": 105
-        },
-        {
-          "Name": "TRIM AIR",
-          "Pin": 1,
-          "MapToBit": 106
-        },
-        {
-          "Name": "BLEED L RECIRC FAN",
-          "Pin": 2,
-          "MapToBit": 116
-        },
-        {
-          "Name": "BLEED R RECIRC FAN",
-          "Pin": 0,
-          "MapToBit": 117
+          "Name": "Pressurization Mode AUTO",
+          "Pin": 15,
+          "MapToBit": 31
         }
       ],
       "Multiplexer 3": [
         {
-          "Name": "Outflow Valve Close",
-          "Pin": 14,
-          "MapToBit": 33
-        },
-        {
-          "Name": "Outflow Valve Open",
-          "Pin": 15,
-          "MapToBit": 34
-        },
-        {
-          "Name": "ENGINE START  BOTH - L",
-          "Pin": 7,
-          "MapToBit": 49
-        },
-        {
-          "Name": "ENGINE START  BOTH - R",
-          "Pin": 6,
-          "MapToBit": 50
-        },
-        {
-          "Name": "LOGO LT",
-          "Pin": 5,
-          "MapToBit": 51
-        },
-        {
-          "Name": "Position Light STEADY",
-          "Pin": 4,
-          "MapToBit": 52
-        },
-        {
-          "Name": "Position Light STROBE STEADY",
-          "Pin": 3,
-          "MapToBit": 53
-        },
-        {
-          "Name": "Anti-collision lights",
-          "Pin": 2,
-          "MapToBit": 55
+          "Name": "WHEEL WELL LT",
+          "Pin": 0,
+          "MapToBit": 57
         },
         {
           "Name": "WING LT",
@@ -558,19 +523,44 @@
           "MapToBit": 56
         },
         {
-          "Name": "WHEEL WELL LT",
-          "Pin": 0,
-          "MapToBit": 57
+          "Name": "Anti-collision lights",
+          "Pin": 2,
+          "MapToBit": 55
         },
         {
-          "Name": "Fasten Belts OFF",
-          "Pin": 9,
-          "MapToBit": 83
+          "Name": "Position Light STROBE STEADY",
+          "Pin": 3,
+          "MapToBit": 53
+        },
+        {
+          "Name": "Position Light STEADY",
+          "Pin": 4,
+          "MapToBit": 52
+        },
+        {
+          "Name": "LOGO LT",
+          "Pin": 5,
+          "MapToBit": 51
+        },
+        {
+          "Name": "ENGINE START  BOTH - R",
+          "Pin": 6,
+          "MapToBit": 50
+        },
+        {
+          "Name": "ENGINE START  BOTH - L",
+          "Pin": 7,
+          "MapToBit": 49
         },
         {
           "Name": "Fasten Belts ON",
           "Pin": 8,
           "MapToBit": 84
+        },
+        {
+          "Name": "Fasten Belts OFF",
+          "Pin": 9,
+          "MapToBit": 83
         },
         {
           "Name": "HYD PUMPS ENG1",
@@ -591,9 +581,39 @@
           "Name": "HYD PUMPS ENG2",
           "Pin": 13,
           "MapToBit": 95
+        },
+        {
+          "Name": "Outflow Valve Close",
+          "Pin": 14,
+          "MapToBit": 33
+        },
+        {
+          "Name": "Outflow Valve Open",
+          "Pin": 15,
+          "MapToBit": 34
         }
       ],
       "Multiplexer 4": [
+        {
+          "Name": "BLEED R PACK HIGH",
+          "Pin": 0,
+          "MapToBit": 113
+        },
+        {
+          "Name": "BLEED ENG2",
+          "Pin": 1,
+          "MapToBit": 109
+        },
+        {
+          "Name": "BLEED APU",
+          "Pin": 2,
+          "MapToBit": 108
+        },
+        {
+          "Name": "BLEED ENG1",
+          "Pin": 3,
+          "MapToBit": 107
+        },
         {
           "Name": "Equipment Cooling Exhaust",
           "Pin": 4,
@@ -615,49 +635,9 @@
           "MapToBit": 99
         },
         {
-          "Name": "WINDOW HEAT L SIDE",
-          "Pin": 15,
-          "MapToBit": 100
-        },
-        {
-          "Name": "BLEED ENG1",
-          "Pin": 3,
-          "MapToBit": 107
-        },
-        {
-          "Name": "BLEED APU",
-          "Pin": 2,
-          "MapToBit": 108
-        },
-        {
-          "Name": "BLEED ENG2",
-          "Pin": 1,
-          "MapToBit": 109
-        },
-        {
-          "Name": "BLEED L PACK OFF",
-          "Pin": 12,
-          "MapToBit": 110
-        },
-        {
-          "Name": "BLEED L PACK HIGH",
-          "Pin": 11,
-          "MapToBit": 111
-        },
-        {
           "Name": "BLEED R PACK OFF",
           "Pin": 8,
           "MapToBit": 112
-        },
-        {
-          "Name": "BLEED R PACK HIGH",
-          "Pin": 0,
-          "MapToBit": 113
-        },
-        {
-          "Name": "BLEED ISOLATION VALVE CLOSE",
-          "Pin": 10,
-          "MapToBit": 114
         },
         {
           "Name": "BLEED ISOLATION VALVE OPEN",
@@ -665,14 +645,34 @@
           "MapToBit": 115
         },
         {
-          "Name": "PROBE A",
-          "Pin": 14,
-          "MapToBit": 124
+          "Name": "BLEED ISOLATION VALVE CLOSE",
+          "Pin": 10,
+          "MapToBit": 114
+        },
+        {
+          "Name": "BLEED L PACK HIGH",
+          "Pin": 11,
+          "MapToBit": 111
+        },
+        {
+          "Name": "BLEED L PACK OFF",
+          "Pin": 12,
+          "MapToBit": 110
         },
         {
           "Name": "PROBE B",
           "Pin": 13,
           "MapToBit": 125
+        },
+        {
+          "Name": "PROBE A",
+          "Pin": 14,
+          "MapToBit": 124
+        },
+        {
+          "Name": "WINDOW HEAT L SIDE",
+          "Pin": 15,
+          "MapToBit": 100
         }
       ]
     },

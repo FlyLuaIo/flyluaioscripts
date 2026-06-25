@@ -6,44 +6,40 @@
     "ShiftRegister": {
       "ShiftRegister 1": [
         {
-          "Name": "EXTERNAL PWR-1",
-          "Pin": 24
-        },
-        {
-          "Name": "AUP-FIRE-LED",
-          "Pin": 3
-        },
-        {
-          "Name": "ENG1-FIRE-1",
-          "Pin": 2
-        },
-        {
-          "Name": "ENG2-FIRE-1",
-          "Pin": 4
-        },
-        {
-          "Name": "BAT1-1",
-          "Pin": 29
-        },
-        {
-          "Name": "BAT1-2",
-          "Pin": 28
-        },
-        {
-          "Name": "BAT2-1",
-          "Pin": 31
-        },
-        {
-          "Name": "BAT2-2",
-          "Pin": 30
+          "Name": "IR1-1",
+          "Pin": 0
         },
         {
           "Name": "ADIRS ON BAT",
           "Pin": 1
         },
         {
-          "Name": "IR1-1",
-          "Pin": 0
+          "Name": "ENG1-FIRE-1",
+          "Pin": 2
+        },
+        {
+          "Name": "AUP-FIRE-LED",
+          "Pin": 3
+        },
+        {
+          "Name": "ENG2-FIRE-1",
+          "Pin": 4
+        },
+        {
+          "Name": "LDG FLAP3-2",
+          "Pin": 5
+        },
+        {
+          "Name": "RCDR GND CTL-2",
+          "Pin": 6
+        },
+        {
+          "Name": "OXYGEN CREW SUPPLY-2",
+          "Pin": 7
+        },
+        {
+          "Name": "PUMP-L-STBY-1",
+          "Pin": 8
         },
         {
           "Name": "IR1-2",
@@ -66,18 +62,6 @@
           "Pin": 13
         },
         {
-          "Name": "LDG FLAP3-2",
-          "Pin": 5
-        },
-        {
-          "Name": "RCDR GND CTL-2",
-          "Pin": 6
-        },
-        {
-          "Name": "OXYGEN CREW SUPPLY-2",
-          "Pin": 7
-        },
-        {
           "Name": "PUMP-L-MAIN-1",
           "Pin": 14
         },
@@ -86,8 +70,8 @@
           "Pin": 15
         },
         {
-          "Name": "PUMP-L-STBY-1",
-          "Pin": 8
+          "Name": "PUMP-R-MAIN-1",
+          "Pin": 16
         },
         {
           "Name": "PUMP-L-STBY-2",
@@ -118,8 +102,8 @@
           "Pin": 23
         },
         {
-          "Name": "PUMP-R-MAIN-1",
-          "Pin": 16
+          "Name": "EXTERNAL PWR-1",
+          "Pin": 24
         },
         {
           "Name": "PUMP-R-MAIN-2 ",
@@ -132,36 +116,36 @@
         {
           "Name": "PUMP-R-STBY-2",
           "Pin": 27
+        },
+        {
+          "Name": "BAT1-2",
+          "Pin": 28
+        },
+        {
+          "Name": "BAT1-1",
+          "Pin": 29
+        },
+        {
+          "Name": "BAT2-2",
+          "Pin": 30
+        },
+        {
+          "Name": "BAT2-1",
+          "Pin": 31
         }
       ],
       "ShiftRegister 2": [
+        {
+          "Name": "PACK2-1",
+          "Pin": 0
+        },
         {
           "Name": "EXTERNAL PWR-2",
           "Pin": 1
         },
         {
-          "Name": "APU MASTERSW-1",
-          "Pin": 10
-        },
-        {
-          "Name": "APU MASTERSW-2",
-          "Pin": 11
-        },
-        {
-          "Name": "APU START-1",
-          "Pin": 18
-        },
-        {
-          "Name": "APU START-2",
-          "Pin": 19
-        },
-        {
-          "Name": "APU BLEED-1",
-          "Pin": 6
-        },
-        {
-          "Name": "APU BLEED-2",
-          "Pin": 7
+          "Name": "PROBE WINDOW HEAT-2",
+          "Pin": 3
         },
         {
           "Name": "PACK1-1",
@@ -172,12 +156,28 @@
           "Pin": 5
         },
         {
-          "Name": "PACK2-1",
-          "Pin": 0
+          "Name": "APU BLEED-1",
+          "Pin": 6
+        },
+        {
+          "Name": "APU BLEED-2",
+          "Pin": 7
+        },
+        {
+          "Name": "ANTI ICE ENG2-1",
+          "Pin": 8
         },
         {
           "Name": "PACK2-2",
           "Pin": 9
+        },
+        {
+          "Name": "APU MASTERSW-1",
+          "Pin": 10
+        },
+        {
+          "Name": "APU MASTERSW-2",
+          "Pin": 11
         },
         {
           "Name": "ANTI ICE WING-1",
@@ -196,16 +196,16 @@
           "Pin": 15
         },
         {
-          "Name": "ANTI ICE ENG2-1",
-          "Pin": 8
-        },
-        {
           "Name": "ANTI ICE ENG2-2",
           "Pin": 17
         },
         {
-          "Name": "PROBE WINDOW HEAT-2",
-          "Pin": 3
+          "Name": "APU START-1",
+          "Pin": 18
+        },
+        {
+          "Name": "APU START-2",
+          "Pin": 19
         },
         {
           "Name": "EMER EXIT LT",
@@ -218,9 +218,24 @@
     "InputMultiplexer": {
       "Multiplexer 2": [
         {
-          "Name": "EXT POWER",
-          "Pin": 13,
-          "MapToBit": 0
+          "Name": "FIRE-APU",
+          "Pin": 0,
+          "MapToBit": 4
+        },
+        {
+          "Name": "FIRE-ENG1",
+          "Pin": 1,
+          "MapToBit": 5
+        },
+        {
+          "Name": "CALLS ALL",
+          "Pin": 2,
+          "MapToBit": 35
+        },
+        {
+          "Name": "FIRE TEST ENG2",
+          "Pin": 3,
+          "MapToBit": 3
         },
         {
           "Name": "FIRE TEST APU",
@@ -233,34 +248,19 @@
           "MapToBit": 2
         },
         {
-          "Name": "FIRE TEST ENG2",
-          "Pin": 3,
-          "MapToBit": 3
+          "Name": "PUMPS-R STBY",
+          "Pin": 6,
+          "MapToBit": 53
         },
         {
-          "Name": "FIRE-APU",
-          "Pin": 0,
-          "MapToBit": 4
+          "Name": "PUMPS-R MAIN",
+          "Pin": 7,
+          "MapToBit": 52
         },
         {
-          "Name": "FIRE-ENG1",
-          "Pin": 1,
-          "MapToBit": 5
-        },
-        {
-          "Name": "BAT1",
-          "Pin": 15,
-          "MapToBit": 7
-        },
-        {
-          "Name": "BAT2",
-          "Pin": 14,
-          "MapToBit": 8
-        },
-        {
-          "Name": "CALLS ALL",
-          "Pin": 2,
-          "MapToBit": 35
+          "Name": "PUMPS-R",
+          "Pin": 8,
+          "MapToBit": 49
         },
         {
           "Name": "PUMP-CENTER TANK",
@@ -273,9 +273,9 @@
           "MapToBit": 48
         },
         {
-          "Name": "PUMPS-R",
-          "Pin": 8,
-          "MapToBit": 49
+          "Name": "PUMPS -L STBY",
+          "Pin": 11,
+          "MapToBit": 51
         },
         {
           "Name": "PUMPS -L  MAIN",
@@ -283,27 +283,22 @@
           "MapToBit": 50
         },
         {
-          "Name": "PUMPS -L STBY",
-          "Pin": 11,
-          "MapToBit": 51
+          "Name": "EXT POWER",
+          "Pin": 13,
+          "MapToBit": 0
         },
         {
-          "Name": "PUMPS-R MAIN",
-          "Pin": 7,
-          "MapToBit": 52
+          "Name": "BAT2",
+          "Pin": 14,
+          "MapToBit": 8
         },
         {
-          "Name": "PUMPS-R STBY",
-          "Pin": 6,
-          "MapToBit": 53
+          "Name": "BAT1",
+          "Pin": 15,
+          "MapToBit": 7
         }
       ],
       "Multiplexer 3": [
-        {
-          "Name": "FIRE-ENG2",
-          "Pin": 15,
-          "MapToBit": 6
-        },
         {
           "Name": "STROBE OFF/AUTO",
           "Pin": 0,
@@ -360,14 +355,14 @@
           "MapToBit": 22
         },
         {
-          "Name": "NOSE OFF/TAXI",
-          "Pin": 12,
-          "MapToBit": 23
-        },
-        {
           "Name": "NOSE TAXI/TO",
           "Pin": 11,
           "MapToBit": 24
+        },
+        {
+          "Name": "NOSE OFF/TAXI",
+          "Pin": 12,
+          "MapToBit": 23
         },
         {
           "Name": "SEATBELTS ON",
@@ -378,23 +373,18 @@
           "Name": "NO SMOKING OFF/AUTO",
           "Pin": 14,
           "MapToBit": 33
+        },
+        {
+          "Name": "FIRE-ENG2",
+          "Pin": 15,
+          "MapToBit": 6
         }
       ],
       "Multiplexer 1": [
         {
-          "Name": "APU MASTERSW",
-          "Pin": 4,
-          "MapToBit": 9
-        },
-        {
-          "Name": "APU BLEED",
-          "Pin": 6,
-          "MapToBit": 10
-        },
-        {
-          "Name": "APU START",
-          "Pin": 3,
-          "MapToBit": 11
+          "Name": "ICE ENG2",
+          "Pin": 0,
+          "MapToBit": 26
         },
         {
           "Name": "ICE ENG1",
@@ -402,24 +392,19 @@
           "MapToBit": 25
         },
         {
-          "Name": "ICE ENG2",
-          "Pin": 0,
-          "MapToBit": 26
-        },
-        {
           "Name": "ICE WING",
           "Pin": 2,
           "MapToBit": 27
         },
         {
-          "Name": "PROBE WINDOW HEAT",
-          "Pin": 8,
-          "MapToBit": 28
+          "Name": "APU START",
+          "Pin": 3,
+          "MapToBit": 11
         },
         {
-          "Name": "PACK1",
-          "Pin": 7,
-          "MapToBit": 29
+          "Name": "APU MASTERSW",
+          "Pin": 4,
+          "MapToBit": 9
         },
         {
           "Name": "PACK2",
@@ -427,24 +412,24 @@
           "MapToBit": 30
         },
         {
-          "Name": "TERR",
-          "Pin": 14,
-          "MapToBit": 31
+          "Name": "APU BLEED",
+          "Pin": 6,
+          "MapToBit": 10
         },
         {
-          "Name": "IR1",
-          "Pin": 13,
-          "MapToBit": 42
+          "Name": "PACK1",
+          "Pin": 7,
+          "MapToBit": 29
         },
         {
-          "Name": "IR2",
-          "Pin": 12,
-          "MapToBit": 43
+          "Name": "PROBE WINDOW HEAT",
+          "Pin": 8,
+          "MapToBit": 28
         },
         {
-          "Name": "IR3",
-          "Pin": 11,
-          "MapToBit": 44
+          "Name": "CREW OXYGEN SUPPLY",
+          "Pin": 9,
+          "MapToBit": 46
         },
         {
           "Name": "GROUND CTL",
@@ -452,9 +437,24 @@
           "MapToBit": 45
         },
         {
-          "Name": "CREW OXYGEN SUPPLY",
-          "Pin": 9,
-          "MapToBit": 46
+          "Name": "IR3",
+          "Pin": 11,
+          "MapToBit": 44
+        },
+        {
+          "Name": "IR2",
+          "Pin": 12,
+          "MapToBit": 43
+        },
+        {
+          "Name": "IR1",
+          "Pin": 13,
+          "MapToBit": 42
+        },
+        {
+          "Name": "TERR",
+          "Pin": 14,
+          "MapToBit": 31
         },
         {
           "Name": "LDGFLAP3",
@@ -464,69 +464,9 @@
       ],
       "Multiplexer 4": [
         {
-          "Name": "NO SMOKING AUTO/ON",
-          "Pin": 3,
-          "MapToBit": 34
-        },
-        {
-          "Name": "ADIRS-1 OFF/NAV",
-          "Pin": 6,
-          "MapToBit": 36
-        },
-        {
-          "Name": "ADIRS-2 OFF/NAV",
-          "Pin": 10,
-          "MapToBit": 37
-        },
-        {
-          "Name": "ADIRS-3 OFF/NAV",
-          "Pin": 8,
-          "MapToBit": 38
-        },
-        {
-          "Name": "ADIRS-1 ATT",
-          "Pin": 7,
-          "MapToBit": 39
-        },
-        {
-          "Name": "ADIRS-2 ATT",
-          "Pin": 11,
-          "MapToBit": 40
-        },
-        {
-          "Name": "ADIRS-3 ATT",
-          "Pin": 9,
-          "MapToBit": 41
-        },
-        {
-          "Name": "AIR XBLEED AUTO/OPEN",
-          "Pin": 13,
-          "MapToBit": 54
-        },
-        {
-          "Name": "AIR XBLEED CLOSE?AUTO",
-          "Pin": 12,
-          "MapToBit": 55
-        },
-        {
-          "Name": "EMERGENCY EXIT ON",
-          "Pin": 5,
-          "MapToBit": 56
-        },
-        {
-          "Name": "EMERGENCY EXIT OFF",
-          "Pin": 4,
-          "MapToBit": 57
-        },
-        {
-          "Name": "WIPER-OFF",
-          "Pin": 15,
-          "MapToBit": 59
-        },
-        {
-          "Name": "WIPER-FAST",
-          "Pin": 14,
-          "MapToBit": 60
+          "Name": "DOME LIGHT BRT",
+          "Pin": 0,
+          "MapToBit": 62
         },
         {
           "Name": "DOME LIGHT DIM",
@@ -534,9 +474,69 @@
           "MapToBit": 61
         },
         {
-          "Name": "DOME LIGHT BRT",
-          "Pin": 0,
-          "MapToBit": 62
+          "Name": "NO SMOKING AUTO/ON",
+          "Pin": 3,
+          "MapToBit": 34
+        },
+        {
+          "Name": "EMERGENCY EXIT OFF",
+          "Pin": 4,
+          "MapToBit": 57
+        },
+        {
+          "Name": "EMERGENCY EXIT ON",
+          "Pin": 5,
+          "MapToBit": 56
+        },
+        {
+          "Name": "ADIRS-1 OFF/NAV",
+          "Pin": 6,
+          "MapToBit": 36
+        },
+        {
+          "Name": "ADIRS-1 ATT",
+          "Pin": 7,
+          "MapToBit": 39
+        },
+        {
+          "Name": "ADIRS-3 OFF/NAV",
+          "Pin": 8,
+          "MapToBit": 38
+        },
+        {
+          "Name": "ADIRS-3 ATT",
+          "Pin": 9,
+          "MapToBit": 41
+        },
+        {
+          "Name": "ADIRS-2 OFF/NAV",
+          "Pin": 10,
+          "MapToBit": 37
+        },
+        {
+          "Name": "ADIRS-2 ATT",
+          "Pin": 11,
+          "MapToBit": 40
+        },
+        {
+          "Name": "AIR XBLEED CLOSE?AUTO",
+          "Pin": 12,
+          "MapToBit": 55
+        },
+        {
+          "Name": "AIR XBLEED AUTO/OPEN",
+          "Pin": 13,
+          "MapToBit": 54
+        },
+        {
+          "Name": "WIPER-FAST",
+          "Pin": 14,
+          "MapToBit": 60
+        },
+        {
+          "Name": "WIPER-OFF",
+          "Pin": 15,
+          "MapToBit": 59
         }
       ]
     }
