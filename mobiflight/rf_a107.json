@@ -7,260 +7,209 @@
       "ShiftRegister 1": [
         {
           "Name": "EXTERNAL PWR-1",
-          "Pin": 24,
-          "MapType": "int"
+          "Pin": 24
         },
         {
           "Name": "AUP-FIRE-LED",
-          "Pin": 3,
-          "MapType": "int"
+          "Pin": 3
         },
         {
           "Name": "ENG1-FIRE-1",
-          "Pin": 2,
-          "MapType": "int"
+          "Pin": 2
         },
         {
           "Name": "ENG2-FIRE-1",
-          "Pin": 4,
-          "MapType": "int"
+          "Pin": 4
         },
         {
           "Name": "BAT1-1",
-          "Pin": 29,
-          "MapType": "int"
+          "Pin": 29
         },
         {
           "Name": "BAT1-2",
-          "Pin": 28,
-          "MapType": "int"
+          "Pin": 28
         },
         {
           "Name": "BAT2-1",
-          "Pin": 31,
-          "MapType": "int"
+          "Pin": 31
         },
         {
           "Name": "BAT2-2",
-          "Pin": 30,
-          "MapType": "int"
+          "Pin": 30
         },
         {
           "Name": "ADIRS ON BAT",
-          "Pin": 1,
-          "MapType": "int"
+          "Pin": 1
         },
         {
           "Name": "IR1-1",
-          "Pin": 0,
-          "MapType": "int"
+          "Pin": 0
         },
         {
           "Name": "IR1-2",
-          "Pin": 9,
-          "MapType": "int"
+          "Pin": 9
         },
         {
           "Name": "IR3-1",
-          "Pin": 10,
-          "MapType": "int"
+          "Pin": 10
         },
         {
           "Name": "IR3-2",
-          "Pin": 11,
-          "MapType": "int"
+          "Pin": 11
         },
         {
           "Name": "IR2-1",
-          "Pin": 12,
-          "MapType": "int"
+          "Pin": 12
         },
         {
           "Name": "IR2-2",
-          "Pin": 13,
-          "MapType": "int"
+          "Pin": 13
         },
         {
           "Name": "LDG FLAP3-2",
-          "Pin": 5,
-          "MapType": "int"
+          "Pin": 5
         },
         {
           "Name": "RCDR GND CTL-2",
-          "Pin": 6,
-          "MapType": "int"
+          "Pin": 6
         },
         {
           "Name": "OXYGEN CREW SUPPLY-2",
-          "Pin": 7,
-          "MapType": "int"
+          "Pin": 7
         },
         {
           "Name": "PUMP-L-MAIN-1",
-          "Pin": 14,
-          "MapType": "int"
+          "Pin": 14
         },
         {
           "Name": "PUMP-L-MAIN-2",
-          "Pin": 15,
-          "MapType": "int"
+          "Pin": 15
         },
         {
           "Name": "PUMP-L-STBY-1",
-          "Pin": 8,
-          "MapType": "int"
+          "Pin": 8
         },
         {
           "Name": "PUMP-L-STBY-2",
-          "Pin": 17,
-          "MapType": "int"
+          "Pin": 17
         },
         {
           "Name": "PUMP-L-1",
-          "Pin": 18,
-          "MapType": "int"
+          "Pin": 18
         },
         {
           "Name": "PUMP-L-2",
-          "Pin": 19,
-          "MapType": "int"
+          "Pin": 19
         },
         {
           "Name": "PUMP-CENTER-TANK-1",
-          "Pin": 20,
-          "MapType": "int"
+          "Pin": 20
         },
         {
           "Name": "PUMP-CENTER-TANK-2",
-          "Pin": 21,
-          "MapType": "int"
+          "Pin": 21
         },
         {
           "Name": "PUMP-R-1",
-          "Pin": 22,
-          "MapType": "int"
+          "Pin": 22
         },
         {
           "Name": "PUMP-R-2",
-          "Pin": 23,
-          "MapType": "int"
+          "Pin": 23
         },
         {
           "Name": "PUMP-R-MAIN-1",
-          "Pin": 16,
-          "MapType": "int"
+          "Pin": 16
         },
         {
           "Name": "PUMP-R-MAIN-2 ",
-          "Pin": 25,
-          "MapType": "int"
+          "Pin": 25
         },
         {
           "Name": "PUMP-R-STBY-1",
-          "Pin": 26,
-          "MapType": "int"
+          "Pin": 26
         },
         {
           "Name": "PUMP-R-STBY-2",
-          "Pin": 27,
-          "MapType": "int"
+          "Pin": 27
         }
       ],
       "ShiftRegister 2": [
         {
           "Name": "EXTERNAL PWR-2",
-          "Pin": 1,
-          "MapType": "int"
+          "Pin": 1
         },
         {
           "Name": "APU MASTERSW-1",
-          "Pin": 10,
-          "MapType": "int"
+          "Pin": 10
         },
         {
           "Name": "APU MASTERSW-2",
-          "Pin": 11,
-          "MapType": "int"
+          "Pin": 11
         },
         {
           "Name": "APU START-1",
-          "Pin": 18,
-          "MapType": "int"
+          "Pin": 18
         },
         {
           "Name": "APU START-2",
-          "Pin": 19,
-          "MapType": "int"
+          "Pin": 19
         },
         {
           "Name": "APU BLEED-1",
-          "Pin": 6,
-          "MapType": "int"
+          "Pin": 6
         },
         {
           "Name": "APU BLEED-2",
-          "Pin": 7,
-          "MapType": "int"
+          "Pin": 7
         },
         {
           "Name": "PACK1-1",
-          "Pin": 4,
-          "MapType": "int"
+          "Pin": 4
         },
         {
           "Name": "PACK1-2",
-          "Pin": 5,
-          "MapType": "int"
+          "Pin": 5
         },
         {
           "Name": "PACK2-1",
-          "Pin": 0,
-          "MapType": "int"
+          "Pin": 0
         },
         {
           "Name": "PACK2-2",
-          "Pin": 9,
-          "MapType": "int"
+          "Pin": 9
         },
         {
           "Name": "ANTI ICE WING-1",
-          "Pin": 12,
-          "MapType": "int"
+          "Pin": 12
         },
         {
           "Name": "ANTI ICE WING-2",
-          "Pin": 13,
-          "MapType": "int"
+          "Pin": 13
         },
         {
           "Name": "ANTI ICE ENG1-1",
-          "Pin": 14,
-          "MapType": "int"
+          "Pin": 14
         },
         {
           "Name": "ANTI ICE ENG1-2",
-          "Pin": 15,
-          "MapType": "int"
+          "Pin": 15
         },
         {
           "Name": "ANTI ICE ENG2-1",
-          "Pin": 8,
-          "MapType": "int"
+          "Pin": 8
         },
         {
           "Name": "ANTI ICE ENG2-2",
-          "Pin": 17,
-          "MapType": "int"
+          "Pin": 17
         },
         {
           "Name": "PROBE WINDOW HEAT-2",
-          "Pin": 3,
-          "MapType": "int"
+          "Pin": 3
         },
         {
           "Name": "EMER EXIT LT",
-          "Pin": 22,
-          "MapType": "int"
+          "Pin": 22
         }
       ]
     }

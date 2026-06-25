@@ -1,4 +1,4 @@
-﻿{
+{
   "ProductName": "CfMega",
   "ModuleName": "MF Mega Pro",
   "ModuleSerial": "SN-3F1-FDD",
@@ -6,8 +6,7 @@
     "Stepper": {
       "Stepper": [
         {
-          "Name": "ENG RPM",
-          "MapType": "int"
+          "Name": "ENG RPM"
         }
       ]
     }
@@ -18,19 +17,34 @@
         {
           "Name": "G1000 FMS inner",
           "Pin": 0,
-          "MapToBits": [0, 1, 2, 3]
+          "MapToBits": [
+            0,
+            1,
+            2,
+            3
+          ]
         },
         {
           "Name": "G1000 Heading",
           "Pin": 0,
-          "MapToBits": [10, 11, 12, 13]
+          "MapToBits": [
+            10,
+            11,
+            12,
+            13
+          ]
         }
       ],
       "Encoder_big": [
         {
           "Name": "G1000 FMS outer",
           "Pin": 0,
-          "MapToBits": [4, 5, 6, 7]
+          "MapToBits": [
+            4,
+            5,
+            6,
+            7
+          ]
         }
       ]
     },

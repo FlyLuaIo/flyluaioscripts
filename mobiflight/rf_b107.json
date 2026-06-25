@@ -7,218 +7,176 @@
       "ShiftRegister 1": [
         {
           "Name": "Fuel Pump Aft 1 Low Pressure",
-          "Pin": 0,
-          "MapType": "int"
+          "Pin": 0
         },
         {
           "Name": "Fuel Pump Fwd 1 Low Pressure",
-          "Pin": 1,
-          "MapType": "int"
+          "Pin": 1
         },
         {
           "Name": "Fuel Pump Fwd 2 Low Pressure",
-          "Pin": 2,
-          "MapType": "int"
+          "Pin": 2
         },
         {
           "Name": "Fuel Pump Aft 2 Low Pressure",
-          "Pin": 3,
-          "MapType": "int"
+          "Pin": 3
         },
         {
           "Name": "Fuel Pump Center Left Low Pressure",
-          "Pin": 4,
-          "MapType": "int"
+          "Pin": 4
         },
         {
           "Name": "Fuel Pump Center Right Low Pressure",
-          "Pin": 5,
-          "MapType": "int"
+          "Pin": 5
         },
         {
           "Name": "Maint blue led",
-          "Pin": 6,
-          "MapType": "int"
+          "Pin": 6
         },
         {
           "Name": "Low Oil Pressure",
-          "Pin": 7,
-          "MapType": "int"
+          "Pin": 7
         },
         {
           "Name": "APU Fault",
-          "Pin": 8,
-          "MapType": "int"
+          "Pin": 8
         },
         {
           "Name": "APU Overspeed",
-          "Pin": 9,
-          "MapType": "int"
+          "Pin": 9
         },
         {
           "Name": "Left Source Off",
-          "Pin": 10,
-          "MapType": "int"
+          "Pin": 10
         },
         {
           "Name": "Left Transfer Bus Off",
-          "Pin": 11,
-          "MapType": "int"
+          "Pin": 11
         },
         {
           "Name": "Right Source Off",
-          "Pin": 12,
-          "MapType": "int"
+          "Pin": 12
         },
         {
           "Name": "Right Transfer Bus Off",
-          "Pin": 13,
-          "MapType": "int"
+          "Pin": 13
         },
         {
           "Name": "Drive 1 Disconnect",
-          "Pin": 14,
-          "MapType": "int"
+          "Pin": 14
         },
         {
           "Name": "Standby Power Off LED",
-          "Pin": 15,
-          "MapType": "int"
+          "Pin": 15
         },
         {
           "Name": "Drive 2 Disconnect",
-          "Pin": 16,
-          "MapType": "int"
+          "Pin": 16
         },
         {
           "Name": "Left Gen Off Bus",
-          "Pin": 17,
-          "MapType": "int"
+          "Pin": 17
         },
         {
           "Name": "Right Gen Off Bus",
-          "Pin": 18,
-          "MapType": "int"
+          "Pin": 18
         },
         {
           "Name": "Apu Gen Off Bus",
-          "Pin": 19,
-          "MapType": "int"
+          "Pin": 19
         },
         {
           "Name": "Yaw Damper OH led",
-          "Pin": 20,
-          "MapType": "int"
+          "Pin": 20
         }
       ],
       "ShiftRegister": [
         {
           "Name": "Hyd Pump A Eng1 Low Pressure",
-          "Pin": 0,
-          "MapType": "int"
+          "Pin": 0
         },
         {
           "Name": "Hyd Pump A Elec2 Low Pressure",
-          "Pin": 1,
-          "MapType": "int"
+          "Pin": 1
         },
         {
           "Name": "Hyd Pump B Elec1 Low Pressure",
-          "Pin": 2,
-          "MapType": "int"
+          "Pin": 2
         },
         {
           "Name": "Hyd Pump B Eng2 Low Pressure",
-          "Pin": 3,
-          "MapType": "int"
+          "Pin": 3
         },
         {
           "Name": "Hyd Pump A Overheat",
-          "Pin": 4,
-          "MapType": "int"
+          "Pin": 4
         },
         {
           "Name": "Hyd Pump B Overheat",
-          "Pin": 5,
-          "MapType": "int"
+          "Pin": 5
         },
         {
           "Name": "Wing Anti Ice Left Valve Open",
-          "Pin": 6,
-          "MapType": "int"
+          "Pin": 6
         },
         {
           "Name": "Wing Anti Ice Right Valve Open",
-          "Pin": 7,
-          "MapType": "int"
+          "Pin": 7
         },
         {
           "Name": "Eng Anti-Ice L Cowl Valve Open",
-          "Pin": 8,
-          "MapType": "int"
+          "Pin": 8
         },
         {
           "Name": "Eng Anti-Ice R Cowl Valve Open",
-          "Pin": 9,
-          "MapType": "int"
+          "Pin": 9
         },
         {
           "Name": "Eng Anti-Ice L Cowl Anti-Ice",
-          "Pin": 10,
-          "MapType": "int"
+          "Pin": 10
         },
         {
           "Name": "Eng Anti-Ice R Cowl Anti-Ice",
-          "Pin": 11,
-          "MapType": "int"
+          "Pin": 11
         },
         {
           "Name": "Window Heat Left Side On",
-          "Pin": 12,
-          "MapType": "int"
+          "Pin": 12
         },
         {
           "Name": "Window Heat Left Fwd On",
-          "Pin": 13,
-          "MapType": "int"
+          "Pin": 13
         },
         {
           "Name": "Window Heat Right Fwd On",
-          "Pin": 14,
-          "MapType": "int"
+          "Pin": 14
         },
         {
           "Name": "Window Heat Right Side On",
-          "Pin": 15,
-          "MapType": "int"
+          "Pin": 15
         },
         {
           "Name": "Window Heat Left Fwd Overheat",
-          "Pin": 16,
-          "MapType": "int"
+          "Pin": 16
         },
         {
           "Name": "Window Heat Left Side Overheat",
-          "Pin": 19,
-          "MapType": "int"
+          "Pin": 19
         },
         {
           "Name": "Window Heat Right Fwd Overheat",
-          "Pin": 17,
-          "MapType": "int"
+          "Pin": 17
         },
         {
           "Name": "Window Heat Right Side Overheat",
-          "Pin": 18,
-          "MapType": "int"
+          "Pin": 18
         }
       ]
     },
     "Stepper": {
       "Stepper": [
         {
-          "Name": "EGT",
-          "MapType": "int"
+          "Name": "EGT"
         }
       ]
     }

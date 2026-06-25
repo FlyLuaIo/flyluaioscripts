@@ -1,4 +1,4 @@
-﻿{
+{
   "ProductName": "CfNano",
   "ModuleName": "cfmfnano",
   "ModuleSerial": "SN-61D-31A",
@@ -6,8 +6,7 @@
     "Display Module": {
       "LedModule": [
         {
-          "Name": "GA ENG RPM",
-          "MapType": "int"
+          "Name": "GA ENG RPM"
         }
       ]
     }
