@@ -13,9 +13,7 @@ local FastTurnsPerSecond = 40 -- How many spins per second  is considered FAST?
 local MaxBrightness = 60 -- Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
 
 -- ###############################################################################################
-if PLANE_ICAO ~= "A330" then
-    return
-end
+if ilua_require_plane_icao("A330") then return end
 
 -- Do not remove below lines: hardware detection
 local qfcu = com.sim.qm.Qfcu:new()

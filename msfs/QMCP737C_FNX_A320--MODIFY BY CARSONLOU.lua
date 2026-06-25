@@ -14,11 +14,7 @@ local FastTurnsPerSecond = 40 -- How many spins per second  is considered FAST?
 local MaxBightness = 30       -- Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
 --
 -- ########################################################
-if ilua_is_acftitle_excluded("Fenix") and ilua_is_acfpath_excluded("fnx-") then
-    if ilua_is_acftitle_excluded("Fenix") and ilua_is_acfpath_excluded("FNX_") then
-        return
-    end
-end
+if ilua_require_fenix_a320() then return end
 
 local fnxready = false
 

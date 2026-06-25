@@ -1,9 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2025-09-10
 -- *****************************************************************
-if ilua_is_acfpath_excluded("PMDG") or ilua_is_acfpath_excluded("737") then
-    return
-end
+if ilua_require_pmdg_737() then return end
 
 -- Do not remove below lines: hardware detection
 local qmovha = com.sim.qm.Qmovha:new()

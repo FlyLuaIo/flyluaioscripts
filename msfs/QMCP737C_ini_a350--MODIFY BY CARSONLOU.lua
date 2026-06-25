@@ -17,9 +17,7 @@ local MaxBightness = 30       -- Max brightness set   /背光的最大亮度设�
 --
 -- ########################################################
 
-if ilua_is_acfpath_excluded("a350") or ilua_is_acfpath_excluded("inibuild") then
-    return
-end
+if ilua_require_inibuild_a350() then return end
 
 -- Do not remove below lines: hardware detection
 local qmcp737c = com.sim.qm.Qmcp737c:new()

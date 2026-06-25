@@ -7,9 +7,7 @@ local MaxBrightness = 100 -- Max brightness set   /背光的最大亮度设定,�
 -- ###############################################################################################
 -- modified by Wei Shuai <cpuwolf@gmail.com> 2024-05-12 LVFR
 
-if ilua_is_acfpath_excluded("lvfr") or ilua_is_acfpath_excluded("a3") then
-    return
-end
+if ilua_require_lvfr_a3xx() then return end
 
 -- Do not remove below lines: hardware detection
 local qfcu = com.sim.qm.Qfcu:new()

@@ -1,9 +1,7 @@
 -- **********************************************************************************************************--
 -- modified by Wei Shuai <cpuwolf@gmail.com> 2024-05-11 asobo TBM930
 -- ########################################################
-if ilua_is_acfpath_excluded("Asobo") or ilua_is_acfpath_excluded("TBM930") then
-    return
-end
+if ilua_require_asobo_tbm930() then return end
 
 -- Do not remove below lines: hardware detection
 local qmcp737c = com.sim.qm.Qmcp737c:new()

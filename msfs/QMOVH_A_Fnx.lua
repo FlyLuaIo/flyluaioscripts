@@ -1,11 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2025-08-26
 -- *****************************************************************
-if ilua_is_acftitle_excluded("Fenix") and ilua_is_acfpath_excluded("fnx-") then
-    if ilua_is_acftitle_excluded("Fenix") and ilua_is_acfpath_excluded("FNX_") then
-        return
-    end
-end
+if ilua_require_fenix_a320() then return end
 
 -- Do not remove below lines: hardware detection
 local qmovha = com.sim.qm.Qmovha:new()

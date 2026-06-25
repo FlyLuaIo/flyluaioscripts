@@ -3,9 +3,7 @@
 -- modified by Wei Shuai <cpuwolf@gmail.com> 2024-02-06 asobo 747-8 1.36.2.0
 -- https://sourceforge.net/projects/qmdevsimconnect/
 -- ########################################################
-if ilua_is_acftitle_excluded("Salty") and ilua_is_acftitle_excluded("747") then
-    return
-end
+if ilua_require_salty_747() then return end
 
 -- Do not remove below lines: hardware detection
 local qcdub = com.sim.qm.Qcdub:new()

@@ -53,9 +53,7 @@ a320/Panel/LightShield
 a320/Panel/LightDisplay
 *****************************  End (not include this line)*************************
 ]]
-if PLANE_ICAO ~= "A320" or PLANE_TAILNUMBER ~= "D-AXLA" then
-    return
-end
+if ilua_require_ff320() then return end
 
 -- Do not remove below lines: hardware detection
 local qfcu = com.sim.qm.Qfcu:new()

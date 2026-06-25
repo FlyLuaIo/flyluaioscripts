@@ -3,9 +3,7 @@
 -- *****************************************************************
 
 
-if PLANE_ICAO ~= "C172" or ilua_is_acftitle_excluded("airfoillabs") or ilua_is_acfpath_excluded("analog") then
-    return
-end
+if ilua_require_afl_c172_ana() then return end
 
 -- Do not remove below lines: hardware detection
 local qmpe = com.sim.qm.Qmpe:new()

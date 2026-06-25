@@ -1,9 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-05-22
 -- *****************************************************************
-if ilua_is_acfpath_excluded("a310") or ilua_is_acfpath_excluded("300") then
-    return
-end
+if ilua_require_inibuild_a310() then return end
 
 -- Do not remove below lines: hardware detection
 local qcdua = com.sim.qm.Qcdua:new()
@@ -110,8 +108,6 @@ function CDU_INIA310_LED_UPD()
     qcdua:SetFm2()
 
     qcdua:SetBkl()
-
 end
 
 GlobalFrameLoopManager:add(CDU_INIA310_LED_UPD)
-

@@ -1,16 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-05-25
 -- *****************************************************************
-if ilua_is_acfpath_excluded("a320") or ilua_is_acfpath_excluded("microsoft-") then
-    if ilua_is_acfpath_excluded("a330") or ilua_is_acfpath_excluded("inibuild") then
-        if ilua_is_acfpath_excluded("a21n") or ilua_is_acfpath_excluded("inibuild") then
-            if ilua_is_acfpath_excluded("belugax") or ilua_is_acfpath_excluded("inibuild") then
-                return
-            end
-
-        end
-    end
-end
+if ilua_require_inibuild_a3xx_family() then return end
 
 -- Do not remove below lines: hardware detection
 local qcdua = com.sim.qm.Qcdua:new()
@@ -19,7 +10,7 @@ if not qcdua:Init() then
 end
 -- Do not remove above lines: hardware detection
 
-uluaLog("QCDU-A320 for Inibuild A320 and A330")
+uluaLog("QCDU-A320 for Inibuild A3XX")
 
 -- A330
 local isINIA330 = false
@@ -119,12 +110,13 @@ qcdua:GetFm2("(L:INI_FMC1_FM2)")
 qcdua:GetMenu("(L:INI_FMC1_MCDU)")
 qcdua:GetFail("(L:INI_FMC1_FAIL)")
 qcdua:GetFmgc("(L:INI_FMC1_FM)")
+-- qcdua:GetBkl("(L:INI_POTENTIOMETER_14)", 0.3)
 qcdua:GetBkl("(A:LIGHT POTENTIOMETER:15, Percent)", 0.3)
 
-local dr_test = iDataRef:New("(L:INI_ANNLT_SWITCH, number)") -- 0: TEST 1:BRT: 2: DIM
+local dr_test = iDataRef:New("(L:INI_ANNLT_SWITCH, number)")                 -- 0: TEST 1:BRT: 2: DIM
 local dr_power = iDataRef:New("(L:INI_DC_ESSENTIAL_BUS_IS_POWERED, number)") -- 0: OFF 1: ON
 
-function CDU_INIA320_LED_UPD()
+GlobalFrameLoopManager:add(function()
     -- expert code: cold and dark
     local b_power = dr_power:Get()
     if b_power == 0 then
@@ -153,8 +145,4 @@ function CDU_INIA320_LED_UPD()
     qcdua:SetFm2()
 
     qcdua:SetBkl()
-
-end
-
-GlobalFrameLoopManager:add(CDU_INIA320_LED_UPD)
-
+end)

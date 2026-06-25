@@ -1,18 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-05-16
 -- *****************************************************************
-if ilua_is_acftitle_excluded("B77") then
-    return
-end
-
-local file
-file = AIRCRAFT_PATH .. "\\..\\plugins\\T7Avionics\\64\\win.xpl"
--- uluaLog(file)
-
-if ilua_file_exists(file) then
-    uluaLog("FF777 old")
-    return
-end
+if ilua_require_ff777(true) then return end
 
 -- Do not remove below lines: hardware detection
 local qmpe = com.sim.qm.Qmpe:new()

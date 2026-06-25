@@ -4,9 +4,7 @@
 local FastTurnsPerSecond = 30 --How many spins per second  is considered FAST?
 --########################################################
 
-if ilua_is_acfpath_excluded("pro") or ilua_is_acfpath_excluded("a34") then
-    return
-end
+if ilua_require_aerosoft_a346() then return end
 
 -- Do not remove below lines: hardware detection
 local hcbravo = com.sim.qm.Hcbravo:new()

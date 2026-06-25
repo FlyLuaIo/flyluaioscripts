@@ -18,9 +18,7 @@ local IsAlreadyInit = 0 --是否已经初始化过了，用来设定首次通电
 --
 --laminar/B738/electric/panel_brightness 面板背光，四个数组，浮点
 --########################################################
-if PLANE_ICAO ~= "B38M" and PLANE_TAILNUMBER ~= "ZB38M" then
-    return
-end
+if ilua_require_ww737max10() then return end
 
 -- Do not remove below lines: hardware detection
 local qmcp737c = com.sim.qm.Qmcp737c:new()

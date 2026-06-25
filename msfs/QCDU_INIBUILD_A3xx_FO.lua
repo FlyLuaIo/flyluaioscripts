@@ -1,9 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-11-30
 -- *****************************************************************
-if ilua_is_acfpath_excluded("a340") or ilua_is_acfpath_excluded("inibuild") then
-    return
-end
+if ilua_require_inibuild_a3xx_family() then return end
 
 -- Do not remove below lines: hardware detection
 local qcduaf = com.sim.qm.Qcduaf:new()
@@ -12,7 +10,7 @@ if not qcduaf:Init() then
 end
 -- Do not remove above lines: hardware detection
 
-uluaLog("QCDU-A320 for Inibuild A340")
+uluaLog("QCDU-A320 for Inibuild A3XX FO")
 
 -- A330
 local isINIA330 = false
@@ -108,12 +106,12 @@ qcduaf:GetFm2("(L:INI_FMC2_FM2)")
 qcduaf:GetMenu("(L:INI_FMC2_MCDU)")
 qcduaf:GetFail("(L:INI_FMC2_FAIL)")
 qcduaf:GetFmgc("(L:INI_FMC2_FM)")
-qcduaf:GetBkl("(L:INI_POTENTIOMETER_14)", 0.3)                                -- 0~100
+qcduaf:GetBkl("(L:INI_POTENTIOMETER_14)", 0.3)                               -- 0~100
 
 local dr_test = iDataRef:New("(L:INI_ANNLT_SWITCH, number)")                 -- 0: TEST 1:BRT: 2: DIM
 local dr_power = iDataRef:New("(L:INI_DC_ESSENTIAL_BUS_IS_POWERED, number)") -- 0: OFF 1: ON
 
-function CDU_INIA320_FO_LED_UPD()
+GlobalFrameLoopManager:add(function()
     -- expert code: cold and dark
     local b_power = dr_power:Get()
     if b_power == 0 then
@@ -142,6 +140,4 @@ function CDU_INIA320_FO_LED_UPD()
     qcduaf:SetFm2()
 
     qcduaf:SetBkl()
-end
-
-GlobalFrameLoopManager:add(CDU_INIA320_FO_LED_UPD)
+end)

@@ -3,9 +3,7 @@
 -- Modify by Carson Lou <carsonlu@sohu.com> 2026-05-09
 -- *****************************************************************
 
-if ilua_is_acfpath_excluded('PMDG') or ilua_is_acfpath_excluded('777') then
-	return
-end
+if ilua_require_pmdg_777() then return end
 
 -- Do not remove below lines: hardware detection
 local wwagp = com.sim.qm.Wwagp:new()

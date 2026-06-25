@@ -1,9 +1,7 @@
 -- *****************************************************************
 -- created by Joseph Yoon <joseph@jyoon.pro> 2024-07-01
 -- *****************************************************************
-if ilua_is_acfpath_excluded("TFDi") and ilua_is_acfpath_excluded("MD-11") then
-    return
-end
+if ilua_require_tfdi_md11() then return end
 
 -- Do not remove below lines: hardware detection
 local qcdua = com.sim.qm.Qcdua:new()

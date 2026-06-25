@@ -2,9 +2,7 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-16
 -- *****************************************************************
 
-if ilua_is_acfpath_excluded("cl650") then
-    return
-end
+if ilua_require_cl650() then return end
 
 
 -- Do not remove below lines: hardware detection

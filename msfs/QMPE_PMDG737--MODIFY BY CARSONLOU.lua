@@ -2,9 +2,7 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-05-16
 -- Modify by Carson Lou <carsonlu@sohu.com> 2025-7-25
 -- *****************************************************************
-if ilua_is_acfpath_excluded("PMDG") or ilua_is_acfpath_excluded("737") then
-    return
-end
+if ilua_require_pmdg_737() then return end
 
 -- Do not remove below lines: hardware detection
 local qmpe = com.sim.qm.Qmpe:new()

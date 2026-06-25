@@ -15,14 +15,7 @@ local FastTurnsPerSecond = 40 -- How many spins per second  is considered FAST?
 local MaxBightness = 30       -- Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
 --
 -- ########################################################
-if ilua_is_acftitle_excluded("B73") then
-    return
-end
-
-if uluaFind("laminar/B738/EFIS_control/cpt/minimums_dn") == nil or uluaFind("laminar/B738/EFIS_control/cpt/minimums") == nil then
-    uluaLog("this is not zibo 738")
-    return
-end
+if ilua_require_zibo() then return end
 
 -- Do not remove below lines: hardware detection
 local qmcp737c = com.sim.qm.Qmcp737c:new()

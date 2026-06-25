@@ -2,9 +2,7 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-20
 -- *****************************************************************
 
-if ilua_is_acfpath_excluded('fslabs') then
-	return
-end
+if ilua_require_fslabs_a32x() then return end
 
 -- Do not remove below lines: hardware detection
 local wwagp = com.sim.qm.Wwagp:new()

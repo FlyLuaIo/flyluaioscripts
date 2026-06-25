@@ -1,9 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-05-22
 -- *****************************************************************
-if ilua_is_acfpath_excluded("lvfr") or ilua_is_acfpath_excluded("a3") then
-    return
-end
+if ilua_require_lvfr_a3xx() then return end
 
 -- Do not remove below lines: hardware detection
 local qcdua = com.sim.qm.Qcdua:new()

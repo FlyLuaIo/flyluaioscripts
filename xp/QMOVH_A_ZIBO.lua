@@ -2,14 +2,7 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-06-05
 -- *****************************************************************
 
-if ilua_is_acftitle_excluded("B73") then
-    return
-end
-
-if uluaFind("laminar/B738/EFIS_control/cpt/minimums_dn") == nil or uluaFind("laminar/B738/EFIS_control/cpt/minimums") == nil then
-    uluaLog("this is not zibo 738")
-    return
-end
+if ilua_require_zibo() then return end
 
 -- Do not remove below lines: hardware detection
 local qmovha = com.sim.qm.Qmovha:new()

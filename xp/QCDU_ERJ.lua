@@ -2,9 +2,7 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2025-11-28
 -- *****************************************************************
 
-if ilua_is_acftitle_excluded("E1") or ilua_is_acfpath_excluded("embraer") then
-    return
-end
+if ilua_require_erj() then return end
 
 
 -- Do not remove below lines: hardware detection

@@ -4,9 +4,7 @@
 -- modified by Wei Shuai <cpuwolf@gmail.com> 2020-06-18 add C90B
 -- modified by Wei Shuai <cpuwolf@gmail.com> 2024-02-06 asobo 747-8 1.36.2.0
 -- ########################################################
-if ilua_is_acftitle_excluded("Salty") and ilua_is_acftitle_excluded("747") then
-    return
-end
+if ilua_require_salty_747() then return end
 
 -- Do not remove below lines: hardware detection
 local qmcp737c = com.sim.qm.Qmcp737c:new()

@@ -1,9 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-05-25
 -- *****************************************************************
-if ilua_is_acfpath_excluded("a350") or ilua_is_acfpath_excluded("inibuild") then
-    return
-end
+if ilua_require_inibuild_a350() then return end
 
 -- Do not remove below lines: hardware detection
 local qcdua = com.sim.qm.Qcdua:new()

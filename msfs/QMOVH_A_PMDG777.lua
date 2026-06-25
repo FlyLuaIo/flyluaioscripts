@@ -3,9 +3,7 @@
 -- modify by Carson Lou <50984721@qq.com> 2025-11-23
 -- *****************************************************************
 -- Do not remove below lines: hardware detection
-if ilua_is_acfpath_excluded("PMDG") or ilua_is_acfpath_excluded("777") then
-    return
-end
+if ilua_require_pmdg_777() then return end
 
 -- Do not remove below lines: hardware detection
 local qmovha = com.sim.qm.Qmovha:new()

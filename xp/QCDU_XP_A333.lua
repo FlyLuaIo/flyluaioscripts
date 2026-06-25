@@ -1,9 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-01-23
 -- *****************************************************************
-if PLANE_ICAO ~= "A333" then
-    return
-end
+if ilua_require_plane_icao("A333") then return end
 
 -- Do not remove below lines: hardware detection
 local qcdua = com.sim.qm.Qcdua:new()

@@ -1,9 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2025-09-14
 -- *****************************************************************
-if PLANE_ICAO ~= "A320" or PLANE_TAILNUMBER ~= "D-AXLA" then
-    return
-end
+if ilua_require_ff320() then return end
 
 -- Do not remove below lines: hardware detection
 local qmovha = com.sim.qm.Qmovha:new()

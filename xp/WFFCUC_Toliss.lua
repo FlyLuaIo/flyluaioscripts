@@ -3,11 +3,7 @@
 -- *****************************************************************
 
 
-if ilua_is_acftitle_excluded("A3") or ilua_is_acfpath_excluded("toliss") then
-	if ilua_is_acftitle_excluded("A2") or ilua_is_acfpath_excluded("toliss") then
-		return
-	end
-end
+if ilua_require_toliss() then return end
 
 -- Do not remove below lines: hardware detection
 local wffcuc = com.sim.wf.Wffcuc:new()

@@ -2,9 +2,7 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-16
 -- *****************************************************************
 
-if ilua_is_acfpath_excluded("a340") or ilua_is_acfpath_excluded("inibuild") then
-	return
-end
+if ilua_require_inibuild_a340() then return end
 
 -- Do not remove below lines: hardware detection
 local wwagp = com.sim.qm.Wwagp:new()
