@@ -1,6 +1,6 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-06-29
--- MobiFlight CfMega / G1000 for GA
+-- MobiFlight CfMega / MF Mega Pro for GA
 -- *****************************************************************
 
 -- Do not remove below lines: hardware detection

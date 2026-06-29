@@ -1,8 +1,7 @@
-
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-06-25
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-06-29
 -- source: mobiflight/CfMega.json
 -- *****************************************************************
 
@@ -24,33 +23,6 @@ function CfMega:absent(FastTurnsPerSecond)
 	_G.idr_cfmega_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/CfMega/fastkeypersec')
 	_G.idr_cfmega_mf_stepper_eng_rpm = uluaFind('cpuwolf/mf/CfMega/stepper/0/position')
 	uluaSet(_G.idr_cfmega_hid_fastkeypersec, FastTurnsPerSecond)
-
-	-- G1000 FMS inner (Encoder_small, MapToBits 0-3)
-	self.dr_enc_fms_inner = {}
-	self.dr_enc_fms_inner[1] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[0]')
-	self.dr_enc_fms_inner[2] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[1]')
-	self.dr_enc_fms_inner[3] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[2]')
-	self.dr_enc_fms_inner[4] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[3]')
-
-	-- G1000 Heading (Encoder_small, MapToBits 4-7)
-	self.dr_enc_hdg = {}
-	self.dr_enc_hdg[1] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[4]')
-	self.dr_enc_hdg[2] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[5]')
-	self.dr_enc_hdg[3] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[6]')
-	self.dr_enc_hdg[4] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[7]')
-
-	-- G1000 FMS outer (Encoder_big, MapToBits 8-11)
-	self.dr_enc_fms_outer = {}
-	self.dr_enc_fms_outer[1] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[8]')
-	self.dr_enc_fms_outer[2] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[9]')
-	self.dr_enc_fms_outer[3] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[10]')
-	self.dr_enc_fms_outer[4] = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[11]')
-
-	-- G1000 FMS push (Button, MapToBit 12)
-	self.dr_btn_fms_push = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[12]')
-
-	-- G1000 ENT (Button, MapToBit 13)
-	self.dr_btn_ent = iDataRef:New('cpuwolf/flyluaio/CfMega/keysmap[13]')
 
 	return false
 end
