@@ -40,7 +40,7 @@ cfmega:CfgCmd(9, "sim/GPS/g1000n3_ent")
 -- OUTPUT data
 
 -- ENG RPM stepper (scale may need tuning for your stepper module)
-cfmega:GetEngRpm('laminar/B738/brake/brake_press', 1)
+cfmega:GetEngRpm('sim/cockpit2/engine/indicators/engine_speed_rpm[0]', 1)
 
 GlobalFrameLoopManager:add(function()
 	cfmega:SetEngRpm()
