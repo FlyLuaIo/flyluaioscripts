@@ -557,17 +557,16 @@ end
 
 function Qmpe_Toliss_loop()
     -- expert code: cold and dark
-    if dr_power:ChangedUpdate() then
-        local b_power = dr_power:GetOld()
-        if b_power == 0 then
-            qmpe:Off()
-            return
-        else
-            if dr_bkl_power:Get() > 0 then
-                qmpe:FreshBkl()
-            end
+    local b_power = dr_power:Get()
+    if b_power == 0 then
+        qmpe:Off()
+        return
+    else
+        if dr_bkl_power:Get() > 0 then
+            qmpe:FreshBkl()
         end
     end
+
 
     -- expert code: test mode
     if dr_test:ChangedUpdate() then

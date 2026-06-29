@@ -47,7 +47,7 @@ function CfNano:InitLedModule()
 
 	uluaSet(_G.idr_cfnano_mf_segment_mask, 63)
 	uluaSet(_G.idr_cfnano_mf_segment_points, 8)
-	uluaSet(_G.idr_cfnano_mf_segment_brightness, 50)
+	uluaSet(_G.idr_cfnano_mf_segment_brightness, 1)
 	self.segment_commit_seq = 0
 end
 
