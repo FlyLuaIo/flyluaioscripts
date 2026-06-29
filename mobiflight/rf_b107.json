@@ -696,109 +696,104 @@
           "Name": "R WIPER INT",
           "Pin": 7,
           "MapToBit": 98
-        },
-        {
-          "Name": "R WIPER PARK",
-          "Pin": 7,
-          "MapToBit": 99
         }
       ],
       "Button 16": [
         {
           "Name": "ENGINE START 1- FLT",
           "Pin": 16,
-          "MapToBit": 100
+          "MapToBit": 99
         }
       ],
       "Button 11": [
         {
           "Name": "IRS L NAV",
           "Pin": 11,
-          "MapToBit": 101
+          "MapToBit": 100
         }
       ],
       "Button": [
         {
           "Name": "ATTEND",
           "Pin": 0,
-          "MapToBit": 102
+          "MapToBit": 101
         }
       ],
       "Button 1": [
         {
           "Name": "GRD CALL",
           "Pin": 1,
-          "MapToBit": 103
+          "MapToBit": 102
         }
       ],
       "Button 2": [
         {
           "Name": "TRIP RESET",
           "Pin": 2,
-          "MapToBit": 104
+          "MapToBit": 103
         }
       ],
       "Button 3": [
         {
           "Name": "Ovht Test",
           "Pin": 3,
-          "MapToBit": 105
+          "MapToBit": 104
         }
       ],
       "Button 6": [
         {
           "Name": "R WIPER INT",
           "Pin": 6,
-          "MapToBit": 106
+          "MapToBit": 105
         }
       ],
       "Button 5": [
         {
           "Name": "R WIPER LOW",
           "Pin": 5,
-          "MapToBit": 107
+          "MapToBit": 106
         }
       ],
       "Button 4": [
         {
           "Name": "R WIPER HIGH",
           "Pin": 4,
-          "MapToBit": 108
+          "MapToBit": 107
         }
       ],
       "Button 17": [
         {
           "Name": "ENGINE START 2- FLT ",
           "Pin": 17,
-          "MapToBit": 109
+          "MapToBit": 108
         }
       ],
       "Button 9": [
         {
           "Name": "IRS L OFF",
           "Pin": 9,
-          "MapToBit": 110
+          "MapToBit": 109
         }
       ],
       "Button 10": [
         {
           "Name": "IRS L ALIGN",
           "Pin": 10,
-          "MapToBit": 111
+          "MapToBit": 110
         }
       ],
       "Button 14": [
         {
           "Name": "IRS L ATT",
           "Pin": 14,
-          "MapToBit": 112
+          "MapToBit": 111
         }
       ],
       "Button 15": [
         {
           "Name": "IRS R ATT",
           "Pin": 15,
-          "MapToBit": 113
+          "MapToBit": 112
         }
       ]
     },
@@ -806,36 +801,33 @@
       "Encoder": [
         {
           "Name": "PANEL BRIGHT",
-          "Pin": 0,
           "MapToBits": [
+            113,
             114,
             115,
-            116,
-            117
+            116
           ]
         }
       ],
       "Encoder 1": [
         {
           "Name": "Flt Alt ",
-          "Pin": 0,
           "MapToBits": [
+            117,
             118,
             119,
-            120,
-            121
+            120
           ]
         }
       ],
       "Encoder 2": [
         {
           "Name": "Land Alt ",
-          "Pin": 0,
           "MapToBits": [
+            121,
             122,
             123,
-            124,
-            125
+            124
           ]
         }
       ]
