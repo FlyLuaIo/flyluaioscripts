@@ -32,10 +32,10 @@ cfmega:CfgCmd(6, "sim/radios/stby_com1_coarse_up")
 cfmega:CfgCmd(7, "sim/radios/stby_com1_coarse_up")
 
 -- G1000 FMS push (Button, bit 12)
-cfmega:CfgCmd(12, "sim/GPS/g1000n3_cursor")
+cfmega:CfgCmd(8, "sim/GPS/g1000n3_cursor")
 
 -- G1000 ENT (Button, bit 13)
-cfmega:CfgCmd(13, "sim/GPS/g1000n3_ent")
+cfmega:CfgCmd(9, "sim/GPS/g1000n3_ent")
 
 -- OUTPUT data
 
