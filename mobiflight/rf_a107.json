@@ -212,6 +212,13 @@
           "Pin": 22
         }
       ]
+    },
+    "Display Module": {
+      "LedModule": [
+        {
+          "Name": "BAT1 VOLT"
+        }
+      ]
     }
   },
   "inputs": {

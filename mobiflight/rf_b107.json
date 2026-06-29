@@ -173,6 +173,18 @@
         }
       ]
     },
+    "Display Module": {
+      "LedModule 1": [
+        {
+          "Name": "FLT ALT"
+        }
+      ],
+      "LedModule": [
+        {
+          "Name": "LAND ALT"
+        }
+      ]
+    },
     "Stepper": {
       "Stepper": [
         {
