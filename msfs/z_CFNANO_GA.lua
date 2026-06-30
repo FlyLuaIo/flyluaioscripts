@@ -2,7 +2,9 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-06-29
 -- MobiFlight CfNano / cfmfnano for GA
 -- *****************************************************************
-
+if ilua_require_msfs() then
+	return
+end
 -- Do not remove below lines: hardware detection
 local cfnano = com.sim.mf.CfNano:new()
 if not cfnano:Init() then
@@ -17,4 +19,3 @@ cfnano:GetGaEngRpm('(A:COM STANDBY FREQUENCY:1, KHz) near')
 GlobalFrameLoopManager:add(function()
 	cfnano:SetGaEngRpm()
 end)
-

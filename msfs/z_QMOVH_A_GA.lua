@@ -1,7 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2025-08-26
 -- *****************************************************************
-if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") == nil then
+if ilua_require_msfs() then
     return
 end
 

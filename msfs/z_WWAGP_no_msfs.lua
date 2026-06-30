@@ -4,7 +4,7 @@
 
 -- This scripts only runs when MSFS is not running
 
-if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") ~= nil then
+if ilua_require_msfs(false) then
 	return
 end
 

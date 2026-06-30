@@ -10,7 +10,7 @@
 -- modified by Wei Shuai <cpuwolf@gmail.com> 2020-06-18 add C90B
 -- ######################  Edit part  #####################
 -- 此处调整加速点, 值越小,越容易进入加速模式,可根据自己的手感调节
-if uluaFind("(A:CIRCUIT AVIONICS ON,Bool)") == nil then
+if ilua_require_msfs() then
     return
 end
 local FastTurnsPerSecond = 40 -- How many spins per second  is considered FAST?
