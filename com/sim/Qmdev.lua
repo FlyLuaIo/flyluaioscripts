@@ -457,4 +457,11 @@ function Qmdev:scaleValue(x)
     return (x - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin
 end
 
+function Qmdev.Open(class, ...)
+    local self = class:new()
+    if self:Init(...) then
+        return self
+    end
+end
+
 return Qmdev

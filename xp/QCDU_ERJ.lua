@@ -6,10 +6,8 @@ if ilua_require_erj() then return end
 
 
 -- Do not remove below lines: hardware detection
-local qcdub = com.sim.qm.Qcdub:new()
-if not qcdub:Init() then
-    return
-end
+local qcdub = com.sim.qm.Qcdub.Open()
+if not qcdub then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QCDU for ERJ family")

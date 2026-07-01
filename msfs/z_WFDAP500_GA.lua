@@ -3,10 +3,8 @@
 -- *****************************************************************
 
 -- Do not remove below lines: hardware detection
-local wfdap500 = com.sim.wf.Wfdap500:new()
-if not wfdap500:Init() then
-	return
-end
+local wfdap500 = com.sim.wf.Wfdap500.Open()
+if not wfdap500 then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog('wingflex DAP 500 for GA')

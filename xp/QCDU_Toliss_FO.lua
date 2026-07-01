@@ -4,10 +4,8 @@
 if ilua_require_toliss() then return end
 
 -- Do not remove below lines: hardware detection
-local qcduaf = com.sim.qm.Qcduaf:new()
-if not qcduaf:Init() then
-    return
-end
+local qcduaf = com.sim.qm.Qcduaf.Open()
+if not qcduaf then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QCDU-A320 FO for Toliss")
@@ -128,8 +126,6 @@ function CDU_A320_FO_LED_UPD()
 
     qcduaf:SetScreenBrt()
     qcduaf:SetBkl()
-
 end
 
 GlobalFrameLoopManager:add(CDU_A320_FO_LED_UPD)
-

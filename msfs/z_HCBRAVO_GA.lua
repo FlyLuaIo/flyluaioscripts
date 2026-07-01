@@ -8,10 +8,8 @@ if ilua_require_msfs() then
 end
 
 -- Do not remove below lines: hardware detection
-local hcbravo = com.sim.qm.Hcbravo:new()
-if not hcbravo:Init() then
-    return
-end
+local hcbravo = com.sim.qm.Hcbravo.Open()
+if not hcbravo then return end
 -- Do not remove above lines: hardware detection
 uluaLog("HCBravo for GA")
 

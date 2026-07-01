@@ -15,10 +15,8 @@ local FastTurnsPerSecond = 40 -- How many spins per second  is considered FAST?
 local MaxBightness = 30       -- Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
 
 -- Do not remove below lines: hardware detection
-local qmcp737c = com.sim.qm.Qmcp737c:new()
-if not qmcp737c:Init() then
-    return
-end
+local qmcp737c = com.sim.qm.Qmcp737c.Open()
+if not qmcp737c then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog('QMCP737C for GA')

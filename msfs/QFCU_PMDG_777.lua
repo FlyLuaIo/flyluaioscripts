@@ -8,10 +8,8 @@ local MaxBrightness = 100 -- Max brightness set
 if ilua_require_pmdg_777() then return end
 
 -- Do not remove below lines: hardware detection
-local qfcu = com.sim.qm.Qfcu:new()
-if not qfcu:Init() then
-    return
-end
+local qfcu = com.sim.qm.Qfcu.Open()
+if not qfcu then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QFCU for PMDG777")

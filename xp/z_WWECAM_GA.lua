@@ -4,10 +4,8 @@
 -- *****************************************************************
 
 -- Do not remove below lines: hardware detection
-local wwecam = com.sim.qm.Wwecam:new()
-if not wwecam:Init() then
-	return
-end
+local wwecam = com.sim.qm.Wwecam.Open()
+if not wwecam then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("Wwecam for GA")

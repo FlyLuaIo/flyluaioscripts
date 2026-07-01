@@ -21,10 +21,8 @@ local IsAlreadyInit = 0 --是否已经初始化过了，用来设定首次通电
 if ilua_require_ww737max10() then return end
 
 -- Do not remove below lines: hardware detection
-local qmcp737c = com.sim.qm.Qmcp737c:new()
-if not qmcp737c:Init() then
-    return
-end
+local qmcp737c = com.sim.qm.Qmcp737c.Open()
+if not qmcp737c then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QMCP737C for WW 737-MAX10")

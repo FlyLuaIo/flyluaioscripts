@@ -20,6 +20,10 @@ function Qcdubf:Init()
     return true
 end
 
+function Qcdubf.Open(...)
+    return com.sim.Qmdev.Open(Qcdubf, ...)
+end
+
 -- ========
 -- Leds Msg
 function Qcdubf:SetMsg(valbase, val)

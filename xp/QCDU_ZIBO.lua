@@ -4,10 +4,8 @@
 if ilua_require_zibo() then return end
 
 -- Do not remove below lines: hardware detection
-local qcdub = com.sim.qm.Qcdub:new()
-if not qcdub:Init() then
-    return
-end
+local qcdub = com.sim.qm.Qcdub.Open()
+if not qcdub then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QCDU for ZIBO")
@@ -88,7 +86,7 @@ qcdub:CfgCmd(68, "laminar/B738/button/fmc1_clr")
 
 -- DataRef setup for LED indicators
 local dr_CDU_B737_msg = uluaFind("laminar/B738/fmc/fmc_message")
-if dr_CDU_B737_msg == nil  then
+if dr_CDU_B737_msg == nil then
     uluaLog("This is not ZIBO, maybe default 738")
     return
 end

@@ -7,10 +7,8 @@
 if ilua_require_salty_747() then return end
 
 -- Do not remove below lines: hardware detection
-local qmcp737c = com.sim.qm.Qmcp737c:new()
-if not qmcp737c:Init() then
-    return
-end
+local qmcp737c = com.sim.qm.Qmcp737c.Open()
+if not qmcp737c then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QMCP737C for Salty 747")

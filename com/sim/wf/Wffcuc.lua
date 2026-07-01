@@ -72,6 +72,10 @@ function Wffcuc:Init(FastTurnsPerSecond)
 	return true
 end
 
+function Wffcuc.Open(...)
+	return com.sim.Qmdev.Open(Wffcuc, ...)
+end
+
 -- ========
 -- leds loc
 

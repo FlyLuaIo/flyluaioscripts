@@ -22,6 +22,10 @@ function Qmcp737c:Init()
 	return true
 end
 
+function Qmcp737c.Open(...)
+	return com.sim.Qmdev.Open(Qmcp737c, ...)
+end
+
 --CRS1
 function Qmcp737c:GetCrs1(dpath)
 	self.d_crs1 = iDataRef:New(dpath)

@@ -20,6 +20,10 @@ function Qcdub:Init()
     return true
 end
 
+function Qcdub.Open(...)
+    return com.sim.Qmdev.Open(Qcdub, ...)
+end
+
 -- ***********************************************************************************
 -- Driver for QCDU
 -- Author: QuickMade

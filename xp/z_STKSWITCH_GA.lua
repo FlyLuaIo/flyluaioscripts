@@ -3,10 +3,8 @@
 -- *****************************************************************
 
 -- Do not remove below lines: hardware detection
-local stkswitch = com.sim.qm.Stkswitch:new()
-if not stkswitch:Init() then
-	return
-end
+local stkswitch = com.sim.qm.Stkswitch.Open()
+if not stkswitch then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("Stkswitch for GA")

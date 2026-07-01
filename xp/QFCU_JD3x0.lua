@@ -18,10 +18,8 @@ local MaxBrightness = 60 -- Max brightness set   /背光的最大亮度设定,�
 if ilua_require_jd3x0() then return end
 
 -- Do not remove below lines: hardware detection
-local qfcu = com.sim.qm.Qfcu:new()
-if not qfcu:Init() then
-    return
-end
+local qfcu = com.sim.qm.Qfcu.Open()
+if not qfcu then return end
 -- Do not remove above lines: hardware detection
 
 -- fcu

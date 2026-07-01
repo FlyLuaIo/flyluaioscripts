@@ -21,4 +21,8 @@ function Qgmc710:Init()
     return true
 end
 
+function Qgmc710.Open(...)
+    return com.sim.Qmdev.Open(Qgmc710, ...)
+end
+
 return Qgmc710

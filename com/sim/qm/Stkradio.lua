@@ -71,6 +71,10 @@ function Stkradio:Init(FastTurnsPerSecond)
 	return true
 end
 
+function Stkradio.Open(...)
+	return com.sim.Qmdev.Open(Stkradio, ...)
+end
+
 -- 11850 -> {1, 1, 8, 5, 0}
 -- 118255 -> {1, 1, 8, 2, 5, 5}
 function Stkradio:getDigits(num)

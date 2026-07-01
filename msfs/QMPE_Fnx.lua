@@ -4,10 +4,8 @@
 if ilua_require_fenix_a320() then return end
 
 -- Do not remove below lines: hardware detection
-local qmpe = com.sim.qm.Qmpe:new()
-if not qmpe:Init() then
-    return
-end
+local qmpe = com.sim.qm.Qmpe.Open()
+if not qmpe then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QMPE for Fenix")

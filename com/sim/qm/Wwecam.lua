@@ -57,6 +57,10 @@ function Wwecam:Init(FastTurnsPerSecond)
 	return true
 end
 
+function Wwecam.Open(...)
+	return com.sim.Qmdev.Open(Wwecam, ...)
+end
+
 function Wwecam:SendLedCmd(LedId, value)
 	local combinedValue = (LedId * 256) + value
 	uluaSet(_G.idr_wwecam_hid_leds_ledcmd, combinedValue)

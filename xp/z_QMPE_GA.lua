@@ -2,10 +2,8 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-05-16
 -- *****************************************************************
 -- Do not remove below lines: hardware detection
-local qmpe = com.sim.qm.Qmpe:new()
-if not qmpe:Init() then
-    return
-end
+local qmpe = com.sim.qm.Qmpe.Open()
+if not qmpe then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QMPE for GA")

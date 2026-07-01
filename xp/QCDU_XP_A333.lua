@@ -4,10 +4,8 @@
 if ilua_require_plane_icao("A333") then return end
 
 -- Do not remove below lines: hardware detection
-local qcdua = com.sim.qm.Qcdua:new()
-if not qcdua:Init() then
-    return
-end
+local qcdua = com.sim.qm.Qcdua.Open()
+if not qcdua then return end
 -- Do not remove above lines: hardware detection
 
 local qfcu_a330_xp_new = false

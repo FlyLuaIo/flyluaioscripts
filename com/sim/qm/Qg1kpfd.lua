@@ -20,4 +20,8 @@ function Qg1kpfd:Init()
     return true
 end
 
+function Qg1kpfd.Open(...)
+    return com.sim.Qmdev.Open(Qg1kpfd, ...)
+end
+
 return Qg1kpfd

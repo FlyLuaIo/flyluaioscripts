@@ -56,10 +56,8 @@ a320/Panel/LightDisplay
 if ilua_require_ff320() then return end
 
 -- Do not remove below lines: hardware detection
-local qfcu = com.sim.qm.Qfcu:new()
-if not qfcu:Init() then
-    return
-end
+local qfcu = com.sim.qm.Qfcu.Open()
+if not qfcu then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog(string.format("aircraft dir=%s", AIRCRAFT_PATH))

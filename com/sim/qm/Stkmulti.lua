@@ -60,6 +60,10 @@ function Stkmulti:Init(FastTurnsPerSecond)
 	return true
 end
 
+function Stkmulti.Open(...)
+	return com.sim.Qmdev.Open(Stkmulti, ...)
+end
+
 -- ========
 -- leds AP_ap
 

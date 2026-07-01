@@ -21,6 +21,10 @@ function Qmovha:Init()
     return true
 end
 
+function Qmovha.Open(...)
+    return com.sim.Qmdev.Open(Qmovha, ...)
+end
+
 -- ========
 -- Backlight
 function Qmovha:GetBkl(dpath, scale)

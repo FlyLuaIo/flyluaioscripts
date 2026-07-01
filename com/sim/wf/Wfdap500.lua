@@ -53,6 +53,10 @@ function Wfdap500:Init(FastTurnsPerSecond)
 	return true
 end
 
+function Wfdap500.Open(...)
+	return com.sim.Qmdev.Open(Wfdap500, ...)
+end
+
 -- ========
 -- leds apr
 

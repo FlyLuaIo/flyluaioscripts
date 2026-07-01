@@ -29,10 +29,8 @@
 local FastTurnsPerSecond = 30 --How many spins per second  is considered FAST?
 
 -- Do not remove below lines: hardware detection
-local qgmc710 = com.sim.qm.Qgmc710:new()
-if not qgmc710:Init() then
-    return
-end
+local qgmc710 = com.sim.qm.Qgmc710.Open()
+if not qgmc710 then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QGMC710 for GA")

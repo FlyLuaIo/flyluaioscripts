@@ -4,10 +4,8 @@
 -- *****************************************************************
 
 -- Do not remove below lines: hardware detection
-local cfmega = com.sim.mf.CfMega:new()
-if not cfmega:Init() then
-	return
-end
+local cfmega = com.sim.mf.CfMega.Open()
+if not cfmega then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog('MobiFlight CfMega for GA')

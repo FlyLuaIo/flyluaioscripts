@@ -11,7 +11,7 @@
 -- 此处调整加速点, 值越小,越容易进入加速模式,可根据自己的手感调节
 local FastTurnsPerSecond = 40 -- How many spins per second  is considered FAST?
 --
-local MaxBrightness = 100 -- Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
+local MaxBrightness = 100     -- Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
 
 -- ###############################################################################################
 
@@ -19,10 +19,8 @@ if ilua_require_toliss() then return end
 
 
 -- Do not remove below lines: hardware detection
-local qfcu = com.sim.qm.Qfcu:new()
-if not qfcu:Init() then
-    return
-end
+local qfcu = com.sim.qm.Qfcu.Open()
+if not qfcu then return end
 -- Do not remove above lines: hardware detection
 
 -- LED Indicator light
@@ -76,22 +74,22 @@ local dr_qfcu_appr = iDataRef:New("AirbusFBW/APPRilluminated")
 -- brightness  AirbusFBW/ALT100_1000
 -- local qfcu_fcu_lightDisp = 0
 if not uluaFind("AirbusFBW/FCUIntegralBrightness") then
-    dr_qfcu_fcu_light = iDataRef:New("AirbusFBW/PanelBrightnessLevel") -- 0~1
+    dr_qfcu_fcu_light = iDataRef:New("AirbusFBW/PanelBrightnessLevel")              -- 0~1
 else
-    dr_qfcu_fcu_light = iDataRef:New("AirbusFBW/FCUIntegralBrightness") -- 0~1
+    dr_qfcu_fcu_light = iDataRef:New("AirbusFBW/FCUIntegralBrightness")             -- 0~1
 end
 local dr_qfcu_fcu_lightDisp = iDataRef:New("AirbusFBW/SupplLightLevelRehostats[1]") -- 0~1
 -- annun test mode
-local dr_qfcu_fcu_test = iDataRef:New("AirbusFBW/AnnunMode") -- 0: DIM 1: BRT 2: test mode
+local dr_qfcu_fcu_test = iDataRef:New("AirbusFBW/AnnunMode")                        -- 0: DIM 1: BRT 2: test mode
 -- dr_qfcu_fcu_power = iDataRef:New( 'sim/cockpit/electrical/cockpit_lights') -- > 0.5
-local dr_qfcu_fcu_power = iDataRef:New("AirbusFBW/FCUAvail") -- 0: OFF  1：ON
-local dr_qfcu_alt_unit = iDataRef:New("AirbusFBW/ALT100_1000") -- 0: 100  1：1000
+local dr_qfcu_fcu_power = iDataRef:New("AirbusFBW/FCUAvail")                        -- 0: OFF  1：ON
+local dr_qfcu_alt_unit = iDataRef:New("AirbusFBW/ALT100_1000")                      -- 0: 100  1：1000
 
 ----------------------------  Display Dataref Set End ------------------------------------
 
-qfcu:CfgEncFull(16, 17, "cpuwolf/flyluaio/QFCU/condbtn[16]" , 100, 100, 0, -39500, 39500)
-qfcu:CfgEncFull(46, 47, "cpuwolf/flyluaio/QFCU/condbtn[46]" , 1, 10, 0, -39500, 39500)
-qfcu:CfgEncFull(78, 79, "cpuwolf/flyluaio/QFCU/condbtn[78]" , 1, 10, 0, -39500, 39500)
+qfcu:CfgEncFull(16, 17, "cpuwolf/flyluaio/QFCU/condbtn[16]", 100, 100, 0, -39500, 39500)
+qfcu:CfgEncFull(46, 47, "cpuwolf/flyluaio/QFCU/condbtn[46]", 1, 10, 0, -39500, 39500)
+qfcu:CfgEncFull(78, 79, "cpuwolf/flyluaio/QFCU/condbtn[78]", 1, 10, 0, -39500, 39500)
 qfcu:CfgCmd(0, "sim/GPS/g430n2_msg", "sim/autopilot/airspeed_down")
 qfcu:CfgCmd(1, "sim/GPS/g430n2_msg", "sim/autopilot/airspeed_up")
 qfcu:CfgCmd(2, "sim/GPS/g430n2_msg", "AirbusFBW/PushSPDSel")
@@ -192,11 +190,11 @@ function digi_disp_set_LEDS_fcu()
         dr_qfcu_appr:Update()
         dr_qfcu_exped:Update()
         ------------------------------------fcu light -------------------
-        uluaSet(idr_qfcu_hid_ledsap1, ilua_bool_ternary(qfcu_ap1, 0)) -- athr)
-        uluaSet(idr_qfcu_hid_ledsap2, ilua_bool_ternary(qfcu_ap2, 0)) -- athr)
-        uluaSet(idr_qfcu_hid_ledsathr, ilua_bool_ternary(qfcu_athr, 0)) -- athr)
-        uluaSet(idr_qfcu_hid_ledsloc, ilua_bool_ternary(qfcu_loc, 0)) -- qfcu_loc)
-        uluaSet(idr_qfcu_hid_ledsappr, ilua_bool_ternary(qfcu_appr, 0)) -- qfcu_appr)
+        uluaSet(idr_qfcu_hid_ledsap1, ilua_bool_ternary(qfcu_ap1, 0))       -- athr)
+        uluaSet(idr_qfcu_hid_ledsap2, ilua_bool_ternary(qfcu_ap2, 0))       -- athr)
+        uluaSet(idr_qfcu_hid_ledsathr, ilua_bool_ternary(qfcu_athr, 0))     -- athr)
+        uluaSet(idr_qfcu_hid_ledsloc, ilua_bool_ternary(qfcu_loc, 0))       -- qfcu_loc)
+        uluaSet(idr_qfcu_hid_ledsappr, ilua_bool_ternary(qfcu_appr, 0))     -- qfcu_appr)
         uluaSet(idr_qfcu_hid_ledsexped, ilua_bool_ternary(qfcu_exped, 110)) -- qfcu_exped)
     end
 end
@@ -224,10 +222,10 @@ function digi_disp_set_LEDS_l_efis()
         uluaSet(idr_qfcu_hid_ledslwpt, ilua_bool_ternary(qfcu_c_wpt, 0))
         -- wpt)
         uluaSet(idr_qfcu_hid_ledslvord, ilua_bool_ternary(qfcu_c_vord, 0)) -- vord)
-        uluaSet(idr_qfcu_hid_ledslndb, ilua_bool_ternary(qfcu_c_ndb, 0)) -- ndb)
+        uluaSet(idr_qfcu_hid_ledslndb, ilua_bool_ternary(qfcu_c_ndb, 0))   -- ndb)
         uluaSet(idr_qfcu_hid_ledslaprt, ilua_bool_ternary(qfcu_c_arpt, 0)) -- aprt)
-        uluaSet(idr_qfcu_hid_ledslfd, ilua_bool_ternary(qfcu_c_fd, 0)) -- fd)
-        uluaSet(idr_qfcu_hid_ledslls, ilua_bool_ternary(qfcu_c_ils, 0)) -- ls)
+        uluaSet(idr_qfcu_hid_ledslfd, ilua_bool_ternary(qfcu_c_fd, 0))     -- fd)
+        uluaSet(idr_qfcu_hid_ledslls, ilua_bool_ternary(qfcu_c_ils, 0))    -- ls)
         -- uluaSet(idr_qfcu_hid_ledslqfe, ilua_bool_ternary(qfcu_c_mode, 1)) --qfe)
         if qfcu_c_barostd == 0 then
             uluaSet(idr_qfcu_hid_ledslqfe, 0) -- qfe)
@@ -263,10 +261,10 @@ function digi_disp_set_LEDS_r_efis()
         uluaSet(idr_qfcu_hid_ledsrwpt, ilua_bool_ternary(qfcu_f_wpt, 0))
         -- wpt)
         uluaSet(idr_qfcu_hid_ledsrvord, ilua_bool_ternary(qfcu_f_vord, 0)) -- vord)
-        uluaSet(idr_qfcu_hid_ledsrndb, ilua_bool_ternary(qfcu_f_ndb, 0)) -- ndb)
+        uluaSet(idr_qfcu_hid_ledsrndb, ilua_bool_ternary(qfcu_f_ndb, 0))   -- ndb)
         uluaSet(idr_qfcu_hid_ledsraprt, ilua_bool_ternary(qfcu_f_arpt, 0)) -- aprt)
-        uluaSet(idr_qfcu_hid_ledsrfd, ilua_bool_ternary(qfcu_f_fd, 0)) -- fd)
-        uluaSet(idr_qfcu_hid_ledsrls, ilua_bool_ternary(qfcu_f_ils, 0)) -- ls)
+        uluaSet(idr_qfcu_hid_ledsrfd, ilua_bool_ternary(qfcu_f_fd, 0))     -- fd)
+        uluaSet(idr_qfcu_hid_ledsrls, ilua_bool_ternary(qfcu_f_ils, 0))    -- ls)
         -- uluaSet(idr_qfcu_hid_ledsrqfe, ilua_bool_ternary(qfcu_f_mode, 1)) --qfe)
 
         if qfcu_f_barostd == 0 then
@@ -415,6 +413,7 @@ function digi_disp_set_VS()
         end
     end
 end
+
 -----------EFIS Capt-------------
 function digi_disp_set_L_EFIS()
     local qfcu_c_baro = dr_qfcu_c_baro:Get()
@@ -440,6 +439,7 @@ function digi_disp_set_L_EFIS()
         end
     end
 end
+
 ---------------------EFIS FO-------------
 function digi_disp_set_R_EFIS()
     local qfcu_f_baro = dr_qfcu_f_baro:Get()
@@ -505,10 +505,12 @@ function digi_disp_set_Bright()
         end
     end
 end
+
 -------------------------------------------------------------
 function QFCU_Off()
     uluaSet(idr_qfcu_hid_indbrightval_i, 0)
 end
+
 function digi_disp_set_BrightOff()
     dr_qfcu_fcu_light:Invalid(-1)
     dr_qfcu_fcu_lightDisp:Invalid(-1)
@@ -528,6 +530,7 @@ function digi_disp_powoff_leds()
     uluaSet(idr_qfcu_hid_ledslval_i, 0)
     uluaSet(idr_qfcu_hid_ledsrval_i, 0)
 end
+
 function digi_disp_powoff_mcp()
     invalid_buffer_digi()
     -- real code
@@ -540,8 +543,8 @@ function digi_disp_powoff_mcp()
 end
 
 -----end sub functions
-local digi_disp_fcu_func_table = {digi_disp_set_SPD, digi_disp_set_HDG, digi_disp_set_ALT, digi_disp_set_VS,
-                                  digi_disp_set_L_EFIS, digi_disp_set_R_EFIS}
+local digi_disp_fcu_func_table = { digi_disp_set_SPD, digi_disp_set_HDG, digi_disp_set_ALT, digi_disp_set_VS,
+    digi_disp_set_L_EFIS, digi_disp_set_R_EFIS }
 
 local digi_disp_rr_func_idx = 0
 
@@ -555,7 +558,6 @@ function digi_disp_mcp_rr()
         digi_disp_fcu_func_table[digi_disp_rr_func_idx]()
     end
 end
-
 
 local is_load = 0
 local start_time = os.clock()

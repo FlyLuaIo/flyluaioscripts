@@ -3,10 +3,8 @@
 -- *****************************************************************
 
 -- Do not remove below lines: hardware detection
-local stkmulti = com.sim.qm.Stkmulti:new()
-if not stkmulti:Init() then
-	return
-end
+local stkmulti = com.sim.qm.Stkmulti.Open()
+if not stkmulti then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("Stkmulti for GA")

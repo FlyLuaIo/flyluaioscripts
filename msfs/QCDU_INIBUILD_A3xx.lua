@@ -4,10 +4,8 @@
 if ilua_require_inibuild_a3xx_family() then return end
 
 -- Do not remove below lines: hardware detection
-local qcdua = com.sim.qm.Qcdua:new()
-if not qcdua:Init() then
-    return
-end
+local qcdua = com.sim.qm.Qcdua.Open()
+if not qcdua then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QCDU-A320 for Inibuild A3XX")

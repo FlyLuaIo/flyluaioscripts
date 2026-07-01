@@ -6,10 +6,8 @@ if ilua_require_msfs(false) then
 end
 
 -- Do not remove below lines: hardware detection
-local wffcuc = com.sim.wf.Wffcuc:new()
-if not wffcuc:Init() then
-	return
-end
+local wffcuc = com.sim.wf.Wffcuc.Open()
+if not wffcuc then return end
 -- Do not remove above lines: hardware detection
 
 -- offline lua running, check MSFS is off

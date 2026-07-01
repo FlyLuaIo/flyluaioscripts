@@ -43,6 +43,10 @@ function Stkswitch:Init(FastTurnsPerSecond)
 	return true
 end
 
+function Stkswitch.Open(...)
+	return com.sim.Qmdev.Open(Stkswitch, ...)
+end
+
 -- ========
 -- LED GreenN
 

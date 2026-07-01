@@ -64,6 +64,10 @@ function Hcbravo:Init(FastTurnsPerSecond)
 	return true
 end
 
+function Hcbravo.Open(...)
+	return com.sim.Qmdev.Open(Hcbravo, ...)
+end
+
 -- ========
 -- LED AP_hdg
 

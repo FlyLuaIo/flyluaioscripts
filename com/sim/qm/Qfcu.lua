@@ -20,6 +20,10 @@ function Qfcu:Init()
     return true
 end
 
+function Qfcu.Open(...)
+    return com.sim.Qmdev.Open(Qfcu, ...)
+end
+
 -- ========================= Alt
 -- Alt
 function Qfcu:GetAlt(dpath)

@@ -115,6 +115,10 @@ function Wwagp:Init(FastTurnsPerSecond)
 	return true
 end
 
+function Wwagp.Open(...)
+	return com.sim.Qmdev.Open(Wwagp, ...)
+end
+
 function Wwagp:Next()
 	local val = self.PackageConter
 	self.PackageConter = (self.PackageConter + 1) % 256

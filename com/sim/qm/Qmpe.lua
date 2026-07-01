@@ -20,6 +20,10 @@ function Qmpe:Init()
     return true
 end
 
+function Qmpe.Open(...)
+    return com.sim.Qmdev.Open(Qmpe, ...)
+end
+
 -- ========================= RMP VHF1/2
 -- RMP1
 function Qmpe:GetRmp1(dcom1, dcom1s, scale)

@@ -39,6 +39,10 @@ function CfMega:Init(FastTurnsPerSecond)
 	return true
 end
 
+function CfMega.Open(...)
+	return com.sim.Qmdev.Open(CfMega, ...)
+end
+
 -- ========
 -- stepper ENG RPM
 

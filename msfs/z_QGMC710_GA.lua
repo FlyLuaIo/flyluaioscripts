@@ -11,10 +11,8 @@ if ilua_require_msfs() then
 end
 
 -- Do not remove below lines: hardware detection
-local qgmc710 = com.sim.qm.Qgmc710:new()
-if not qgmc710:Init() then
-    return
-end
+local qgmc710 = com.sim.qm.Qgmc710.Open()
+if not qgmc710 then return end
 -- Do not remove above lines: hardware detection
 
 

@@ -38,6 +38,10 @@ function CfNano:Init(FastTurnsPerSecond)
 	return true
 end
 
+function CfNano.Open(...)
+	return com.sim.Qmdev.Open(CfNano, ...)
+end
+
 function CfNano:InitLedModule()
 	_G.idr_cfnano_mf_segment_mask = uluaFind('cpuwolf/mf/CfNano/segment/0/mask')
 	_G.idr_cfnano_mf_segment_points = uluaFind('cpuwolf/mf/CfNano/segment/0/points')

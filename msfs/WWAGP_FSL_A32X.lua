@@ -5,10 +5,8 @@
 if ilua_require_fslabs_a32x() then return end
 
 -- Do not remove below lines: hardware detection
-local wwagp = com.sim.qm.Wwagp:new()
-if not wwagp:Init() then
-	return
-end
+local wwagp = com.sim.qm.Wwagp.Open()
+if not wwagp then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog('WinWing AGP for FSLabs A32X')

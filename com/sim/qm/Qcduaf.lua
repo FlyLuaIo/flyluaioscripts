@@ -20,6 +20,10 @@ function Qcduaf:Init()
     return true
 end
 
+function Qcduaf.Open(...)
+    return com.sim.Qmdev.Open(Qcduaf, ...)
+end
+
 --------------------------- process encoder ----------------
 ---- B7   B6   B5   B4    B3    B2     B1     B0
 ---- X    X    X         FMGC  FAIL          MENU

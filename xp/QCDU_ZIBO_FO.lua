@@ -24,10 +24,8 @@
 if ilua_require_zibo() then return end
 
 -- Do not remove below lines: hardware detection
-local qcdubf = com.sim.qm.Qcdubf:new()
-if not qcdubf:Init() then
-    return
-end
+local qcdubf = com.sim.qm.Qcdubf.Open()
+if not qcdubf then return end
 -- Do not remove above lines: hardware detection
 
 ilua_qlcd_set_airplane(100)

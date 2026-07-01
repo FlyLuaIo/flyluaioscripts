@@ -36,4 +36,8 @@ function Vkbgunut:Init(FastTurnsPerSecond)
 	return true
 end
 
+function Vkbgunut.Open(...)
+	return com.sim.Qmdev.Open(Vkbgunut, ...)
+end
+
 return Vkbgunut

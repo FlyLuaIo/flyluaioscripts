@@ -7,10 +7,8 @@ local FastTurnsPerSecond = 4 --How many spins per second  is considered FAST?
 if ilua_require_toliss() then return end
 
 -- Do not remove below lines: hardware detection
-local hcbravo = com.sim.qm.Hcbravo:new()
-if not hcbravo:Init() then
-    return
-end
+local hcbravo = com.sim.qm.Hcbravo.Open()
+if not hcbravo then return end
 -- Do not remove above lines: hardware detection
 uluaLog('HCBravo for Toliss')
 

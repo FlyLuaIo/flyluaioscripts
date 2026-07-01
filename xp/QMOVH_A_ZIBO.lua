@@ -5,10 +5,8 @@
 if ilua_require_zibo() then return end
 
 -- Do not remove below lines: hardware detection
-local qmovha = com.sim.qm.Qmovha:new()
-if not qmovha:Init() then
-    return
-end
+local qmovha = com.sim.qm.Qmovha.Open()
+if not qmovha then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog("QMOVH-A for ZIBO 738")
