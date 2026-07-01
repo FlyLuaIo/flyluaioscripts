@@ -14,26 +14,26 @@ uluaLog('MobiFlight CfMega for GA')
 
 ---- G1000 FMS inner
 -- inner
-cfmega:CfgCmd(0, "sim/radios/stby_com1_fine_down_833")
-cfmega:CfgCmd(1, "sim/radios/stby_com1_fine_down_833")
+cfmega:CfgCmd(0, 'sim/radios/stby_com1_fine_down_833')
+cfmega:CfgCmd(1, 'sim/radios/stby_com1_fine_down_833')
 -- outer
-cfmega:CfgCmd(2, "sim/radios/stby_com1_fine_up_833")
-cfmega:CfgCmd(3, "sim/radios/stby_com1_fine_up_833")
+cfmega:CfgCmd(2, 'sim/radios/stby_com1_fine_up_833')
+cfmega:CfgCmd(3, 'sim/radios/stby_com1_fine_up_833')
 
 
 ---- G1000 FMS outer
 -- inner
-cfmega:CfgCmd(4, "sim/radios/stby_com1_coarse_down")
-cfmega:CfgCmd(5, "sim/radios/stby_com1_coarse_down")
+cfmega:CfgCmd(4, 'sim/radios/stby_com1_coarse_down_833')
+cfmega:CfgCmd(5, 'sim/radios/stby_com1_coarse_down_833')
 -- outer
-cfmega:CfgCmd(6, "sim/radios/stby_com1_coarse_up")
-cfmega:CfgCmd(7, "sim/radios/stby_com1_coarse_up")
+cfmega:CfgCmd(6, 'sim/radios/stby_com1_coarse_up_833')
+cfmega:CfgCmd(7, 'sim/radios/stby_com1_coarse_up_833')
 
 -- G1000 FMS push (Button, bit 12)
-cfmega:CfgCmd(8, "sim/GPS/g1000n3_cursor")
+cfmega:CfgCmd(8, 'sim/radios/com1_standy_flip')
 
 -- G1000 ENT (Button, bit 13)
-cfmega:CfgCmd(9, "sim/GPS/g1000n3_ent")
+cfmega:CfgCmd(9, 'sim/GPS/g1000n1_ent')
 
 -- OUTPUT data
 
