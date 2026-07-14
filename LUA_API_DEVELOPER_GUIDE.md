@@ -1,39 +1,45 @@
-## Qmdev Lua API Developer Guide
+## FlyLuaIo Lua API Developer Guide
+
+> **Naming note:** **FlyLuaIo** (plugin namespace `cpuwolf/flyluaio/`) is the current project name.  
+> **Qmdev** is the legacy name still used in source code — class names (`Qmdev`), filenames (`Qmdev.lua`), IDs (`QmdevId`), and C API symbols (`uluaQmdevConfig`, etc.) are kept for backward compatibility.
 
 ### Table of Contents
 1. Overview
 2. Architecture
-3. Base Classes (`com/oop`)
-4. Core Device Classes (`com/sim`)
-5. Hardware Abstraction Classes (`com/sim/qm`)
+3. Core Device Classes (`com/sim`)
+4. Hardware Abstraction Classes (`com/sim/qm`)
+5. Extension Packages (`com/sim/wf`, `com/sim/mf`)
 6. Configuration APIs
-7. Data Reference System
-8. Best Practices
-9. Troubleshooting
-10. Changelog
+7. Position Switch (PID) APIs
+8. Runtime Globals (`init.lua`)
+9. Data Reference System
+10. Best Practices
+11. Troubleshooting
+12. Changelog
 
 ---
 
 ## 1. Overview
 
-Qmdev is a hardware control framework for flight simulators.  
-It uses Lua scripts to bridge USB HID hardware devices with:
+**FlyLuaIo** is a hardware control framework for flight simulators.  
+The **flyluaioscripts** repository provides Lua scripts that bridge USB HID hardware devices with:
 
 - **X-Plane 11 / 12**
 - **Microsoft Flight Simulator 2020 / 2024**
 
 You typically:
 
-1. Use the shared device framework under `com/` (`com/oop`, `com/sim`, `com/sim/qm`).
-2. Create aircraft‑specific configuration files under `xp/` (X‑Plane) or `msfs/` (MSFS).
-3. Map your hardware (MCP, CDU, FCU, G1000, etc.) to aircraft systems using the configuration APIs.
+1. Use the shared device framework under `com/` (`com/oop`, `com/sim`, `com/sim/qm`, etc.).
+2. Create aircraft-specific configuration files under `xp/` (X-Plane) or `msfs/` (MSFS).
+3. Map your hardware (MCP, CDU, FCU, G1000, overhead panel, etc.) to aircraft systems using the configuration APIs.
 
 ### Main Features
 
 - **Embedded Lua scripting engine** for hardware control and simulator communication.
 - **Hardware abstraction layer** implemented in Lua classes.
-- **Cross‑simulator support** with a single shared core.
+- **Cross-simulator support** with a single shared core.
 - **Modular design**: each hardware–aircraft pair has its own Lua profile file.
+- **Factory helpers** (`Class.Open()`) and **frame loop manager** for LED/display refresh.
 
 ---
 
@@ -42,7 +48,7 @@ You typically:
 The repository is organized as follows:
 
 ```text
-root/
+flyluaioscripts/
 ├── xp/                      # X-Plane 11/12 aircraft-specific profiles
 │   └── *.lua                # One file per hardware–aircraft combination
 ├── msfs/                    # MSFS 2020/2024 aircraft-specific profiles
@@ -54,214 +60,264 @@ root/
     │   ├── include.lua
     │   └── package.lua
     └── sim/                 # Shared simulator-agnostic core
-        ├── Qmdev.lua        # Core device base class
+        ├── Qmdev.lua        # Core device base class (legacy name; FlyLuaIo framework)
         ├── QmReload.lua     # Reload / helper utilities
-        └── qm/              # Concrete hardware classes
-            ├── Qmcp737c.lua
-            ├── Qfcu.lua
-            ├── Qcdu.lua
-            ├── Qcdua.lua
-            ├── Qcduaf.lua
-            ├── Qcdub.lua
-            ├── Qcdubf.lua
-            ├── Qgmc710.lua
-            ├── Qg1kmfd.lua
-            ├── Qg1kpfd.lua
-            ├── Qmovha.lua
-            └── Qmpe.lua
+        ├── qm/              # QuickMade hardware classes
+        │   ├── Hcbravo.lua
+        │   ├── Qmcp737c.lua
+        │   ├── Qfcu.lua
+        │   ├── Qcdu.lua / Qcdua.lua / Qcduaf.lua
+        │   ├── Qcdub.lua / Qcdubf.lua
+        │   ├── Qgmc710.lua
+        │   ├── Qg1kmfd.lua / Qg1kpfd.lua
+        │   ├── Qmovha.lua
+        │   ├── Qmpe.lua
+        │   ├── Stkmulti.lua / Stkradio.lua / Stkswitch.lua
+        │   ├── Vkbgunut.lua
+        │   └── Wwagp.lua / Wwecam.lua
+        ├── wf/              # Wingflex / third-party hardware adapters
+        │   ├── Wfdap500.lua
+        │   ├── Wffcuc.lua
+        │   └── Wingflex.lua
+        └── mf/              # MobiFlight integration
+            ├── MobiFlight.lua
+            ├── CfMega.lua
+            └── CfNano.lua
 ```
 
-- The `com/` tree is **shared** by both X‑Plane and MSFS.
-- The `xp/` and `msfs/` directories contain **aircraft‑specific logic and mapping**.
+- The `com/` tree is **shared** by both X-Plane and MSFS.
+- The `xp/` and `msfs/` directories contain **aircraft-specific logic and mapping**.
+- Simulator entry scripts (`init.lua`) register global helpers such as `iDataRef`, hardware detection, and `GlobalFrameLoopManager`.
+- HID datarefs are published under the `cpuwolf/flyluaio/` namespace (e.g. `cpuwolf/flyluaio/QFCU/ledsl/aprt`).
+
+### File Naming Convention
+
+```
+<hardware_name>_<aircraft_model_name>.lua
+```
+
+Example: `QMCP737C_ZIBO738.lua` — QMCP737C hardware mapped for ZIBO 737-800.
 
 ---
 
-## 3. Base Classes (`com/oop`)
+## 3. Core Device Classes (`com/sim`)
 
-These files implement a small object‑oriented layer in Lua and are used by all higher‑level components.
+### 3.1 `Qmdev` – Core Base Class (legacy name)
 
-### `Object.lua`
-
-Provides core OOP features:
-
-- Class creation
-- Inheritance
-- Method dispatch
-
-Typical usage:
-
-```lua
-local Object = require("com.oop.Object")
-
-local MyClass = Object:extend()
-
-function MyClass:new(name)
-    self.name = name
-end
-
-function MyClass:hello()
-    print("Hello, " .. (self.name or "world"))
-end
-```
-
-### `class.lua`
-
-Helper utilities to simplify defining classes.  
-In the existing framework, it is used internally by `Object.lua` and higher‑level modules.
-
-### `include.lua`
-
-Simple module include helper for splitting code into multiple files and reusing common pieces.
-
-### `package.lua`
-
-Implements basic package and module loading utilities for the framework, abstracting away Lua’s built‑in `package` details.
-
----
-
-## 4. Core Device Classes (`com/sim`)
-
-### 4.1 `Qmdev` – Core Base Class
-
-`Qmdev` is the base class for all hardware devices.  
+`com.sim.Qmdev` is the shared base class for all FlyLuaIo hardware devices.  
+The name **Qmdev** comes from the earlier project; it remains in code and is not renamed.
 It contains:
 
-- Device‑level configuration
-- Common encoder / button mapping logic
-- Data reference helpers
-- Bit / LED state management
+- Device-level configuration (`QmdevId`, `FastTurnsPerSecond`, `MaxBrightness`)
+- Key assignment tracking (`KeyTable`)
+- Encoder / button mapping logic
+- Bit / LED state management (`Bits`)
+- Position-switch (PID) helpers (`CfgPSw`, etc.)
 
-#### Constructor
+#### Construction Patterns
+
+**Pattern A – explicit init (legacy, still valid):**
 
 ```lua
-local qmdev = com.sim.Qmdev:new()
+local qfcu = com.sim.qm.Qfcu:new()
+if not qfcu:Init() then return end
 ```
+
+**Pattern B – factory helper (recommended):**
+
+```lua
+local qcdua = com.sim.qm.Qcdua.Open()
+if not qcdua then return end
+```
+
+`Qmdev.Open(class, ...)` creates an instance, calls `Init(...)`, and returns `nil` on failure.
 
 #### Initialization
 
 ```lua
--- Initialize the device with default values
 function Qmdev:init()
-    self.QmdevId = 0                 -- Device ID
-    self.FastTurnsPerSecond = 40     -- Threshold for "fast" encoder rotations
-    self.MaxBrightness = 100         -- Maximum display / LED brightness
-    self.KeyTable = {}               -- Key definitions
-    self.Bits = {}                   -- Bit / LED states
+    self.QmdevId = 0
+    self.FastTurnsPerSecond = 40   -- Threshold for "fast" encoder rotations
+    self.MaxBrightness = 100       -- Maximum display / LED brightness
+    self.KeyTable = {}             -- Key definitions
+    self.Bits = {}                 -- Bit / LED states
 end
 
--- Configure initialization parameters
 function Qmdev:CfgInit(ftpsdefval, maxBright)
     -- ftpsdefval: default fast-turns-per-second threshold
     -- maxBright : maximum brightness value
 end
 ```
 
-### 4.2 Other Core Helpers
+#### Key Tracking
 
-#### `QmReload.lua`
+```lua
+Qmdev:AddKey(KeyIdx)   -- Register a key index; logs if already assigned
+```
 
-Provides helpers to reload Lua configuration without restarting the whole plugin.
+#### Bit / LED Helpers
 
-Typical responsibilities:
+```lua
+Qmdev:GetBit(idx, dpath, revert, base)  -- Bind simulator dataref to bit slot
+Qmdev:SetBit(idx, idr, valbase, val)    -- Push bit change to HID handle
+Qmdev:FreshBit(idx, val)                -- Invalidate one bit slot
+Qmdev:FreshBits()                       -- Invalidate all bit slots
+```
 
-- Reload mapping files when they change.
-- Reset device state and re‑initialize.
+#### Utility Methods
 
-Exact usage depends on your integration in X‑Plane or MSFS, but usually it is called from your bootstrap / entry script.
+```lua
+Qmdev:AddTogMenu(menuEn, menuCh, globalvarstr)  -- Add GUI toggle menu entry
+Qmdev:swap16(val)                               -- Swap high/low byte of 16-bit value
+Qmdev:scaleValue(x)                             -- Map 0..1024 to -16383..16384
+```
+
+### 3.2 `QmReload` (legacy name)
+
+Provides deferred reload of FlyLuaIo Lua profiles without restarting the whole plugin.
+
+```lua
+local reload = com.sim.QmReload:new()
+
+reload:Req(delayms)   -- Schedule reload (default 1000 ms; keeps longest pending delay)
+reload:Exec()         -- Called from main loop; fires reload command when due
+```
+
+Global helper (defined in `init.lua`):
+
+```lua
+ilua_req_reload(delayms)   -- Uses global ilua_qmReload instance
+```
 
 ---
 
-## 5. Hardware Abstraction Classes (`com/sim/qm`)
+## 4. Hardware Abstraction Classes (`com/sim/qm`)
 
 Each physical hardware device has a corresponding class under `com/sim/qm/`.  
-These classes inherit from `Qmdev` and expose device‑specific configuration helpers.
+These classes inherit from `Qmdev` (legacy base class) or an intermediate base such as `Qcdu`, and expose device-specific configuration helpers.
 
-Below are examples of commonly used classes.
+| Class | `QmdevId` | Role |
+|-------|-----------|------|
+| `Hcbravo` | `0xE2F65B0` | Honeycomb Bravo throttle quadrant |
+| `Qmcp737c` | 2 | Boeing 737 MCP |
+| `Qcdu` | 5 | CDU base (backlight / screen brightness) |
+| `Qcdua` / `Qcduaf` | 6 | A320 Captain / FO CDU |
+| `Qcdub` / `Qcdubf` | — | B737 Captain / FO CDU |
+| `Qgmc710` | — | GA / TBM-style MCP |
+| `Qfcu` | 7 | Airbus FCU |
+| `Qg1kpfd` / `Qg1kmfd` | — | G1000 PFD / MFD |
+| `Qmpe` | — | Radio / audio / ECAM panel |
+| `Qmovha` | — | Airbus overhead panel |
 
-### 5.1 Qcdua – A320 Captain CDU
+All hardware classes expose `Class.Open(...)` as a shorthand for `Qmdev.Open(Class, ...)`.
+
+### 4.1 Qcdua – A320 Captain CDU
 
 ```lua
-local qcdua = com.sim.qm.Qcdua:new()
-if not qcdua:Init() then return end
+local qcdua = com.sim.qm.Qcdua.Open()
+if not qcdua then return end
 
--- Configure MCDU1 keys
+-- Button mapping
 qcdua:CfgCmd(0, "AirbusFBW/MCDU1LSK1L")
 qcdua:CfgCmd(1, "AirbusFBW/MCDU1LSK2L")
 
--- Configure LED state
+-- LED feedback (Get* binds dataref; Set* pushes to HID in loop)
 qcdua:GetFm1("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
 qcdua:GetInd("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
 qcdua:GetRdy("cpuwolf/flyluaio/QCDU-A320/condbtn[0]")
 
--- Configure brightness
+-- Brightness
 qcdua:GetBkl("AirbusFBW/MCDUIntegBrightness[0]", 40)
 qcdua:GetScreenBrt("AirbusFBW/DUBrightness[6]")
+
+function CDU_LED_UPD()
+    qcdua:SetLeds()
+    qcdua:SetScreenBrt()
+    qcdua:SetBkl()
+end
+GlobalFrameLoopManager:add(CDU_LED_UPD)
 ```
 
-### 5.2 Qcduaf – A320 First Officer CDU
+`Qcdua` LED helpers: `GetMenu/SetMenu`, `GetFail/SetFail`, `GetFmgc/SetFmgc`, `GetFm1/SetFm1`, `GetInd/SetInd`, `GetRdy/SetRdy`, `GetFm2/SetFm2`, `SetLeds`, `SetBkl`, `Off`.
+
+### 4.2 Qcduaf – A320 First Officer CDU
+
+Same API as `Qcdua`, but uses FO HID handles (`idr_qcdu_a320_1_*`).  
+`Qcduaf` omits redundant `Get*` wrappers; use inherited methods from `Qcdua`.
+
+### 4.3 Qcdub – Boeing 737 Captain CDU
 
 ```lua
-local qcduaf = com.sim.qm.Qcduaf:new()
-if not qcduaf:Init() then return end
+local qcdub = com.sim.qm.Qcdub.Open()
+if not qcdub then return end
 
--- Configure MCDU2 keys
-qcduaf:CfgCmd(0, "AirbusFBW/MCDU2LSK1L")
-qcduaf:CfgCmd(1, "AirbusFBW/MCDU2LSK2L")
-
--- Configure LED state
-qcduaf:GetFm1("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
-qcduaf:GetInd("cpuwolf/flyluaio/QCDU-A3201/condbtn[0]")
-
--- Configure brightness
-qcduaf:GetBkl("AirbusFBW/MCDUIntegBrightness[1]", 40)
-qcduaf:GetScreenBrt("AirbusFBW/DUBrightness[7]")
-```
-
-### 5.3 Qcdub – Boeing 737 Captain CDU
-
-```lua
-local qcdub = com.sim.qm.Qcdub:new()
-if not qcdub:Init() then return end
-
--- FMC1 key assignments
 qcdub:CfgCmd(0, "laminar/B738/button/fmc1_1L")
-qcdub:CfgCmd(1, "laminar/B738/button/fmc1_2L")
-
--- Encoder configuration for display brightness
-qcdub:CfgEncFull(
-    69, 70,
-    "laminar/B738/electric/instrument_brightness[10]",
-    0.05, 0.05, 1, 0.05, 1.0
-)
-
--- Screen brightness feedback
+qcdub:CfgEncFull(69, 70, "laminar/B738/electric/instrument_brightness[10]",
+    0.05, 0.05, 1, 0.05, 1.0)
 qcdub:GetScreenBrt("laminar/B738/electric/instrument_brightness[10]")
 ```
 
-### 5.4 Qcdubf – Boeing 737 First Officer CDU
+`Qcdub` LED helpers: `GetMsg/SetMsg`, `GetOfst/SetOfst`, `GetCall/SetCall`, `GetFail/SetFail`, `GetExec/SetExec`, `SetLeds`, `SetBkl`, `Off`.
+
+### 4.4 Qfcu – Airbus FCU
 
 ```lua
-local qcdubf = com.sim.qm.Qcdubf:new()
-if not qcdubf:Init() then return end
+local qfcu = com.sim.qm.Qfcu.Open()
+if not qfcu then return end
 
--- FMC2 key assignments
-qcdubf:CfgCmd(0, "laminar/B738/button/fmc2_1L")
-qcdubf:CfgCmd(1, "laminar/B738/button/fmc2_2L")
-
--- Encoder configuration for display brightness
-qcdubf:CfgEncFull(
-    69, 70,
-    "laminar/B738/electric/instrument_brightness[11]",
-    0.05, 0.05, 1, 0.05, 1.0
-)
-
--- Screen brightness feedback
-qcdubf:GetScreenBrt("laminar/B738/electric/instrument_brightness[11]")
+qfcu:GetAlt("A:AUTOPILOT ALTITUDE LOCK VAR:3")
+qfcu:GetAp1("L:XMLVAR_Autopilot_1_Status")
+qfcu:SetMidLeds()
 ```
+
+Key method groups: altitude (`GetAlt/SetAlt/FreshAlt`), baro (`SetLBaro/SetRBaro`), AP/ATHR/LOC LEDs, left/right EFIS LEDs, `SetLedsOff`, `SetDigiOff`.
+
+### 4.5 Qmcp737c – Boeing 737 MCP
+
+```lua
+local qmcp737c = com.sim.qm.Qmcp737c.Open()
+if not qmcp737c then return end
+
+qmcp737c:GetCrs1("sim/cockpit/autopilot/heading")
+qmcp737c:CfgEncFull(0, 1, "sim/cockpit/autopilot/heading", 1, 5, 2, 0, 360)
+```
+
+Key method groups: course/IAS/HDG/ALT/VS displays, VHF/NAV radio, MCP LEDs, `LoopMcp`, `OffMcp`.
+
+### 4.6 Qmovha – Airbus Overhead Panel
+
+Supports physical multi-position switches via `CfgPSw` / `CfgPSwTog` (see Section 7).  
+Key method groups: backlight, dim/bright, upper/lower LED banks, `FreshAllled`, `Off`.
+
+### 4.7 Qmpe – Radio / ECAM Panel
+
+Large API covering RMP, transponder, ACP, ECAM pages, backlight, and warning lights.  
+See `docs/context7-api-index.json` for the full method list.
+
+---
+
+## 5. Extension Packages (`com/sim/wf`, `com/sim/mf`)
+
+### `com/sim/wf` – Wingflex Adapters
+
+Third-party or alternate hardware bridges:
+
+- `Wfdap500.lua`
+- `Wffcuc.lua`
+- `Wingflex.lua`
+
+### `com/sim/mf` – MobiFlight Integration
+
+- `MobiFlight.lua` – base MobiFlight device class
+- `CfMega.lua` / `CfNano.lua` – board-specific configs
+
+Load via `oop.package('com.sim.wf')` / `oop.package('com.sim.mf')` in the entry script.
 
 ---
 
 ## 6. Configuration APIs
+
+All configuration methods are defined on the `Qmdev` base class and inherited by hardware classes.
 
 ### 6.1 Encoder Configuration
 
@@ -271,7 +327,7 @@ qcdubf:GetScreenBrt("laminar/B738/electric/instrument_brightness[11]")
 Qmdev:CfgEncFull(
     DecKey,     -- Decrement key index
     IncKey,     -- Increment key index
-    Rpnstr,     -- RPN or dataref string
+    Rpnstr,     -- RPN, dataref, or B: event string
     SlowStep,   -- Step size for slow rotation (default 1)
     FastStep,   -- Step size for fast rotation (default 1)
     StepMode,   -- Step mode (default 0)
@@ -280,11 +336,22 @@ Qmdev:CfgEncFull(
 )
 ```
 
-#### Simplified encoder configuration
+#### Typed encoder (MSFS B: events, etc.)
+
+```lua
+Qmdev:CfgEncTypeFull(
+    DataType,   -- Encoder data type prefix (e.g. "a", "f", "B:")
+    DecKey, IncKey, Rpnstr,
+    SlowStep, FastStep, StepMode, MinStep, MaxStep
+)
+```
+
+`CfgEncFull` is equivalent to `CfgEncTypeFull("a", ...)`.
+
+#### Simplified encoder
 
 ```lua
 Qmdev:CfgEnc(DecKey, IncKey, Rpnstr)
--- Uses default step sizes and mode
 ```
 
 ### 6.2 Button Configuration
@@ -293,188 +360,343 @@ Qmdev:CfgEnc(DecKey, IncKey, Rpnstr)
 
 ```lua
 Qmdev:CfgTog(KeyIdx, BeventStr, RpnStr)
--- KeyIdx   : button index
--- BeventStr: base event (e.g. B event or sim command)
--- RpnStr   : RPN script to execute on toggle
+-- Toggles BeventStr based on current value of RpnStr
 ```
 
 #### Function button
 
 ```lua
-Qmdev:CfgFc(KeyIdx, FuncPressStr, FuncReleaseStr)
--- KeyIdx       : button index
--- FuncPressStr : Lua code executed on press
--- FuncReleaseStr: Lua code executed on release (optional)
+Qmdev:CfgFc(KeyIdx, FuncPressStr, FuncReleaseStr, FuncFastStr)
+-- FuncPressStr   : Lua code executed on press
+-- FuncReleaseStr : Lua code executed on release (optional)
+-- FuncFastStr    : Lua code executed on fast repeat (optional)
 ```
 
-#### Long‑press function button
+#### Long-press function button
 
 ```lua
 Qmdev:CfgLongFc(KeyIdx, WaitMs, LongPressFunc, ShortPressFunc, InitPressFunc)
--- KeyIdx        : button index
--- WaitMs        : long‑press threshold in milliseconds
--- LongPressFunc : function called on long press
--- ShortPressFunc: function called on short press
--- InitPressFunc : function called when key is initially pressed (optional)
+-- LongPressFunc, ShortPressFunc, InitPressFunc must be Lua functions (not strings)
 ```
 
 #### RPN button
 
 ```lua
 Qmdev:CfgRpn(KeyIdx, RpnPressStr, RpnReleaseStr)
--- RpnPressStr   : RPN executed on press
--- RpnReleaseStr : RPN executed on release (optional)
+-- Delegates to CfgCmd
 ```
 
 #### Command button
 
 ```lua
 Qmdev:CfgCmd(KeyIdx, CmdPressStr, CmdReleaseStr)
--- Simulator command on press / release
+-- Simulator command / dataref path on press / release
 ```
 
 #### Value button
 
 ```lua
 Qmdev:CfgVal(KeyIdx, ValStr, PressInt, ReleaseInt)
--- ValStr   : dataref path
--- PressInt : integer value written on press (optional)
--- ReleaseInt: integer value written on release (optional)
+-- ValStr    : dataref (XP) or B: event (MSFS)
+-- PressInt  : integer written on press (optional)
+-- ReleaseInt: integer written on release (optional)
 ```
 
 #### Toggle value button
 
 ```lua
-Qmdev:CfgValT(KeyIdx, ValStr， value0, value1)
--- Writes to ValStr when the button is active (touch‑style input)
+Qmdev:CfgValT(KeyIdx, ValStr, value0, value1)
+-- Writes value0 or value1 to ValStr on each press (touch-style toggle)
 ```
-
 
 ### 6.3 Aircraft Type Checks
 
-Use multiple checks to ensure a profile only runs on the intended aircraft:
+Low-level path/title guards (return `true` when the pattern is **not** found — i.e. script should exit):
 
 ```lua
--- ICAO code
-if PLANE_ICAO ~= "A320" then return end
-
--- Tail number
-if PLANE_TAILNUMBER ~= "D-AXLA" then return end
-
--- Path exclusion
 if ilua_is_acfpath_excluded("toliss") then return end
-
--- Title exclusion
 if ilua_is_acftitle_excluded("A3") then return end
+if PLANE_ICAO ~= "A320" then return end
+if PLANE_TAILNUMBER ~= "D-AXLA" then return end
+```
+
+Positive-match helpers:
+
+```lua
+if ilua_acfpath_matches("FlyByWire") then ... end
+if ilua_acftitle_matches("B73") then ... end
+```
+
+High-level aircraft guards (return `true` when the aircraft does **not** match — script should exit):
+
+```lua
+if ilua_require_ff320() then return end
+if ilua_require_zibo() then return end
+if ilua_require_fbw_a3xx() then return end
+if ilua_require_pmdg_737() then return end
+if ilua_require_msfs() then return end      -- exit if not running in MSFS
+if ilua_require_msfs(false) then return end -- exit if running in MSFS (XP-only script)
+```
+
+See `init.lua` for the full list of `ilua_require_*` helpers.
+
+---
+
+## 7. Position Switch (PID) APIs
+
+Multi-position physical switches (e.g. overhead panel) use a PID-style position tracker.
+
+### 7.1 Global Init
+
+```lua
+local idx = QmdevPosSwitchInit(
+    statusPath,   -- dataref / simvar to read current position
+    step,         -- position step size
+    incCmd,       -- command string when moving up
+    decCmd,       -- command string when moving down (can equal incCmd for loop mode)
+    delay,        -- ms between steps (default 100)
+    decaccu       -- decimal accumulator threshold (default 0.1)
+)
+```
+
+### 7.2 Binding to Hardware Keys
+
+```lua
+-- Press only
+device:CfgPSw(KeyIdx, idx, pressExpect)
+
+-- Press / release
+device:CfgPSw(KeyIdx, idx, pressExpect, releaseExpect)
+
+-- Toggle between two positions
+device:CfgPSwTog(KeyIdx, idx, posA, posB)
+```
+
+### 7.3 Runtime Control
+
+```lua
+QmdevPosSwitchSet(idx, expectPos)          -- Move switch to target position
+device:GetPSw(idx)                         -- Read current position
+device:PSwDelay(idx, timeout, expectPos)   -- Delayed move
+device:PSwTog(idx, timeout, posA, posB)    -- Toggle with delay
+```
+
+Example (overhead strobe switch):
+
+```lua
+local pswh1 = QmdevPosSwitchInit("1-sim/anim/lightStrobeT", 1,
+    "1-sim/command/strobeLightSwitch_trigger",
+    "1-sim/command/strobeLightSwitch_trigger", 1000)
+qmovha:CfgPSw(0, pswh1, 1)
+qmovha:CfgPSw(1, pswh1, 0)
 ```
 
 ---
 
-## 7. Data Reference System
+## 8. Runtime Globals (`init.lua`)
 
-### 7.1 `iDataRef` Class
+These are defined in the simulator entry script (`init.lua`), not in `com/`.
 
-`iDataRef` is a helper that wraps a dataref (X‑Plane) or simvar (MSFS) and tracks value changes.
+### 8.1 Hardware Detection
+
+Each device family has an `ilua_hw_*_absent(FastTurnsPerSecond)` function.  
+Return value `true` means hardware is **not** connected.
+
+| Function | Device |
+|----------|--------|
+| `ilua_hw_qgmc710_absent` | QGMC710 |
+| `ilua_hw_qmcp737c_absent` | QMCP737C |
+| `ilua_hw_qfcu_absent` | QFCU |
+| `ilua_hw_qcdu_b737_absent` | QCDU B737 Captain |
+| `ilua_hw_qcdu_b737_1_absent` | QCDU B737 FO |
+| `ilua_hw_qcdu_a320_absent` | QCDU A320 Captain |
+| `ilua_hw_qcdu_a320_1_absent` | QCDU A320 FO |
+| `ilua_hw_qg1k_pfd_absent` | QG1K PFD |
+| `ilua_hw_qg1k_mfd_absent` | QG1K MFD |
+| `ilua_hw_qmpe_absent` | QMPE |
+| `ilua_hw_qmovh_a_absent` | QMOVH-A |
+
+Hardware assignment flags (`ilua_hw_assigned_*`) prevent double-binding when multiple profiles load.
+
+### 8.2 Frame Loop Manager
 
 ```lua
--- Create a data reference
-local dataref = iDataRef:New("sim/cockpit/autopilot/heading")
+GlobalFrameLoopManager:add(function()
+    device:SetLeds()
+    device:SetBkl()
+end)
 
--- Get the current value
-local value = dataref:Get()
-
--- Detect changes
-if dataref:ChangedUpdate() then
-    -- Value changed; handle update
-end
-
--- Mark as invalid
-dataref:Invalid(-1)
+GlobalFrameLoopManager:tick()           -- Called from C++ each frame
+GlobalFrameLoopManager:has_active_loops()
+GlobalFrameLoopManager:remove(func)
 ```
 
-### 7.2 Common Dataref / Simvar Paths
+Prefer `GlobalFrameLoopManager` over legacy `uluaAddDoLoop` for per-frame LED/display updates.
+
+### 8.3 QLCD (CDU screen IPC)
+
+```lua
+ilua_qlcd_set_airplane(idx)   -- Select aircraft profile for QLCD
+ilua_qlcd_set_brightness(brt) -- Push screen brightness to QLCD
+```
+
+### 8.4 Utilities
+
+```lua
+ilua_bool_ternary(value1, value, revert)  -- Threshold-to-bool helper
+ilua_file_exists(path)
+ilua_get_path(str)
+IndexAllocator.new() / :alloc() / :free()
+```
+
+---
+
+## 9. Data Reference System
+
+### 9.1 `iDataRef` Class
+
+`iDataRef` wraps a dataref (X-Plane) or simvar (MSFS) and tracks value changes.  
+Defined in `init.lua`.
+
+```lua
+local dr = iDataRef:New(pathstr, defval, bool_revert, bool_base)
+-- Returns nil if uluaFind(pathstr) fails
+```
+
+| Method | Description |
+|--------|-------------|
+| `Set(newval)` | Write value to simulator |
+| `Get()` | Read and cache current value |
+| `Changed()` | Compare cached vs last (epsilon 0.001) |
+| `Update()` | Commit current value as last |
+| `Invalid(val)` | Reset last value (default -1) |
+| `Delta(val)` | Return `val - val_last` |
+| `GetOld()` | Return last cached value |
+| `GetChanged()` | `Get()` then return whether changed |
+| `ChangedUpdate()` | `Get()` + if changed, `Update()` and return true |
+| `GetBit()` | Bool threshold of current value |
+| `GetOldBit()` | Bool threshold of last value |
+
+Example:
+
+```lua
+local heading = iDataRef:New("sim/cockpit/autopilot/heading")
+if heading:ChangedUpdate() then
+    -- value changed; handle update
+end
+heading:Invalid(-1)
+```
+
+### 9.2 Common Dataref / Simvar Paths
 
 #### X-Plane
 
-- `sim/cockpit/autopilot/heading` – AP heading
-- `sim/cockpit/autopilot/altitude` – AP altitude
-- `sim/cockpit/autopilot/airspeed` – AP airspeed
-- `sim/cockpit/autopilot/vertical_velocity` – AP vertical speed
-- `sim/cockpit/autopilot/autopilot_on` – AP master state
+- `sim/cockpit/autopilot/heading`
+- `sim/cockpit/autopilot/altitude`
+- `sim/cockpit/autopilot/airspeed`
+- `sim/cockpit/autopilot/vertical_velocity`
+- `sim/cockpit/autopilot/autopilot_on`
 
 #### MSFS
 
-- `A:HEADING INDICATOR, degrees` – Heading
-- `A:ALTITUDE INDICATOR, feet` – Altitude
-- `A:AIRSPEED INDICATED, knots` – Indicated airspeed
-- `A:VERTICAL SPEED, feet per minute` – Vertical speed
-- `L:XMLVAR_AirSpeedIsInMach` – Airspeed unit (Mach or knots)
+- `A:HEADING INDICATOR, degrees`
+- `A:ALTITUDE INDICATOR, feet`
+- `A:AIRSPEED INDICATED, knots`
+- `A:VERTICAL SPEED, feet per minute`
+- `L:XMLVAR_AirSpeedIsInMach`
 
 ---
 
-## 8. Best Practices
+## 10. Best Practices
 
-### 8.1 Hardware Detection
+### 10.1 Hardware Detection
 
 Always verify that the hardware is present before configuring:
 
 ```lua
-local qmcp737c = com.sim.qm.Qmcp737c:new()
-if not qmcp737c:Init() then return end
-
--- G1000 hardware detection
-if ilua_hw_qg1k_pfd_absent(FastTurnsPerSecond) then return end
+local qmcp737c = com.sim.qm.Qmcp737c.Open()
+if not qmcp737c then return end
 ```
 
-### 8.2 Aircraft Type Checks
+### 10.2 Aircraft Guards
 
-Use multiple checks to ensure your script only runs where intended:
+Prefer high-level `ilua_require_*` helpers over manual ICAO checks when available:
 
 ```lua
--- Path checks
-if ilua_is_acfpath_excluded("FlyByWire") or ilua_is_acfpath_excluded("A320") then return end
-
--- Title checks
-if ilua_is_acftitle_excluded("A3") or ilua_is_acftitle_excluded("A2") then return end
-
--- ICAO checks
-if PLANE_ICAO ~= "B738" and PLANE_ICAO ~= "B736" then return end
-
--- Tail number checks
-if PLANE_TAILNUMBER ~= "ZB738" then return end
+if ilua_require_zibo() then return end
+if ilua_require_ff320() then return end
 ```
 
-### 8.3 Choosing Configuration Methods
+### 10.3 LED / Display Refresh
 
-- **Traditional methods**: direct calls like `CfgRpn`, `CfgEncFull`, `CfgCmd` – best when you need fine‑grained control for a specific device.
+Bind datarefs with `Get*` in setup; push to hardware in a loop function:
 
 ```lua
--- Traditional configuration
-qmcp737c:CfgRpn(0, "(>H:AS1000_PFD_CRS_DEC)")
-qmcp737c:CfgEncFull(0, 1, "dataref", 0.05, 0.05, 1, 0.05, 1.0)
+qcdua:GetFm1("a320/.../AnnuFM1_Light/Power")
+
+function CDU_LED_UPD()
+    qcdua:SetLeds()
+    qcdua:SetBkl()
+end
+GlobalFrameLoopManager:add(CDU_LED_UPD)
 ```
 
-### 8.4 Error Handling and Logging
+### 10.4 Deferred Reload
 
-Use logging and defensive checks to simplify debugging:
+When simulator datarefs are not yet available at profile load time:
 
 ```lua
--- Log important messages
-uluaLog("QCDU-A320 for Toliss")
-
--- Check whether a critical dataref exists
 if uluaFind("AirbusFBW/PanelBrightnessLevel") == nil then
     ilua_req_reload()
     return
 end
 ```
 
-### 8.5 Main Loop
+### 10.5 Error Handling and Logging
 
-- Register update functions with `uluaAddDoLoop`.
-- Avoid heavy computations on every frame.
-- Use `ChangedUpdate()` to only react when a value actually changes.
-- Choose sensible update intervals.
+```lua
+uluaLog("QCDU-A320 for Toliss")
+```
+
+### 10.6 Performance
+
+- Register update functions with `GlobalFrameLoopManager`.
+- Avoid heavy computation every frame.
+- Use `ChangedUpdate()` to react only when values actually change.
+- Call `FreshAlt()` / `FreshBkl()` / `FreshBits()` after aircraft swaps to force re-sync.
 
 ---
 
+## 11. Troubleshooting
+
+| Symptom | Likely Cause | Fix |
+|---------|--------------|-----|
+| Profile exits immediately | `ilua_require_*` guard mismatch | Check `AIRCRAFT_PATH`, `PLANE_ICAO`, `PLANE_TAILNUMBER` |
+| `Open()` returns nil | Hardware not connected or already assigned | Verify USB; check `ilua_hw_assigned_*` flag |
+| LEDs stuck / stale | Missing frame loop | Add `GlobalFrameLoopManager:add(...)` |
+| `iDataRef:New` returns nil | Dataref not yet published | `ilua_req_reload()` and return early |
+| Key already assigned log | Duplicate `KeyIdx` in same device | Use unique key indices per `Cfg*` call |
+| Position switch overshoots | `delay` too short in `QmdevPosSwitchInit` | Increase delay (e.g. 1000 ms) |
+
+---
+
+## 12. Changelog
+
+### 2026-07 – Rebrand to FlyLuaIo
+
+- Project/framework name updated from **Qmdev** to **FlyLuaIo** in documentation.
+- Code identifiers (`Qmdev`, `QmdevId`, `QmdevPosSwitch*`, `uluaQmdev*`) remain unchanged for compatibility.
+
+### 2026-07 – Documentation sync with codebase
+
+- Document `Class.Open()` factory pattern.
+- Add `CfgEncTypeFull`, `CfgPSw` / position-switch APIs, `AddTogMenu`, `swap16`, `scaleValue`.
+- Add `com/sim/wf`, `com/sim/mf`, and new `qm` classes (`Hcbravo`, `Stk*`, `Vkbgunut`, `Ww*`).
+- Document `GlobalFrameLoopManager`, `ilua_require_*` guards, and full `iDataRef` API.
+- Update CDU examples to use `SetLeds()` + frame loop pattern.
+
+### 2024-05 – OOP refactor (Qmdev era)
+
+- Introduced `com/oop` class system and `Qmdev` base class.
+- Hardware classes moved under `com/sim/qm/`.
+- Added `iDataRef` change-tracking helpers.
