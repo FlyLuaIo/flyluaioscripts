@@ -1,94 +1,64 @@
+# flyluaioscripts
 
-## Project Overview
+Lua hardware mapping profiles for [FlyLuaIO](https://github.com/cpuwolf/flyluaio) — the successor to qmdev.
 
-**flyluaioscripts** is a Lua‑based framework for controlling USB HID hardware devices and bridging them with flight simulators (X-Plane 11/12 and Microsoft Flight Simulator 2020/2024).
+FlyLuaIO bridges USB HID cockpit panels to **X-Plane 11/12** and **Microsoft Flight Simulator 2020/2024**. This repository contains the shared Lua framework and aircraft-specific profile scripts loaded by the FlyLuaIO plugin.
 
-The repository contains:
+## Requirements
 
-- Shared Lua device framework and object model
-- Per‑aircraft configuration scripts for X-Plane
-- Per‑aircraft configuration scripts for Microsoft Flight Simulator
+- [FlyLuaIO](https://github.com/cpuwolf/flyluaio) plugin installed in your simulator
+- Supported FlyLuaIO hardware (MCP, CDU, FCU, G1000, overhead panel, etc.)
 
-## Main Features
+## Repository layout
 
-- **Lua scripting for hardware control**: All device behavior is defined in Lua.
-- **Support for multiple simulators**:
-  - X-Plane 11 / 12
-  - Microsoft Flight Simulator 2020 / 2024
-- **Hardware abstraction layer**: Common Lua classes abstract each physical device so that aircraft profiles focus only on mapping and logic.
-- **Reusable core library**: Shared base classes under `com/` are reused across both simulators.
-
-## Design Concept
-<img width="1016" height="752" alt="hcbravo" src="https://github.com/user-attachments/assets/f635130d-e145-4ddb-a293-f9945f4e4d05" />
-
-
-## Supported Hardware
-
-The framework supports multiple QuickMade hardware devices, including but not limited to:
-
-1. **HCBravo** - Honeycombe Bravo throttle
-2. **QGMC710** – General aviation / Hotstart TBM-900 style controller
-3. **QMCP737C** – MCP panel for Boeing 737 family (ZIBO, Level-up, MAX, IXEG, Flightfactor, etc.)
-4. **QCDU B737/A320** – CDU/FMS units for Boeing 737 and Airbus A320 families
-5. **QG1K PFD/MFD** – G1000 glass cockpit (PFD / MFD)
-6. **QFCU** – Airbus A320 FCU style controller
-7. **QMPE** - Radio & Audio & ECAM controller Airbus style
-8. **OMOVH-A** - Airbus Overhead panel
-
-## Repository Layout
-
-The current folder structure is:
-
-- **`xp/`** – X-Plane 11/12 aircraft‑specific Lua configuration files  
-  Each file typically represents one hardware–aircraft combination (for example `QMCP737C_ZIBO738.lua`).
-- **`msfs/`** – Microsoft Flight Simulator 2020/2024 aircraft‑specific Lua configuration files  
-  For example `QMCP737C_PMDG737.lua`, `QFCU_PMDG_777.lua`, etc.
-- **`com/oop/`** – Lightweight object‑oriented helpers for Lua  
-  - `Object.lua` – base object implementation  
-  - `class.lua` – helper for defining classes  
-  - `include.lua` – simple module include helper  
-  - `package.lua` – package and module loading helper
-- **`com/sim/`** – Shared simulator‑agnostic core
-  - `Qmdev.lua` – core device base class used by all hardware
-  - `QmReload.lua` – helper for reloading / resetting configurations
-  - `com/sim/qm/` – concrete hardware abstraction classes (QMCP737C, QFCU, QCDU, QGMC710, QG1K, QMPE, QMOVH, etc.), shared by both X-Plane and MSFS profiles
-
-> Additional API documentation is available in the QuickMade wiki:  
-> `https://github.com/cpuwolf/Quickmadedevice/wiki/Qmdev-.lua-files`
-
-### File Naming Convention
-
-Lua profile files follow this pattern:
-
-```
-<hardware_name>_<aircraft_model_name>.lua
+```text
+flyluaioscripts/
+├── com/          Shared framework (OOP, Qmdev base class, hardware drivers)
+├── xp/           X-Plane aircraft profiles
+├── msfs/         MSFS aircraft profiles
+└── LUA_API_DEVELOPER_GUIDE.md
 ```
 
-For example: `QMCP737C_ZIBO738.lua` means “QMCP737C hardware mapped for the ZIBO 737‑800 aircraft”.
+| Directory | Purpose |
+|-----------|---------|
+| `com/oop/` | Lua OOP infrastructure |
+| `com/sim/qm/` | Hardware device classes (Qmcp737c, Qcdua, Qfcu, …) |
+| `com/sim/wf/` | Wingflex / third-party adapters |
+| `com/sim/mf/` | MobiFlight integration |
+| `xp/` | X-Plane mapping scripts (`{DEVICE}_{AIRCRAFT}.lua`) |
+| `msfs/` | MSFS mapping scripts |
 
-## Core Architecture
+Profile naming:
 
-1. **Hardware abstraction classes** – Implemented under `com/sim/qm/`, one class per hardware family.
-2. **Per‑aircraft profiles** – Located in `xp/` and `msfs/`, each file binds a specific aircraft to a specific hardware class.
-3. **Data reference system** – The `iDataRef` helper (see the Lua API developer guide) manages reading and tracking simulator datarefs / simvars.
-4. **Configuration API** – Methods such as `CfgEncFull`, `CfgCmd`, `CfgVal`, `CfgTog`, `CfgRpn`, etc., are used to map encoders, buttons and LEDs to simulator functions.
+- `{DEVICE}_{AIRCRAFT/ADDON}.lua` — aircraft-specific mapping
+- `z_{DEVICE}_GA.lua` — General Aviation fallback
+- `z_{DEVICE}_no_msfs.lua` — disable on MSFS
 
-## Main Capabilities
+## Documentation
 
-- **Encoder configuration** – Heading, altitude, speed, V/S, baro and other rotary controls.
-- **Button mapping** – Map hardware buttons to simulator commands, RPN scripts or custom Lua functions.
-- **Display and LED handling** – Drive numeric displays and indicators from simulator data.
-- **Multi‑platform** – The same core device classes can be reused for both X-Plane and MSFS.
-- **Modular design** – Each hardware–aircraft pair is isolated in its own Lua profile file.
+Full API reference, examples, and troubleshooting:
 
-## Recommended VSCode Extensions
+**[LUA_API_DEVELOPER_GUIDE.md](./LUA_API_DEVELOPER_GUIDE.md)**
 
-To make Lua development and collaboration easier, it is recommended to use Visual Studio Code with:
+## Quick start
 
-1. **Lua language support**
-   - [Lua by sumneko](https://marketplace.visualstudio.com/items?itemName=sumneko.lua)  
-     Provides syntax highlighting, IntelliSense, debugging and linting for Lua, suitable for this project.
+1. Install the FlyLuaIO plugin and connect your hardware.
+2. Place or symlink this repository where the plugin loads scripts from.
+3. Find a profile for your hardware and aircraft under `xp/` or `msfs/`.
+4. To add a new mapping, copy the closest existing profile and adjust dataref paths and aircraft guards.
 
-## What This Project Is
+Minimal profile skeleton:
 
-This repository is essentially a **hardware driver and configuration framework** that lets flight‑sim enthusiasts use real‑world style hardware (MCP, CDU, FCU, G1000, etc.) to control aircraft inside the simulator, providing a more immersive and realistic cockpit experience.
+```lua
+local device = com.sim.qm.Qmcp737c.Open()
+if not device then return end
+
+device:CfgCmd(0, "sim/autopilot/heading_down")
+GlobalFrameLoopManager:add(function() device:LoopMcp() end)
+```
+
+## Notes
+
+- Files under `com/` marked `Don't modify this file` are framework core.
+- Runtime APIs (`ulua*`, `ilua*`, `iDataRef`, `GlobalFrameLoopManager`) are provided by the FlyLuaIO plugin, not this repository.
+- Legacy code identifiers such as `Qmdev` and `uluaQmdevConfig` are retained from the qmdev era for compatibility.
