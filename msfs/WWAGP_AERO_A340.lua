@@ -142,7 +142,7 @@ end
 local dr_test = iDataRef:New("(L:AB_VC_OVH_ANN_LT_SW)")      -- 0: TEST 1:BRT: 2: DIM
 local dr_power = iDataRef:New("(L:TLS_FCU_AVAILABLE, Bool)") -- 0: OFF 1: ON
 
-function Wwagp_Aero_A346_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark
 	local b_power
 	if dr_power:ChangedUpdate() then
@@ -191,6 +191,4 @@ function Wwagp_Aero_A346_Loop_Upd()
 	Wwagp_GA_LCD_Loop()
 	-- update LEDs
 	wwagp:Setleds()
-end
-
-GlobalFrameLoopManager:add(Wwagp_Aero_A346_Loop_Upd)
+end)

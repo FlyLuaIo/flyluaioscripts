@@ -96,14 +96,10 @@ local dr_CDU_ERJ_brightness = uluaFind("sim/cockpit2/electrical/panel_brightness
 qcdub:GetScreenBrt('XCrafts/FMS/CDU1_brt') -- 0-1
 
 -- LED Update Function
--- DONT use this name "CDU_ERJ_LED_UPD" again
--- it must be unique across all .sec and lua files
-function CDU_ERJ_LED_UPD()
+GlobalFrameLoopManager:add(function()
     qcdub:SetMsg(nil, math.floor(uluaGet(dr_CDU_ERJ_msg) + 0.5))
     qcdub:SetExec(nil, math.floor(uluaGet(dr_CDU_ERJ_exec) + 0.5))
     qcdub:SetScreenBrt()
     local brightness = math.floor(uluaGet(dr_CDU_ERJ_brightness) * 60)
     qcdub:SetBkl(brightness)
-end
-
-GlobalFrameLoopManager:add(CDU_ERJ_LED_UPD)
+end)

@@ -94,29 +94,28 @@ function CDU_asobo747_LED_dataref_exists()
     qcdub:CfgRpn(69, '(>H:B747_8_FMC_1_BTN_BRT_DIM)', '') -- FMS LEFT BRIGHTNESS CONTROL selector 
     qcdub:CfgRpn(70, '(>H:B747_8_FMC_1_BTN_1)', '(>H:B747_8_FMC_1_BTN_1)') -- FMS LEFT BRIGHTNESS CONTROL selector 
 
-    GlobalFrameLoopManager:add(CDU_asobo747_LED_UPD)
+    GlobalFrameLoopManager:add(function()
+        local CDU_asobo747_msg = uluaGet(dr_CDU_asobo747_msg)
+        local CDU_asobo747_exec = uluaGet(dr_CDU_asobo747_exec)
+        local CDU_asobo747_fail = uluaGet(dr_CDU_asobo747_fail)
+        local CDU_asobo747_warn = uluaGet(dr_CDU_asobo747_warn)
+        local CDU_asobo747_offset = uluaGet(dr_CDU_asobo747_offset)
+        local CDU_asobo747_brightness = uluaGet(dr_CDU_asobo747_brightness)
+
+        uluaSet(idr_qcdu_b737_hid_ledfail, math.floor(CDU_asobo747_fail + 0.5))
+        uluaSet(idr_qcdu_b737_hid_ledcall, math.floor(CDU_asobo747_warn + 0.5))
+
+        uluaSet(idr_qcdu_b737_hid_ledmsg, math.floor(CDU_asobo747_msg + 0.5))
+
+        uluaSet(idr_qcdu_b737_hid_ledexec, math.floor(CDU_asobo747_exec + 0.5))
+
+        uluaSet(idr_qcdu_b737_hid_ledofst, ilua_01_ternary(dr_CDU_asobo747_offset, 0.4))
+
+        uluaSet(idr_qcdu_b737_hid_bright, math.floor(CDU_asobo747_brightness * 0.15)) -- max 300
+    end)
 end
 
 ---------------------------------------------------------------------------------------------------
 
-function CDU_asobo747_LED_UPD()
-    local CDU_asobo747_msg = uluaGet(dr_CDU_asobo747_msg)
-    local CDU_asobo747_exec = uluaGet(dr_CDU_asobo747_exec)
-    local CDU_asobo747_fail = uluaGet(dr_CDU_asobo747_fail)
-    local CDU_asobo747_warn = uluaGet(dr_CDU_asobo747_warn)
-    local CDU_asobo747_offset = uluaGet(dr_CDU_asobo747_offset)
-    local CDU_asobo747_brightness = uluaGet(dr_CDU_asobo747_brightness)
-
-    uluaSet(idr_qcdu_b737_hid_ledfail, math.floor(CDU_asobo747_fail + 0.5))
-    uluaSet(idr_qcdu_b737_hid_ledcall, math.floor(CDU_asobo747_warn + 0.5))
-
-    uluaSet(idr_qcdu_b737_hid_ledmsg, math.floor(CDU_asobo747_msg + 0.5))
-
-    uluaSet(idr_qcdu_b737_hid_ledexec, math.floor(CDU_asobo747_exec + 0.5))
-
-    uluaSet(idr_qcdu_b737_hid_ledofst, ilua_01_ternary(dr_CDU_asobo747_offset, 0.4))
-
-    uluaSet(idr_qcdu_b737_hid_bright, math.floor(CDU_asobo747_brightness * 0.15)) -- max 300
-end
 -- polling function for LEDS
 uluasetTimeout("CDU_asobo747_LED_dataref_exists()", 100)

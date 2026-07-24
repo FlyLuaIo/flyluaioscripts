@@ -149,14 +149,10 @@ qmovha:GetUpled2Eng2ag2('sim/cockpit2/annunciators/electric_trim_off')
 
 qmovha:GetBkl('sim/cockpit/electrical/instrument_brightness', 100) -- 0~1
 
--- DONT use this name "Qmovha_XP_GA_loop" again
--- it must be unique across all .sec and lua files
-function Qmovha_XP_GA_loop()
+GlobalFrameLoopManager:add(function()
     qmovha:SetDnled()
     qmovha:SetUpled1()
     qmovha:SetUpled2()
 
     qmovha:SetBkl()
-end
-
-GlobalFrameLoopManager:add(Qmovha_XP_GA_loop)
+end)

@@ -821,7 +821,7 @@ function ga_qmcp737c_digi_disp_nav()
     end
 end
 
-function fnx_qmcp737c_digi_disp_every_frame()
+GlobalFrameLoopManager:add(function()
     if ga_qmcp737c_digi_disp_set_Bright() then
         return
     end
@@ -849,6 +849,4 @@ function fnx_qmcp737c_digi_disp_every_frame()
     else
         ga_qmcp737c_digi_disp_powoff_nav()
     end
-end
-
-GlobalFrameLoopManager:add(fnx_qmcp737c_digi_disp_every_frame)
+end)

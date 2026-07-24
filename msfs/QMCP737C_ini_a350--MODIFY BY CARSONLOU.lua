@@ -574,7 +574,7 @@ function ini_a350_qmcp737c_digi_disp_nav()
     end
 end
 
-function ini_a350_qmcp737c_digi_disp_every_frame()
+GlobalFrameLoopManager:add(function()
     if ini_a350_qmcp737c_digi_disp_set_Bright() then
         return
     end
@@ -602,6 +602,4 @@ function ini_a350_qmcp737c_digi_disp_every_frame()
     else
         ini_a350_qmcp737c_digi_disp_powoff_nav()
     end
-end
-
-GlobalFrameLoopManager:add(ini_a350_qmcp737c_digi_disp_every_frame)
+end)

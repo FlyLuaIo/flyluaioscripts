@@ -110,7 +110,7 @@ local dr_ac_bus = iDataRef:New("sim/cockpit/electrical/avionics_on")
 
 qcdua:GetScreenBrt("AirbusFBW/DUBrightness[6]") -- 0-1
 
-function CDU_A320_LED_UPD()
+GlobalFrameLoopManager:add(function()
     local b_ac_bus = dr_ac_bus:Get()
     qcdua:SetLeds()
     if dr_ac_bus:ChangedUpdate() then
@@ -124,8 +124,5 @@ function CDU_A320_LED_UPD()
     end
     qcdua:SetScreenBrt()
     qcdua:SetBkl()
-
-end
-
-GlobalFrameLoopManager:add(CDU_A320_LED_UPD)
+end)
 

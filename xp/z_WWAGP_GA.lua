@@ -94,7 +94,7 @@ function Wwagp_GA_LCD_Loop()
 end
 local dr_test = iDataRef:New("sim/cockpit/warnings/annunciator_test_pressed") -- 0: normal 1:test
 local dr_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on") -- 0: OFF 1: ON
-function Wwagp_GA_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark
 	local b_power
 	if dr_power:ChangedUpdate() then
@@ -143,6 +143,4 @@ function Wwagp_GA_Loop_Upd()
 	Wwagp_GA_LCD_Loop()
 	-- update LEDs
 	wwagp:Setleds()
-end
-
-GlobalFrameLoopManager:add(Wwagp_GA_Loop_Upd)
+end)

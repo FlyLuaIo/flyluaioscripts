@@ -97,9 +97,7 @@ qcdua:GetFail("(L:INI_FMS1_display_light)")
 qcdua:GetFmgc("(L:INI_FMS1_display_light)")
 qcdua:GetBkl("(A:LIGHT POTENTIOMETER:3, Percent)", 0.3)
 
-function CDU_INIA300_LED_UPD()
+GlobalFrameLoopManager:add(function()
     qcdua:SetBkl()
-end
-
-GlobalFrameLoopManager:add(CDU_INIA300_LED_UPD)
+end)
 

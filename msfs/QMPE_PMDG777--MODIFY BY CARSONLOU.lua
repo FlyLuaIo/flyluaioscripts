@@ -326,7 +326,7 @@ local qmcp737c_com_power = iDataRef:New("(A:AVIONICS MASTER SWITCH,Bool)")
 local dr_power1 = iDataRef:New("(A:AVIONICS MASTER SWITCH,Bool)")
 local dr_power = iDataRef:New("(L:Battery)") -- 1 batt 2 AC bus
 
-function Qmpe_pmdg_777_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: cold and dark
     local b_power = dr_power:Get()
     local b_power1 = dr_power1:Get()
@@ -359,6 +359,4 @@ function Qmpe_pmdg_777_loop()
     qmpe:SetAcp()
     qmpe:SetEcam()
     qmpe:SetMisc()
-end
-
-GlobalFrameLoopManager:add(Qmpe_pmdg_777_loop)
+end)

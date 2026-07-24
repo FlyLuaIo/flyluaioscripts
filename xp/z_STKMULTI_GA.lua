@@ -93,9 +93,7 @@ stkmulti:GetDigiIas("sim/cockpit2/autopilot/airspeed_dial_kts_mach")
 stkmulti:GetDigiHdg("sim/cockpit/autopilot/heading_mag")
 stkmulti:GetDigiCrs('sim/cockpit/radios/nav1_obs_degm')
 
-function Stkmulti_GA_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	stkmulti:loopDigi()
 	stkmulti:SetLeds()
-end
-
-GlobalFrameLoopManager:add(Stkmulti_GA_Loop_Upd)
+end)

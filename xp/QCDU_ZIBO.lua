@@ -95,12 +95,10 @@ local dr_CDU_B737_brightness = uluaFind("laminar/B738/electric/panel_brightness[
 qcdub:GetScreenBrt("laminar/B738/electric/instrument_brightness[10]") -- 0-1
 
 -- LED Update Function
-function CDU_B737_LED_UPD()
+GlobalFrameLoopManager:add(function()
     qcdub:SetMsg(nil, math.floor(uluaGet(dr_CDU_B737_msg) + 0.5))
     qcdub:SetExec(nil, math.floor(uluaGet(dr_CDU_B737_exec) + 0.5))
     qcdub:SetScreenBrt()
     local brightness = math.floor(uluaGet(dr_CDU_B737_brightness) * 50)
     qcdub:SetBkl(brightness)
-end
-
-GlobalFrameLoopManager:add(CDU_B737_LED_UPD)
+end)

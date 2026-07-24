@@ -328,7 +328,7 @@ function Qmpe_Test()
     qmpe:SetBklMode(1)
 end
 
-function Qmpe_Fenix_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: test mode
     if dr_test:ChangedUpdate() then
         local b_test = dr_test:GetOld()
@@ -356,6 +356,4 @@ function Qmpe_Fenix_loop()
     qmpe:SetAcp()
     qmpe:SetEcam()
     qmpe:SetMisc()
-end
-
-GlobalFrameLoopManager:add(Qmpe_Fenix_loop)
+end)

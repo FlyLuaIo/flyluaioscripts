@@ -122,7 +122,7 @@ else
 	dr_bkl_power = iDataRef:New("AirbusFBW/ACBusVoltages[0]")           -- 0: OFF >0: ON
 end
 
-function Wwecam_Toliss_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark
 	if dr_power:ChangedUpdate() then
 		local b_power = dr_power:GetOld()
@@ -153,6 +153,4 @@ function Wwecam_Toliss_Loop_Upd()
 	end
 	-- brightness
 	wwecam:SetBkl()
-end
-
-GlobalFrameLoopManager:add(Wwecam_Toliss_Loop_Upd)
+end)

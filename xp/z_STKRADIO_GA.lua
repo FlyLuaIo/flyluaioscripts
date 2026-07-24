@@ -121,8 +121,6 @@ stkradio:getDigiAdf('sim/cockpit/radios/adf1_freq_hz', 'sim/cockpit/radios/adf1_
 stkradio:getDigiDme('sim/cockpit/radios/nav1_dme_dist_m', 'sim/cockpit/radios/nav2_dme_dist_m')
 stkradio:getDigiXpdr('sim/cockpit/radios/transponder_code')
 
-function Stkradio_GA_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	stkradio:loopDigi()
-end
-
-GlobalFrameLoopManager:add(Stkradio_GA_Loop_Upd)
+end)

@@ -620,7 +620,7 @@ local function digi_disp_nav()
     end
 end
 
-function digi_disp_every_frame()
+GlobalFrameLoopManager:add(function()
     digi_disp_set_Bright()
 
     if uluaGet(qmcp737c_avionics_on) == 1 then
@@ -646,6 +646,4 @@ function digi_disp_every_frame()
     else
         digi_disp_powoff_nav()
     end
-end
-
-GlobalFrameLoopManager:add(digi_disp_every_frame)
+end)

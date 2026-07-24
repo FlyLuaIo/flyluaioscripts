@@ -350,7 +350,7 @@ local function digi_disp_set_Bright()
 end
 
 -----end sub functions
-function qmcp737c_zibo_loop()
+GlobalFrameLoopManager:add(function()
     qmcp737c:LoopVhf()
 
     digi_disp_set_Bright()
@@ -380,6 +380,4 @@ function qmcp737c_zibo_loop()
     else
         qmcp737c:OffNav()
     end
-end
-
-GlobalFrameLoopManager:add(qmcp737c_zibo_loop)
+end)

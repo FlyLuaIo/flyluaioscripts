@@ -511,7 +511,7 @@ local dr_ann_ap_amber = iDataRef:New("pmdg/ng3/data/MAIN_annunAP_Amber[0]")
 local dr_ann_at_amber = iDataRef:New("pmdg/ng3/data/MAIN_annunAT_Amber[0]")
 local dr_ann_ap = iDataRef:New("pmdg/ng3/data/MAIN_annunAP[0]")
 local dr_ann_at = iDataRef:New("pmdg/ng3/data/MAIN_annunAT[0]")
-function Qmpe_pmdg_737_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: cold and dark
     local b_power = dr_power:Get()
     local b_power1 = dr_power1:Get()
@@ -573,6 +573,4 @@ function Qmpe_pmdg_737_loop()
         -- brightness
         qmpe:SetBkl()
     end
-end
-
-GlobalFrameLoopManager:add(Qmpe_pmdg_737_loop)
+end)

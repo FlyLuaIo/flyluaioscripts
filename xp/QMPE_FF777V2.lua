@@ -320,7 +320,7 @@ end
 -- =====Annunciator test
 local dr_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on") -- 0: OFF 1: ON
 local dr_com_tx_sel = iDataRef:New("sim/cockpit2/radios/actuators/audio_com_selection") -- 6:COM1 7:COM2
-function Qmpe_ff777v2_XP_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: cold and dark
     local b_power = dr_power:Get()
     if dr_power:ChangedUpdate() then
@@ -373,6 +373,4 @@ function Qmpe_ff777v2_XP_loop()
 
     qmpe:SetEcam()
     qmpe:SetMisc()
-end
-
-GlobalFrameLoopManager:add(Qmpe_ff777v2_XP_loop)
+end)

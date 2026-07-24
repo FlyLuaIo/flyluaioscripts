@@ -348,9 +348,7 @@ else
     dr_dc_bus = iDataRef:New("laminar/A333/elec/dc_bat_bus_has_power")
 end
 
--- DONT use this name "Qmovha_XP_A333_loop" again
--- it must be unique across all .sec and lua files
-function Qmovha_XP_A333_loop()
+GlobalFrameLoopManager:add(function()
     local b_dc_bus = dr_dc_bus:Get()
     local b_ac_bus = dr_ac_bus:Get()
     local b_test = dr_test:Get()
@@ -482,6 +480,4 @@ function Qmovha_XP_A333_loop()
 
         qmovha:SetBkl(0)
     end
-end
-
-GlobalFrameLoopManager:add(Qmovha_XP_A333_loop)
+end)

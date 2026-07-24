@@ -59,7 +59,7 @@ wffcuc:GetPower('(L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED, number)')
 local dr_test_set = iDataRef:New('cpuwolf/flyluaio/WfFcuc/condbtn[0]')
 local dr_test = iDataRef:New("(L:INI_ANNLT_SWITCH, number)", -1) -- 0: TEST 1:BRT: 2: DIM
 
-function Wffcuc_ini340_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	-- expert code: test mode
 	local b_test
 	if dr_test:ChangedUpdate() then
@@ -98,6 +98,4 @@ function Wffcuc_ini340_Loop_Upd()
 	wffcuc:LoopAxis(2)
 	wffcuc:LoopAxis(3)
 	wffcuc:LoopAxis(4)
-end
-
-GlobalFrameLoopManager:add(Wffcuc_ini340_Loop_Upd)
+end)

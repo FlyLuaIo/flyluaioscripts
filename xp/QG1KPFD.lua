@@ -301,7 +301,7 @@ else
     qg1k_pfd_audio_func = qg1k_pfd_ga_audio	
 end
 
-function qg1k_pfd_LED_UPD()
+GlobalFrameLoopManager:add(function()
     if uluaGet(dr_QG1K_battery_on) <= 0 then
         qg1k_pfd_powoff()
         return
@@ -317,6 +317,4 @@ function qg1k_pfd_LED_UPD()
     uluaSet(idr_qg1k_pfd_hid_lednav2, uluaGet(dr_QG1K_nav2))
 
     qg1k_pfd_audio_func()
-end
-
-GlobalFrameLoopManager:add(qg1k_pfd_LED_UPD)
+end)

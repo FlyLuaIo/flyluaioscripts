@@ -105,7 +105,7 @@ qcdua:GetFmgc("(L:I_CDU1_FM)")
 qcdua:GetBkl("(L:LIGHTING_PANEL_1)", 0.3) -- 0~100
 local dr_CDU_A320_ecp_power = iDataRef:New("(L:A320_Neo_BAT_ScreenLuminosity, number)")
 
-function CDU_LVFR_LED_UPD()
+GlobalFrameLoopManager:add(function()
     local CDU_A320_ecp_power = dr_CDU_A320_ecp_power:Get()
     qcdua:SetLeds()
 
@@ -114,7 +114,5 @@ function CDU_LVFR_LED_UPD()
     else
         qcdua:Off()
     end
-end
-
-GlobalFrameLoopManager:add(CDU_LVFR_LED_UPD)
+end)
 

@@ -316,9 +316,7 @@ qmovha:GetAirCond("AirbusFBW/Pack1FCVInd", "AirbusFBW/CockpitTemp", 1, 2) --0~1,
 local dr_test = iDataRef:New("AirbusFBW/AnnunMode")                       -- 0: DIM 1: BRT 2: test mode
 local dr_ac_bus = iDataRef:New("sim/cockpit2/radios/actuators/com2_power")
 
--- DONT use this name "Qmovha_Toliss_loop" again
--- it must be unique across all .sec and lua files
-function Qmovha_Toliss_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: test mode
     local b_ac_bus = dr_ac_bus:Get()
 
@@ -346,6 +344,4 @@ function Qmovha_Toliss_loop()
     else
         qmovha:SetBkl(0)
     end
-end
-
-GlobalFrameLoopManager:add(Qmovha_Toliss_loop)
+end)

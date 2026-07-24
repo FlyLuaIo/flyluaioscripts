@@ -121,7 +121,7 @@ else
     qcdua:GetScreenBrt("sim/cockpit/electrical/avionics_on") -- 0-1
 end
 
-function CDU_XP_A333_LED_UPD()
+GlobalFrameLoopManager:add(function()
     local b_ac_bus = dr_ac_bus:Get()
     qcdua:SetLeds()
     if dr_ac_bus:ChangedUpdate() then
@@ -137,6 +137,4 @@ function CDU_XP_A333_LED_UPD()
     end
     qcdua:SetScreenBrt()
     qcdua:SetBkl()
-end
-
-GlobalFrameLoopManager:add(CDU_XP_A333_LED_UPD)
+end)

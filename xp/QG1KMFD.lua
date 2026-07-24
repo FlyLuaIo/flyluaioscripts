@@ -208,7 +208,7 @@ function qg1k_mfd_powoff()
     uluaSet(idr_qg1k_mfd_hid_bright, 0)
 end
 
-function qg1k_mfd_LED_UPD()
+GlobalFrameLoopManager:add(function()
     local QG1K_avionics_on = uluaGet(dr_QG1K_avionics_on)
     if QG1K_avionics_on <= 0 then
         qg1k_mfd_powoff()
@@ -227,6 +227,4 @@ function qg1k_mfd_LED_UPD()
         end
         uluaSet(idr_qg1k_mfd_hid_bright, led_br)
     end
-end
-
-GlobalFrameLoopManager:add(qg1k_mfd_LED_UPD)
+end)

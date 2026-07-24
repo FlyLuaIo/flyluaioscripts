@@ -433,7 +433,7 @@ end
 local dr_test = iDataRef:New("(L:INI_ANNLT_SWITCH, number)")                 -- 0: TEST 1:BRT: 2: DIM
 local dr_power = iDataRef:New("(L:INI_DC_ESSENTIAL_BUS_IS_POWERED, number)") -- 0: OFF 1: ON
 
-function Qmpe_IniA340_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: cold and dark
     local b_power = dr_power:Get()
     if b_power == 0 then
@@ -471,6 +471,4 @@ function Qmpe_IniA340_loop()
     qmpe:SetAcp()
     qmpe:SetEcam()
     qmpe:SetMisc()
-end
-
-GlobalFrameLoopManager:add(Qmpe_IniA340_loop)
+end)

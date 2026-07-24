@@ -10,6 +10,6 @@ if not wwecam then return end
 
 uluaLog("Wwecam for GA")
 
-function Wwecam_GA_Loop_Upd()
-end
-GlobalFrameLoopManager:add(Wwecam_GA_Loop_Upd)
+GlobalFrameLoopManager:add(function()
+
+end)

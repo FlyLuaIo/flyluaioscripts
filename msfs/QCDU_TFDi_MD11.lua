@@ -110,10 +110,8 @@ qcdua:GetFail("(L:MD11_LMCDU_FAIL_LT)")
 qcdua:GetFmgc("(L:MD11_LMCDU_OFST_LT)")
 qcdua:GetBkl("(L:MD11_OVHD_LTS_OUTER_INSTR_PED_PNL_FLOOD_KB)", 3)
 
-function CDU_TFDIMD11_LED_UPD()
+GlobalFrameLoopManager:add(function()
     qcdua:SetLeds()
     qcdua:SetBkl()
-end
-
-GlobalFrameLoopManager:add(CDU_TFDIMD11_LED_UPD)
+end)
 

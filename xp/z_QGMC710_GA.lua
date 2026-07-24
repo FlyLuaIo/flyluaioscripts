@@ -196,7 +196,7 @@ else
 end
 
 
-function QGMC710_LED_UPD()
+GlobalFrameLoopManager:add(function()
     uluaSet(idr_qgmc710_hid_ledflc, ilua_01_ternary(qgmv710_xp_flc_led, 0))
     uluaSet(idr_qgmc710_hid_ledvs, ilua_01_ternary(qgmv710_xp_vs_led, 0))
     uluaSet(idr_qgmc710_hid_ledyd, ilua_01_ternary(qgmv710_xp_yd_led, 0))
@@ -213,6 +213,4 @@ function QGMC710_LED_UPD()
 
     local led_br = math.floor(uluaGet(qgmv710_xp_cockpit_led) * 255.0)
     uluaSet(idr_qgmc710_hid_bright, led_br)
-end
-
-GlobalFrameLoopManager:add(QGMC710_LED_UPD)
+end)

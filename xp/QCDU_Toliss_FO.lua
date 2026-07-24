@@ -109,7 +109,7 @@ qcduaf:GetBkl("AirbusFBW/PanelBrightnessLevel", 60)
 qcduaf:GetScreenBrt("AirbusFBW/DUBrightness[7]") -- 0-1
 local dr_ac_bus = iDataRef:New("sim/cockpit/electrical/avionics_on")
 
-function CDU_A320_FO_LED_UPD()
+GlobalFrameLoopManager:add(function()
     local b_ac_bus = dr_ac_bus:Get()
 
     qcduaf:SetLeds()
@@ -126,6 +126,4 @@ function CDU_A320_FO_LED_UPD()
 
     qcduaf:SetScreenBrt()
     qcduaf:SetBkl()
-end
-
-GlobalFrameLoopManager:add(CDU_A320_FO_LED_UPD)
+end)

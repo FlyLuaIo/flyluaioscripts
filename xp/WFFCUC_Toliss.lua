@@ -70,7 +70,7 @@ local dr_test = iDataRef:New("AirbusFBW/AnnunMode") -- 0: DIM 1: BRT 2: test mod
 
 
 
-function Wffcuc_Toliss_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	-- expert code: test mode
 	local b_test
 	if dr_test:ChangedUpdate() then
@@ -124,6 +124,4 @@ function Wffcuc_Toliss_Loop_Upd()
 	wffcuc:LoopAxis(2)
 	wffcuc:LoopAxis(3)
 	wffcuc:LoopAxis(4)
-end
-
-GlobalFrameLoopManager:add(Wffcuc_Toliss_Loop_Upd)
+end)

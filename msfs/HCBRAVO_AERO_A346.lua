@@ -136,7 +136,7 @@ hcbravo:GetDoor('')
 
 
 
-function HCBRAVO_Aero_A346_LED_UPD()
+GlobalFrameLoopManager:add(function()
     hcbravo:SetLed()
     --[[
     hcbravo:LoopAxis(1)
@@ -144,6 +144,4 @@ function HCBRAVO_Aero_A346_LED_UPD()
     hcbravo:LoopAxis(3)
     hcbravo:LoopAxis(4)
     --]]
-end
-
-GlobalFrameLoopManager:add(HCBRAVO_Aero_A346_LED_UPD)
+end)

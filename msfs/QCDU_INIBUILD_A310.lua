@@ -96,7 +96,7 @@ qcdua:GetFail("(L:A300DR_FMS1_display_light)")
 qcdua:GetFmgc("(L:A300DR_FMS1_display_light)")
 qcdua:GetBkl("(A:LIGHT POTENTIOMETER:3, Percent)", 0.3)
 
-function CDU_INIA310_LED_UPD()
+GlobalFrameLoopManager:add(function()
     qcdua:SetMenu()
     qcdua:SetFail()
     qcdua:SetFmgc()
@@ -106,6 +106,4 @@ function CDU_INIA310_LED_UPD()
     qcdua:SetFm2()
 
     qcdua:SetBkl()
-end
-
-GlobalFrameLoopManager:add(CDU_INIA310_LED_UPD)
+end)

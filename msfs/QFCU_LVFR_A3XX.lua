@@ -590,7 +590,7 @@ local function digi_disp_mcp_rr()
     end
 end
 
-function qfcu_lvfr_digi_disp_every_frame()
+GlobalFrameLoopManager:add(function()
     local qfcu_fcu_power = dr_qfcu_fcu_power:Get()
     local qfcu_altitude = dr_qfcu_altitude:Get()
     local qfcu_fcu_test = dr_qfcu_fcu_test:Get()
@@ -613,6 +613,4 @@ function qfcu_lvfr_digi_disp_every_frame()
         digi_disp_set_LEDS()
         digi_disp_mcp_rr()
     end
-end
-
-GlobalFrameLoopManager:add(qfcu_lvfr_digi_disp_every_frame)
+end)

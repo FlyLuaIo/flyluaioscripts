@@ -102,7 +102,7 @@ qcdua:GetBkl("(L:INI_CKPT_LT_INTEG, Percent)", 0.3)
 local dr_test = iDataRef:New("(L:INI_ANNLT_SWITCH, number)") -- 0: TEST 1:BRT: 2: DIM
 local dr_power = iDataRef:New("(L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED, number)") -- 0: OFF 1: ON
 
-function CDU_INIA350_LED_UPD()
+GlobalFrameLoopManager:add(function()
     -- expert code: cold and dark
     local b_power = dr_power:Get()
     if b_power == 0 then
@@ -131,8 +131,5 @@ function CDU_INIA350_LED_UPD()
     qcdua:SetFm2()
 
     qcdua:SetBkl()
-
-end
-
-GlobalFrameLoopManager:add(CDU_INIA350_LED_UPD)
+end)
 

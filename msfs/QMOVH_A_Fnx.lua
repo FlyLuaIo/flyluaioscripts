@@ -246,9 +246,7 @@ local dr_test = iDataRef:New("(L:S_OH_IN_LT_ANN_LT)")                           
 local dr_ac_bus = iDataRef:New("(L:B_ELEC_BUS_POWER_AC_ESS, Bool)")
 local dr_dc_bus = iDataRef:New("(L:B_ELEC_BUS_POWER_DC_BAT, Bool)")
 
--- DONT use this name "Qmovha_Fenix_loop" again
--- it must be unique across all .sec and lua files
-function Qmovha_Fenix_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: test mode
     local b_ac_bus = dr_ac_bus:Get()
     local b_dc_bus = dr_dc_bus:Get()
@@ -280,6 +278,4 @@ function Qmovha_Fenix_loop()
     else
         qmovha:SetBkl(0)
     end
-end
-
-GlobalFrameLoopManager:add(Qmovha_Fenix_loop)
+end)

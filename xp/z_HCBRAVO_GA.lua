@@ -116,8 +116,6 @@ hcbravo:GetParkingbrake('sim/cockpit2/controls/parking_brake_ratio')
 hcbravo:GetLowvolts('sim/cockpit2/annunciators/low_voltage')
 hcbravo:GetDoor('sim/flightmodel2/misc/door_open_ratio[0]')
 
-function HCBRAVO_GA_LED_UPD()
+GlobalFrameLoopManager:add(function()
     hcbravo:SetLed()
-end
-
-GlobalFrameLoopManager:add(HCBRAVO_GA_LED_UPD)
+end)

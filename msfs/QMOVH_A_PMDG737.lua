@@ -463,9 +463,7 @@ local isstableapuegt = 0
 local dr_apu_on = iDataRef:New('(L:APU)')
 
 StabilityManager:addMonitor("EGT", 25.0, 2, 1) -- 温度监控
--- DONT use this name "Qmovha_pmdg_737_loop" again
--- it must be unique across all .sec and lua files
-function Qmovha_pmdg_737_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: test mode
     local b_ac_bus = dr_ac_bus:Get()
 
@@ -528,6 +526,4 @@ function Qmovha_pmdg_737_loop()
 
     qmovha:SetBkl()
     qmovha:SetBrtDim()
-end
-
-GlobalFrameLoopManager:add(Qmovha_pmdg_737_loop)
+end)

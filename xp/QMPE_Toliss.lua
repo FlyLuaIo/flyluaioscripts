@@ -553,7 +553,7 @@ if oldversion then
     ecam_lt_base = 0.4
 end
 
-function Qmpe_Toliss_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: cold and dark
     local b_power = dr_power:Get()
     if b_power == 0 then
@@ -628,6 +628,4 @@ function Qmpe_Toliss_loop()
 
     -- brightness
     qmpe:SetBkl()
-end
-
-GlobalFrameLoopManager:add(Qmpe_Toliss_loop)
+end)

@@ -32,8 +32,6 @@ stkswitch:GetRedl('sim/flightmodel2/gear/eagle_claw_angle_deg[1]')
 stkswitch:GetRedr('sim/flightmodel2/gear/eagle_claw_angle_deg[2]')
 
 
-function Stkswitch_GA_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	stkswitch:SetLed()
-end
-
-GlobalFrameLoopManager:add(Stkswitch_GA_Loop_Upd)
+end)

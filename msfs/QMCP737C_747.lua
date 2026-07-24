@@ -528,11 +528,10 @@ function digi_disp_nav()
     end
 end
 
-function digi_disp_every_frame()
+GlobalFrameLoopManager:add(function()
     digi_disp_set_Bright()
     digi_disp_set_LEDS()
     digi_disp_mcp_rr()
     digi_disp_com()
     digi_disp_nav()
-end
-GlobalFrameLoopManager:add(digi_disp_every_frame)
+end)

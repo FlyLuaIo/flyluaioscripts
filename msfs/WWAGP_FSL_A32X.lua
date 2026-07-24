@@ -140,7 +140,7 @@ end
 local dr_test = iDataRef:New('(L:VC_OVHD_INTLT_AnnLt_Switch)')    -- 0: DIM 10: BRT 20: test mode
 local dr_power = iDataRef:New('(L:FSL_MCDU_Right_Powered, Bool)') -- 0: OFF 1: ON
 
-function Wwagp_Fsl_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark
 	local b_power
 	if dr_power:ChangedUpdate() then
@@ -189,6 +189,4 @@ function Wwagp_Fsl_Loop_Upd()
 	Wwagp_GA_LCD_Loop()
 	-- update LEDs
 	wwagp:Setleds()
-end
-
-GlobalFrameLoopManager:add(Wwagp_Fsl_Loop_Upd)
+end)

@@ -175,7 +175,7 @@ if isINIA340 then
 	drf_brk_sel = iDataRef:New('AirbusFBW/AutoBrkSel')
 	drf_brk_max = iDataRef:New('AirbusFBW/AutoBrkMax')
 end
-function Wwagp_Toliss_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark
 	local b_power
 	if dr_power:ChangedUpdate() then
@@ -233,6 +233,4 @@ function Wwagp_Toliss_Loop_Upd()
 		end
 	end
 	wwagp:Setleds(0.1)
-end
-
-GlobalFrameLoopManager:add(Wwagp_Toliss_Loop_Upd)
+end)

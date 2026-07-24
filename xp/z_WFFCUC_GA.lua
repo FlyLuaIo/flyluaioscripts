@@ -45,7 +45,7 @@ wffcuc:GetPower('sim/cockpit2/switches/avionics_power_on')
 
 
 
-function Wffcuc_GA_Loop_Upd()
+GlobalFrameLoopManager:add(function()
 	wffcuc:SetLeds()
 	wffcuc:SetTest()
 	wffcuc:SetPower()
@@ -64,5 +64,4 @@ function Wffcuc_GA_Loop_Upd()
 	wffcuc:LoopAxis(2)
 	wffcuc:LoopAxis(3)
 	wffcuc:LoopAxis(4)
-end
-GlobalFrameLoopManager:add(Wffcuc_GA_Loop_Upd)
+end)

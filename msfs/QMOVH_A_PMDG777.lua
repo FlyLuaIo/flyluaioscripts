@@ -355,9 +355,7 @@ qmovha:GetBrtDim("(L:switch_118_a,number)", 50)         -- 100: DIM 50: BRT 0: t
 local dr_test = iDataRef:New("(L:switch_118_a,number)") -- 2: DIM 1: BRT 0: test mode
 local dr_ac_bus = iDataRef:New("(L:Battery)")           -- 0: OFF 1: ON
 
--- DONT use this name "Qmovha_pmdg_777_loop" again
--- it must be unique across all .sec and lua files
-function Qmovha_pmdg_777_loop()
+GlobalFrameLoopManager:add(function()
     -- expert code: test mode
     local b_ac_bus = dr_ac_bus:Get()
 
@@ -401,6 +399,4 @@ function Qmovha_pmdg_777_loop()
 
     qmovha:SetBkl()
     qmovha:SetBrtDim()
-end
-
-GlobalFrameLoopManager:add(Qmovha_pmdg_777_loop)
+end)
