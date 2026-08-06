@@ -1,0 +1,107 @@
+{
+  "ProductName": "RfA112",
+  "ModuleName": "Rowsfire A112",
+  "ModuleSerial": "SN-E91-E96",
+  "outputs": {
+    "Output": {
+      "LED": [
+        {
+          "Name": "MIP-LT"
+        }
+      ]
+    }
+  },
+  "inputs": {
+    "AnalogInput": {
+      "MAINPNL": [
+        {
+          "Name": "MAIN PNL",
+          "MapToBit": 0
+        }
+      ],
+      "MAINPNL&PED": [
+        {
+          "Name": "MAIN PNL&PED",
+          "MapToBit": 1
+        }
+      ],
+      "GAIN": [
+        {
+          "Name": "GAIN",
+          "MapToBit": 2
+        }
+      ],
+      "TILI": [
+        {
+          "Name": "TILT",
+          "MapToBit": 3
+        }
+      ]
+    },
+    "Button": {
+      "WX": [
+        {
+          "Name": "WX",
+          "Pin": 0,
+          "MapToBit": 4
+        }
+      ],
+      "WX+T": [
+        {
+          "Name": "WX+T",
+          "Pin": 0,
+          "MapToBit": 5
+        }
+      ],
+      "WX+T+HZD": [
+        {
+          "Name": "WX+T+HZD",
+          "Pin": 0,
+          "MapToBit": 6
+        }
+      ],
+      "MAP": [
+        {
+          "Name": "MAP",
+          "Pin": 0,
+          "MapToBit": 7
+        }
+      ],
+      "MULTISCAN": [
+        {
+          "Name": "MULTISCAN",
+          "Pin": 0,
+          "MapToBit": 8
+        }
+      ],
+      "GCS": [
+        {
+          "Name": "GCS",
+          "Pin": 0,
+          "MapToBit": 9
+        }
+      ],
+      "SYS 1": [
+        {
+          "Name": "SYS 1",
+          "Pin": 0,
+          "MapToBit": 10
+        }
+      ],
+      "SYS 2": [
+        {
+          "Name": "SYS 2",
+          "Pin": 0,
+          "MapToBit": 11
+        }
+      ],
+      "PWS": [
+        {
+          "Name": "PWS",
+          "Pin": 0,
+          "MapToBit": 12
+        }
+      ]
+    }
+  }
+}
