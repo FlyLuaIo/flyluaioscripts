@@ -21,7 +21,7 @@ function RfA112:absent(FastTurnsPerSecond)
 	end
 	_G.idr_rfa112_hid_invalid = uluaFind('cpuwolf/flyluaio/RfA112/invalid')
 	_G.idr_rfa112_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/RfA112/fastkeypersec')
-	_G.idr_rfa112_mf_output_mip_lt = uluaFind('cpuwolf/flyluaio/RfA112/output/0/state')
+	_G.idr_rfa112_mf_output_mip_lt = uluaFind('cpuwolf/mf/RfA112/output/0/state')
 	uluaSet(_G.idr_rfa112_hid_fastkeypersec, FastTurnsPerSecond)
 
 	return false

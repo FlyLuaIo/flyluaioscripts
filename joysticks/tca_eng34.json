@@ -1,0 +1,6 @@
+{
+  "$schema": "./joystick-config.schema.json",
+  "ProductName": "TcaQEng34",
+  "USB_VID": "0x044F",
+  "USB_PID": "0x0408"
+}
