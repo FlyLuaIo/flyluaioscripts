@@ -4,6 +4,10 @@ Lua hardware mapping profiles for [FlyLuaIO](https://github.com/cpuwolf/flyluaio
 
 FlyLuaIO bridges USB HID cockpit panels to **X-Plane 11/12** and **Microsoft Flight Simulator 2020/2024**. This repository contains the shared Lua framework and aircraft-specific profile scripts loaded by the FlyLuaIO plugin.
 
+## Performance note (plugin runtime)
+
+FlyLuaIO’s **embedded LuaJIT** is not the same performance model as typical market LuaJIT plugins (**XLua**, **SASL**, **FlyWithLua**), which usually run Lua every frame on the X-Plane sim / flight-loop thread. FlyLuaIO runs script work on a dedicated worker path; the product claim is **ZERO X-Plane FPS impact**. (This repo only ships scripts; the runtime lives in the plugin.)
+
 ## Requirements
 
 - [FlyLuaIO](https://github.com/cpuwolf/flyluaio) plugin installed in your simulator
