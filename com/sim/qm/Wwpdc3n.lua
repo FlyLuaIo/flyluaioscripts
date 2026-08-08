@@ -45,6 +45,24 @@ function Wwpdc3n.Open(...)
 	return com.sim.Qmdev.Open(Wwpdc3n, ...)
 end
 
+function Wwpdc3n:SendLedCmd(LedId, value)
+	local combinedValue = (LedId * 256) + value
+	uluaSet(_G.idr_wwpdc3n_hid_leds_ledcmd, combinedValue)
+end
+
+function Wwpdc3n:SendBit(idx, valbase, val)
+	valbase = valbase == nil and 0 or valbase
+	if val == nil then
+		hdl = self.Bits[idx + 1]
+		if hdl:ChangedUpdate() then
+			val = hdl:GetOldBit()
+			self:SendLedCmd(idx, val)
+		end
+	else
+		self:SendLedCmd(idx, ilua_bool_ternary(val, valbase))
+	end
+end
+
 -- ========
 -- LEDS BKL
 function Wwpdc3n:GetBkl(dpath, revert, base)

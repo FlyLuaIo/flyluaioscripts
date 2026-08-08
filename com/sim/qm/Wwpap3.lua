@@ -10,6 +10,8 @@ function Wwpap3:init()
 	self.QmdevId = 0x0939BE95
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwpap3 == nil then
+		self.PackageConter = 0
+		self.LcdText = nil
 		_G.ilua_hw_assigned_wwpap3 = 0
 		self.LEDS_BKL = 0
 		self.LEDS_LCDBKL = 1
@@ -95,6 +97,24 @@ end
 
 function Wwpap3.Open(...)
 	return com.sim.Qmdev.Open(Wwpap3, ...)
+end
+
+function Wwpap3:SendLedCmd(LedId, value)
+	local combinedValue = (LedId * 256) + value
+	uluaSet(_G.idr_wwpap3_hid_leds_ledcmd, combinedValue)
+end
+
+function Wwpap3:SendBit(idx, valbase, val)
+	valbase = valbase == nil and 0 or valbase
+	if val == nil then
+		hdl = self.Bits[idx + 1]
+		if hdl:ChangedUpdate() then
+			val = hdl:GetOldBit()
+			self:SendLedCmd(idx, val)
+		end
+	else
+		self:SendLedCmd(idx, ilua_bool_ternary(val, valbase))
+	end
 end
 
 -- ========
@@ -310,4 +330,239 @@ function Wwpap3:Setleds(valbase, val)
 	self:SetMaFo(valbase, val)
 	self:SetAtSol(valbase, val)
 end
+
+-- ========
+-- LCD (WINCTRL pap3-mcp-lcd-segments / product-pap3-mcp::sendLCDDisplay)
+function Wwpap3:Next()
+	local val = self.PackageConter or 1
+	if val < 1 then val = 1 end
+	self.PackageConter = (val % 255) + 1
+	return val
+end
+
+function Wwpap3:ensureLcdInit()
+	if self._lcdInited then return end
+	self._lcdInited = true
+	uluaSet(_G.idr_wwpap3_hid_init_seqnum, self:Next())
+end
+
+local function pap3_clamp(v, lo, hi)
+	if v < lo then return lo end
+	if v > hi then return hi end
+	return v
+end
+
+local PAP3_DIGIT = {
+	[0] = 0x3F, [1] = 0x06, [2] = 0x5B, [3] = 0x4F, [4] = 0x66,
+	[5] = 0x6D, [6] = 0x7D, [7] = 0x07, [8] = 0x7F, [9] = 0x6F
+}
+local PAP3_A, PAP3_B, PAP3_C = 0x01, 0x02, 0x04
+local PAP3_D, PAP3_E, PAP3_F, PAP3_G = 0x08, 0x10, 0x20, 0x40
+local PAP3_LETTER_A = bit.bor(PAP3_A, PAP3_B, PAP3_C, PAP3_E, PAP3_F, PAP3_G)
+local PAP3_G0 = { 0x1D, 0x21, 0x25, 0x29, 0x2D, 0x31, 0x35 }
+local PAP3_G1 = { 0x1E, 0x22, 0x26, 0x2A, 0x2E, 0x32, 0x36 }
+local PAP3_G2 = { 0x1F, 0x23, 0x27, 0x2B, 0x2F, 0x33, 0x37 }
+local PAP3_G3 = { 0x20, 0x24, 0x28, 0x2C, 0x30, 0x34, 0x38 }
+
+local function pap3_apply(p, absOff, flag, on)
+	if not on then return end
+	local i = absOff - 0x19
+	if i < 0 or i >= 32 then return end
+	p[i + 1] = bit.bor(p[i + 1], flag)
+end
+
+local function pap3_drawMask(g, p, flag, m)
+	pap3_apply(p, g[1], flag, bit.band(m, PAP3_G) ~= 0)
+	pap3_apply(p, g[2], flag, bit.band(m, PAP3_F) ~= 0)
+	pap3_apply(p, g[3], flag, bit.band(m, PAP3_E) ~= 0)
+	pap3_apply(p, g[4], flag, bit.band(m, PAP3_D) ~= 0)
+	pap3_apply(p, g[5], flag, bit.band(m, PAP3_C) ~= 0)
+	pap3_apply(p, g[6], flag, bit.band(m, PAP3_B) ~= 0)
+	pap3_apply(p, g[7], flag, bit.band(m, PAP3_A) ~= 0)
+end
+
+local function pap3_drawDigit(g, p, flag, digit)
+	pap3_drawMask(g, p, flag, PAP3_DIGIT[pap3_clamp(digit, 0, 9)] or 0)
+end
+
+local function pap3_drawDash(g, p, flag)
+	pap3_apply(p, g[1], flag, true)
+end
+
+local function pap3_pack32(payload)
+	local out = {}
+	for i = 0, 7 do
+		local b0 = payload[i * 4 + 1] or 0
+		local b1 = payload[i * 4 + 2] or 0
+		local b2 = payload[i * 4 + 3] or 0
+		local b3 = payload[i * 4 + 4] or 0
+		out[i + 1] = b0 + b1 * 256 + b2 * 65536 + b3 * 16777216
+	end
+	return out
+end
+
+function Wwpap3:sendRawLcdPayload(payload)
+	self:ensureLcdInit()
+	local words = pap3_pack32(payload)
+	uluaSet(_G.idr_wwpap3_hid_lcd_lcd1, words[1])
+	uluaSet(_G.idr_wwpap3_hid_lcd_lcd2, words[2])
+	uluaSet(_G.idr_wwpap3_hid_lcd_lcd3, words[3])
+	uluaSet(_G.idr_wwpap3_hid_lcd_lcd4, words[4])
+	uluaSet(_G.idr_wwpap3_hid_lcd_lcd5, words[5])
+	uluaSet(_G.idr_wwpap3_hid_lcd_lcd6, words[6])
+	uluaSet(_G.idr_wwpap3_hid_lcd_lcd7, words[7])
+	uluaSet(_G.idr_wwpap3_hid_lcd_lcd8, words[8])
+	uluaSet(_G.idr_wwpap3_hid_lcd_seqnum, self:Next())
+	uluaSet(_G.idr_wwpap3_hid_empty_seqnum, self:Next())
+	uluaSet(_G.idr_wwpap3_hid_empty_seqnum, self:Next())
+	uluaSet(_G.idr_wwpap3_hid_finish_seqnum, self:Next())
+end
+
+function Wwpap3:setMcpDisplay(data)
+	data = data or {}
+	local enabled = data.displayEnabled ~= false
+	local test = data.displayTest and true or false
+	local key = table.concat({
+		tostring(enabled), tostring(test),
+		tostring(data.speed or 0), tostring(data.spdMach), tostring(data.speedVisible),
+		tostring(data.heading or 0), tostring(data.headingVisible),
+		tostring(data.altitude or 0), tostring(data.altitudeVisible),
+		tostring(data.verticalSpeed or 0), tostring(data.verticalSpeedVisible),
+		tostring(data.crsCapt or 0), tostring(data.crsFo or 0),
+		tostring(data.digitA), tostring(data.digitB), tostring(data.showLabels)
+	}, '|')
+	if key == self.LcdText then return end
+	self.LcdText = key
+
+	local p = {}
+	for i = 1, 32 do p[i] = 0 end
+
+	if not enabled or test then
+		local fill = (enabled and test) and 0xFF or 0x00
+		for i = 1, 32 do p[i] = fill end
+		self:sendRawLcdPayload(p)
+		return
+	end
+
+	local showLabels = data.showLabels and true or false
+	local digitA = data.digitA and true or false
+	local digitB = data.digitB and true or false
+	local showCourse = data.showCourse ~= false
+
+	if data.speedVisible then
+		local spd = tonumber(data.speed) or 0
+		if data.spdMach then
+			local mach = spd
+			if mach >= 1.0 then mach = mach / 100.0 end
+			mach = pap3_clamp(mach, 0.0, 0.9999)
+			if (data.machDigits or 2) >= 3 then
+				local three = pap3_clamp(math.floor(mach * 1000.0 + 0.5), 0, 999)
+				pap3_drawDigit(PAP3_G0, p, 0x04, math.floor(three / 100) % 10)
+				pap3_drawDigit(PAP3_G0, p, 0x02, math.floor(three / 10) % 10)
+				pap3_drawDigit(PAP3_G0, p, 0x01, three % 10)
+				pap3_apply(p, 0x1E, 0x80, true)
+			else
+				local two = pap3_clamp(math.floor(mach * 100.0 + 0.5), 0, 99)
+				pap3_drawDigit(PAP3_G0, p, 0x02, math.floor(two / 10) % 10)
+				pap3_drawDigit(PAP3_G0, p, 0x01, two % 10)
+				pap3_apply(p, 0x19, 0x04, true)
+				pap3_apply(p, 0x22, 0x80, digitA)
+				pap3_apply(p, 0x1E, 0x80, digitA)
+			end
+			pap3_apply(p, 0x32, 0x80, showLabels)
+			pap3_apply(p, 0x2E, 0x80, showLabels)
+		else
+			local ias = math.max(0, math.floor(spd + 0.5))
+			local k = math.floor(ias / 1000) % 10
+			local h = math.floor(ias / 100) % 10
+			local t = math.floor(ias / 10) % 10
+			local u = ias % 10
+			local showK = k ~= 0
+			local showH = showK or h ~= 0
+			if showK then pap3_drawDigit(PAP3_G0, p, 0x08, k) end
+			if showH then pap3_drawDigit(PAP3_G0, p, 0x04, h) end
+			pap3_drawDigit(PAP3_G0, p, 0x02, t)
+			pap3_drawDigit(PAP3_G0, p, 0x01, u)
+			pap3_apply(p, 0x36, 0x80, showLabels)
+			pap3_apply(p, 0x22, 0x80, digitA)
+			pap3_apply(p, 0x1E, 0x80, digitA)
+			if not showK then
+				if digitA then pap3_drawMask(PAP3_G0, p, 0x08, PAP3_LETTER_A) end
+				if digitB then pap3_drawDigit(PAP3_G0, p, 0x08, 8) end
+			end
+		end
+	elseif data.showDashesWhenInactive then
+		pap3_drawDash(PAP3_G0, p, 0x04)
+		pap3_drawDash(PAP3_G0, p, 0x02)
+		pap3_drawDash(PAP3_G0, p, 0x01)
+		if data.showLabelsWhenInactive then pap3_apply(p, 0x36, 0x80, true) end
+	end
+
+	if showCourse then
+		local crs = pap3_clamp(math.max(0, math.floor(tonumber(data.crsCapt) or 0)), 0, 999)
+		pap3_drawDigit(PAP3_G0, p, 0x80, math.floor(crs / 100) % 10)
+		pap3_drawDigit(PAP3_G0, p, 0x40, math.floor(crs / 10) % 10)
+		pap3_drawDigit(PAP3_G0, p, 0x20, crs % 10)
+	end
+
+	if data.headingVisible ~= false then
+		local heading = math.floor(tonumber(data.heading) or 0)
+		local hdg = (heading >= 360) and 360 or pap3_clamp(heading, 0, 359)
+		pap3_drawDigit(PAP3_G1, p, 0x40, math.floor(hdg / 100) % 10)
+		pap3_drawDigit(PAP3_G1, p, 0x20, math.floor(hdg / 10) % 10)
+		pap3_drawDigit(PAP3_G1, p, 0x10, hdg % 10)
+		pap3_apply(p, 0x36, 0x08, showLabels)
+		pap3_apply(p, 0x32, 0x08, showLabels)
+	elseif data.showDashesWhenInactive then
+		pap3_drawDash(PAP3_G1, p, 0x40)
+		pap3_drawDash(PAP3_G1, p, 0x20)
+		pap3_drawDash(PAP3_G1, p, 0x10)
+		if data.showLabelsWhenInactive then
+			pap3_apply(p, 0x36, 0x08, true)
+			pap3_apply(p, 0x32, 0x08, true)
+		end
+	end
+
+	if data.altitudeVisible ~= false then
+		local alt = pap3_clamp(math.max(0, math.floor(tonumber(data.altitude) or 0)), 0, 99999)
+		local d10k = math.floor(alt / 10000) % 10
+		if d10k ~= 0 then pap3_drawDigit(PAP3_G1, p, 0x04, d10k) end
+		pap3_drawDigit(PAP3_G1, p, 0x02, math.floor(alt / 1000) % 10)
+		pap3_drawDigit(PAP3_G1, p, 0x01, math.floor(alt / 100) % 10)
+		pap3_drawDigit(PAP3_G2, p, 0x80, math.floor(alt / 10) % 10)
+		pap3_drawDigit(PAP3_G2, p, 0x40, alt % 10)
+	end
+
+	if data.verticalSpeedVisible then
+		local v = math.floor(tonumber(data.verticalSpeed) or 0)
+		local absV = pap3_clamp(math.abs(v), 0, 9999)
+		if absV >= 1000 then pap3_drawDigit(PAP3_G2, p, 0x08, math.floor(absV / 1000) % 10) end
+		if absV >= 100 then pap3_drawDigit(PAP3_G2, p, 0x04, math.floor(absV / 100) % 10) end
+		if absV >= 10 or absV == 0 then pap3_drawDigit(PAP3_G2, p, 0x02, math.floor(absV / 10) % 10) end
+		pap3_drawDigit(PAP3_G2, p, 0x01, absV % 10)
+		local neg, pos = v < 0, v > 0
+		pap3_apply(p, 0x1F, 0x10, neg or pos)
+		pap3_apply(p, 0x2C, 0x80, pos)
+		pap3_apply(p, 0x28, 0x80, pos)
+		pap3_apply(p, 0x38, 0x80, showLabels)
+	elseif data.showDashesWhenInactive then
+		pap3_drawDash(PAP3_G2, p, 0x08)
+		pap3_drawDash(PAP3_G2, p, 0x04)
+		pap3_drawDash(PAP3_G2, p, 0x02)
+		pap3_drawDash(PAP3_G2, p, 0x01)
+		if data.showLabelsWhenInactive then pap3_apply(p, 0x38, 0x80, true) end
+	elseif data.showLabelsWhenInactive then
+		pap3_apply(p, 0x38, 0x80, true)
+	end
+
+	if showCourse then
+		local crs = pap3_clamp(math.max(0, math.floor(tonumber(data.crsFo) or 0)), 0, 999)
+		pap3_drawDigit(PAP3_G3, p, 0x40, math.floor(crs / 100) % 10)
+		pap3_drawDigit(PAP3_G3, p, 0x20, math.floor(crs / 10) % 10)
+		pap3_drawDigit(PAP3_G3, p, 0x10, crs % 10)
+	end
+
+	self:sendRawLcdPayload(p)
+end
+
 return Wwpap3

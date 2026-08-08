@@ -1,0 +1,162 @@
+-- *****************************************************************
+-- WwPap3 for Zibo B738 (ported from WINCTRL zibo-pap3-mcp-profile)
+-- *****************************************************************
+
+if ilua_require_zibo() then return end
+
+-- Do not remove below lines: hardware detection
+local wwpap3 = com.sim.qm.Wwpap3.Open()
+if not wwpap3 then return end
+-- Do not remove above lines: hardware detection
+
+uluaLog('Wwpap3 for Zibo')
+
+-------------------- Input Keys Binding ---------------------
+wwpap3:CfgCmd(0, 'laminar/B738/autopilot/n1_press')
+wwpap3:CfgCmd(1, 'laminar/B738/autopilot/speed_press')
+wwpap3:CfgCmd(2, 'laminar/B738/autopilot/vnav_press')
+wwpap3:CfgCmd(3, 'laminar/B738/autopilot/lvl_chg_press')
+wwpap3:CfgCmd(4, 'laminar/B738/autopilot/hdg_sel_press')
+wwpap3:CfgCmd(5, 'laminar/B738/autopilot/lnav_press')
+wwpap3:CfgCmd(6, 'laminar/B738/autopilot/vorloc_press')
+wwpap3:CfgCmd(7, 'laminar/B738/autopilot/app_press')
+wwpap3:CfgCmd(8, 'laminar/B738/autopilot/alt_hld_press')
+wwpap3:CfgCmd(9, 'laminar/B738/autopilot/vs_press')
+wwpap3:CfgCmd(10, 'laminar/B738/autopilot/cmd_a_press')
+wwpap3:CfgCmd(11, 'laminar/B738/autopilot/cws_a_press')
+wwpap3:CfgCmd(12, 'laminar/B738/autopilot/cmd_b_press')
+wwpap3:CfgCmd(13, 'laminar/B738/autopilot/cws_b_press')
+wwpap3:CfgCmd(14, 'laminar/B738/autopilot/change_over_press')
+wwpap3:CfgCmd(15, 'laminar/B738/autopilot/spd_interv')
+wwpap3:CfgCmd(16, 'laminar/B738/autopilot/alt_interv')
+
+-- Encoders (hardware also exposes as button pairs)
+wwpap3:CfgCmd(17, 'laminar/B738/autopilot/course_pilot_dn')
+wwpap3:CfgCmd(18, 'laminar/B738/autopilot/course_pilot_up')
+wwpap3:CfgCmd(19, 'sim/autopilot/airspeed_down')
+wwpap3:CfgCmd(20, 'sim/autopilot/airspeed_up')
+wwpap3:CfgCmd(21, 'sim/autopilot/heading_down')
+wwpap3:CfgCmd(22, 'sim/autopilot/heading_up')
+wwpap3:CfgCmd(23, 'laminar/B738/autopilot/altitude_dn')
+wwpap3:CfgCmd(24, 'laminar/B738/autopilot/altitude_up')
+wwpap3:CfgCmd(25, 'laminar/B738/autopilot/course_copilot_dn')
+wwpap3:CfgCmd(26, 'laminar/B738/autopilot/course_copilot_up')
+wwpap3:CfgCmd(38, 'sim/autopilot/vertical_speed_down')
+wwpap3:CfgCmd(39, 'sim/autopilot/vertical_speed_up')
+
+-- Maintained switches / bank angle (button indices match WINCTRL)
+wwpap3:CfgCmd(27, 'laminar/B738/autopilot/flight_director_toggle')
+wwpap3:CfgCmd(29, 'laminar/B738/autopilot/flight_director_fo_toggle')
+wwpap3:CfgCmd(31, 'laminar/B738/autopilot/disconnect_toggle')
+wwpap3:CfgCmd(32, 'laminar/B738/autopilot/disconnect_toggle')
+function wwpap3_zibo_bank(target)
+	local dr = uluaFind('laminar/B738/autopilot/bank_angle_pos')
+	if not dr then return end
+	local cur = uluaGet(dr)
+	local cmd = uluaFind(target > cur and 'laminar/B738/autopilot/bank_angle_up' or 'laminar/B738/autopilot/bank_angle_dn')
+	local steps = math.abs(target - cur)
+	for _ = 1, steps do uluaCmdOnce(cmd) end
+end
+wwpap3:CfgFc(33, 'wwpap3_zibo_bank(0)')
+wwpap3:CfgFc(34, 'wwpap3_zibo_bank(1)')
+wwpap3:CfgFc(35, 'wwpap3_zibo_bank(2)')
+wwpap3:CfgFc(36, 'wwpap3_zibo_bank(3)')
+wwpap3:CfgFc(37, 'wwpap3_zibo_bank(4)')
+wwpap3:CfgCmd(40, 'laminar/B738/autopilot/autothrottle_arm_toggle')
+wwpap3:CfgCmd(41, 'laminar/B738/autopilot/autothrottle_arm_toggle')
+
+-------------------- Output LEDs ---------------------
+wwpap3:GetN1('laminar/B738/autopilot/n1_status1', nil, 0.5)
+wwpap3:GetSpeed('laminar/B738/autopilot/speed_status1', nil, 0.5)
+wwpap3:GetVnav('laminar/B738/autopilot/vnav_status1', nil, 0.5)
+wwpap3:GetLvlChg('laminar/B738/autopilot/lvl_chg_status', nil, 0.5)
+wwpap3:GetHdgSel('laminar/B738/autopilot/hdg_sel_status', nil, 0.5)
+wwpap3:GetLnav('laminar/B738/autopilot/lnav_status', nil, 0.5)
+wwpap3:GetVorLoc('laminar/B738/autopilot/vorloc_status', nil, 0.5)
+wwpap3:GetApp('laminar/B738/autopilot/app_status', nil, 0.5)
+wwpap3:GetAltHld('laminar/B738/autopilot/alt_hld_status', nil, 0.5)
+wwpap3:GetVs('laminar/B738/autopilot/vs_status', nil, 0.5)
+wwpap3:GetCmdA('laminar/B738/autopilot/cmd_a_status', nil, 0.5)
+wwpap3:GetCwsA('laminar/B738/autopilot/cws_a_status', nil, 0.5)
+wwpap3:GetCmdB('laminar/B738/autopilot/cmd_b_status', nil, 0.5)
+wwpap3:GetCwsB('laminar/B738/autopilot/cws_b_status', nil, 0.5)
+wwpap3:GetAtArm('laminar/B738/autopilot/autothrottle_status1', nil, 0.5)
+wwpap3:GetMaCapt('laminar/B738/autopilot/master_capt_status', nil, 0.5)
+wwpap3:GetMaFo('laminar/B738/autopilot/master_fo_status', nil, 0.5)
+wwpap3:GetAtSol('laminar/B738/autopilot/autothrottle_arm_pos')
+
+local dr_power = iDataRef:New('sim/cockpit/electrical/avionics_on')
+local dr_main = iDataRef:New('laminar/B738/electric/main_bus')
+local dr_panel = iDataRef:New('laminar/B738/electric/panel_brightness[0]')
+local dr_test = iDataRef:New('laminar/B738/dspl_light_test[0]')
+local dr_spd = iDataRef:New('laminar/B738/autopilot/mcp_speed_dial_kts_mach')
+local dr_mach = iDataRef:New('sim/cockpit/autopilot/airspeed_is_mach')
+local dr_hdg = iDataRef:New('laminar/B738/autopilot/mcp_hdg_dial')
+local dr_alt = iDataRef:New('laminar/B738/autopilot/mcp_alt_dial')
+local dr_vs = iDataRef:New('sim/cockpit2/autopilot/vvi_dial_fpm')
+local dr_vs_show = iDataRef:New('laminar/B738/autopilot/vvi_dial_show')
+local dr_spd_show = iDataRef:New('laminar/B738/autopilot/show_ias')
+local dr_crs_c = iDataRef:New('laminar/B738/autopilot/course_pilot')
+local dr_crs_f = iDataRef:New('laminar/B738/autopilot/course_copilot')
+local dr_digit_a = iDataRef:New('laminar/B738/mcp/digit_A')
+local dr_digit_b = iDataRef:New('laminar/B738/mcp/digit_8')
+
+GlobalFrameLoopManager:add(function()
+	local hasPower = dr_power:Get() ~= 0
+	local hasMain = dr_main:Get() ~= 0
+	local ratio = hasMain and dr_panel:Get() or 0.5
+	if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
+	local bkl = hasPower and math.floor(ratio * 255) or 0
+	local testMode = dr_test:Get() or 0
+	local ledBkl = (hasPower and hasMain) and 180 or 0
+	if testMode >= 1 then
+		ledBkl = 255
+	end
+	wwpap3:SendLedCmd(wwpap3.LEDS_BKL, bkl)
+	wwpap3:SendLedCmd(wwpap3.LEDS_LCDBKL, hasPower and 180 or 0)
+	wwpap3:SendLedCmd(wwpap3.LEDS_LEDBKL, ledBkl)
+
+	if testMode >= 1 then
+		wwpap3:Setleds(0, 1)
+	else
+		wwpap3:SetN1(0.5)
+		wwpap3:SetSpeed(0.5)
+		wwpap3:SetVnav(0.5)
+		wwpap3:SetLvlChg(0.5)
+		wwpap3:SetHdgSel(0.5)
+		wwpap3:SetLnav(0.5)
+		wwpap3:SetVorLoc(0.5)
+		wwpap3:SetApp(0.5)
+		wwpap3:SetAltHld(0.5)
+		wwpap3:SetVs(0.5)
+		wwpap3:SetCmdA(0.5)
+		wwpap3:SetCwsA(0.5)
+		wwpap3:SetCmdB(0.5)
+		wwpap3:SetCwsB(0.5)
+		wwpap3:SetAtArm(0.5)
+		wwpap3:SetMaCapt(0.5)
+		wwpap3:SetMaFo(0.5)
+		wwpap3:SetAtSol()
+	end
+
+	-- LCD (WINCTRL zibo-pap3-mcp-profile::updateDisplayData)
+	wwpap3:setMcpDisplay({
+		displayEnabled = (testMode ~= 2) and hasPower,
+		displayTest = testMode >= 1,
+		showLabels = false,
+		showCourse = true,
+		speed = dr_spd:Get(),
+		spdMach = dr_mach:Get() ~= 0,
+		speedVisible = dr_spd_show:Get() ~= 0,
+		heading = dr_hdg:Get(),
+		headingVisible = true,
+		altitude = dr_alt:Get(),
+		altitudeVisible = true,
+		verticalSpeed = dr_vs:Get(),
+		verticalSpeedVisible = dr_vs_show:Get() ~= 0,
+		crsCapt = dr_crs_c:Get(),
+		crsFo = dr_crs_f:Get(),
+		digitA = dr_digit_a:Get() ~= 0,
+		digitB = dr_digit_b:Get() ~= 0,
+	})
+end)

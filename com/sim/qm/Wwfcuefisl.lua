@@ -10,6 +10,8 @@ function Wwfcuefisl:init()
 	self.QmdevId = 0x0926AC01
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwfcuefisl == nil then
+		self.PackageConter = 0
+		self.LcdText = nil
 		_G.ilua_hw_assigned_wwfcuefisl = 0
 		self.LEDS_BKL = 0
 		self.LEDS_SCRBKL = 1
@@ -94,6 +96,29 @@ end
 
 function Wwfcuefisl.Open(...)
 	return com.sim.Qmdev.Open(Wwfcuefisl, ...)
+end
+
+function Wwfcuefisl:SendLedCmd(LedId, value)
+	local combinedValue = (LedId * 256) + value
+	uluaSet(_G.idr_wwfcuefisl_hid_leds_ledcmd, combinedValue)
+end
+
+function Wwfcuefisl:SendBit(idx, valbase, val)
+	valbase = valbase == nil and 0 or valbase
+	if val == nil then
+		hdl = self.Bits[idx + 1]
+		if hdl:ChangedUpdate() then
+			val = hdl:GetOldBit()
+			self:SendLedCmd(idx, val)
+		end
+	else
+		self:SendLedCmd(idx, ilua_bool_ternary(val, valbase))
+	end
+end
+
+function Wwfcuefisl:SendLedCmdL(LedId, value)
+	local combinedValue = (LedId * 256) + value
+	uluaSet(_G.idr_wwfcuefisl_hid_ledsl_ledcmd, combinedValue)
 end
 
 -- ========

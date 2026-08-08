@@ -10,6 +10,8 @@ function Wwursa:init()
 	self.QmdevId = 0x06410BF7
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwursa == nil then
+		self.PackageConter = 0
+		self.LcdText = nil
 		_G.ilua_hw_assigned_wwursa = 0
 		self.LEDS_BKL = 0
 		self.LEDS_MAKER = 2
@@ -74,6 +76,24 @@ end
 
 function Wwursa.Open(...)
 	return com.sim.Qmdev.Open(Wwursa, ...)
+end
+
+function Wwursa:SendLedCmd(LedId, value)
+	local combinedValue = (LedId * 256) + value
+	uluaSet(_G.idr_wwursa_hid_leds_ledcmd, combinedValue)
+end
+
+function Wwursa:SendBit(idx, valbase, val)
+	valbase = valbase == nil and 0 or valbase
+	if val == nil then
+		hdl = self.Bits[idx + 1]
+		if hdl:ChangedUpdate() then
+			val = hdl:GetOldBit()
+			self:SendLedCmd(idx, val)
+		end
+	else
+		self:SendLedCmd(idx, ilua_bool_ternary(val, valbase))
+	end
 end
 
 -- ========
