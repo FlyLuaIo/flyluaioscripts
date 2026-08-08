@@ -1,0 +1,241 @@
+{
+  "ProductName": "Winctrl3nPap",
+  "ModuleName": "WINCTRL 3N PAP",
+  "ModuleSerial": "JS-57844190-4a15-11f1-8002-444553540000",
+  "outputs": {
+    "LcdDisplay": {
+      "Speed Value": [
+        {
+          "Name": "A320 SPD DISPLAY"
+        }
+      ],
+      "Altitude Value": [
+        {
+          "Name": "A320 ALT DISPLAY"
+        }
+      ],
+      "Heading Value": [
+        {
+          "Name": "A320 HDG DISPLAY"
+        }
+      ],
+      "VS Value": [
+        {
+          "Name": "A320 VS DISPLAY"
+        }
+      ]
+    },
+    "Output": {
+      "L_MA": [
+        {
+          "Name": "A320 FD L LED "
+        }
+      ],
+      "R_MA": [
+        {
+          "Name": "A320 FD R LED"
+        }
+      ],
+      "AT_ARM": [
+        {
+          "Name": "A320 ATHR LED"
+        }
+      ],
+      "VNAV": [
+        {
+          "Name": "A320 SPEED MANAGED LED"
+        }
+      ],
+      "LNAV": [
+        {
+          "Name": "A320 HDG MANAGED LED"
+        }
+      ],
+      "VOR_LOC": [
+        {
+          "Name": "A320 LOC LED"
+        }
+      ],
+      "APP": [
+        {
+          "Name": "A320 APP LED"
+        }
+      ],
+      "A_CMD": [
+        {
+          "Name": "A320 AP1 LED"
+        }
+      ],
+      "B_CMD": [
+        {
+          "Name": "A320 AP2 LED"
+        }
+      ]
+    }
+  },
+  "inputs": {
+    "Button": {
+      "Button 20": [
+        {
+          "Name": "A320 SPD DEC",
+          "Pin": 20,
+          "MapToBit": 0
+        }
+      ],
+      "Button 21": [
+        {
+          "Name": "A320 SPD INC",
+          "Pin": 21,
+          "MapToBit": 1
+        }
+      ],
+      "Button 22": [
+        {
+          "Name": "A320 HDG DEC",
+          "Pin": 22,
+          "MapToBit": 2
+        }
+      ],
+      "Button 23": [
+        {
+          "Name": "A320 HDG INC",
+          "Pin": 23,
+          "MapToBit": 3
+        }
+      ],
+      "Button 24": [
+        {
+          "Name": "A320 ALT DEC",
+          "Pin": 24,
+          "MapToBit": 4
+        }
+      ],
+      "Button 25": [
+        {
+          "Name": "A320 ALT INC",
+          "Pin": 25,
+          "MapToBit": 5
+        }
+      ],
+      "Button 39": [
+        {
+          "Name": "A320 VS DEC",
+          "Pin": 39,
+          "MapToBit": 6
+        }
+      ],
+      "Button 40": [
+        {
+          "Name": "A320 VS INC",
+          "Pin": 40,
+          "MapToBit": 7
+        }
+      ],
+      "Button 28": [
+        {
+          "Name": "A320 FD L ON",
+          "Pin": 28,
+          "MapToBit": 8
+        }
+      ],
+      "Button 29": [
+        {
+          "Name": "A320 FD L OFF",
+          "Pin": 29,
+          "MapToBit": 9
+        }
+      ],
+      "Button 30": [
+        {
+          "Name": "A320 FD R ON",
+          "Pin": 30,
+          "MapToBit": 10
+        }
+      ],
+      "Button 31": [
+        {
+          "Name": "A320 FD R OFF",
+          "Pin": 31,
+          "MapToBit": 11
+        }
+      ],
+      "Button 15": [
+        {
+          "Name": "A320 SPD/MACH BUTTON",
+          "Pin": 15,
+          "MapToBit": 12
+        }
+      ],
+      "Button 2": [
+        {
+          "Name": "A320 SPEED SELECTED",
+          "Pin": 2,
+          "MapToBit": 13
+        }
+      ],
+      "Button 16": [
+        {
+          "Name": "A320 SPEED MANAGED",
+          "Pin": 16,
+          "MapToBit": 14
+        }
+      ],
+      "Button 5": [
+        {
+          "Name": "A320 HED SELECTED",
+          "Pin": 5,
+          "MapToBit": 15
+        }
+      ],
+      "Button 6": [
+        {
+          "Name": "A320 HED MANAGED",
+          "Pin": 6,
+          "MapToBit": 16
+        }
+      ],
+      "Button 26": [
+        {
+          "Name": "A320 ALT 100 SELECT",
+          "Pin": 26,
+          "MapToBit": 17
+        }
+      ],
+      "Button 27": [
+        {
+          "Name": "A320 ALT 1000 SELECT",
+          "Pin": 27,
+          "MapToBit": 18
+        }
+      ],
+      "Button 17": [
+        {
+          "Name": "A320 ALT DECEND",
+          "Pin": 17,
+          "MapToBit": 19
+        }
+      ],
+      "Button 9": [
+        {
+          "Name": "A320 ALT OPEN DECEND",
+          "Pin": 9,
+          "MapToBit": 20
+        }
+      ],
+      "Button 11": [
+        {
+          "Name": "A320 AP1 BUTTON",
+          "Pin": 11,
+          "MapToBit": 21
+        }
+      ],
+      "Button 13": [
+        {
+          "Name": "A320 AP2 BUTTON",
+          "Pin": 13,
+          "MapToBit": 22
+        }
+      ]
+    }
+  }
+}

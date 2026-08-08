@@ -1,0 +1,163 @@
+{
+  "ProductName": "Winctrl3nPdcL",
+  "ModuleName": "WINCTRL 3N PDC L",
+  "ModuleSerial": "JS-8d155470-4a15-11f1-8003-444553540000",
+  "inputs": {
+    "Button": {
+      "Button 2": [
+        {
+          "Name": "A320 METRIC BUTTON",
+          "Pin": 2,
+          "MapToBit": 0
+        }
+      ],
+      "Button 26": [
+        {
+          "Name": "A320 EFIS L BARO MODE IN HG",
+          "Pin": 26,
+          "MapToBit": 1
+        }
+      ],
+      "Button 27": [
+        {
+          "Name": "A320 EFIS L BARO MODE HPA",
+          "Pin": 27,
+          "MapToBit": 2
+        }
+      ],
+      "Button 43": [
+        {
+          "Name": "A320 EFIS L BARO MODE DEC",
+          "Pin": 43,
+          "MapToBit": 3
+        }
+      ],
+      "Button 45": [
+        {
+          "Name": "A320 EFIS L BARO MODE INC",
+          "Pin": 45,
+          "MapToBit": 4
+        }
+      ],
+      "Button 10": [
+        {
+          "Name": "A320 EFIS L 1 VOR",
+          "Pin": 10,
+          "MapToBit": 5
+        }
+      ],
+      "Button 11": [
+        {
+          "Name": "A320 EFIS L 1 OFF",
+          "Pin": 11,
+          "MapToBit": 6
+        }
+      ],
+      "Button 12": [
+        {
+          "Name": "A320 EFIS L 1 ADF",
+          "Pin": 12,
+          "MapToBit": 7
+        }
+      ],
+      "Button 13": [
+        {
+          "Name": "A320 EFIS L 2 VOR",
+          "Pin": 13,
+          "MapToBit": 8
+        }
+      ],
+      "Button 14": [
+        {
+          "Name": "A320 EFIS L 2 OFF",
+          "Pin": 14,
+          "MapToBit": 9
+        }
+      ],
+      "Button 15": [
+        {
+          "Name": "A320 EFIS L 2 ADF",
+          "Pin": 15,
+          "MapToBit": 10
+        }
+      ],
+      "Button 31": [
+        {
+          "Name": "A320 EFIS ND MODE PLAN",
+          "Pin": 31,
+          "MapToBit": 11
+        }
+      ],
+      "Button 30": [
+        {
+          "Name": "A320 EFIS ND MODE ARC",
+          "Pin": 30,
+          "MapToBit": 12
+        }
+      ],
+      "Button 29": [
+        {
+          "Name": "A320 EFIS ND MODE NAV",
+          "Pin": 29,
+          "MapToBit": 13
+        }
+      ],
+      "Button 28": [
+        {
+          "Name": "A320 EFIS ND MODE VOR",
+          "Pin": 28,
+          "MapToBit": 14
+        }
+      ],
+      "Button 33": [
+        {
+          "Name": "A320 EFIS RANGE 10",
+          "Pin": 33,
+          "MapToBit": 15
+        }
+      ],
+      "Button 34": [
+        {
+          "Name": "A320 EFIS RANGE 20",
+          "Pin": 34,
+          "MapToBit": 16
+        }
+      ],
+      "Button 35": [
+        {
+          "Name": "A320 EFIS RANGE 40",
+          "Pin": 35,
+          "MapToBit": 17
+        }
+      ],
+      "Button 36": [
+        {
+          "Name": "A320 EFIS RANGE 80",
+          "Pin": 36,
+          "MapToBit": 18
+        }
+      ],
+      "Button 37": [
+        {
+          "Name": "A320 EFIS RANGE 160",
+          "Pin": 37,
+          "MapToBit": 19
+        }
+      ],
+      "Button 38": [
+        {
+          "Name": "A320 EFIS RANGE 320",
+          "Pin": 38,
+          "MapToBit": 20
+        }
+      ],
+      "Button 19": [
+        {
+          "Name": "A320 BARO STD/QNH",
+          "Pin": 19,
+          "MapToBit": 21
+        }
+      ]
+    }
+  }
+}
