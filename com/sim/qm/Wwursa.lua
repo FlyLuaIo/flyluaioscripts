@@ -7,7 +7,7 @@
 
 local Wwursa = oop.class(com.sim.Qmdev)
 function Wwursa:init()
-	self.QmdevId = 0x06410BF7
+	self.QmdevId = 0x247CC218
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwursa == nil then
 		self.PackageConter = 0

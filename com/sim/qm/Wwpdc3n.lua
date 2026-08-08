@@ -7,7 +7,7 @@
 
 local Wwpdc3n = oop.class(com.sim.Qmdev)
 function Wwpdc3n:init()
-	self.QmdevId = 0x0FF5DEBA
+	self.QmdevId = 0x2243764D
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwpdc3n == nil then
 		_G.ilua_hw_assigned_wwpdc3n = 0

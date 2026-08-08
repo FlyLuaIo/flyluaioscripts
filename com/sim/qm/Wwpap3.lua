@@ -7,7 +7,7 @@
 
 local Wwpap3 = oop.class(com.sim.Qmdev)
 function Wwpap3:init()
-	self.QmdevId = 0x0939BE95
+	self.QmdevId = 0x3A3C0513
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwpap3 == nil then
 		self.PackageConter = 0
