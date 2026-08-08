@@ -88,6 +88,10 @@ function KayeRoof:Init(FastTurnsPerSecond)
 	return true
 end
 
+function KayeRoof.Open(...)
+	return com.sim.Qmdev.Open(KayeRoof, ...)
+end
+
 -- ========
 -- output FIRE L (output/0/state)
 
