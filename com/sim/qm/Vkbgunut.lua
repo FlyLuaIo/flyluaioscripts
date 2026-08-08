@@ -7,7 +7,7 @@
 
 local Vkbgunut = oop.class(com.sim.Qmdev)
 function Vkbgunut:init()
-	self.QmdevId = 0x2C94C7A2
+	self.QmdevId = 0x1DDFA25E
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_vkbgunut == nil then
 		_G.ilua_hw_assigned_vkbgunut = 0
