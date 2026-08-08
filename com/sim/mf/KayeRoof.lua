@@ -72,6 +72,7 @@ function KayeRoof:absent(FastTurnsPerSecond)
 	_G.idr_kayeroof_mf_output_bat2v = uluaFind('cpuwolf/mf/KayeRoof/output/48/state')
 	_G.idr_kayeroof_mf_output_backlight = uluaFind('cpuwolf/mf/KayeRoof/output/49/state')
 	uluaSet(_G.idr_kayeroof_hid_fastkeypersec, FastTurnsPerSecond)
+	self:InitLedModule()
 
 	return false
 end
@@ -90,6 +91,50 @@ end
 
 function KayeRoof.Open(...)
 	return com.sim.Qmdev.Open(KayeRoof, ...)
+end
+
+-- Display Module / LedModule "BAT 1+2" → segment/0 (same pattern as CfNano)
+function KayeRoof:InitLedModule()
+	_G.idr_kayeroof_mf_segment_mask = uluaFind('cpuwolf/mf/KayeRoof/segment/0/mask')
+	_G.idr_kayeroof_mf_segment_points = uluaFind('cpuwolf/mf/KayeRoof/segment/0/points')
+	_G.idr_kayeroof_mf_segment_commit = uluaFind('cpuwolf/mf/KayeRoof/segment/0/commit')
+	_G.idr_kayeroof_mf_segment_bat_1_2 = uluaFind('cpuwolf/mf/KayeRoof/segment/0/text')
+	_G.idr_kayeroof_mf_segment_brightness = uluaFind('cpuwolf/mf/KayeRoof/segment/0/brightness')
+
+	-- mfproj DisplayLedModuleSize=6 → mask 0b111111; DP on digits 1 and 4 (BAT2/BAT1)
+	uluaSet(_G.idr_kayeroof_mf_segment_mask, 63)
+	uluaSet(_G.idr_kayeroof_mf_segment_points, 18)
+	uluaSet(_G.idr_kayeroof_mf_segment_brightness, 1)
+	self.segment_commit_seq = 0
+end
+
+function KayeRoof:CommitSegment()
+	self.segment_commit_seq = (self.segment_commit_seq or 0) + 1
+	uluaSet(_G.idr_kayeroof_mf_segment_commit, self.segment_commit_seq)
+end
+
+-- ========
+-- segment BAT 1+2
+
+function KayeRoof:GetBat12(dpath)
+	self.d_bat_1_2 = iDataRef:New(dpath)
+end
+
+function KayeRoof:SetBat12(val)
+	if val == nil then
+		val = self.d_bat_1_2:Get()
+		if self.d_bat_1_2:ChangedUpdate() then
+			uluaSet(_G.idr_kayeroof_mf_segment_bat_1_2, val)
+			self:CommitSegment()
+		end
+	else
+		uluaSet(_G.idr_kayeroof_mf_segment_bat_1_2, val)
+		self:CommitSegment()
+	end
+end
+
+function KayeRoof:FreshBat12()
+	self.d_bat_1_2:Invalid(-1)
 end
 
 -- ========

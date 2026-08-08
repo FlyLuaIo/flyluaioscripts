@@ -189,12 +189,25 @@ kayeroof:GetMasterSwDown('(L:I_OH_ELEC_APU_MASTER_L)') -- APU MASTER ON
 kayeroof:GetStartDown('(L:I_OH_ELEC_APU_START_L)') -- APU START ON
 kayeroof:GetStartUp('(L:I_OH_ELEC_APU_START_U)') -- APU START AVAIL
 
--- BAT1V / BAT2V (mfproj: voltage != 0 → 1)
+-- BAT1V / BAT2V Output LEDs (mfproj: voltage != 0 → 1)
 kayeroof:GetBat1v('(L:N_ELEC_VOLT_BAT_1) 0 !=') -- BAT1 VOLT PRESENT
 kayeroof:GetBat2v('(L:N_ELEC_VOLT_BAT_2) 0 !=') -- BAT2 VOLT PRESENT
 
 -- BACKLIGHT (mfproj: A_OH_LIGHTING_OVD * 100)
 kayeroof:GetBacklight('(L:A_OH_LIGHTING_OVD)', 100) -- OVHD INTEG LT
+
+-- PAP3 LedModule "BAT 1+2" (same pattern as z_CFNANO_GA segment Get/Set)
+-- mfproj: BAT2 digits 0..2 DP@1, BAT1 digits 3..5 DP@4; Round($,1) → pack 6 digits
+local d_pap3_bat1 = iDataRef:New('(L:N_ELEC_VOLT_BAT_1)')
+local d_pap3_bat2 = iDataRef:New('(L:N_ELEC_VOLT_BAT_2)')
+local pap3_bat12_last = -1
+local function pack_pap3_bat12(v1, v2)
+	local n1 = math.floor((v1 or 0) * 10 + 0.5)
+	local n2 = math.floor((v2 or 0) * 10 + 0.5)
+	if n1 < 0 then n1 = 0 elseif n1 > 999 then n1 = 999 end
+	if n2 < 0 then n2 = 0 elseif n2 > 999 then n2 = 999 end
+	return n2 * 1000 + n1
+end
 
 GlobalFrameLoopManager:add(function()
 	kayeroof:SetFireL()
@@ -247,4 +260,9 @@ GlobalFrameLoopManager:add(function()
 	kayeroof:SetBat1v()
 	kayeroof:SetBat2v()
 	kayeroof:SetBacklight()
+	local packed = pack_pap3_bat12(d_pap3_bat1:Get(), d_pap3_bat2:Get())
+	if packed ~= pap3_bat12_last then
+		pap3_bat12_last = packed
+		kayeroof:SetBat12(packed)
+	end
 end)

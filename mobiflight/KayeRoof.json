@@ -256,9 +256,9 @@
       ]
     },
     "Display Module": {
-      "BAT 1+2": [
+      "LedModule": [
         {
-          "Name": "BAT 1 segment"
+          "Name": "BAT 1+2"
         }
       ]
     }
