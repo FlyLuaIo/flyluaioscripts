@@ -1,0 +1,210 @@
+{
+  "$schema": "./joystick-config.schema.json",
+  "ProductName": "WwTcas",
+  "USB_VID": "0x4098",
+  "USB_PID": "0xBB81",
+  "LightKey": 9,
+  "LightKeyName": "IDENT",
+  "Functions": [
+    {
+      "FunName": "leds",
+      "USB_CMD_length": 14,
+      "HeaderBytes": [
+        "0x02",
+        "0x81",
+        "0xBB",
+        "0x00",
+        "0x00",
+        "0x03",
+        "0x49",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00"
+      ],
+      "FunIndex": 1,
+      "LightBytes": [
+        "0x02",
+        "0x81",
+        "0xBB",
+        "0x00",
+        "0x00",
+        "0x03",
+        "0x49",
+        "0x00",
+        "0xEE",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00"
+      ],
+      "TestBytes": [
+        "0x02",
+        "0x81",
+        "0xBB",
+        "0x00",
+        "0x00",
+        "0x03",
+        "0x49",
+        "0x03",
+        "0x01",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00"
+      ],
+      "OffBytes": [
+        "0x0281BB0000034900000000000000",
+        "0x0281BB0000034901000000000000",
+        "0x0281BB0000034902000000000000",
+        "0x0281BB0000034903000000000000"
+      ],
+      "SubFunctions": [
+        {
+          "ledCmd": "i56:16"
+        }
+      ],
+      "SubIndexFunctions": [
+        {
+          "Bkl": "0"
+        },
+        {
+          "LcdBkl": "1"
+        },
+        {
+          "LedBkl": "2"
+        },
+        {
+          "AtcFail": "3"
+        }
+      ]
+    },
+    {
+      "FunName": "lcd",
+      "USB_CMD_length": 64,
+      "HeaderBytes": [
+        "0xF0",
+        "0x00",
+        "0x01",
+        "0x35",
+        "0x81",
+        "0xBB",
+        "0x00",
+        "0x00",
+        "0x02",
+        "0x01",
+        "0x00",
+        "0x00",
+        "0xFF",
+        "0xFF",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x24"
+      ],
+      "SkipBytes": [
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF",
+        "0xFF"
+      ],
+      "SubFunctions": [
+        {
+          "seqNum": "i16:8",
+          "lcd1": "i296:32",
+          "lcd2": "i264:32",
+          "lcd3": "i232:32",
+          "lcd4": "i200:32",
+          "lcd5": "i392:32",
+          "lcd6": "i360:32",
+          "lcd7": "i328:32"
+        }
+      ]
+    },
+    {
+      "FunName": "finish",
+      "USB_CMD_length": 64,
+      "HeaderBytes": [
+        "0xF0",
+        "0x00",
+        "0x01",
+        "0x11",
+        "0x81",
+        "0xBB",
+        "0x00",
+        "0x00",
+        "0x03",
+        "0x01",
+        "0x00",
+        "0x00",
+        "0xFF",
+        "0xFF",
+        "0x00",
+        "0x00"
+      ],
+      "SubFunctions": [
+        {
+          "seqNum": "i16:8"
+        }
+      ]
+    }
+  ]
+}
