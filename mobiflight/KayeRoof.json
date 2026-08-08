@@ -1,0 +1,661 @@
+{
+  "ProductName": "KayeRoof",
+  "ModuleName": "Kaye Roof",
+  "ModuleSerial": "SN-GE9-CEA",
+  "outputs": {
+    "Output": {
+      "FIRE L": [
+        {
+          "Name": "FIRE L"
+        }
+      ],
+      "ANTICE_ENG2_UP": [
+        {
+          "Name": "ANTI_ICE_ENG2_UP"
+        }
+      ],
+      "ANTICE_ENG1_DOWN": [
+        {
+          "Name": "ANTI_ICE_ENG1_DOWN"
+        }
+      ],
+      "ANTICE_ENG2_DOWN": [
+        {
+          "Name": "ANTI_ICE_ENG2_DOWN"
+        }
+      ],
+      "ANTICE_WING_DOWN": [
+        {
+          "Name": "ANTI_ICE_WING_DOWN"
+        }
+      ],
+      "APU BLEED DOWN": [
+        {
+          "Name": "APU BLEED DOWN"
+        }
+      ],
+      "EXT DOWN": [
+        {
+          "Name": "EXT PWR DOWN"
+        }
+      ],
+      "ELEC DOWN": [
+        {
+          "Name": "ELEC PUMP DOWN"
+        }
+      ],
+      "FIRE C": [
+        {
+          "Name": "FIRE C"
+        }
+      ],
+      "BAT_1_DOWN": [
+        {
+          "Name": "BAT1_DOWN"
+        }
+      ],
+      "BAT_2_UP": [
+        {
+          "Name": "BAT2_UP"
+        }
+      ],
+      "BAT_2_DOWN": [
+        {
+          "Name": "BAT2_DOWN"
+        }
+      ],
+      "FIRE R": [
+        {
+          "Name": "FIRE R"
+        }
+      ],
+      "IR1": [
+        {
+          "Name": "IR1_LOWER"
+        }
+      ],
+      "IR1_UP": [
+        {
+          "Name": "IR1_UP"
+        }
+      ],
+      "IR2": [
+        {
+          "Name": "IR2_LOWER"
+        }
+      ],
+      "IR3": [
+        {
+          "Name": "IR3_LOWER"
+        }
+      ],
+      "EXT UP": [
+        {
+          "Name": "EXT PWR UP"
+        }
+      ],
+      "ANTICE_WING_UP": [
+        {
+          "Name": "ANTI_ICE_WING_UP"
+        }
+      ],
+      "APU BLEED UP": [
+        {
+          "Name": "APU BLEED UP"
+        }
+      ],
+      "ELEC UP": [
+        {
+          "Name": "ELEC PUMP UP"
+        }
+      ],
+      "ANTICE_ENG1_UP": [
+        {
+          "Name": "ANTI_ICE_ENG1_UP"
+        }
+      ],
+      "CREW SUPPLY": [
+        {
+          "Name": "CREW SUPPLY"
+        }
+      ],
+      "GND CTL": [
+        {
+          "Name": "GND CTL"
+        }
+      ],
+      "BAT_1_UP": [
+        {
+          "Name": "BAT1_UP"
+        }
+      ],
+      "LTK_PUMPS_1_UP": [
+        {
+          "Name": "LTK PUMPS_1_UP"
+        }
+      ],
+      "LTK_PUMPS_2_DOWN": [
+        {
+          "Name": "LTK PUMPS_2_DOWN"
+        }
+      ],
+      "IR3_UP": [
+        {
+          "Name": "IR3_UP"
+        }
+      ],
+      "IR2_UP": [
+        {
+          "Name": "IR2_UP"
+        }
+      ],
+      "RTKPUMPS_1_UP": [
+        {
+          "Name": "RTK PUMPS_1_UP"
+        }
+      ],
+      "LTK_PUMPS_1_DOWN": [
+        {
+          "Name": "LTK PUMPS_1_DOWN"
+        }
+      ],
+      "LTK_PUMPS_2_UP": [
+        {
+          "Name": "LTK PUMPS_2_UP"
+        }
+      ],
+      "PUMP1_UP": [
+        {
+          "Name": "PUMP 1_UP"
+        }
+      ],
+      "MODE SEL_DOWN": [
+        {
+          "Name": "MODE SEL_DOWN"
+        }
+      ],
+      "PUMP2_DOWN": [
+        {
+          "Name": "PUMP 2_DOWN"
+        }
+      ],
+      "PUMP1_DOWN": [
+        {
+          "Name": "PUMP 1_DOWN"
+        }
+      ],
+      "START_DOWN": [
+        {
+          "Name": "START_DOWN"
+        }
+      ],
+      "PUMP2_UP": [
+        {
+          "Name": "PUMP 2_UP"
+        }
+      ],
+      "MODE SEL_UP": [
+        {
+          "Name": "MODE SEL_UP"
+        }
+      ],
+      "RTKPUMPS_2_DOWN": [
+        {
+          "Name": "RTK PUMPS_2_DOWN"
+        }
+      ],
+      "RTKPUMPS_1_DOWN": [
+        {
+          "Name": "RTK PUMPS_1_DOWN"
+        }
+      ],
+      "RTKPUMPS_2_UP": [
+        {
+          "Name": "RTK PUMPS_2_UP"
+        }
+      ],
+      "X FEED_UP": [
+        {
+          "Name": "X FEED_UP"
+        }
+      ],
+      "X FEED_DOWN": [
+        {
+          "Name": "X FEED_DOWN"
+        }
+      ],
+      "MASTER SW_UP": [
+        {
+          "Name": "MASTER SW_UP"
+        }
+      ],
+      "MASTER SW_DOWN": [
+        {
+          "Name": "MASTER SW_DOWN"
+        }
+      ],
+      "START_UP": [
+        {
+          "Name": "START_UP"
+        }
+      ],
+      "BAT1V": [
+        {
+          "Name": "BAT1V"
+        }
+      ],
+      "BAT2V": [
+        {
+          "Name": "BAT2V"
+        }
+      ],
+      "BACKLIGHT": [
+        {
+          "Name": "BACKLIGHT"
+        }
+      ]
+    },
+    "Display Module": {
+      "BAT 1+2": [
+        {
+          "Name": "BAT 1 segment"
+        }
+      ]
+    }
+  },
+  "inputs": {
+    "Button": {
+      "Multiplexer 1:7": [
+        {
+          "Name": "GNADIRS_1_OFF",
+          "Pin": 0,
+          "MapToBit": 0
+        }
+      ],
+      "Multiplexer 1:8": [
+        {
+          "Name": "GNADIRS_1_NAV",
+          "Pin": 0,
+          "MapToBit": 1
+        }
+      ],
+      "Multiplexer 1:9": [
+        {
+          "Name": "GNADIRS_1_ATT",
+          "Pin": 0,
+          "MapToBit": 2
+        }
+      ],
+      "Multiplexer 1:15": [
+        {
+          "Name": "GNADIRS_3_OFF",
+          "Pin": 0,
+          "MapToBit": 3
+        }
+      ],
+      "Multiplexer 1:14": [
+        {
+          "Name": "GNADIRS_3_NAV",
+          "Pin": 0,
+          "MapToBit": 4
+        }
+      ],
+      "Multiplexer 1:13": [
+        {
+          "Name": "GNADIRS_3_ATT",
+          "Pin": 0,
+          "MapToBit": 5
+        }
+      ],
+      "Multiplexer 1:10": [
+        {
+          "Name": "GNADIRS_2_OFF",
+          "Pin": 0,
+          "MapToBit": 6
+        }
+      ],
+      "Multiplexer 1:11": [
+        {
+          "Name": "GNADIRS_2_NAV",
+          "Pin": 0,
+          "MapToBit": 7
+        }
+      ],
+      "Multiplexer 1:12": [
+        {
+          "Name": "GNADIRS_2_ATT",
+          "Pin": 0,
+          "MapToBit": 8
+        }
+      ],
+      "Multiplexer 2:11": [
+        {
+          "Name": "APU BLEED",
+          "Pin": 0,
+          "MapToBit": 9
+        }
+      ],
+      "Multiplexer 3:7": [
+        {
+          "Name": "ELEC PUMP",
+          "Pin": 0,
+          "MapToBit": 10
+        }
+      ],
+      "Multiplexer 2:14": [
+        {
+          "Name": "WING",
+          "Pin": 0,
+          "MapToBit": 11
+        }
+      ],
+      "Multiplexer 2:13": [
+        {
+          "Name": "ENG1",
+          "Pin": 0,
+          "MapToBit": 12
+        }
+      ],
+      "Multiplexer 2:12": [
+        {
+          "Name": "ENG2",
+          "Pin": 0,
+          "MapToBit": 13
+        }
+      ],
+      "Multiplexer 2:10": [
+        {
+          "Name": "GND CTL",
+          "Pin": 0,
+          "MapToBit": 14
+        }
+      ],
+      "Multiplexer 2:15": [
+        {
+          "Name": "CREW SUPPLY",
+          "Pin": 0,
+          "MapToBit": 15
+        }
+      ],
+      "Multiplexer 2:9": [
+        {
+          "Name": "BAT1",
+          "Pin": 0,
+          "MapToBit": 16
+        }
+      ],
+      "Multiplexer 2:8": [
+        {
+          "Name": "BAT2",
+          "Pin": 0,
+          "MapToBit": 17
+        }
+      ],
+      "Multiplexer 2:0": [
+        {
+          "Name": "LTK PUMPS1",
+          "Pin": 0,
+          "MapToBit": 18
+        }
+      ],
+      "Multiplexer 2:1": [
+        {
+          "Name": "LTK PUMPS2",
+          "Pin": 0,
+          "MapToBit": 19
+        }
+      ],
+      "Multiplexer 2:2": [
+        {
+          "Name": "PUMP1",
+          "Pin": 0,
+          "MapToBit": 20
+        }
+      ],
+      "Multiplexer 2:4": [
+        {
+          "Name": "PUMP2",
+          "Pin": 0,
+          "MapToBit": 21
+        }
+      ],
+      "Multiplexer 2:3": [
+        {
+          "Name": "MODE SEL",
+          "Pin": 0,
+          "MapToBit": 22
+        }
+      ],
+      "Multiplexer 2:5": [
+        {
+          "Name": "RTKPUMPS1",
+          "Pin": 0,
+          "MapToBit": 23
+        }
+      ],
+      "Multiplexer 2:6": [
+        {
+          "Name": "RTKPUMPS2",
+          "Pin": 0,
+          "MapToBit": 24
+        }
+      ],
+      "Multiplexer 1:0": [
+        {
+          "Name": "XFEED",
+          "Pin": 0,
+          "MapToBit": 25
+        }
+      ],
+      "Multiplexer 3:0": [
+        {
+          "Name": "MASTER SW",
+          "Pin": 0,
+          "MapToBit": 26
+        }
+      ],
+      "Multiplexer 3:1": [
+        {
+          "Name": "START",
+          "Pin": 0,
+          "MapToBit": 27
+        }
+      ],
+      "Multiplexer 1:1": [
+        {
+          "Name": "ENG1_FIRE_TEST",
+          "Pin": 0,
+          "MapToBit": 28
+        }
+      ],
+      "Multiplexer 1:2": [
+        {
+          "Name": "APU_FIRE_TEST",
+          "Pin": 0,
+          "MapToBit": 29
+        }
+      ],
+      "Multiplexer 3:8": [
+        {
+          "Name": "CVR_TEST",
+          "Pin": 0,
+          "MapToBit": 30
+        }
+      ],
+      "Multiplexer 1:3": [
+        {
+          "Name": "ENG2_FIRE_TEST",
+          "Pin": 0,
+          "MapToBit": 31
+        }
+      ],
+      "Multiplexer 3:3": [
+        {
+          "Name": "EMER EXIT LT_ON",
+          "Pin": 0,
+          "MapToBit": 32
+        }
+      ],
+      "Multiplexer 3:2": [
+        {
+          "Name": "EMER EXIT LT_OFF",
+          "Pin": 0,
+          "MapToBit": 33
+        }
+      ],
+      "Multiplexer 3:4": [
+        {
+          "Name": "SEAT BELTS_OFF",
+          "Pin": 0,
+          "MapToBit": 34
+        }
+      ],
+      "Multiplexer 3:5": [
+        {
+          "Name": "NO SMOKING_OFF",
+          "Pin": 0,
+          "MapToBit": 35
+        }
+      ],
+      "Multiplexer 3:6": [
+        {
+          "Name": "NO SMOKING_ON",
+          "Pin": 0,
+          "MapToBit": 36
+        }
+      ],
+      "Multiplexer 4:2": [
+        {
+          "Name": "EXT LT_STORBE_ON",
+          "Pin": 0,
+          "MapToBit": 37
+        }
+      ],
+      "Multiplexer 4:3": [
+        {
+          "Name": "EXT LT_STORBE_OFF",
+          "Pin": 0,
+          "MapToBit": 38
+        }
+      ],
+      "Multiplexer 4:5": [
+        {
+          "Name": "EXT LT_BEACON_ON",
+          "Pin": 0,
+          "MapToBit": 39
+        }
+      ],
+      "Multiplexer 4:4": [
+        {
+          "Name": "EXT LT_BEACON_OFF",
+          "Pin": 0,
+          "MapToBit": 40
+        }
+      ],
+      "Multiplexer 4:9": [
+        {
+          "Name": "EXT LT_WING_ON",
+          "Pin": 0,
+          "MapToBit": 41
+        }
+      ],
+      "Multiplexer 4:8": [
+        {
+          "Name": "EXT LT_WING_OFF",
+          "Pin": 0,
+          "MapToBit": 42
+        }
+      ],
+      "Multiplexer 4:11": [
+        {
+          "Name": "EXT LT_NAV_NAV",
+          "Pin": 0,
+          "MapToBit": 43
+        }
+      ],
+      "Multiplexer 4:10": [
+        {
+          "Name": "EXT LT_NAV_OFF",
+          "Pin": 0,
+          "MapToBit": 44
+        }
+      ],
+      "Multiplexer 4:1": [
+        {
+          "Name": "EXT LT_RWY TURN_ON",
+          "Pin": 0,
+          "MapToBit": 45
+        }
+      ],
+      "Multiplexer 4:0": [
+        {
+          "Name": "EXT LT_RWY TURN_OFF",
+          "Pin": 0,
+          "MapToBit": 46
+        }
+      ],
+      "Multiplexer 4:6": [
+        {
+          "Name": "EXT LT_LAND_L_ON",
+          "Pin": 0,
+          "MapToBit": 47
+        }
+      ],
+      "Multiplexer 4:7": [
+        {
+          "Name": "EXT LT_LAND_L_PETPACT",
+          "Pin": 0,
+          "MapToBit": 48
+        }
+      ],
+      "Multiplexer 4:15": [
+        {
+          "Name": "EXT LT_LAND_R_ON",
+          "Pin": 0,
+          "MapToBit": 49
+        }
+      ],
+      "Multiplexer 4:14": [
+        {
+          "Name": "EXT LT_LAND_R_PETPACT",
+          "Pin": 0,
+          "MapToBit": 50
+        }
+      ],
+      "Multiplexer 4:13": [
+        {
+          "Name": "EXT LT_NOSE_TO",
+          "Pin": 0,
+          "MapToBit": 51
+        }
+      ],
+      "Multiplexer 4:12": [
+        {
+          "Name": "EXT LT_NOSE_OFF",
+          "Pin": 0,
+          "MapToBit": 52
+        }
+      ],
+      "Multiplexer 2:7": [
+        {
+          "Name": "EXT PWR",
+          "Pin": 0,
+          "MapToBit": 53
+        }
+      ]
+    },
+    "Encoder": {
+      "LIGHT": [
+        {
+          "Name": "LIGHT BRT",
+          "MapToBits": [
+            54,
+            55,
+            56,
+            57
+          ]
+        }
+      ]
+    }
+  }
+}
