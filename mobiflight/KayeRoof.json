@@ -265,27 +265,6 @@
   },
   "inputs": {
     "Button": {
-      "Multiplexer 1:4": [
-        {
-          "Name": "IR2_BUTTON",
-          "Pin": 0,
-          "MapToBit": 58
-        }
-      ],
-      "Multiplexer 1:5": [
-        {
-          "Name": "IR3_BUTTON",
-          "Pin": 0,
-          "MapToBit": 59
-        }
-      ],
-      "Multiplexer 1:6": [
-        {
-          "Name": "IR1_BUTTON",
-          "Pin": 0,
-          "MapToBit": 60
-        }
-      ],
       "Multiplexer 1:7": [
         {
           "Name": "GNADIRS_1_OFF",
@@ -662,6 +641,27 @@
           "Name": "EXT PWR",
           "Pin": 0,
           "MapToBit": 53
+        }
+      ],
+      "Multiplexer 1:4": [
+        {
+          "Name": "IR2_BUTTON",
+          "Pin": 0,
+          "MapToBit": 58
+        }
+      ],
+      "Multiplexer 1:5": [
+        {
+          "Name": "IR3_BUTTON",
+          "Pin": 0,
+          "MapToBit": 59
+        }
+      ],
+      "Multiplexer 1:6": [
+        {
+          "Name": "IR1_BUTTON",
+          "Pin": 0,
+          "MapToBit": 60
         }
       ]
     },
