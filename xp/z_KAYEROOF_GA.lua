@@ -127,6 +127,11 @@ kayeroof:CfgCmd(52, 'sim/lights/taxi_lights_off')
 -- EXT PWR (Button, bit 53)
 kayeroof:CfgValT(53, 'sim/cockpit/electrical/gpu_on')
 
+-- IR2 / IR3 / IR1 buttons (bits 58..60 ← Multiplexer 1:4/5/6; no stock ADIRS)
+kayeroof:CfgCmd(58, 'sim/operation/test_none')
+kayeroof:CfgCmd(59, 'sim/operation/test_none')
+kayeroof:CfgCmd(60, 'sim/operation/test_none')
+
 -- OUTPUT data (Fenix I_OH_* → nearest stock XP; upper/fault LEDs left off)
 
 -- FIRE L / C / R

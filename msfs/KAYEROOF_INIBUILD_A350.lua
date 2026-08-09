@@ -125,6 +125,11 @@ kayeroof:CfgRpn(52, '0 (>L:INI_LIGHTS_NOSE)', '1 (>L:INI_LIGHTS_NOSE)')
 kayeroof:CfgRpn(53,
 	'(L:INI_GPU_AVAIL) 1 == if{ (L:INI_GEN_EXT_A_ONLINE) ! (>L:INI_GEN_EXT_A_ONLINE) } (L:INI_GPU_AVAIL) 1 == if{ (L:INI_GEN_EXT_B_ONLINE) ! (>L:INI_GEN_EXT_B_ONLINE) }')
 
+-- IR2 / IR3 / IR1 buttons (bits 58..60 ← Multiplexer 1:4/5/6)
+kayeroof:CfgRpn(58, '(L:INI_IR2_STATE) ! (>L:INI_IR2_STATE)') -- IR2_BUTTON
+kayeroof:CfgRpn(59, '(L:INI_IR3_STATE) ! (>L:INI_IR3_STATE)') -- IR3_BUTTON
+kayeroof:CfgRpn(60, '(L:INI_IR1_STATE) ! (>L:INI_IR1_STATE)') -- IR1_BUTTON
+
 -- ===========================================================
 -- Read data for lights (Get* — keep all channels)
 
