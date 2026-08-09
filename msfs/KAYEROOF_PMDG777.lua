@@ -149,8 +149,8 @@ kayeroof:GetXFeedDown('0')
 kayeroof:GetMasterSwUp('0')
 kayeroof:GetMasterSwDown('(L:switch_03_a) 50 ==') -- APU MASTER
 kayeroof:GetStartUp('(L:APUStartup) 1 == (L:7X7XAPUInlet) 100 == and') -- APU AVAIL
-kayeroof:GetBat1v('0')
-kayeroof:GetBat2v('0')
+kayeroof:GetBat1v2('0') -- BAT2V|BAT1V PINS
+kayeroof:GetBat12('0', '0') -- BAT 1+2 DISPLAY (no PMDG voltage mapping yet)
 kayeroof:GetBacklight('(L:BL_Overhead, number)') -- OVHD PANEL LT
 
 GlobalFrameLoopManager:add(function()
@@ -201,8 +201,8 @@ GlobalFrameLoopManager:add(function()
 	kayeroof:SetMasterSwUp()
 	kayeroof:SetMasterSwDown()
 	kayeroof:SetStartUp()
-	kayeroof:SetBat1v()
-	kayeroof:SetBat2v()
+	kayeroof:SetBat1v2()
 	kayeroof:SetBacklight()
+	kayeroof:SetBat12()
 end)
 

@@ -196,25 +196,14 @@ kayeroof:GetMasterSwDown('(L:INI_APU_MASTER_SWITCH) 1 == (L:INI_ANNLT_SWITCH) 2 
 kayeroof:GetStartDown('(L:INI_APU_START_BUTTON) 1 == (L:INI_APU_AVAILABLE) 0 == and') -- APU START ON
 kayeroof:GetStartUp('(L:INI_APU_AVAILABLE)') -- APU START AVAIL
 
--- BAT1V / BAT2V Output LEDs (mfproj display Round — LED channel uses voltage present)
-kayeroof:GetBat1v('(L:INI_BATTERY_1_VOLTAGE) 0 !=') -- BAT1 VOLT PRESENT
-kayeroof:GetBat2v('(L:INI_BATTERY_2_VOLTAGE) 0 !=') -- BAT2 VOLT PRESENT
+-- BAT1V|BAT2V Output pins (mfproj Device "BAT2V|BAT1V", ≠ LedModule)
+kayeroof:GetBat1v2('(L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED)') -- BAT2V|BAT1V PINS
 
 -- BACKLIGHT (mfproj: bus powered → 255)
 kayeroof:GetBacklight('(L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED)', 255) -- OVHD BACKLIGHT
 
--- PAP3 LedModule "BAT 1+2" (same pattern as z_CFNANO_GA segment Get/Set)
--- mfproj: BAT2 digits 0..2 DP@1, BAT1 digits 3..5 DP@4; Round($,1) → pack 6 digits
-local d_pap3_bat1 = iDataRef:New('(L:INI_BATTERY_1_VOLTAGE)')
-local d_pap3_bat2 = iDataRef:New('(L:INI_BATTERY_2_VOLTAGE)')
-local pap3_bat12_last = -1
-local function pack_pap3_bat12(v1, v2)
-	local n1 = math.floor((v1 or 0) * 10 + 0.5)
-	local n2 = math.floor((v2 or 0) * 10 + 0.5)
-	if n1 < 0 then n1 = 0 elseif n1 > 999 then n1 = 999 end
-	if n2 < 0 then n2 = 0 elseif n2 > 999 then n2 = 999 end
-	return n2 * 1000 + n1
-end
+-- PAP3 LedModule "BAT 1+2": BAT1 + BAT2 voltages → one segment write
+kayeroof:GetBat12('(L:INI_BATTERY_1_VOLTAGE)', '(L:INI_BATTERY_2_VOLTAGE)') -- BAT 1+2 DISPLAY
 
 GlobalFrameLoopManager:add(function()
 	kayeroof:SetFireL()
@@ -264,12 +253,7 @@ GlobalFrameLoopManager:add(function()
 	kayeroof:SetMasterSwUp()
 	kayeroof:SetMasterSwDown()
 	kayeroof:SetStartUp()
-	kayeroof:SetBat1v()
-	kayeroof:SetBat2v()
+	kayeroof:SetBat1v2()
 	kayeroof:SetBacklight()
-	local packed = pack_pap3_bat12(d_pap3_bat1:Get(), d_pap3_bat2:Get())
-	if packed ~= pap3_bat12_last then
-		pap3_bat12_last = packed
-		kayeroof:SetBat12(packed)
-	end
+	kayeroof:SetBat12()
 end)

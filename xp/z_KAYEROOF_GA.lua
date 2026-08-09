@@ -201,9 +201,13 @@ kayeroof:GetMasterSwDown('sim/cockpit/electrical/avionics_on')
 kayeroof:GetStartUp(LED_OFF)
 kayeroof:GetStartDown('sim/cockpit2/electrical/cross_tie')
 
--- BAT voltage digits (channel is 0/1 in mfcfg — show battery on)
-kayeroof:GetBat1v('sim/cockpit/electrical/battery_on')
-kayeroof:GetBat2v('sim/cockpit2/electrical/battery_array_on[1]')
+-- BAT1V|BAT2V Output pins (mfproj "BAT2V|BAT1V", ≠ LedModule)
+kayeroof:GetBat1v2('sim/cockpit/electrical/avionics_on') -- BAT2V|BAT1V PINS
+
+-- PAP3 LedModule "BAT 1+2" (one segment write for both voltages)
+kayeroof:GetBat12(
+	'sim/cockpit2/electrical/battery_voltage_actual_volts[0]',
+	'sim/cockpit2/electrical/battery_voltage_actual_volts[1]') -- BAT 1+2 DISPLAY
 
 -- BACKLIGHT (Fenix A_OH_LIGHTING_OVD * 100)
 kayeroof:GetBacklight('sim/cockpit/electrical/instrument_brightness', 100)
@@ -256,7 +260,7 @@ GlobalFrameLoopManager:add(function()
 	kayeroof:SetMasterSwUp()
 	kayeroof:SetMasterSwDown()
 	kayeroof:SetStartUp()
-	kayeroof:SetBat1v()
-	kayeroof:SetBat2v()
+	kayeroof:SetBat1v2()
 	kayeroof:SetBacklight()
+	kayeroof:SetBat12()
 end)

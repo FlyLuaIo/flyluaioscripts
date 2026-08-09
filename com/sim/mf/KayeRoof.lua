@@ -104,7 +104,7 @@ function KayeRoof:InitLedModule()
 	-- mfproj DisplayLedModuleSize=6 → mask 0b111111; DP on digits 1 and 4 (BAT2/BAT1)
 	uluaSet(_G.idr_kayeroof_mf_segment_mask, 63)
 	uluaSet(_G.idr_kayeroof_mf_segment_points, 18)
-	uluaSet(_G.idr_kayeroof_mf_segment_brightness, 1)
+	uluaSet(_G.idr_kayeroof_mf_segment_brightness, 100)
 	self.segment_commit_seq = 0
 end
 
@@ -114,17 +114,30 @@ function KayeRoof:CommitSegment()
 end
 
 -- ========
--- segment BAT 1+2
+-- segment BAT 1+2 (one LedModule; BAT1+BAT2 voltages packed into a single text write)
 
-function KayeRoof:GetBat12(dpath)
-	self.d_bat_1_2 = iDataRef:New(dpath)
+local function pack_bat12_volts(v_bat1, v_bat2)
+	-- mfproj: BAT2 digits 0..2 DP@1, BAT1 digits 3..5 DP@4; Round($,1)
+	local n1 = math.floor((v_bat1 or 0) * 10 + 0.5)
+	local n2 = math.floor((v_bat2 or 0) * 10 + 0.5)
+	if n1 < 0 then n1 = 0 elseif n1 > 999 then n1 = 999 end
+	if n2 < 0 then n2 = 0 elseif n2 > 999 then n2 = 999 end
+	return n2 * 1000 + n1
+end
+
+function KayeRoof:GetBat12(dpath_bat1, dpath_bat2)
+	self.d_bat12_1 = iDataRef:New(dpath_bat1)
+	self.d_bat12_2 = iDataRef:New(dpath_bat2)
 end
 
 function KayeRoof:SetBat12(val)
 	if val == nil then
-		val = self.d_bat_1_2:Get()
-		if self.d_bat_1_2:ChangedUpdate() then
-			uluaSet(_G.idr_kayeroof_mf_segment_bat_1_2, val)
+		local v1 = self.d_bat12_1:Get()
+		local v2 = self.d_bat12_2:Get()
+		local changed = self.d_bat12_1:ChangedUpdate()
+		changed = self.d_bat12_2:ChangedUpdate() or changed
+		if changed then
+			uluaSet(_G.idr_kayeroof_mf_segment_bat_1_2, pack_bat12_volts(v1, v2))
 			self:CommitSegment()
 		end
 	else
@@ -134,7 +147,8 @@ function KayeRoof:SetBat12(val)
 end
 
 function KayeRoof:FreshBat12()
-	self.d_bat_1_2:Invalid(-1)
+	self.d_bat12_1:Invalid(-1)
+	self.d_bat12_2:Invalid(-1)
 end
 
 -- ========
@@ -1313,53 +1327,31 @@ function KayeRoof:FreshStartUp()
 end
 
 -- ========
--- output BAT1V (output/47/state)
+-- output BAT1V + BAT2V (output/47 + output/48)
+-- mfproj one Output Device "BAT2V|BAT1V" (two pins, same value; not LedModule)
 
 -- Channel state is 0/1 (bitLength=1 in mfcfg)
 
-function KayeRoof:GetBat1v(dpath, scale)
-	self.d_bat1v_scale = scale == nil and 1 or scale
-	self.d_bat1v = iDataRef:New(dpath)
+function KayeRoof:GetBat1v2(dpath, scale)
+	self.d_bat1v2_scale = scale == nil and 1 or scale
+	self.d_bat1v2 = iDataRef:New(dpath)
 end
 
-function KayeRoof:SetBat1v(val)
+function KayeRoof:SetBat1v2(val)
 	if val == nil then
-		val = self.d_bat1v:Get() * self.d_bat1v_scale
-		if self.d_bat1v:ChangedUpdate() then
+		val = self.d_bat1v2:Get() * self.d_bat1v2_scale
+		if self.d_bat1v2:ChangedUpdate() then
 			uluaSet(_G.idr_kayeroof_mf_output_bat1v, val)
-		end
-	else
-		uluaSet(_G.idr_kayeroof_mf_output_bat1v, val)
-	end
-end
-
-function KayeRoof:FreshBat1v()
-	self.d_bat1v:Invalid(-1)
-end
-
--- ========
--- output BAT2V (output/48/state)
-
--- Channel state is 0/1 (bitLength=1 in mfcfg)
-
-function KayeRoof:GetBat2v(dpath, scale)
-	self.d_bat2v_scale = scale == nil and 1 or scale
-	self.d_bat2v = iDataRef:New(dpath)
-end
-
-function KayeRoof:SetBat2v(val)
-	if val == nil then
-		val = self.d_bat2v:Get() * self.d_bat2v_scale
-		if self.d_bat2v:ChangedUpdate() then
 			uluaSet(_G.idr_kayeroof_mf_output_bat2v, val)
 		end
 	else
+		uluaSet(_G.idr_kayeroof_mf_output_bat1v, val)
 		uluaSet(_G.idr_kayeroof_mf_output_bat2v, val)
 	end
 end
 
-function KayeRoof:FreshBat2v()
-	self.d_bat2v:Invalid(-1)
+function KayeRoof:FreshBat1v2()
+	self.d_bat1v2:Invalid(-1)
 end
 
 -- ========
