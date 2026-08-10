@@ -382,7 +382,7 @@ Qmdev:CfgTog(KeyIdx, BeventStr, RpnStr)
 Qmdev:CfgFc(KeyIdx, FuncPressStr, FuncReleaseStr, FuncFastStr)
 Qmdev:CfgLongFc(KeyIdx, WaitMs, LongPressFunc, ShortPressFunc, InitPressFunc)
 -- LongPressFunc etc. must be Lua functions, not strings
--- CfgAnalog requires self.ProductName (device class init); hub writes ADC via setAnalogByName
+-- CfgAnalog: keysmap board id from getClassName() (optional self.ProductName override)
 ```
 
 ### 8.3 Aircraft Guards

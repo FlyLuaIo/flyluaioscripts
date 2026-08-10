@@ -182,7 +182,6 @@ function Qmdev:CfgRpn(KeyIdx, RpnPressStr, RpnReleaseStr)
 end
 
 -- MF AnalogInput: hub writes ADC into keysmap[MapToBit]; PollAnalogs() maps in Lua.
--- Requires self.ProductName (e.g. 'RfA112').
 -- @KeyIdx: (number) keysmap index (JSON MapToBit)
 -- @storeRpn: (string) MSFS write op e.g. '(>L:A_WR_GAIN)'; XP: dataref path for uluaSet
 -- @baseline, @scale: (number) value = (baseline - adc) / scale
@@ -191,10 +190,6 @@ end
 --   Example: CfgAnalog(0, '(>L:FOO)', 220, 219)
 -- No return value.
 function Qmdev:CfgAnalog(KeyIdx, storeRpn, baseline, scale, clampLo, clampHi, postOffset)
-    if self.ProductName == nil or self.ProductName == '' then
-        uluaLog('CfgAnalog: missing self.ProductName')
-        return
-    end
     if type(storeRpn) ~= 'string' or storeRpn == '' then
         uluaLog('CfgAnalog: storeRpn must be a non-empty string for bit ' .. tostring(KeyIdx))
         return
@@ -221,7 +216,12 @@ function Qmdev:CfgAnalog(KeyIdx, storeRpn, baseline, scale, clampLo, clampHi, po
     if self.Analogs == nil then
         self.Analogs = {}
     end
-    local path = 'cpuwolf/flyluaio/' .. self.ProductName .. '/keysmap[' .. tostring(KeyIdx) .. ']'
+    -- keysmap board id = class name (MF ProductName); optional self.ProductName override
+    local board = self.ProductName
+    if board == nil or board == '' then
+        board = self:getClassName()
+    end
+    local path = 'cpuwolf/flyluaio/' .. board .. '/keysmap[' .. tostring(KeyIdx) .. ']'
     local dr = iDataRef:New(path)
     if dr == nil then
         uluaLog('CfgAnalog: missing ' .. path)
