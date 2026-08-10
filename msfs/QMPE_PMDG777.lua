@@ -24,27 +24,27 @@ qmpe:CfgRpn(7, "(>H:A32NX_RMP_L_VHF1_BUTTON_PRESSED)")
 qmpe:CfgRpn(6, "(>H:A32NX_RMP_L_VHF2_BUTTON_PRESSED)")
 
 -- VHF1 RX
-qmpe:CfgRpn(10, "(A:COM RECEIVE:1, Bool) ! (>K:COM1_RECEIVE_SELECT) , 54801 (>K:ROTOR_BRAKE)")
+qmpe:CfgRpn(10, "54801 (>K:ROTOR_BRAKE)")
 -- VHF2 RX
-qmpe:CfgRpn(11, "(A:COM RECEIVE:2, Bool) ! (>K:COM2_RECEIVE_SELECT) , 54901 (>K:ROTOR_BRAKE)")
+qmpe:CfgRpn(11, "54901 (>K:ROTOR_BRAKE)")
 -- INT RX
-qmpe:CfgRpn(12, "(L:S_ASP_INT_REC_LATCH) ! (>L:S_ASP_INT_REC_LATCH)")
+qmpe:CfgRpn(12, "55101 (>K:ROTOR_BRAKE)", '55104 (>K:ROTOR_BRAKE)')
 -- CAB RX
-qmpe:CfgRpn(13, "(L:S_ASP_CAB_REC_LATCH) ! (>L:S_ASP_CAB_REC_LATCH)")
+qmpe:CfgRpn(13, "55201 (>K:ROTOR_BRAKE)", '55204 (>K:ROTOR_BRAKE)')
 -- PA RX
-qmpe:CfgRpn(14, "(L:S_ASP_PA_REC_LATCH) ! (>L:S_ASP_PA_REC_LATCH)")
+qmpe:CfgRpn(14, "55301 (>K:ROTOR_BRAKE)", '55304 (>K:ROTOR_BRAKE)')
 -- VHF1 TX
-qmpe:CfgRpn(15, "52601 (>K:ROTOR_BRAKE)")
+qmpe:CfgRpn(15, "53601 (>K:ROTOR_BRAKE)", '53604 (>K:ROTOR_BRAKE)')
 -- VHF2 TX
-qmpe:CfgRpn(24, "80101 (>K:ROTOR_BRAKE)")
+qmpe:CfgRpn(24, "53701 (>K:ROTOR_BRAKE)", '53704 (>K:ROTOR_BRAKE)')
 -- INT TX
-qmpe:CfgRpn(25, "1 (>L:S_ASP_INT_SEND)", "0 (>L:S_ASP_INT_SEND)")
+qmpe:CfgRpn(25, "53901 (>K:ROTOR_BRAKE)", '53904 (>K:ROTOR_BRAKE)')
 -- CAB TX
-qmpe:CfgRpn(26, "1 (>L:S_ASP_CAB_SEND)", "0 (>L:S_ASP_CAB_SEND)")
+qmpe:CfgRpn(26, "54001 (>K:ROTOR_BRAKE)", '54004 (>K:ROTOR_BRAKE)')
 -- PA TX nop, Airbus PA send is not latched
-qmpe:CfgRpn(27, "1 (>L:S_ASP_PA_SEND)", "0 (>L:S_ASP_PA_SEND)")
+qmpe:CfgRpn(27, "54101 (>K:ROTOR_BRAKE)", '54104 (>K:ROTOR_BRAKE)')
 
--- WX+T
+-- WX+T use PA RX
 qmpe:CfgRpn(14, "57801 (>K:ROTOR_BRAKE) , 59001 (>K:ROTOR_BRAKE)")
 qmpe:CfgRpn(8, "58208 (>K:ROTOR_BRAKE) , 58708 (>K:ROTOR_BRAKE)")
 qmpe:CfgRpn(9, "58207 (>K:ROTOR_BRAKE) , 58707 (>K:ROTOR_BRAKE)")
@@ -233,21 +233,21 @@ qmpe:GetCVhf2("(L:I_ASP_VHF_2_CALL)")
 -- VHF2 RX LIGHT
 qmpe:GetRVhf2("(L:switch_549_a)")
 -- MECH TX LIGHT
-qmpe:GetSMech("(L:I_ASP_INT_SEND)")
+qmpe:GetSMech("(L:switch_5392_a)")
 -- MECH CALL LIGHT
 qmpe:GetCMech("(L:I_ASP_INT_CALL)")
 -- MECH RX LIGHT
-qmpe:GetRMech("(L:I_ASP_INT_REC)")
+qmpe:GetRMech("(L:switch_551_a)")
 -- ATT TX LIGHT
-qmpe:GetSAtt("(L:I_ASP_CAB_SEND)")
+qmpe:GetSAtt("(L:switch_5402_a)")
 -- ATT CALL LIGHT
 qmpe:GetCAtt("(L:I_ASP_CAB_CALL)")
 -- ATT RX LIGHT
-qmpe:GetRAtt("(L:I_ASP_CAB_REC)")
+qmpe:GetRAtt("(L:switch_552_a)")
 -- PX TX LIGHT
-qmpe:GetSPa("(L:I_ASP_PA_SEND)")
+qmpe:GetSPa("(L:switch_5412_a)")
 -- ATT RX LIGHT
-qmpe:GetRPa("(L:I_ASP_PA_REC)")
+qmpe:GetRPa("(L:switch_553_a)")
 
 -- =====ECAM
 qmpe:GetEEng("(L:A32NX_ECAM_SD_CURRENT_PAGE_INDEX) 20 ==")
