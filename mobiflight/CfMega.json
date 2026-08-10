@@ -14,9 +14,9 @@
   },
   "inputs": {
     "AnalogInput": {
-      "Analog": [
+      "Axis": [
         {
-          "Name": "Axis",
+          "Name": "G1000 analog",
           "MapToBit": 10
         }
       ]
