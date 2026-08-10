@@ -1,4 +1,5 @@
 {
+  "$schema": "./mobiflight-config.schema.json",
   "ProductName": "RfB107",
   "ModuleName": "Rowsfire B107 V1",
   "ModuleSerial": "SN-G88-57F",

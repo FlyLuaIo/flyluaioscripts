@@ -20,6 +20,8 @@ flyluaioscripts/
 ├── com/          Shared framework (OOP, Qmdev base class, hardware drivers)
 ├── xp/           X-Plane aircraft profiles
 ├── msfs/         MSFS aircraft profiles
+├── joysticks/    USB HID device JSON (+ joystick-config.schema.json)
+├── mobiflight/   MobiFlight device JSON (+ mobiflight-config.schema.json)
 └── LUA_API_DEVELOPER_GUIDE.md
 ```
 
@@ -31,6 +33,8 @@ flyluaioscripts/
 | `com/sim/mf/` | MobiFlight integration |
 | `xp/` | X-Plane mapping scripts (`{DEVICE}_{AIRCRAFT}.lua`) |
 | `msfs/` | MSFS mapping scripts |
+| `joysticks/` | HID panel configs validated by `joystick-config.schema.json` |
+| `mobiflight/` | MobiFlight configs validated by `mobiflight-config.schema.json` |
 
 Profile naming:
 
@@ -43,6 +47,13 @@ Profile naming:
 Full API reference, examples, and troubleshooting:
 
 **[LUA_API_DEVELOPER_GUIDE.md](./LUA_API_DEVELOPER_GUIDE.md)**
+
+Device JSON schemas:
+
+- [joysticks/joystick-config.schema.json](./joysticks/joystick-config.schema.json)
+- [mobiflight/mobiflight-config.schema.json](./mobiflight/mobiflight-config.schema.json)
+
+Codegen that turns device JSON into Lua classes lives in the private sibling tooling that maintains this tree (not required for end users who only load profiles).
 
 ## Quick start
 

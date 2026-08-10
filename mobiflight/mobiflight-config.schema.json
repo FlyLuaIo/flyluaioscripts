@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mobiflight-config.schema.json",
+  "title": "MobiFlight Device Config",
+  "description": "FlyLuaIO MobiFlight board JSON (pins, MapToBit, outputs). Channel Name is not always DeviceName — see working KayeRoof.json.",
+  "type": "object",
+  "required": ["ProductName"],
+  "additionalProperties": true,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "./mobiflight-config.schema.json"
+    },
+    "ProductName": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Device class id (e.g. CfNano, KayeRoof). Letter-start preferred."
+    },
+    "ModuleName": {
+      "type": "string",
+      "description": "MobiFlight module display / match name."
+    },
+    "ModuleSerial": {
+      "type": "string",
+      "description": "Serial or board id substring used for matching."
+    },
+    "outputs": {
+      "type": "object",
+      "description": "Grouped by device type (Output, Display Module, Stepper, …).",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Name": { "type": "string" },
+              "Pin": { "type": "integer" },
+              "MapToBit": { "type": "integer" },
+              "MapToBits": {
+                "type": "array",
+                "items": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "description": "Grouped by Button / Encoder / …",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Name": { "type": "string" },
+              "Pin": { "type": "integer" },
+              "MapToBit": { "type": "integer" },
+              "MapToBits": {
+                "type": "array",
+                "items": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

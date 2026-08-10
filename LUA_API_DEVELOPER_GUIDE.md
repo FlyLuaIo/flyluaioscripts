@@ -30,6 +30,8 @@ Scripts are loaded by the [FlyLuaIO](https://github.com/cpuwolf/flyluaio) plugin
 11. [Data Reference System](#11-data-reference-system)
 12. [Best Practices](#12-best-practices)
 13. [Troubleshooting](#13-troubleshooting)
+14. [Device JSON schemas](#14-device-json-schemas)
+15. [Runtime helpers appendix](#15-runtime-helpers-appendix)
 
 ---
 
@@ -580,3 +582,31 @@ end
 | MSFS buttons ineffective | X-Plane syntax used | Use `CfgRpn` with `L:` / `B:` |
 
 With FlyLuaIO logging enabled, `uluaLog()` output appears in the plugin log window.
+
+---
+
+## 14. Device JSON schemas
+
+| Kind | Path | Notes |
+|------|------|-------|
+| USB HID panels | `joysticks/joystick-config.schema.json` | Required `$schema` on HID JSON |
+| MobiFlight boards | `mobiflight/mobiflight-config.schema.json` | Channel `Name` is not always the hardware `DeviceName`; follow working siblings such as `CfNano.json` / `KayeRoof.json` |
+
+`Display Module` entries use a `LedModule` child key (see `CfNano.json`). WinWing LCD/LED framing belongs in `joysticks/*.json`, not MobiFlight JSON.
+
+---
+
+## 15. Runtime helpers appendix
+
+These symbols are provided by the FlyLuaIO plugin entry script (`init.lua`), not by files in this repository. Signatures are stable for profile authors:
+
+| Group | Examples |
+|-------|----------|
+| Logging / dataref I/O | `uluaLog`, `uluaFind`, `uluaGet`, `uluaSet`, `uluaCmdOnce`, `uluaWriteCmd` |
+| Aircraft gates | `ilua_require_zibo`, `ilua_require_toliss`, `ilua_require_fenix_a320`, `ilua_require_pmdg_737`, `ilua_require_msfs`, … |
+| Hardware helpers | `ilua_hw_qmcp737c_absent`, `ilua_hw_qfcu_absent`, … (prefer `Class.Open()`) |
+| Reload / match | `ilua_req_reload`, `ilua_acfpath_matches`, `ilua_acftitle_matches` |
+| Frame loop | `GlobalFrameLoopManager:add` / `remove` / `tick` / `has_active_loops` |
+| Typed dataref | `iDataRef:New` / `Get` / `Set` / `Changed` / … |
+
+Do not invent undocumented `ilua_require_*` names; copy gates from an existing profile for the same aircraft family.

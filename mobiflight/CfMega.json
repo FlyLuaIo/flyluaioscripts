@@ -1,4 +1,5 @@
 {
+  "$schema": "./mobiflight-config.schema.json",
   "ProductName": "CfMega",
   "ModuleName": "MF Mega Pro",
   "ModuleSerial": "SN-3F1-FDD",

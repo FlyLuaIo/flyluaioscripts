@@ -1,4 +1,5 @@
 {
+  "$schema": "./mobiflight-config.schema.json",
   "ProductName": "RfA112",
   "ModuleName": "Rowsfire A112",
   "ModuleSerial": "SN-E91-E96",
