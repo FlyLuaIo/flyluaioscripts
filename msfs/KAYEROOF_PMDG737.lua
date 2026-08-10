@@ -185,9 +185,47 @@ kayeroof:GetMasterSwDown('(L:switch_118_73X) 50 >=') -- APU MASTER
 kayeroof:GetStartUp('(L:APU_Volume) 100 >=') -- APU AVAIL
 kayeroof:GetBat1v2('0') -- BAT2V|BAT1V PINS
 
--- kayeroof:GetBat12('pmdg/ng3/data/ELEC_MeterDisplayTop[1]', 'pmdg/ng3/data/ELEC_MeterDisplayTop[2]') -- BAT 1+2 DISPLAY (PMDG voltage mapping yet)
-kayeroof:GetBat12('pmdg/ng3/data/AIR_DisplayFltAlt[0]', 'pmdg/ng3/data/AIR_DisplayLandAlt[0]') -- BAT 1+2 DISPLAY (PMDG air alt mapping yet)
+-- BAT 1+2: PMDG char[] (ASCII per index) → number → segment (1 decimal, max 99.9)
+local function pmdg_open_chars(path, n)
+	local drs = {}
+	for i = 0, n - 1 do
+		local dr = iDataRef:New(string.format('%s[%d]', path, i))
+		if not dr then return nil end
+		drs[i] = dr
+	end
+	return drs
+end
 
+local function pmdg_chars_getnum(drs, n)
+	local t = {}
+	for i = 0, n - 1 do
+		local c = drs[i]:Get()
+		if c and c ~= 0 then
+			t[#t + 1] = string.char(math.floor(c))
+		end
+	end
+	return tonumber(table.concat(t)) or 0
+end
+
+local function pmdg_chars_changed(drs, n)
+	local ch = false
+	for i = 0, n - 1 do
+		if drs[i]:ChangedUpdate() then ch = true end
+	end
+	return ch
+end
+
+local function pack_bat12_volts(v1, v2)
+	local n1 = math.floor((v1 or 0) * 10 + 0.5)
+	local n2 = math.floor((v2 or 0) * 10 + 0.5)
+	if n1 < 0 then n1 = 0 elseif n1 > 999 then n1 = 999 end
+	if n2 < 0 then n2 = 0 elseif n2 > 999 then n2 = 999 end
+	return n1 * 1000 + n2
+end
+
+-- temp: AIR FLT/LAND ALT ("35500" / "  50"); ELEC_MeterDisplayBottom 3×4 groups later for volts
+local dr_bat12_a = pmdg_open_chars('pmdg/ng3/data/AIR_DisplayFltAlt', 6)
+local dr_bat12_b = pmdg_open_chars('pmdg/ng3/data/AIR_DisplayLandAlt', 6)
 
 kayeroof:GetBacklight('(L:BL_Overhead, number)', 255) -- OVHD PANEL LT (mfproj Interpolation 0–100 → 0–255)
 
@@ -305,5 +343,16 @@ GlobalFrameLoopManager:add(function()
 	end
 	kayeroof:SetBat1v2()
 	kayeroof:SetBacklight()
-	kayeroof:SetBat12()
+	-- BAT 1+2: AIR FLT/LAND char[] → number (35500→35.5, 50→50.0 on voltage segment)
+	if dr_bat12_a and dr_bat12_b then
+		local ch = pmdg_chars_changed(dr_bat12_a, 6)
+		ch = pmdg_chars_changed(dr_bat12_b, 6) or ch
+		if ch then
+			local v1 = pmdg_chars_getnum(dr_bat12_a, 6)
+			local v2 = pmdg_chars_getnum(dr_bat12_b, 6)
+			if v1 > 99.9 then v1 = v1 / 1000 end
+			if v2 > 99.9 then v2 = v2 / 1000 end
+			kayeroof:SetBat12(pack_bat12_volts(v1, v2))
+		end
+	end
 end)
