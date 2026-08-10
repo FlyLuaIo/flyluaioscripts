@@ -187,7 +187,65 @@ kayeroof:GetBat1v2('0') -- BAT2V|BAT1V PINS
 kayeroof:GetBat12('0', '0') -- BAT 1+2 DISPLAY (no PMDG voltage mapping yet)
 kayeroof:GetBacklight('(L:BL_Overhead, number)', 255) -- OVHD PANEL LT (mfproj Interpolation 0–100 → 0–255)
 
+-- APU EGT stability (same as QMOVH_A_PMDG737): correct Start AVAIL / START when float EGT < 1000
+local StabilityManager = {
+	monitors = {}
+}
+
+function StabilityManager:addMonitor(name, initialValue, threshold, interval)
+	self.monitors[name] = {
+		lastValue = initialValue,
+		threshold = threshold,
+		interval = interval,
+		lastCheckTime = os.time(),
+		stableCount = 0,
+		requiredStableChecks = 3
+	}
+end
+
+function StabilityManager:update(name, currentValue)
+	local monitor = self.monitors[name]
+	if not monitor then return false end
+
+	local currentTime = os.time()
+	if currentTime - monitor.lastCheckTime < monitor.interval then
+		return false
+	end
+
+	monitor.lastCheckTime = currentTime
+
+	local delta = math.abs(currentValue - monitor.lastValue)
+	monitor.lastValue = currentValue
+
+	if delta <= monitor.threshold then
+		monitor.stableCount = monitor.stableCount + 1
+	else
+		monitor.stableCount = 0
+	end
+
+	return monitor.stableCount >= monitor.requiredStableChecks
+end
+
+local dr_kayeroof_pmdg737_apu_egt = iDataRef:New("pmdg/ng3/data/APU_EGTNeedle")
+local isstableapuegt = 0
+local dr_apu_on = iDataRef:New('(L:APU)')
+
+StabilityManager:addMonitor("EGT", 25.0, 2, 1)
+
 GlobalFrameLoopManager:add(function()
+	local isapuon = dr_apu_on:Get()
+	local currentTemp = dr_kayeroof_pmdg737_apu_egt:Get()
+	if currentTemp > 350 then
+		if StabilityManager:update("EGT", currentTemp) then
+			isstableapuegt = 1
+		end
+	else
+		isstableapuegt = 0
+	end
+	if isstableapuegt > 0 then
+		isapuon = 0
+	end
+
 	kayeroof:SetFireL()
 	kayeroof:SetAntiIceEng2Up()
 	kayeroof:SetAntiIceEng1Down()
@@ -224,7 +282,6 @@ GlobalFrameLoopManager:add(function()
 	kayeroof:SetModeSelDown()
 	kayeroof:SetPump2Down()
 	kayeroof:SetPump1Down()
-	kayeroof:SetStartDown()
 	kayeroof:SetPump2Up()
 	kayeroof:SetModeSelUp()
 	kayeroof:SetRtkPumps2Down()
@@ -234,7 +291,14 @@ GlobalFrameLoopManager:add(function()
 	kayeroof:SetXFeedDown()
 	kayeroof:SetMasterSwUp()
 	kayeroof:SetMasterSwDown()
-	kayeroof:SetStartUp()
+	-- PMDG SDK float data correction path (QMOVH SetStartUp/SetStartDn)
+	if currentTemp < 1000 then
+		kayeroof:SetStartUp(isstableapuegt * 255)
+		kayeroof:SetStartDown(isapuon * 255)
+	else
+		kayeroof:SetStartUp()
+		kayeroof:SetStartDown()
+	end
 	kayeroof:SetBat1v2()
 	kayeroof:SetBacklight()
 	kayeroof:SetBat12()
