@@ -18,9 +18,9 @@ uluaLog('MobiFlight KayeRoof for PMDG 737')
 
 ---- LIGHT BRT (Encoder MapToBits 54..57; mfproj onLeft=+, onRight=-)
 kayeroof:CfgRpn(54, '(L:OH_PANEL_LIGHT_CONTROL, number) 3 + 300 min (>L:OH_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 3 + 300 min (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number) (L:PED_PANEL_LIGHT_CONTROL, number) 3 + 300 min (>L:PED_PANEL_LIGHT_CONTROL, number)')
-kayeroof:CfgRpn(55, '(L:OH_PANEL_LIGHT_CONTROL, number) 3 - 0 max (>L:OH_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 3 - 0 max (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number) (L:PED_PANEL_LIGHT_CONTROL, number) 3 - 0 max (>L:PED_PANEL_LIGHT_CONTROL, number)')
-kayeroof:CfgRpn(56, '(L:OH_PANEL_LIGHT_CONTROL, number) 3 + 300 min (>L:OH_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 3 + 300 min (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number) (L:PED_PANEL_LIGHT_CONTROL, number) 3 + 300 min (>L:PED_PANEL_LIGHT_CONTROL, number)')
 kayeroof:CfgRpn(57, '(L:OH_PANEL_LIGHT_CONTROL, number) 3 - 0 max (>L:OH_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 3 - 0 max (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number) (L:PED_PANEL_LIGHT_CONTROL, number) 3 - 0 max (>L:PED_PANEL_LIGHT_CONTROL, number)')
+kayeroof:CfgRpn(55, '(L:OH_PANEL_LIGHT_CONTROL, number) 3 + 300 min (>L:OH_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 3 + 300 min (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number) (L:PED_PANEL_LIGHT_CONTROL, number) 3 + 300 min (>L:PED_PANEL_LIGHT_CONTROL, number)')
+kayeroof:CfgRpn(56, '(L:OH_PANEL_LIGHT_CONTROL, number) 3 - 0 max (>L:OH_PANEL_LIGHT_CONTROL, number) (L:CA_MAIN_PANEL_LIGHT_CONTROL, number) 3 - 0 max (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number) (L:PED_PANEL_LIGHT_CONTROL, number) 3 - 0 max (>L:PED_PANEL_LIGHT_CONTROL, number)')
 
 -- bit 0 GNADIRS_1_OFF ← PMDG737 ENG START L GND
 kayeroof:CfgRpn(0, '0 (L:switch_119_73X) - 10 div s0 :1 l0 0 > if{ 11907 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 11908 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
@@ -128,6 +128,10 @@ kayeroof:CfgRpn(51, '0 (L:switch_115_73X, number) == if{ 11501 (>K:ROTOR_BRAKE) 
 kayeroof:CfgRpn(52, '100 (L:switch_117_73X, number) == if{ 11701 (>K:ROTOR_BRAKE) }', '0 (L:switch_117_73X, number) == if{ 11701 (>K:ROTOR_BRAKE) }')
 -- bit 53 EXT PWR ← PMDG737 GRD PWR ON
 kayeroof:CfgRpn(53, '1701 (>K:ROTOR_BRAKE)')
+--WINDOW HEAT
+kayeroof:CfgRpn(60, '13601 (>K:ROTOR_BRAKE) , 13501 (>K:ROTOR_BRAKE)')
+kayeroof:CfgRpn(59, '13801 (>K:ROTOR_BRAKE)')
+kayeroof:CfgRpn(58, '13901 (>K:ROTOR_BRAKE)')
 
 -- ===========================================================
 -- Read data for lights (Get* — keep all channels; unmapped → 0)
@@ -137,7 +141,7 @@ kayeroof:GetAntiIceEng2Up('0') -- ENG2 AI FAULT
 kayeroof:GetAntiIceEng1Down('(L:switch_157_73X, number)') -- ENG1 AI ON
 kayeroof:GetAntiIceEng2Down('(L:switch_158_73X, number)') -- ENG2 AI ON
 kayeroof:GetAntiIceWingDown('(L:switch_152_73X, number) 10 *') -- WING AI ON
-kayeroof:GetApuBleedDown('0') -- APU BLEED ON
+kayeroof:GetApuBleedDown('(L:switch_211_73X, bool)') -- APU BLEED ON
 kayeroof:GetExtPwrDown('0') -- EXT PWR ON
 kayeroof:GetElecPumpDown('(L:switch_25_73X, number) 0 >') -- ELEC PUMP / HYD
 kayeroof:GetFireC('(L:switch_142_73X, number) 0 >') -- APU FIRE
@@ -151,7 +155,7 @@ kayeroof:GetIr2Lower('(L:switch_134_73X, number) 0 >') -- IR R
 kayeroof:GetIr3Lower('(L:switch_133_73X, number) 0 >') -- IR C
 kayeroof:GetExtPwrUp('(L:switch_16_73X, number) 0 >') -- GRD PWR
 kayeroof:GetAntiIceWingUp('0')
-kayeroof:GetApuBleedUp('0')
+kayeroof:GetApuBleedUp('(L:VC_OVHD_AC_Eng_APU_Bleed_Button_TOP)')
 kayeroof:GetElecPumpUp('0')
 kayeroof:GetAntiIceEng1Up('0')
 kayeroof:GetCrewSupply('(L:switch_26_73X, number) 0 >')
@@ -168,7 +172,7 @@ kayeroof:GetPump1Up('(L:switch_47_73X, number) 0 >') -- CTR L
 kayeroof:GetModeSelDown('0')
 kayeroof:GetPump2Down('0')
 kayeroof:GetPump1Down('0')
-kayeroof:GetStartDown('(L:switch_32_73X, number) 0 >') -- APU START
+kayeroof:GetStartDown('(L:APU)') -- APU START
 kayeroof:GetPump2Up('(L:switch_48_73X, number) 0 >') -- CTR R
 kayeroof:GetModeSelUp('(L:switch_164_73X, number) 0 >')
 kayeroof:GetRtkPumps2Down('(L:switch_44_73X, number) 0 >') -- FUEL AFT R
@@ -176,12 +180,12 @@ kayeroof:GetRtkPumps1Down('(L:switch_43_73X, number) 0 >') -- FUEL FWD R
 kayeroof:GetRtkPumps2Up('0')
 kayeroof:GetXFeedUp('(L:switch_163_73X, number) 0 >')
 kayeroof:GetXFeedDown('0')
-kayeroof:GetMasterSwUp('0')
+kayeroof:GetMasterSwUp('(L:INI_APU_MASTER_FAULT)')
 kayeroof:GetMasterSwDown('(L:switch_118_73X) 50 >=') -- APU MASTER
 kayeroof:GetStartUp('(L:APU_Volume) 100 >=') -- APU AVAIL
 kayeroof:GetBat1v2('0') -- BAT2V|BAT1V PINS
 kayeroof:GetBat12('0', '0') -- BAT 1+2 DISPLAY (no PMDG voltage mapping yet)
-kayeroof:GetBacklight('(L:BL_Overhead, number)', 2.55) -- OVHD PANEL LT (mfproj Interpolation 0–100 → 0–255)
+kayeroof:GetBacklight('(L:BL_Overhead, number)', 255) -- OVHD PANEL LT (mfproj Interpolation 0–100 → 0–255)
 
 GlobalFrameLoopManager:add(function()
 	kayeroof:SetFireL()
