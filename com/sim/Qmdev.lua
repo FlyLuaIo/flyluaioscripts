@@ -181,6 +181,46 @@ function Qmdev:CfgRpn(KeyIdx, RpnPressStr, RpnReleaseStr)
     -- uluaLog(self.QmdevId ..', ' .. RpnPressStr.. ', '.. RpnReleaseStr)
 end
 
+-- MF AnalogInput: hub writes ADC into keysmap[MapToBit]; PollAnalogs() calls onChange(adc).
+-- Requires self.ProductName (e.g. 'RfA112'). Scale / write LVars in Lua — not mfproj '@' strings.
+-- @KeyIdx: (number) keysmap index (JSON MapToBit)
+-- @onChange: (function) function(adc) … end
+-- No return value.
+function Qmdev:CfgAnalog(KeyIdx, onChange)
+    if self.ProductName == nil or self.ProductName == '' then
+        uluaLog('CfgAnalog: missing self.ProductName')
+        return
+    end
+    if type(onChange) ~= 'function' then
+        uluaLog('CfgAnalog: onChange must be a function for bit ' .. tostring(KeyIdx))
+        return
+    end
+    if self.Analogs == nil then
+        self.Analogs = {}
+    end
+    local path = 'cpuwolf/flyluaio/' .. self.ProductName .. '/keysmap[' .. tostring(KeyIdx) .. ']'
+    local dr = iDataRef:New(path)
+    if dr == nil then
+        uluaLog('CfgAnalog: missing ' .. path)
+        return
+    end
+    self.Analogs[#self.Analogs + 1] = { dr = dr, onChange = onChange }
+end
+
+-- Apply pending AnalogInput changes: onChange(adc).
+-- No return value.
+function Qmdev:PollAnalogs()
+    if self.Analogs == nil then
+        return
+    end
+    for i = 1, #self.Analogs do
+        local a = self.Analogs[i]
+        if a.dr:ChangedUpdate() then
+            a.onChange(a.dr:Get())
+        end
+    end
+end
+
 -- uluaQmdevConfig(2, 'ASSIGN;6;"laminar/B738/autopilot/change_over_press"')
 -- @KeyIdx: (number) Key index
 -- @CmdPressStr: (string) Command string for key press

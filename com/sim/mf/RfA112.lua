@@ -9,6 +9,7 @@ local RfA112 = oop.class(com.sim.mf.MobiFlight)
 function RfA112:init()
 	-- MF bridge assigns qmdev_id at connect (see log). Fallback: ProductName + ModuleSerial from JSON.
 	self.QmdevId = 0x242B0D91
+	self.ProductName = 'RfA112' -- for CfgAnalog keysmap path
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_rfa112 == nil then
 		_G.ilua_hw_assigned_rfa112 = 0
@@ -37,6 +38,10 @@ function RfA112:Init(FastTurnsPerSecond)
 	end
 	_G.ilua_hw_assigned_rfa112 = 1
 	return true
+end
+
+function RfA112.Open(...)
+	return com.sim.Qmdev.Open(RfA112, ...)
 end
 
 -- ========

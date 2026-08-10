@@ -373,12 +373,16 @@ Qmdev:CfgEnc(DecKey, IncKey, Rpnstr)                          -- defaults
 ```lua
 Qmdev:CfgCmd(KeyIdx, CmdPressStr, CmdReleaseStr)
 Qmdev:CfgRpn(KeyIdx, RpnPressStr, RpnReleaseStr)
+Qmdev:CfgAnalog(KeyIdx, onChange) -- MF AnalogInput; onChange(adc) Lua function
+Qmdev:PollAnalogs()               -- FrameLoop: call registered onChange when ADC changes
+
 Qmdev:CfgVal(KeyIdx, ValStr, PressInt, ReleaseInt)
 Qmdev:CfgValT(KeyIdx, ValStr, value0, value1)
 Qmdev:CfgTog(KeyIdx, BeventStr, RpnStr)
 Qmdev:CfgFc(KeyIdx, FuncPressStr, FuncReleaseStr, FuncFastStr)
 Qmdev:CfgLongFc(KeyIdx, WaitMs, LongPressFunc, ShortPressFunc, InitPressFunc)
 -- LongPressFunc etc. must be Lua functions, not strings
+-- CfgAnalog requires self.ProductName (device class init); hub writes ADC via setAnalogByName
 ```
 
 ### 8.3 Aircraft Guards
