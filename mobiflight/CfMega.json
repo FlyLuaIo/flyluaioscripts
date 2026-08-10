@@ -13,6 +13,14 @@
     }
   },
   "inputs": {
+    "AnalogInput": {
+      "Analog": [
+        {
+          "Name": "Axis",
+          "MapToBit": 10
+        }
+      ]
+    },
     "Encoder": {
       "Encoder_small": [
         {

@@ -107,7 +107,7 @@
           "Pin": 24
         },
         {
-          "Name": "PUMP-R-MAIN-2 ",
+          "Name": "PUMP-R-MAIN-2",
           "Pin": 25
         },
         {
@@ -119,7 +119,7 @@
           "Pin": 27
         },
         {
-          "Name": "BAT1-2",
+          "Name": "BAT1 OFF",
           "Pin": 28
         },
         {
@@ -214,10 +214,17 @@
         }
       ]
     },
+    "Output": {
+      "LED": [
+        {
+          "Name": "A107 BACKLIGHT"
+        }
+      ]
+    },
     "Display Module": {
       "LedModule": [
         {
-          "Name": "BAT1 VOLT"
+          "Name": "BAT 1+2"
         }
       ]
     }
