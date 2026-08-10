@@ -12,6 +12,9 @@ if not kayeroof then return end
 
 uluaLog('MobiFlight KayeRoof for PMDG 737')
 
+-- 0: AIR FLT/LAND ALT (default); 1: ELEC meter volts (Top/Bottom group0)
+kayeroof:AddTogMenu("BAT display ELEC volts", "BAT显示电表电压", "g_kayeroof_pmdg737_bat12_elec")
+
 -- ===========================================================
 -- button binding (keysmap bits from mobiflight/KayeRoof.json)
 -- Note: this mfproj remaps many Airbus-labelled bits to 737 functions.
@@ -266,9 +269,25 @@ local function pack_bat12_volts(v1, v2)
 	return n1 * 1000 + n2
 end
 
--- temp: AIR FLT/LAND ALT ("35500" / "  50"); ELEC_MeterDisplayBottom 3×4 groups later for volts
-local dr_bat12_a = pmdg_open_chars('pmdg/ng3/data/AIR_DisplayFltAlt', 6)
-local dr_bat12_b = pmdg_open_chars('pmdg/ng3/data/AIR_DisplayLandAlt', 6)
+-- ELEC meter: 3×4 char groups (e.g. Bottom " 28  0  0 " → group0=28)
+local function pmdg_meter_group_num(drs, group)
+	local t = {}
+	local base = group * 4
+	for i = base, base + 3 do
+		local c = drs[i]:Get()
+		if c and c ~= 0 then
+			t[#t + 1] = string.char(math.floor(c))
+		end
+	end
+	return tonumber(table.concat(t)) or 0
+end
+
+-- both sources; toggle g_kayeroof_pmdg737_bat12_elec selects path (0=AIR default)
+local dr_elec_top = pmdg_open_chars('pmdg/ng3/data/ELEC_MeterDisplayTop', 12)
+local dr_elec_bot = pmdg_open_chars('pmdg/ng3/data/ELEC_MeterDisplayBottom', 12)
+local dr_air_flt = pmdg_open_chars('pmdg/ng3/data/AIR_DisplayFltAlt', 6)
+local dr_air_land = pmdg_open_chars('pmdg/ng3/data/AIR_DisplayLandAlt', 6)
+local bat12_mode_last = -1
 
 kayeroof:GetBacklight('(L:BL_Overhead, number)', 255) -- OVHD PANEL LT (mfproj Interpolation 0–100 → 0–255)
 
@@ -386,16 +405,31 @@ GlobalFrameLoopManager:add(function()
 	end
 	kayeroof:SetBat1v2()
 	kayeroof:SetBacklight()
-	-- BAT 1+2: AIR FLT/LAND char[] → number (35500→35.5, 50→50.0 on voltage segment)
-	if dr_bat12_a and dr_bat12_b then
-		local ch = pmdg_chars_changed(dr_bat12_a, 6)
-		ch = pmdg_chars_changed(dr_bat12_b, 6) or ch
-		if ch then
-			local v1 = pmdg_chars_getnum(dr_bat12_a, 6)
-			local v2 = pmdg_chars_getnum(dr_bat12_b, 6)
-			if v1 > 99.9 then v1 = v1 / 1000 end
-			if v2 > 99.9 then v2 = v2 / 1000 end
-			kayeroof:SetBat12(pack_bat12_volts(v1, v2))
+	-- BAT 1+2: menu off=AIR FLT/LAND ALT (default); on=ELEC volts
+	local bat12_air = (g_kayeroof_pmdg737_bat12_elec ~= 1)
+	local bat12_force = (bat12_mode_last ~= (bat12_air and 1 or 0))
+	bat12_mode_last = bat12_air and 1 or 0
+	if bat12_air then
+		if dr_air_flt and dr_air_land then
+			local ch = pmdg_chars_changed(dr_air_flt, 6)
+			ch = pmdg_chars_changed(dr_air_land, 6) or ch
+			if bat12_force or ch then
+				local v1 = pmdg_chars_getnum(dr_air_flt, 6)
+				local v2 = pmdg_chars_getnum(dr_air_land, 6)
+				if v1 > 99.9 then v1 = v1 / 1000 end
+				if v2 > 99.9 then v2 = v2 / 1000 end
+				kayeroof:SetBat12(pack_bat12_volts(v1, v2))
+			end
+		end
+	else
+		if dr_elec_top and dr_elec_bot then
+			local ch = pmdg_chars_changed(dr_elec_top, 12)
+			ch = pmdg_chars_changed(dr_elec_bot, 12) or ch
+			if bat12_force or ch then
+				local v1 = pmdg_meter_group_num(dr_elec_top, 0)
+				local v2 = pmdg_meter_group_num(dr_elec_bot, 0)
+				kayeroof:SetBat12(pack_bat12_volts(v1, v2))
+			end
 		end
 	end
 end)
