@@ -34,9 +34,9 @@ qmpe:CfgRpn(13, "(L:S_ASP_CAB_REC_LATCH) ! (>L:S_ASP_CAB_REC_LATCH)")
 -- PA RX
 qmpe:CfgRpn(14, "(L:S_ASP_PA_REC_LATCH) ! (>L:S_ASP_PA_REC_LATCH)")
 -- VHF1 TX
-qmpe:CfgRpn(15, "(>K:COM1_TRANSMIT_SELECT) , 53601 (>K:ROTOR_BRAKE)")
+qmpe:CfgRpn(15, "52601 (>K:ROTOR_BRAKE)")
 -- VHF2 TX
-qmpe:CfgRpn(24, "(>K:COM2_TRANSMIT_SELECT)")
+qmpe:CfgRpn(24, "80101 (>K:ROTOR_BRAKE)")
 -- INT TX
 qmpe:CfgRpn(25, "1 (>L:S_ASP_INT_SEND)", "0 (>L:S_ASP_INT_SEND)")
 -- CAB TX
