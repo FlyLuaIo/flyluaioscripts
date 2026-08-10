@@ -373,9 +373,8 @@ Qmdev:CfgEnc(DecKey, IncKey, Rpnstr)                          -- defaults
 ```lua
 Qmdev:CfgCmd(KeyIdx, CmdPressStr, CmdReleaseStr)
 Qmdev:CfgRpn(KeyIdx, RpnPressStr, RpnReleaseStr)
-Qmdev:CfgAnalog(KeyIdx, onChange) -- MF AnalogInput; onChange(adc) Lua function
-Qmdev:PollAnalogs()               -- FrameLoop: call registered onChange when ADC changes
-
+Qmdev:CfgAnalog(KeyIdx, mapping) -- string: RPN suffix (ADC prepended); or function(adc)
+Qmdev:PollAnalogs()              -- FrameLoop when AnalogInput ADC changes
 Qmdev:CfgVal(KeyIdx, ValStr, PressInt, ReleaseInt)
 Qmdev:CfgValT(KeyIdx, ValStr, value0, value1)
 Qmdev:CfgTog(KeyIdx, BeventStr, RpnStr)

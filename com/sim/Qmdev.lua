@@ -181,18 +181,26 @@ function Qmdev:CfgRpn(KeyIdx, RpnPressStr, RpnReleaseStr)
     -- uluaLog(self.QmdevId ..', ' .. RpnPressStr.. ', '.. RpnReleaseStr)
 end
 
--- MF AnalogInput: hub writes ADC into keysmap[MapToBit]; PollAnalogs() calls onChange(adc).
--- Requires self.ProductName (e.g. 'RfA112'). Scale / write LVars in Lua — not mfproj '@' strings.
+-- MF AnalogInput: hub writes ADC into keysmap[MapToBit]; PollAnalogs() applies mapping.
+-- Requires self.ProductName (e.g. 'RfA112').
 -- @KeyIdx: (number) keysmap index (JSON MapToBit)
--- @onChange: (function) function(adc) … end
+-- @mapping: (string|function)
+--   string  — MSFS RPN *suffix*; PollAnalogs runs: "<adc> <mapping>" via uluaWriteCmd
+--             (XP: uluaCmdOnce(uluaFind(...)); same uluaCmdBegin gate as CfgPSw)
+--   function — onChange(adc); use when Lua math / branching is needed
 -- No return value.
-function Qmdev:CfgAnalog(KeyIdx, onChange)
+function Qmdev:CfgAnalog(KeyIdx, mapping)
     if self.ProductName == nil or self.ProductName == '' then
         uluaLog('CfgAnalog: missing self.ProductName')
         return
     end
-    if type(onChange) ~= 'function' then
-        uluaLog('CfgAnalog: onChange must be a function for bit ' .. tostring(KeyIdx))
+    local kind = type(mapping)
+    if kind ~= 'string' and kind ~= 'function' then
+        uluaLog('CfgAnalog: mapping must be string or function for bit ' .. tostring(KeyIdx))
+        return
+    end
+    if kind == 'string' and mapping == '' then
+        uluaLog('CfgAnalog: empty RPN for bit ' .. tostring(KeyIdx))
         return
     end
     if self.Analogs == nil then
@@ -204,10 +212,10 @@ function Qmdev:CfgAnalog(KeyIdx, onChange)
         uluaLog('CfgAnalog: missing ' .. path)
         return
     end
-    self.Analogs[#self.Analogs + 1] = { dr = dr, onChange = onChange }
+    self.Analogs[#self.Analogs + 1] = { dr = dr, mapping = mapping }
 end
 
--- Apply pending AnalogInput changes: onChange(adc).
+-- Apply pending AnalogInput changes.
 -- No return value.
 function Qmdev:PollAnalogs()
     if self.Analogs == nil then
@@ -216,7 +224,18 @@ function Qmdev:PollAnalogs()
     for i = 1, #self.Analogs do
         local a = self.Analogs[i]
         if a.dr:ChangedUpdate() then
-            a.onChange(a.dr:Get())
+            local adc = a.dr:Get()
+            local m = a.mapping
+            if type(m) == 'function' then
+                m(adc)
+            else
+                local cmd = tostring(adc) .. ' ' .. m
+                if uluaCmdBegin == nil then
+                    uluaWriteCmd(cmd)
+                else
+                    uluaCmdOnce(uluaFind(cmd))
+                end
+            end
         end
     end
 end
