@@ -17,9 +17,9 @@ uluaLog('MobiFlight KayeRoof for iniBuilds A350')
 
 ---- LIGHT BRT (Encoder MapToBits 54..57; INI integ LT — not in mfproj, same LVar as QMOVH-A)
 kayeroof:CfgRpn(54, '(L:INI_CKPT_LT_INTEG) 5 + 100 min (>L:INI_CKPT_LT_INTEG)')
-kayeroof:CfgRpn(55, '(L:INI_CKPT_LT_INTEG) 5 - 0 max (>L:INI_CKPT_LT_INTEG)')
-kayeroof:CfgRpn(56, '(L:INI_CKPT_LT_INTEG) 5 + 100 min (>L:INI_CKPT_LT_INTEG)')
 kayeroof:CfgRpn(57, '(L:INI_CKPT_LT_INTEG) 5 - 0 max (>L:INI_CKPT_LT_INTEG)')
+kayeroof:CfgRpn(55, '(L:INI_CKPT_LT_INTEG) 5 + 100 min (>L:INI_CKPT_LT_INTEG)')
+kayeroof:CfgRpn(56, '(L:INI_CKPT_LT_INTEG) 5 - 0 max (>L:INI_CKPT_LT_INTEG)')
 
 -- GNADIRS_1 OFF / NAV / ATT (bits 0..2) → IRS1
 kayeroof:CfgRpn(0, '0 (>L:INI_IRS1_STATE)')
@@ -81,19 +81,19 @@ kayeroof:CfgRpn(30, '1 (>L:INI_CALLS_PURS)', '0 (>L:INI_CALLS_PURS)')
 kayeroof:CfgRpn(31, '1 (>L:INI_FIRE_TEST)', '0 (>L:INI_FIRE_TEST)')
 
 -- EMER EXIT LT (bits 32..33)
-kayeroof:CfgRpn(32, '2 (>L:INI_EMER_EXIT_SWITCH)', '1 (>L:INI_EMER_EXIT_SWITCH)')
-kayeroof:CfgRpn(33, '0 (>L:INI_EMER_EXIT_SWITCH)', '1 (>L:INI_EMER_EXIT_SWITCH)')
+kayeroof:CfgRpn(32, '0 (>L:INI_EMER_EXIT_SWITCH)', '1 (>L:INI_EMER_EXIT_SWITCH)')
+kayeroof:CfgRpn(33, '2 (>L:INI_EMER_EXIT_SWITCH)', '1 (>L:INI_EMER_EXIT_SWITCH)')
 
 -- SEAT BELTS (bit 34)
 kayeroof:CfgRpn(34, '2 (>L:INI_SEATBELTS_SWITCH)', '0 (>L:INI_SEATBELTS_SWITCH)')
 
 -- NO SMOKING (bits 35..36)
-kayeroof:CfgRpn(35, '0 (>L:INI_NO_SMOKING_SWITCH)', '1 (>L:INI_NO_SMOKING_SWITCH)')
-kayeroof:CfgRpn(36, '2 (>L:INI_NO_SMOKING_SWITCH)', '1 (>L:INI_NO_SMOKING_SWITCH)')
+kayeroof:CfgRpn(35, '2 (>L:INI_NO_SMOKING_SWITCH)', '1 (>L:INI_NO_SMOKING_SWITCH)')
+kayeroof:CfgRpn(36, '0 (>L:INI_NO_SMOKING_SWITCH)', '1 (>L:INI_NO_SMOKING_SWITCH)')
 
 -- EXT LT STROBE (bits 37..38)
-kayeroof:CfgRpn(37, '2 (>L:INI_LIGHTS_STROBE)', '1 (>L:INI_LIGHTS_STROBE)')
-kayeroof:CfgRpn(38, '0 (>L:INI_LIGHTS_STROBE)', '1 (>L:INI_LIGHTS_STROBE)')
+kayeroof:CfgRpn(37, '0 (>L:INI_LIGHTS_STROBE)', '1 (>L:INI_LIGHTS_STROBE)')
+kayeroof:CfgRpn(38, '2 (>L:INI_LIGHTS_STROBE)', '1 (>L:INI_LIGHTS_STROBE)')
 
 -- EXT LT BEACON (bits 39..40)
 kayeroof:CfgRpn(39, '1 (>L:INI_LIGHTS_BEACON)')
@@ -118,8 +118,8 @@ kayeroof:CfgRpn(48, '2 (>L:INI_SIGNS_NO_MOBILE)', '1 (>L:INI_SIGNS_NO_MOBILE)')
 -- EXT LT LAND R (bits 49..50) — not present in mfproj Kaye Roof inputs
 
 -- EXT LT NOSE (bits 51..52)
-kayeroof:CfgRpn(51, '2 (>L:INI_LIGHTS_NOSE)', '1 (>L:INI_LIGHTS_NOSE)')
-kayeroof:CfgRpn(52, '0 (>L:INI_LIGHTS_NOSE)', '1 (>L:INI_LIGHTS_NOSE)')
+kayeroof:CfgRpn(51, '0 (>L:INI_LIGHTS_NOSE)', '1 (>L:INI_LIGHTS_NOSE)')
+kayeroof:CfgRpn(52, '2 (>L:INI_LIGHTS_NOSE)', '1 (>L:INI_LIGHTS_NOSE)')
 
 -- EXT PWR (bit 53) — toggle A/B when GPU available (mfproj dual configs on same pin)
 kayeroof:CfgRpn(53,
@@ -134,67 +134,98 @@ kayeroof:CfgRpn(60, '(L:INI_IR1_STATE) ! (>L:INI_IR1_STATE)') -- IR1_BUTTON
 -- Read data for lights (Get* — keep all channels)
 
 -- FIRE L / C / R
-kayeroof:GetFireL('(L:INI_FIRE_ENG_1_FIRE) (L:INI_FIRE_TEST) 1 == or (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 0.1 * (L:INI_DC_LIGHTS_FAILURE) 10 * *') -- ENG1 FIRE
-kayeroof:GetFireC('(L:INI_FIRE_APU_FIRE) (L:INI_FIRE_TEST) 1 == or (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 0.1 * (L:INI_DC_LIGHTS_FAILURE) 10 * *') -- APU FIRE
-kayeroof:GetFireR('(L:INI_FIRE_ENG_2_FIRE) (L:INI_FIRE_TEST) 1 == or (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 0.1 * (L:INI_DC_LIGHTS_FAILURE) 10 * *') -- ENG2 FIRE
+kayeroof:GetFireL(
+'(L:INI_FIRE_ENG_1_FIRE) (L:INI_FIRE_TEST) 1 == or (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 0.1 * (L:INI_DC_LIGHTS_FAILURE) 10 * *')                   -- ENG1 FIRE
+kayeroof:GetFireC(
+'(L:INI_FIRE_APU_FIRE) (L:INI_FIRE_TEST) 1 == or (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 0.1 * (L:INI_DC_LIGHTS_FAILURE) 10 * *')                     -- APU FIRE
+kayeroof:GetFireR(
+'(L:INI_FIRE_ENG_2_FIRE) (L:INI_FIRE_TEST) 1 == or (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 0.1 * (L:INI_DC_LIGHTS_FAILURE) 10 * *')                   -- ENG2 FIRE
 
 -- Anti-ice (mfproj Transformation: fault/state && AC ESS SHED powered)
-kayeroof:GetAntiIceEng2Up('(L:INI_ENG_ANTI_ICE2_FAULT) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and') -- ENG2 AI FAULT
-kayeroof:GetAntiIceEng1Down('(L:INI_ENG_ANTI_ICE1_STATE) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and') -- ENG1 AI ON
-kayeroof:GetAntiIceEng2Down('(L:INI_ENG_ANTI_ICE2_STATE) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and') -- ENG2 AI ON
+kayeroof:GetAntiIceEng2Up('(L:INI_ENG_ANTI_ICE2_FAULT) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and')    -- ENG2 AI FAULT
+kayeroof:GetAntiIceEng1Down('(L:INI_ENG_ANTI_ICE1_STATE) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and')  -- ENG1 AI ON
+kayeroof:GetAntiIceEng2Down('(L:INI_ENG_ANTI_ICE2_STATE) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and')  -- ENG2 AI ON
 kayeroof:GetAntiIceWingDown('(L:INI_WING_ANTI_ICE1_STATE) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and') -- WING AI ON
-kayeroof:GetAntiIceWingUp('(L:INI_WING_ANTI_ICE1_FAULT) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and') -- WING AI FAULT
-kayeroof:GetAntiIceEng1Up('(L:INI_ENG_ANTI_ICE1_FAULT) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and') -- ENG1 AI FAULT
+kayeroof:GetAntiIceWingUp('(L:INI_WING_ANTI_ICE1_FAULT) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and')   -- WING AI FAULT
+kayeroof:GetAntiIceEng1Up('(L:INI_ENG_ANTI_ICE1_FAULT) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and')    -- ENG1 AI FAULT
 
 -- APU BLEED / EXT PWR / ELEC PUMP
-kayeroof:GetApuBleedDown('(L:INI_AIR_BLEED_APU) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and') -- APU BLEED ON
-kayeroof:GetApuBleedUp('(L:INI_AIR_BLEED_APU_FAULT) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and') -- APU BLEED FAULT
-kayeroof:GetExtPwrDown('(L:INI_GEN_EXT_A_ONLINE)') -- EXT PWR ON
-kayeroof:GetExtPwrUp('(L:INI_GPU_AVAIL) 1 == (L:INI_GEN_EXT_B_ONLINE) 0 == and (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_GPU_AVAIL) (L:INI_AC_LIGHTS_FAILURE) || *') -- EXT PWR AVAIL
-kayeroof:GetElecPumpDown('(L:INI_HYD_ELEC2_STATE) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- ELEC PUMP ON
-kayeroof:GetElecPumpUp('(L:INI_GND_HYD_GREEN_ELEC_PUMP_FAULT) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- ELEC PUMP FAULT
+kayeroof:GetApuBleedDown('(L:INI_AIR_BLEED_APU) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and')                                                                                                        -- APU BLEED ON
+kayeroof:GetApuBleedUp('(L:INI_AIR_BLEED_APU_FAULT) 1 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and')                                                                                                    -- APU BLEED FAULT
+kayeroof:GetExtPwrDown('(L:INI_GEN_EXT_A_ONLINE)')                                                                                                                                                             -- EXT PWR ON
+kayeroof:GetExtPwrUp(
+'(L:INI_GPU_AVAIL) 1 == (L:INI_GEN_EXT_B_ONLINE) 0 == and (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_GPU_AVAIL) (L:INI_AC_LIGHTS_FAILURE) || *')                      -- EXT PWR AVAIL
+kayeroof:GetElecPumpDown(
+'(L:INI_HYD_ELEC2_STATE) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                                                                       -- ELEC PUMP ON
+kayeroof:GetElecPumpUp(
+'(L:INI_GND_HYD_GREEN_ELEC_PUMP_FAULT) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                                                         -- ELEC PUMP FAULT
 
 -- BAT1 / BAT2 (mfproj BAT_2_UP used BATTERY_1_FAULT — corrected to BATTERY_2_FAULT)
-kayeroof:GetBat1Down('(L:INI_BATTERY_1_SWITCH) 0 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and') -- BAT1 OFF
-kayeroof:GetBat1Up('(L:INI_BATTERY_1_FAULT)') -- BAT1 FAULT
-kayeroof:GetBat2Up('(L:INI_BATTERY_2_FAULT)') -- BAT2 FAULT
-kayeroof:GetBat2Down('(L:INI_BATTERY_2_SWITCH) 0 == (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 1 == and') -- BAT2 OFF
+kayeroof:GetBat1Down('(L:INI_BATTERY_1_SWITCH) 0 == ((L:INI_BATTERY_1_SWITCH) 1 == and') -- BAT1 OFF
+kayeroof:GetBat1Up('(L:INI_BATTERY_1_FAULT)')                                            -- BAT1 FAULT
+kayeroof:GetBat2Up('(L:INI_BATTERY_2_FAULT)')                                            -- BAT2 FAULT
+kayeroof:GetBat2Down('(L:INI_BATTERY_2_SWITCH) 0 == ((L:INI_BATTERY_2_SWITCH) 1 == and') -- BAT2 OFF
 
 -- IR1..3
-kayeroof:GetIr1Lower('(L:INI_IR1_STATE) ! (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- IR1 ALIGN
-kayeroof:GetIr1Up('(L:INI_IR1_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- IR1 FAULT
-kayeroof:GetIr2Lower('(L:INI_IR2_STATE) ! (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- IR2 ALIGN
-kayeroof:GetIr2Up('(L:INI_IR2_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- IR2 FAULT
-kayeroof:GetIr3Lower('(L:INI_IR3_STATE) ! (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- IR3 ALIGN
-kayeroof:GetIr3Up('(L:INI_IR3_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- IR3 FAULT
+kayeroof:GetIr1Lower(
+'(L:INI_IR1_STATE) ! (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                      -- IR1 ALIGN
+kayeroof:GetIr1Up(
+'(L:INI_IR1_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                        -- IR1 FAULT
+kayeroof:GetIr2Lower(
+'(L:INI_IR2_STATE) ! (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                      -- IR2 ALIGN
+kayeroof:GetIr2Up(
+'(L:INI_IR2_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                        -- IR2 FAULT
+kayeroof:GetIr3Lower(
+'(L:INI_IR3_STATE) ! (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                      -- IR3 ALIGN
+kayeroof:GetIr3Up(
+'(L:INI_IR3_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                        -- IR3 FAULT
 
 -- CREW SUPPLY / GND CTL
-kayeroof:GetCrewSupply('(L:INI_CREW_SUPPLY) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- CREW OXY OFF
-kayeroof:GetGndCtl('(L:INI_GND_CTL) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- GND CTL ON
+kayeroof:GetCrewSupply(
+'(L:INI_CREW_SUPPLY) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                        -- CREW OXY OFF
+kayeroof:GetGndCtl(
+'(L:INI_GND_CTL) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                            -- GND CTL ON
 
 -- Fuel LTK / CTR / RTK / MODE / XFEED
-kayeroof:GetLtkPumps1Up('(L:INI_OUTER_TANK_LEFT) (L:INI_OUTER_TANK_LEFT_PUMP_ON) ! and (L:INI_OUTER_TANK_LEFT_FAULT) or (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- L TK PUMP1 FAULT
-kayeroof:GetLtkPumps2Down('(L:INI_INNER_TANK_LEFT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- L TK PUMP2 OFF
-kayeroof:GetLtkPumps1Down('(L:INI_OUTER_TANK_LEFT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- L TK PUMP1 OFF
-kayeroof:GetLtkPumps2Up('(L:INI_INNER_TANK_LEFT_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- L TK PUMP2 FAULT
-kayeroof:GetPump1Up('(L:INI_CENTER_TANK_LEFT_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- CTR PUMP1 FAULT
-kayeroof:GetPump1Down('(L:INI_CENTER_TANK_LEFT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- CTR PUMP1 OFF
-kayeroof:GetPump2Down('(L:INI_CENTER_TANK_RIGHT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- CTR PUMP2 OFF
-kayeroof:GetPump2Up('(L:INI_CENTER_TANK_RIGHT_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- CTR PUMP2 FAULT
-kayeroof:GetModeSelDown('(L:INI_FUEL_CTR_TANK_FEED_MAN) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *') -- MODE SEL MAN
-kayeroof:GetModeSelUp('0') -- MODE SEL FAULT (not in mfproj)
-kayeroof:GetRtkPumps1Up('(L:INI_INNER_TANK_RIGHT) (L:INI_INNER_TANK_RIGHT_PUMP_ON) ! and (L:INI_INNER_TANK_RIGHT_FAULT) or (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- R TK PUMP1 FAULT
-kayeroof:GetRtkPumps1Down('(L:INI_INNER_TANK_RIGHT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- R TK PUMP1 OFF
-kayeroof:GetRtkPumps2Down('(L:INI_OUTER_TANK_RIGHT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- R TK PUMP2 OFF
-kayeroof:GetRtkPumps2Up('(L:INI_OUTER_TANK_RIGHT_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- R TK PUMP2 FAULT
-kayeroof:GetXFeedUp('(L:INI_XFEED_TRANSFER_OPEN) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- X FEED OPEN
-kayeroof:GetXFeedDown('(L:INI_XFEED_TRANSFER_ON) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- X FEED ON
+kayeroof:GetLtkPumps1Up(
+'(L:INI_OUTER_TANK_LEFT) (L:INI_OUTER_TANK_LEFT_PUMP_ON) ! and (L:INI_OUTER_TANK_LEFT_FAULT) or (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                            -- L TK PUMP1 FAULT
+kayeroof:GetLtkPumps2Down(
+'(L:INI_INNER_TANK_LEFT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                              -- L TK PUMP2 OFF
+kayeroof:GetLtkPumps1Down(
+'(L:INI_OUTER_TANK_LEFT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                              -- L TK PUMP1 OFF
+kayeroof:GetLtkPumps2Up(
+'(L:INI_INNER_TANK_LEFT_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                             -- L TK PUMP2 FAULT
+kayeroof:GetPump1Up(
+'(L:INI_CENTER_TANK_LEFT_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                            -- CTR PUMP1 FAULT
+kayeroof:GetPump1Down(
+'(L:INI_CENTER_TANK_LEFT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                             -- CTR PUMP1 OFF
+kayeroof:GetPump2Down(
+'(L:INI_CENTER_TANK_RIGHT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                            -- CTR PUMP2 OFF
+kayeroof:GetPump2Up(
+'(L:INI_CENTER_TANK_RIGHT_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                           -- CTR PUMP2 FAULT
+kayeroof:GetModeSelDown(
+'(L:INI_FUEL_CTR_TANK_FEED_MAN) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_AC_LIGHTS_FAILURE) *')                                                                                       -- MODE SEL MAN
+kayeroof:GetModeSelUp('0')                                                                                                                                                                                                            -- MODE SEL FAULT (not in mfproj)
+kayeroof:GetRtkPumps1Up(
+'(L:INI_INNER_TANK_RIGHT) (L:INI_INNER_TANK_RIGHT_PUMP_ON) ! and (L:INI_INNER_TANK_RIGHT_FAULT) or (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                         -- R TK PUMP1 FAULT
+kayeroof:GetRtkPumps1Down(
+'(L:INI_INNER_TANK_RIGHT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                             -- R TK PUMP1 OFF
+kayeroof:GetRtkPumps2Down(
+'(L:INI_OUTER_TANK_RIGHT) 0 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                             -- R TK PUMP2 OFF
+kayeroof:GetRtkPumps2Up(
+'(L:INI_OUTER_TANK_RIGHT_FAULT) (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                            -- R TK PUMP2 FAULT
+kayeroof:GetXFeedUp(
+'(L:INI_XFEED_TRANSFER_OPEN) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                          -- X FEED OPEN
+kayeroof:GetXFeedDown(
+'(L:INI_XFEED_TRANSFER_ON) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                                                                                            -- X FEED ON
 
 -- APU MASTER / START
-kayeroof:GetMasterSwUp('(L:INI_APU_MASTER_FAULT) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- APU MASTER FAULT
-kayeroof:GetMasterSwDown('(L:INI_APU_MASTER_SWITCH) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *') -- APU MASTER ON
-kayeroof:GetStartDown('(L:INI_APU_START_BUTTON) 1 == (L:INI_APU_AVAILABLE) 0 == and') -- APU START ON
-kayeroof:GetStartUp('(L:INI_APU_AVAILABLE)') -- APU START AVAIL
+kayeroof:GetMasterSwUp(
+'(L:INI_APU_MASTER_FAULT) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                           -- APU MASTER FAULT
+kayeroof:GetMasterSwDown(
+'(L:INI_APU_MASTER_SWITCH) 1 == (L:INI_ANNLT_SWITCH) 2 == + 1 min (L:INI_GENERAL_LIGHT_MULTIPLIER) * 1 5 * * (L:INI_DC_LIGHTS_FAILURE) *')                          -- APU MASTER ON
+kayeroof:GetStartDown('(L:INI_APU_START_BUTTON) 1 == (L:INI_APU_AVAILABLE) 0 == and')                                                                               -- APU START ON
+kayeroof:GetStartUp('(L:INI_APU_AVAILABLE)')                                                                                                                        -- APU START AVAIL
 
 -- BAT1V|BAT2V Output pins (mfproj Device "BAT2V|BAT1V", ≠ LedModule)
 kayeroof:GetBat1v2('(L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED)') -- BAT2V|BAT1V PINS
