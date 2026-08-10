@@ -18,9 +18,9 @@ uluaLog('MobiFlight KayeRoof for PMDG 777')
 
 ---- LIGHT BRT (Encoder MapToBits 54..57; mfproj onLeft=+, onRight=-)
 kayeroof:CfgRpn(54, '(L:OH_MASTER_BRIGHT_ROTATE, number) 1 + 100 min (>L:OH_MASTER_BRIGHT_ROTATE)')
-kayeroof:CfgRpn(55, '(L:OH_MASTER_BRIGHT_ROTATE, number) 1 - 0 max (>L:OH_MASTER_BRIGHT_ROTATE)')
-kayeroof:CfgRpn(56, '(L:OH_MASTER_BRIGHT_ROTATE, number) 1 + 100 min (>L:OH_MASTER_BRIGHT_ROTATE)')
 kayeroof:CfgRpn(57, '(L:OH_MASTER_BRIGHT_ROTATE, number) 1 - 0 max (>L:OH_MASTER_BRIGHT_ROTATE)')
+kayeroof:CfgRpn(55, '(L:OH_MASTER_BRIGHT_ROTATE, number) 1 + 100 min (>L:OH_MASTER_BRIGHT_ROTATE)')
+kayeroof:CfgRpn(56, '(L:OH_MASTER_BRIGHT_ROTATE, number) 1 - 0 max (>L:OH_MASTER_BRIGHT_ROTATE)')
 
 -- bit 0 GNADIRS_1_OFF ← PMDG777 L START START
 kayeroof:CfgRpn(0, '(L:switch_94_a) if{ 9401 (>K:ROTOR_BRAKE) }')
@@ -31,15 +31,19 @@ kayeroof:CfgRpn(3, '(L:switch_95_a) if{ 9501 (>K:ROTOR_BRAKE) }')
 -- bit 4 GNADIRS_3_NAV ← PMDG777 R START NORM
 kayeroof:CfgRpn(4, '(L:switch_95_a) ! if{ 9507 (>K:ROTOR_BRAKE) }')
 -- bit 5 GNADIRS_3_ATT ← PMDG777 R ELEC ON
-kayeroof:CfgRpn(5, '100 (L:switch_38_a) - 50 div s0 :1 l0 0 > if{ 3807 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3808 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
+kayeroof:CfgRpn(5,
+	'100 (L:switch_38_a) - 50 div s0 :1 l0 0 > if{ 3807 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3808 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
 -- bit 6 GNADIRS_2_OFF ← PMDG777 C1/C2/L ELEC/R ELEC AIR OFF
-kayeroof:CfgRpn(6, '0 (L:switch_36_a) - 50 div s0 :1 l0 0 > if{ 3607 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3608 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 0 (L:switch_37_a) - 50 div s0 :1 l0 0 > if{ 3707 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3708 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 0 (L:switch_38_a) - 50 div s0 :1 l0 0 > if{ 3807 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3808 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 0 (L:switch_35_a) - 50 div s0 :1 l0 0 > if{ 3507 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3508 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
+kayeroof:CfgRpn(6,
+	'0 (L:switch_36_a) - 50 div s0 :1 l0 0 > if{ 3607 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3608 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 0 (L:switch_37_a) - 50 div s0 :1 l0 0 > if{ 3707 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3708 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 0 (L:switch_38_a) - 50 div s0 :1 l0 0 > if{ 3807 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3808 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 0 (L:switch_35_a) - 50 div s0 :1 l0 0 > if{ 3507 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3508 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
 -- bit 7 GNADIRS_2_NAV ← PMDG777 C1/C2/L ELEC/R ELEC AIR AUTO
-kayeroof:CfgRpn(7, '50 (L:switch_36_a) - 50 div s0 :1 l0 0 > if{ 3607 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3608 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 50 (L:switch_37_a) - 50 div s0 :1 l0 0 > if{ 3707 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3708 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 50 (L:switch_38_a) - 50 div s0 :1 l0 0 > if{ 3807 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3808 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 50 (L:switch_35_a) - 50 div s0 :1 l0 0 > if{ 3507 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3508 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
+kayeroof:CfgRpn(7,
+	'50 (L:switch_36_a) - 50 div s0 :1 l0 0 > if{ 3607 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3608 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 50 (L:switch_37_a) - 50 div s0 :1 l0 0 > if{ 3707 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3708 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 50 (L:switch_38_a) - 50 div s0 :1 l0 0 > if{ 3807 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3808 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 50 (L:switch_35_a) - 50 div s0 :1 l0 0 > if{ 3507 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3508 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
 -- bit 8 GNADIRS_2_ATT ← PMDG777 C1/C2/L ELEC/R ELEC AIR ON
-kayeroof:CfgRpn(8, '100 (L:switch_36_a) - 50 div s0 :1 l0 0 > if{ 3607 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3608 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 100 (L:switch_37_a) - 50 div s0 :1 l0 0 > if{ 3707 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3708 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 100 (L:switch_35_a) - 50 div s0 :1 l0 0 > if{ 3507 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3508 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 100 (L:switch_38_a) - 50 div s0 :1 l0 0 > if{ 3807 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3808 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
+kayeroof:CfgRpn(8,
+	'100 (L:switch_36_a) - 50 div s0 :1 l0 0 > if{ 3607 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3608 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 100 (L:switch_37_a) - 50 div s0 :1 l0 0 > if{ 3707 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3708 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 100 (L:switch_35_a) - 50 div s0 :1 l0 0 > if{ 3507 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3508 (>K:ROTOR_BRAKE) l0 ++ s0 g1 } 100 (L:switch_38_a) - 50 div s0 :1 l0 0 > if{ 3807 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3808 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
 -- bit 14 GND CTL ← PMDG777 SECONDARY EXT PWR TOGGLE
-kayeroof:CfgRpn(14, '701 (>K:ROTOR_BRAKE)')
+--kayeroof:CfgRpn(14, '701 (>K:ROTOR_BRAKE)')
 -- bit 16 BAT1 ← PMDG777 BATTERY TOGGLE
 kayeroof:CfgRpn(16, '101 (>K:ROTOR_BRAKE)')
 -- bit 17 BAT2 ← PMDG777 CABIN TOGGLE + PMDG777  IFE TOGGLE
@@ -59,21 +63,31 @@ kayeroof:CfgRpn(24, '10601 (>K:ROTOR_BRAKE)')
 -- bit 26 MASTER SW ← PMDG777 APU ON/OFF
 kayeroof:CfgRpn(26, '(L:switch_03_a, number) 0 == if{ 307 (>K:ROTOR_BRAKE) } els{ 308 (>K:ROTOR_BRAKE) }')
 -- bit 27 START ← PMDG777 APU START
-kayeroof:CfgRpn(27, '100 (L:switch_03_a) - 50 div s0 :1 l0 0 > if{ 307 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 308 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
+kayeroof:CfgRpn(27,
+	'100 (L:switch_03_a) - 50 div s0 :1 l0 0 > if{ 307 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 308 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
 -- bit 28 ENG1_FIRE_TEST ← PMDG777 C1 AIR AUTO/OFF
-kayeroof:CfgRpn(28, '50 (L:switch_37_a) - 50 div s0 :1 l0 0 > if{ 3707 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3708 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
+kayeroof:CfgRpn(28,
+	'50 (L:switch_37_a) - 50 div s0 :1 l0 0 > if{ 3707 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3708 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
 -- bit 29 APU_FIRE_TEST ← PMDG777 C1 ELEC TOGGLE
 kayeroof:CfgRpn(29, '4001 (>K:ROTOR_BRAKE) 4101 (>K:ROTOR_BRAKE)')
 -- bit 31 ENG2_FIRE_TEST ← PMDG777 C2 ELEC TOGGLE
 kayeroof:CfgRpn(31, '4101 (>K:ROTOR_BRAKE)')
 -- bit 32 EMER EXIT LT_ON ← PMDG777 SEAT BELTS ON/AUTO
-kayeroof:CfgRpn(32, '100 (L:switch_30_a) - 50 div s0 :1 l0 0 > if{ 3007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }', '50 (L:switch_30_a) - 50 div s0 :1 l0 0 > if{ 3007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
+kayeroof:CfgRpn(32,
+	'100 (L:switch_30_a) - 50 div s0 :1 l0 0 > if{ 3007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }',
+	'50 (L:switch_30_a) - 50 div s0 :1 l0 0 > if{ 3007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
 -- bit 33 EMER EXIT LT_OFF ← PMDG777 SEAT BELTS OFF/AUTO
-kayeroof:CfgRpn(33, '0 (L:switch_30_a) - 50 div s0 :1 l0 0 > if{ 3007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }', '50 (L:switch_30_a) - 50 div s0 :1 l0 0 > if{ 3007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
+kayeroof:CfgRpn(33,
+	'0 (L:switch_30_a) - 50 div s0 :1 l0 0 > if{ 3007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }',
+	'50 (L:switch_30_a) - 50 div s0 :1 l0 0 > if{ 3007 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 3008 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
 -- bit 35 NO SMOKING_OFF ← PMDG777 NO SMOKING OFF/AUTO
-kayeroof:CfgRpn(35, '0 (L:switch_29_a) - 50 div s0 :1 l0 0 > if{ 2907 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 2908 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }', '50 (L:switch_29_a) - 50 div s0 :1 l0 0 > if{ 2907 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 2908 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
+kayeroof:CfgRpn(35,
+	'0 (L:switch_29_a) - 50 div s0 :1 l0 0 > if{ 2907 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 2908 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }',
+	'50 (L:switch_29_a) - 50 div s0 :1 l0 0 > if{ 2907 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 2908 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
 -- bit 36 NO SMOKING_ON ← PMDG777 NO SMOKING ON/AUTO
-kayeroof:CfgRpn(36, '100 (L:switch_29_a) - 50 div s0 :1 l0 0 > if{ 2907 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 2908 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }', '50 (L:switch_29_a) - 50 div s0 :1 l0 0 > if{ 2907 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 2908 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
+kayeroof:CfgRpn(36,
+	'100 (L:switch_29_a) - 50 div s0 :1 l0 0 > if{ 2907 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 2908 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }',
+	'50 (L:switch_29_a) - 50 div s0 :1 l0 0 > if{ 2907 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 2908 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }')
 -- bit 38 EXT LT_STORBE_OFF ← PMDG777 STROBE LIGHT ON/OFF
 kayeroof:CfgRpn(38, '(L:switch_122_a) if{ 12201 (>K:ROTOR_BRAKE) }', '(L:switch_122_a) ! if{ 12201 (>K:ROTOR_BRAKE) }')
 -- bit 39 EXT LT_BEACON_ON ← PMDG777 BEACON LIGHT ON/OFF
@@ -93,48 +107,85 @@ kayeroof:CfgRpn(49, '(L:switch_24_a) ! if{ 2401 (>K:ROTOR_BRAKE) }')
 -- bit 50 EXT LT_LAND_R_PETPACT ← PMDG777 RIGHT LANDING LIGHTS OFF
 kayeroof:CfgRpn(50, '(L:switch_24_a) if{ 2401 (>K:ROTOR_BRAKE) }')
 -- bit 51 EXT LT_NOSE_TO ← PMDG777 RUNWAY TURNOFF LIGHT ON/OFF
-kayeroof:CfgRpn(51, '(L:switch_119_a) ! if{ 11901 (>K:ROTOR_BRAKE) } (L:switch_120_a) ! if{ 12001 (>K:ROTOR_BRAKE) }', '(L:switch_119_a) if{ 11901 (>K:ROTOR_BRAKE) } (L:switch_120_a) if{ 12001 (>K:ROTOR_BRAKE) }')
+kayeroof:CfgRpn(51, '(L:switch_119_a) ! if{ 11901 (>K:ROTOR_BRAKE) } (L:switch_120_a) ! if{ 12001 (>K:ROTOR_BRAKE) }',
+	'(L:switch_119_a) if{ 11901 (>K:ROTOR_BRAKE) } (L:switch_120_a) if{ 12001 (>K:ROTOR_BRAKE) }')
 -- bit 52 EXT LT_NOSE_OFF ← PMDG777 TAXI LIGHT ON/OFF
 kayeroof:CfgRpn(52, '(L:switch_121_a) if{ 12101 (>K:ROTOR_BRAKE) }', '(L:switch_121_a) ! if{ 12101 (>K:ROTOR_BRAKE) }')
 -- bit 53 EXT PWR ← PMDG777 PRIMARY EXT PWR TOGGLE
-kayeroof:CfgRpn(53, '801 (>K:ROTOR_BRAKE)')
+--kayeroof:CfgRpn(53, '801 (>K:ROTOR_BRAKE)')
+--PRIMARY --SECONDARY
+local pswh61 = QmdevPosSwitchInit("(L:switch_07_b, number)", 1, "701 (>K:ROTOR_BRAKE)", "701 (>K:ROTOR_BRAKE)", 500)
+local pswh62 = QmdevPosSwitchInit("(L:switch_08_b, number)", 1, "801 (>K:ROTOR_BRAKE)", "801 (>K:ROTOR_BRAKE)", 500)
+dr_qmovh_pmdg777_ext_on = iDataRef:New("(L:switch_08_b, number)")
+kayeroof:CfgFc(53,
+	"local pos = 1 - dr_qmovh_pmdg777_ext_on:Get();QmdevPosSwitchSet(" ..
+	tostring(pswh61) .. ",  pos);QmdevPosSwitchSet(" .. tostring(pswh62) .. ",  pos)")
+
+
+-- ADIRU
+kayeroof:CfgRpn(60, '5901 (>K:ROTOR_BRAKE)')
+-- EMER LIGHTS（短按切换ARMED关盖/OFF，长按OFF开盖）
+kayeroof:CfgRpn(59, '5001 (>K:ROTOR_BRAKE)')
+
+-- WINDOW HEAT
+kayeroof:CfgRpn(58, '4601 (>K:ROTOR_BRAKE) , 4501 (>K:ROTOR_BRAKE) , 4701 (>K:ROTOR_BRAKE) , 4801 (>K:ROTOR_BRAKE)')
+
+-- ANTI ICE
+---- ENG2
+local pswh32 = QmdevPosSwitchInit("(L:switch_113_a, number)", 50, "11307 (>K:ROTOR_BRAKE)", "11308 (>K:ROTOR_BRAKE)", 500)
+dr_qmovh_pmdg777_anti_eng2 = iDataRef:New("(L:switch_113_a, number)")
+kayeroof:CfgFc(13,
+	"local pos = 100 == dr_qmovh_pmdg777_anti_eng2:Get() and 50 or 100;QmdevPosSwitchSet(" ..
+	tostring(pswh32) .. ",  pos)")
+---- ENG1
+local pswh33 = QmdevPosSwitchInit("(L:switch_112_a, number)", 50, "11207 (>K:ROTOR_BRAKE)", "11208 (>K:ROTOR_BRAKE)", 500)
+dr_qmovh_pmdg777_anti_eng1 = iDataRef:New("(L:switch_112_a, number)")
+kayeroof:CfgFc(12,
+	"local pos = 100 == dr_qmovh_pmdg777_anti_eng1:Get() and 50 or 100;QmdevPosSwitchSet(" ..
+	tostring(pswh33) .. ",  pos)")
+---- WING
+local pswh37 = QmdevPosSwitchInit("(L:switch_111_a, number)", 50, "11107 (>K:ROTOR_BRAKE)", "11108 (>K:ROTOR_BRAKE)", 500)
+dr_qmovh_pmdg777_anti_wing = iDataRef:New("(L:switch_111_a, number)")
+kayeroof:CfgFc(11,
+	"local pos = 100 == dr_qmovh_pmdg777_anti_wing:Get() and 50 or 100;QmdevPosSwitchSet(" ..
+	tostring(pswh37) .. ",  pos)")
+
 
 -- ===========================================================
 -- Read data for lights (Get* — keep all channels; unmapped → 0)
-
 kayeroof:GetFireL('0')
-kayeroof:GetAntiIceEng2Up('0')
-kayeroof:GetAntiIceEng1Down('0')
-kayeroof:GetAntiIceEng2Down('0')
-kayeroof:GetAntiIceWingDown('0')
+kayeroof:GetAntiIceEng2Up('(L:INI_ENG_ANTI_ICE2_FAULT)')
+kayeroof:GetAntiIceEng1Down('(L:switch_112_a) 100 ==')
+kayeroof:GetAntiIceEng2Down('(L:switch_113_a) 100 ==')
+kayeroof:GetAntiIceWingDown('(L:switch_111_a) 100 ==')
 kayeroof:GetApuBleedDown('(L:APUStartup) 1 == (L:7X7XAPUInlet) 100 == and') -- APU BLEED / AVAIL
-kayeroof:GetExtPwrDown('(L:switch_08_b)') -- PRIMARY EXT ON
+kayeroof:GetExtPwrDown('(L:switch_08_b)')                                   -- PRIMARY EXT ON
 kayeroof:GetElecPumpDown('0')
 kayeroof:GetFireC('0')
-kayeroof:GetBat1Down('(L:switch_01_c)') -- BAT
+kayeroof:GetBat1Down('(L:switch_01_c)')              -- BAT
 kayeroof:GetBat2Up('0')
-kayeroof:GetBat2Down('(L:switch_18_c)') -- IFE/CABIN
+kayeroof:GetBat2Down('(L:switch_18_c)')              -- IFE/CABIN
 kayeroof:GetFireR('0')
-kayeroof:GetIr1Lower('(L:switch_59_a, bool) 100 ==') -- ADIRU
-kayeroof:GetIr1Up('(L:switch_59_c)')
+kayeroof:GetIr1Lower('(L:switch_59_a, bool) 100 ==') -- ADIRU ON
+kayeroof:GetIr1Up('(L:switch_59_c)')                 -- ADIRU OFF
 kayeroof:GetIr2Lower('(L:switch_46_a, bool) 100 ==') -- WIN HEAT
 kayeroof:GetIr3Lower('0')
-kayeroof:GetExtPwrUp('(L:switch_08_c)') -- PRIMARY EXT AVAIL
-kayeroof:GetAntiIceWingUp('0')
+kayeroof:GetExtPwrUp('(L:switch_08_c)')              -- PRIMARY EXT AVAIL
+kayeroof:GetAntiIceWingUp('(L:INI_WING_ANTI_ICE1_FAULT)')
 kayeroof:GetApuBleedUp('0')
 kayeroof:GetElecPumpUp('0')
-kayeroof:GetAntiIceEng1Up('0')
+kayeroof:GetAntiIceEng1Up('(L:INI_ENG_ANTI_ICE1_FAULT)')
 kayeroof:GetCrewSupply('0')
-kayeroof:GetGndCtl('(L:switch_07_b)') -- SECONDARY EXT
+kayeroof:GetGndCtl('(L:switch_07_b)')       -- SECONDARY EXT
 kayeroof:GetBat1Up('0')
 kayeroof:GetLtkPumps1Up('(L:switch_103_c)') -- L FWD
 kayeroof:GetLtkPumps2Down('0')
 kayeroof:GetIr3Up('0')
-kayeroof:GetIr2Up('(L:switch_46_c)')
+kayeroof:GetIr2Up('(L:switch_46_c)')        -- WINDOW HEAT INOP
 kayeroof:GetRtkPumps1Up('(L:switch_104_c)') -- R FWD
 kayeroof:GetLtkPumps1Down('0')
 kayeroof:GetLtkPumps2Up('(L:switch_105_c)') -- L AFT
-kayeroof:GetPump1Up('(L:switch_109_c)') -- CTR L
+kayeroof:GetPump1Up('(L:switch_109_c)')     -- CTR L
 kayeroof:GetModeSelDown('0')
 kayeroof:GetPump2Down('0')
 kayeroof:GetPump1Down('0')
@@ -147,11 +198,11 @@ kayeroof:GetRtkPumps2Up('(L:switch_106_c)') -- R AFT
 kayeroof:GetXFeedUp('0')
 kayeroof:GetXFeedDown('0')
 kayeroof:GetMasterSwUp('0')
-kayeroof:GetMasterSwDown('(L:switch_03_a) 50 ==') -- APU MASTER
+kayeroof:GetMasterSwDown('(L:switch_03_a) 50 ==')                      -- APU MASTER
 kayeroof:GetStartUp('(L:APUStartup) 1 == (L:7X7XAPUInlet) 100 == and') -- APU AVAIL
-kayeroof:GetBat1v2('0') -- BAT2V|BAT1V PINS
-kayeroof:GetBat12('0', '0') -- BAT 1+2 DISPLAY (no PMDG voltage mapping yet)
-kayeroof:GetBacklight('(L:BL_Overhead, number)', 1) -- OVHD PANEL LT (0–100 → wire; mfproj interp 0–100→0–255)
+kayeroof:GetBat1v2('0')                                                -- BAT2V|BAT1V PINS
+kayeroof:GetBat12('0', '0')                                            -- BAT 1+2 DISPLAY (no PMDG voltage mapping yet)
+kayeroof:GetBacklight('(L:BL_Overhead, number)', 255)                  -- OVHD PANEL LT (0–100 → wire; mfproj interp 0–100→0–255)
 
 GlobalFrameLoopManager:add(function()
 	kayeroof:SetFireL()
@@ -205,4 +256,3 @@ GlobalFrameLoopManager:add(function()
 	kayeroof:SetBacklight()
 	kayeroof:SetBat12()
 end)
-
