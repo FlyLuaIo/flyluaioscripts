@@ -117,12 +117,12 @@ end
 -- segment BAT 1+2 (one LedModule; BAT1+BAT2 voltages packed into a single text write)
 
 local function pack_bat12_volts(v_bat1, v_bat2)
-	-- mfproj: BAT2 digits 0..2 DP@1, BAT1 digits 3..5 DP@4; Round($,1)
+	-- mfproj: BAT1 digits 3..5 DP@4, BAT2 digits 0..2 DP@1; Round($,1)
 	local n1 = math.floor((v_bat1 or 0) * 10 + 0.5)
 	local n2 = math.floor((v_bat2 or 0) * 10 + 0.5)
 	if n1 < 0 then n1 = 0 elseif n1 > 999 then n1 = 999 end
 	if n2 < 0 then n2 = 0 elseif n2 > 999 then n2 = 999 end
-	return n2 * 1000 + n1
+	return n1 * 1000 + n2
 end
 
 function KayeRoof:GetBat12(dpath_bat1, dpath_bat2)
