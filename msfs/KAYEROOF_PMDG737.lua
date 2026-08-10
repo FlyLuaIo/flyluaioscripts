@@ -184,7 +184,7 @@ kayeroof:GetMasterSwUp('(L:INI_APU_MASTER_FAULT)')
 kayeroof:GetMasterSwDown('(L:switch_118_73X) 50 >=') -- APU MASTER
 kayeroof:GetStartUp('(L:APU_Volume) 100 >=') -- APU AVAIL
 kayeroof:GetBat1v2('0') -- BAT2V|BAT1V PINS
-kayeroof:GetBat12('0', '0') -- BAT 1+2 DISPLAY (no PMDG voltage mapping yet)
+kayeroof:GetBat12('pmdg/ng3/data/ELEC_MeterDisplayTop[1]', 'pmdg/ng3/data/ELEC_MeterDisplayTop[2]') -- BAT 1+2 DISPLAY (no PMDG voltage mapping yet)
 kayeroof:GetBacklight('(L:BL_Overhead, number)', 255) -- OVHD PANEL LT (mfproj Interpolation 0–100 → 0–255)
 
 -- APU EGT stability (same as QMOVH_A_PMDG737): correct Start AVAIL / START when float EGT < 1000
