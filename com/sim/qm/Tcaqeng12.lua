@@ -7,7 +7,7 @@
 
 local Tcaqeng12 = oop.class(com.sim.Qmdev)
 function Tcaqeng12:init()
-	self.QmdevId = 0x2C94C7A1
+	self.QmdevId = 0x2DE611FB
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_tcaqeng12 == nil then
 		_G.ilua_hw_assigned_tcaqeng12 = 0
