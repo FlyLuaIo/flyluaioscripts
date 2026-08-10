@@ -11,12 +11,7 @@ if not rfa112 then return end
 uluaLog('MobiFlight RfA112 for GA')
 
 -- INPUT key bindings (keysmap bits from mobiflight/rf_a112.json)
-
----- AnalogInput (bits 0..3) — string RPN suffix or function(adc); PollAnalogs in FrameLoop
-rfa112:CfgAnalog(0, 'sim/operation/test_none')
-rfa112:CfgAnalog(1, 'sim/operation/test_none')
-rfa112:CfgAnalog(2, 'sim/operation/test_none')
-rfa112:CfgAnalog(3, 'sim/operation/test_none')
+-- AnalogInput bits 0..3: CfgAnalog(bit, store, baseline, scale, lo, hi [, postOffset])
 
 -- WX (Button, bit 4)
 rfa112:CfgCmd(4, "sim/operation/test_none")
@@ -51,6 +46,5 @@ rfa112:CfgCmd(12, "sim/operation/test_none")
 rfa112:GetMipLt('sim/flightmodel/engine/ENGN_N1_', 1)
 
 GlobalFrameLoopManager:add(function()
-	rfa112:PollAnalogs()
 	rfa112:SetMipLt()
 end)

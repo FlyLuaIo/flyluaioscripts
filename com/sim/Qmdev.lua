@@ -181,26 +181,41 @@ function Qmdev:CfgRpn(KeyIdx, RpnPressStr, RpnReleaseStr)
     -- uluaLog(self.QmdevId ..', ' .. RpnPressStr.. ', '.. RpnReleaseStr)
 end
 
--- MF AnalogInput: hub writes ADC into keysmap[MapToBit]; PollAnalogs() applies mapping.
+-- MF AnalogInput: hub writes ADC into keysmap[MapToBit]; PollAnalogs() maps in Lua.
 -- Requires self.ProductName (e.g. 'RfA112').
 -- @KeyIdx: (number) keysmap index (JSON MapToBit)
--- @mapping: (string|function)
---   string  — MSFS RPN *suffix*; PollAnalogs runs: "<adc> <mapping>" via uluaWriteCmd
---             (XP: uluaCmdOnce(uluaFind(...)); same uluaCmdBegin gate as CfgPSw)
---   function — onChange(adc); use when Lua math / branching is needed
+-- @storeRpn: (string) MSFS write op e.g. '(>L:A_WR_GAIN)'; XP: dataref path for uluaSet
+-- @baseline, @scale: (number) value = (baseline - adc) / scale
+-- @clampLo, @clampHi: (number, optional) clamp to [lo, hi]; default 0, 1
+-- @postOffset: (number, optional) subtract after scale; default 0
+--   Example: CfgAnalog(0, '(>L:FOO)', 220, 219)
 -- No return value.
-function Qmdev:CfgAnalog(KeyIdx, mapping)
+function Qmdev:CfgAnalog(KeyIdx, storeRpn, baseline, scale, clampLo, clampHi, postOffset)
     if self.ProductName == nil or self.ProductName == '' then
         uluaLog('CfgAnalog: missing self.ProductName')
         return
     end
-    local kind = type(mapping)
-    if kind ~= 'string' and kind ~= 'function' then
-        uluaLog('CfgAnalog: mapping must be string or function for bit ' .. tostring(KeyIdx))
+    if type(storeRpn) ~= 'string' or storeRpn == '' then
+        uluaLog('CfgAnalog: storeRpn must be a non-empty string for bit ' .. tostring(KeyIdx))
         return
     end
-    if kind == 'string' and mapping == '' then
-        uluaLog('CfgAnalog: empty RPN for bit ' .. tostring(KeyIdx))
+    if type(baseline) ~= 'number' or type(scale) ~= 'number' then
+        uluaLog('CfgAnalog: baseline/scale must be numbers for bit ' .. tostring(KeyIdx))
+        return
+    end
+    if scale == 0 then
+        uluaLog('CfgAnalog: scale must be non-zero for bit ' .. tostring(KeyIdx))
+        return
+    end
+    clampLo = clampLo == nil and 0 or clampLo
+    clampHi = clampHi == nil and 1 or clampHi
+    postOffset = postOffset == nil and 0 or postOffset
+    if type(clampLo) ~= 'number' or type(clampHi) ~= 'number' then
+        uluaLog('CfgAnalog: clampLo/clampHi must be numbers for bit ' .. tostring(KeyIdx))
+        return
+    end
+    if type(postOffset) ~= 'number' then
+        uluaLog('CfgAnalog: postOffset must be a number for bit ' .. tostring(KeyIdx))
         return
     end
     if self.Analogs == nil then
@@ -212,10 +227,27 @@ function Qmdev:CfgAnalog(KeyIdx, mapping)
         uluaLog('CfgAnalog: missing ' .. path)
         return
     end
-    self.Analogs[#self.Analogs + 1] = { dr = dr, mapping = mapping }
+    local entry = {
+        dr = dr,
+        store = storeRpn,
+        baseline = baseline,
+        scale = scale,
+        lo = clampLo,
+        hi = clampHi,
+        postOffset = postOffset,
+    }
+    -- XP: resolve dataref once at cfg time (uluaFind is too slow for FrameLoop)
+    if uluaCmdBegin ~= nil then
+        entry.storeDr = uluaFind(storeRpn)
+        if entry.storeDr == nil then
+            uluaLog('CfgAnalog: missing store ' .. storeRpn)
+            return
+        end
+    end
+    self.Analogs[#self.Analogs + 1] = entry
 end
 
--- Apply pending AnalogInput changes.
+-- Apply pending AnalogInput changes (Lua math; write final value only).
 -- No return value.
 function Qmdev:PollAnalogs()
     if self.Analogs == nil then
@@ -224,17 +256,16 @@ function Qmdev:PollAnalogs()
     for i = 1, #self.Analogs do
         local a = self.Analogs[i]
         if a.dr:ChangedUpdate() then
-            local adc = a.dr:Get()
-            local m = a.mapping
-            if type(m) == 'function' then
-                m(adc)
+            local v = (a.baseline - a.dr:Get()) / a.scale - a.postOffset
+            if v < a.lo then
+                v = a.lo
+            elseif v > a.hi then
+                v = a.hi
+            end
+            if uluaCmdBegin == nil then
+                uluaWriteCmd(tostring(v) .. ' ' .. a.store)
             else
-                local cmd = tostring(adc) .. ' ' .. m
-                if uluaCmdBegin == nil then
-                    uluaWriteCmd(cmd)
-                else
-                    uluaCmdOnce(uluaFind(cmd))
-                end
+                uluaSet(a.storeDr, v)
             end
         end
     end

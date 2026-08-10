@@ -1,7 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-08-11
 -- MobiFlight RfA112 / Rowsfire A112 for Fenix A320 (weather radar)
--- MSFS bindings from: Rowsfire A112-FENIX A320-RADAR.mfproj (Lua, not @-RPN)
+-- MSFS bindings from: Rowsfire A112-FENIX A320-RADAR.mfproj
 -- *****************************************************************
 if ilua_require_fenix_a320() then return end
 
@@ -12,38 +12,21 @@ if not rfa112 then return end
 
 uluaLog('MobiFlight RfA112 for Fenix A320 radar')
 
-local function clamp(x, lo, hi)
-	if x < lo then return lo end
-	if x > hi then return hi end
-	return x
-end
-
-local function set_lvar(name, val)
-	uluaWriteCmd(tostring(val) .. ' (>L:' .. name .. ')')
-end
-
 -- ===========================================================
--- AnalogInput (keysmap bits 0..3; hub setAnalogByName → PollAnalogs)
+-- AnalogInput: CfgAnalog(bit, store, baseline, scale [, lo, hi [, postOffset]])
+-- value = (baseline - adc) / scale [- postOffset], clamp default [0,1]
 
 ---- MAIN PNL flood (bit 0 / DeviceName MAINPNL)
-rfa112:CfgAnalog(0, function(adc)
-	set_lvar('A_MIP_LIGHTING_FLOOD_MAIN', clamp((adc - 220) / -219, 0, 1))
-end)
+rfa112:CfgAnalog(0, '(>L:A_MIP_LIGHTING_FLOOD_MAIN)', 220, 219)
 
 ---- MAIN PNL&PED pedestal light (bit 1 / DeviceName MAINPNL&PED)
-rfa112:CfgAnalog(1, function(adc)
-	set_lvar('A_PED_LIGHTING_PEDESTAL', clamp((adc - 220) / -219, 0, 1))
-end)
+rfa112:CfgAnalog(1, '(>L:A_PED_LIGHTING_PEDESTAL)', 220, 219)
 
 ---- GAIN (bit 2 / DeviceName GAIN)
-rfa112:CfgAnalog(2, function(adc)
-	set_lvar('A_WR_GAIN', clamp((adc - 230) / -22.7778 - 5, -5, 4))
-end)
+rfa112:CfgAnalog(2, '(>L:A_WR_GAIN)', 230, 22.7778, -5, 4, 5)
 
 ---- TILT (bit 3 / DeviceName TILI)
-rfa112:CfgAnalog(3, function(adc)
-	set_lvar('A_WR_TILT', clamp((adc - 220) / -4.8333 - 15, -15, 15))
-end)
+rfa112:CfgAnalog(3, '(>L:A_WR_TILT)', 220, 4.8333, -15, 15, 15)
 
 -- ===========================================================
 -- button binding (keysmap bits from mobiflight/rf_a112.json)
