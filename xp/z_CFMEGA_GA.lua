@@ -12,6 +12,10 @@ uluaLog('MobiFlight CfMega for GA')
 
 -- INPUT key bindings (keysmap bits from mobiflight/CfMega.json)
 
+---- G1000 analog (AnalogInput Axis / MapToBit 10 → 0..1 brightness)
+-- (0 - adc) / -1023 = adc/1023; clamp default [0,1]
+cfmega:CfgAnalog(10, 'sim/cockpit/electrical/instrument_brightness', 0, -1023)
+
 ---- G1000 FMS inner
 -- inner
 cfmega:CfgCmd(0, 'sim/radios/stby_com1_fine_down_833')
@@ -29,10 +33,10 @@ cfmega:CfgCmd(5, 'sim/radios/stby_com1_coarse_down_833')
 cfmega:CfgCmd(6, 'sim/radios/stby_com1_coarse_up_833')
 cfmega:CfgCmd(7, 'sim/radios/stby_com1_coarse_up_833')
 
--- G1000 FMS push (Button, bit 12)
+-- G1000 FMS push (Button, bit 8)
 cfmega:CfgCmd(8, 'sim/radios/com1_standy_flip')
 
--- G1000 ENT (Button, bit 13)
+-- G1000 ENT (Button, bit 9)
 cfmega:CfgCmd(9, 'sim/GPS/g1000n1_ent')
 
 -- OUTPUT data
@@ -41,5 +45,6 @@ cfmega:CfgCmd(9, 'sim/GPS/g1000n1_ent')
 cfmega:GetEngRpm('sim/cockpit2/engine/indicators/engine_speed_rpm[0]', 1)
 
 GlobalFrameLoopManager:add(function()
+	cfmega:PollAnalogs()
 	cfmega:SetEngRpm()
 end)

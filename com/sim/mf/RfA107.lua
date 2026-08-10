@@ -8,7 +8,7 @@
 local RfA107 = oop.class(com.sim.mf.MobiFlight)
 function RfA107:init()
 	-- MF bridge assigns qmdev_id at connect (see log). Fallback: ProductName + ModuleSerial from JSON.
-	self.QmdevId = 0x XXXXXX
+	self.QmdevId = 0x500002
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_rfa107 == nil then
 		_G.ilua_hw_assigned_rfa107 = 0
