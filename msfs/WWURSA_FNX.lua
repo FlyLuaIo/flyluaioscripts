@@ -49,19 +49,19 @@ wwursa:CfgRpn(38, '0 (>L:A_FC_SPEEDBRAKE)', '1 (>L:A_FC_SPEEDBRAKE)')
 -- Analog axes (throttle / spoiler) stay in sim / HID assignment — not CfgRpn
 
 --====backlight / LEDs
-wwursa:GetBkl('(L:A_PED_LIGHTING_PEDESTAL)', 100)
-wwursa:GetMaker('(L:A_FCU_LIGHTING_TEXT, Number)', 100)
+wwursa:GetBkl('(L:A_PED_LIGHTING_PEDESTAL)', 250)
 wwursa:GetFault1('(L:I_ENG_FAULT_1)')
 wwursa:GetFire1('(L:I_ENG_FIRE_1)')
 wwursa:GetFault2('(L:I_ENG_FAULT_2)')
 wwursa:GetFire2('(L:I_ENG_FIRE_2)')
 wwursa:GetVibL('0')
 wwursa:GetVibR('0')
+wwursa:GetLcdBkl('(L:A_FCU_LIGHTING_TEXT, Number)', 250)
 
 --====LCD
 local dr_trim = iDataRef:New('(L:N_FC_RUDDER_TRIM_DECIMAL, Number)')
 local dr_test = iDataRef:New('(L:S_OH_IN_LT_ANN_LT)') -- 0: DIM 1: BRT 2: test
-local dr_power = iDataRef:New('(L:B_FCU_POWER, Number)')
+local dr_power = iDataRef:New('(L:B_ELEC_BUS_POWER_AC_ESS, Bool)')
 
 function Wwursa_FNX_LCD_Loop()
 	-- mfproj: (L:N_FC_RUDDER_TRIM_DECIMAL) 10 /
@@ -70,7 +70,7 @@ function Wwursa_FNX_LCD_Loop()
 end
 
 GlobalFrameLoopManager:add(function()
-	-- expert code: cold and dark
+--[[ 	-- expert code: cold and dark
 	local b_power
 	if dr_power:ChangedUpdate() then
 		b_power = dr_power:GetOld()
@@ -103,10 +103,10 @@ GlobalFrameLoopManager:add(function()
 
 	if b_test == 2 then
 		return
-	end
+	end ]]
 
 	wwursa:SetBkl()
-	wwursa:SetMaker()
+	wwursa:SetLcdBkl()
 	Wwursa_FNX_LCD_Loop()
 	wwursa:Setleds()
 end)
