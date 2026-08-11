@@ -58,8 +58,9 @@ wwpap3:CfgRpn(32, '(L:switch_406_73X) 0 == if{ 40601 (>K:ROTOR_BRAKE) }')
 
 -- Bank angle (Buttons 34..38 → bits 33..37); targets 0/10/20/30/40 per mfproj
 local function wwpap3_pmdg_bank_rpn(target)
-	return string.format(
-		'%d (L:switch_389_73X,number) - 10 div s0 :1 l0 0 > if{ 38902 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 38901 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }',
+	return string.format('%d (L:switch_389_73X,number) - 10 div s0 :1'
+		.. ' l0 0 > if{ 38902 (>K:ROTOR_BRAKE) l0 -- s0 g1 }'
+		.. ' l0 0 < if{ 38901 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }',
 		target)
 end
 wwpap3:CfgRpn(33, wwpap3_pmdg_bank_rpn(0))
@@ -143,39 +144,53 @@ local wwpap3_was_test = false
 GlobalFrameLoopManager:add(function()
 	local hasPower = dr_power:Get() ~= 0
 	local testMode = dr_test:Get() or 50 -- 0 test, 50 normal, 100 dim (PMDG)
+	local poweredChanged = (hasPower == true) ~= wwpap3_was_powered
 
-	-- Use panel built-in backlight methods (with change detection)
-	if hasPower then
-		if not wwpap3_was_powered then
-			-- power restore / first frame: force all LEDs to re-sync once
-			wwpap3_was_powered = true
+	if not hasPower then
+		-- power-loss edge only: kill all LEDs/LCD once (no per-frame HID spam)
+		if wwpap3_was_powered then
+			wwpap3_was_powered = false
 			wwpap3_was_test = false
-			wwpap3:FreshBits()
+			wwpap3:Setleds(0, 0)
+			wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
 		end
-		wwpap3:SetBkl()
-		wwpap3:SetLcdBkl()
-		wwpap3:SetLedBkl()
-	else
-		wwpap3_was_powered = false
-		wwpap3_was_test = false
-		wwpap3:Setleds(0, 0)
-		wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
 		return
 	end
 
+	if not wwpap3_was_powered then
+		-- power restore / first frame: force all LEDs to re-sync once
+		wwpap3_was_powered = true
+		wwpap3_was_test = false
+		wwpap3:FreshBits()
+	end
+
+	-- backlight channels live outside Bits: invalidate on power edge so
+	-- ChangedUpdate re-sends even when BL_MainCA never dropped
+	if poweredChanged then
+		wwpap3.d_bkl:Invalid()
+		wwpap3.d_lcdbkl:Invalid()
+		wwpap3.d_ledbkl:Invalid()
+	end
+	wwpap3:SetBkl()
+	wwpap3:SetLcdBkl()
+	wwpap3:SetLedBkl()
+
 	-- Test mode (mfproj TST LGT: 9 mode annunciators + LCD test)
 	if testMode == 0 then
-		wwpap3_was_test = true
-		wwpap3:SetN1(0, 1)
-		wwpap3:SetSpeed(0, 1)
-		wwpap3:SetVnav(0, 1)
-		wwpap3:SetHdgSel(0, 1)
-		wwpap3:SetVorLoc(0, 1)
-		wwpap3:SetApp(0, 1)
-		wwpap3:SetAltHld(0, 1)
-		wwpap3:SetLnav(0, 1)
-		wwpap3:SetLvlChg(0, 1)
-		wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })
+		-- test entry edge only: explicit Set*(valbase, val) bypasses change detection
+		if not wwpap3_was_test then
+			wwpap3_was_test = true
+			wwpap3:SetN1(0, 1)
+			wwpap3:SetSpeed(0, 1)
+			wwpap3:SetVnav(0, 1)
+			wwpap3:SetHdgSel(0, 1)
+			wwpap3:SetVorLoc(0, 1)
+			wwpap3:SetApp(0, 1)
+			wwpap3:SetAltHld(0, 1)
+			wwpap3:SetLnav(0, 1)
+			wwpap3:SetLvlChg(0, 1)
+			wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })
+		end
 		return
 	elseif wwpap3_was_test then
 		-- leaving test: force all annunciators to re-sync
