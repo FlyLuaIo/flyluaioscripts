@@ -1,7 +1,7 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-08-11
 -- WinWing PAP3 MCP for PMDG 737 (USB HID WwPap3)
--- MSFS RPN from: PMDG 737 WINWING PAP3 MCP abd PFP3N.mfproj (PMDG737_WinWingMCP only)
+-- MSFS RPN from: PMDG-737.mfproj (WINCTRL 3N PAP only)
 -- *****************************************************************
 
 if ilua_require_pmdg_737() then return end
@@ -46,14 +46,15 @@ wwpap3:CfgRpn(25, '40908 (>K:ROTOR_BRAKE)') -- R CRS DEC
 wwpap3:CfgRpn(26, '40907 (>K:ROTOR_BRAKE)') -- R CRS INC
 
 -- FD Capt / FO maintained (Buttons 28..31 → bits 27..30)
--- Sync: ON position turns on if off; OFF turns off if on (mfproj RPN was name-swapped)
+-- PMDG-737.mfproj guards: Button 28/30 fire when switch==100, Button 29/31 when ==0
 wwpap3:CfgRpn(27, '(L:switch_378_73X, number) 0 != if{ 37801 (>K:ROTOR_BRAKE) }')
 wwpap3:CfgRpn(28, '(L:switch_378_73X, number) 0 == if{ 37801 (>K:ROTOR_BRAKE) }')
 wwpap3:CfgRpn(29, '(L:switch_407_73X, number) 0 != if{ 40701 (>K:ROTOR_BRAKE) }')
 wwpap3:CfgRpn(30, '(L:switch_407_73X, number) 0 == if{ 40701 (>K:ROTOR_BRAKE) }')
 
--- A/P disengage (Button 33 → bit 32)
-wwpap3:CfgRpn(32, '40601 (>K:ROTOR_BRAKE)')
+-- A/P disengage paddle (Button 32 Up / Button 33 Down → bits 31/32)
+wwpap3:CfgRpn(31, '(L:switch_406_73X) 100 == if{ 40601 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(32, '(L:switch_406_73X) 0 == if{ 40601 (>K:ROTOR_BRAKE) }')
 
 -- Bank angle (Buttons 34..38 → bits 33..37); targets 0/10/20/30/40 per mfproj
 local function wwpap3_pmdg_bank_rpn(target)
@@ -92,9 +93,9 @@ wwpap3:GetCwsB('(L:switch_4051_73X, number) 0 >')
 wwpap3:GetAtArm('(L:switch_3801_73X, number) 0 >')
 wwpap3:GetMaCapt('(L:ngx_MCP_FDLeft, Number)')
 wwpap3:GetMaFo('(L:ngx_MCP_FDRight, Number)')
-wwpap3:GetAtSol('(L:switch_380_73X, number)')
+wwpap3:GetAtSol('(L:switch_3801_73X, number) 0 >') -- mfproj Solenoid
 
---====backlight (use panel built-in change detection)
+--====backlight (mfproj: BKL=BL_MainCA, LCD/LED=100% when battery on)
 wwpap3:GetBkl('(L:BL_MainCA, number)', 255)
 wwpap3:GetLcdBkl('(L:BL_MainCA, number)', 255)
 wwpap3:GetLedBkl('(L:BL_MainCA, number)', 255)
@@ -137,6 +138,7 @@ else
 end
 
 local wwpap3_was_powered = false
+local wwpap3_was_test = false
 
 GlobalFrameLoopManager:add(function()
 	local hasPower = dr_power:Get() ~= 0
@@ -147,6 +149,7 @@ GlobalFrameLoopManager:add(function()
 		if not wwpap3_was_powered then
 			-- power restore / first frame: force all LEDs to re-sync once
 			wwpap3_was_powered = true
+			wwpap3_was_test = false
 			wwpap3:FreshBits()
 		end
 		wwpap3:SetBkl()
@@ -154,15 +157,30 @@ GlobalFrameLoopManager:add(function()
 		wwpap3:SetLedBkl()
 	else
 		wwpap3_was_powered = false
+		wwpap3_was_test = false
+		wwpap3:Setleds(0, 0)
 		wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
 		return
 	end
 
-	-- Test mode
+	-- Test mode (mfproj TST LGT: 9 mode annunciators + LCD test)
 	if testMode == 0 then
-		wwpap3:Setleds(0, 1)
+		wwpap3_was_test = true
+		wwpap3:SetN1(0, 1)
+		wwpap3:SetSpeed(0, 1)
+		wwpap3:SetVnav(0, 1)
+		wwpap3:SetHdgSel(0, 1)
+		wwpap3:SetVorLoc(0, 1)
+		wwpap3:SetApp(0, 1)
+		wwpap3:SetAltHld(0, 1)
+		wwpap3:SetLnav(0, 1)
+		wwpap3:SetLvlChg(0, 1)
 		wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })
 		return
+	elseif wwpap3_was_test then
+		-- leaving test: force all annunciators to re-sync
+		wwpap3_was_test = false
+		wwpap3:FreshBits()
 	end
 
 	-- Update LED indicators (panel internal change detection)
