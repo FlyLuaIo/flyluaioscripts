@@ -302,16 +302,30 @@ function Wwursa:Setleds(valbase, val)
 	self:SetVibR(valbase, val)
 end
 -- ========
--- PAC LCDBKL (PAC_BKL is auto-mirrored by SendLedCmd when LedId < 3)
-function Wwursa:GetLcdBkl(dpath, revert, base)
-	self:GetBit(self.PAC_LCDBKL, dpath, revert, base)
+-- PAC LCDBKL (dimmable, uses SendLedCmdPac for PAC module)
+function Wwursa:GetLcdBkl(dpath, scale)
+	self.d_lcdbkl_scale = scale == nil and 30 or scale
+	self.d_lcdbkl = iDataRef:New(dpath)
 end
 
-function Wwursa:SetLcdBkl(valbase, val)
-	self:SendBit(self.PAC_LCDBKL, valbase, val)
+function Wwursa:SetLcdBkl(val)
+	if val == nil then
+		if self.d_lcdbkl:ChangedUpdate() then
+			val = self.d_lcdbkl:GetOld() * self.d_lcdbkl_scale
+			if val < 0 then val = 0 elseif val > 255 then val = 255 end
+			self:SendLedCmdPac(self.PAC_LCDBKL, math.floor(val))
+		end
+	else
+		if val < 0 then val = 0 elseif val > 255 then val = 255 end
+		self:SendLedCmdPac(self.PAC_LCDBKL, math.floor(val))
+	end
 end
 
-function Wwursa:Setpac(valbase, val)
-	self:SetLcdBkl(valbase, val)
+function Wwursa:FreshLcdBkl()
+	self.d_lcdbkl:Invalid(-1)
+end
+
+function Wwursa:Setpac(val)
+	self:SetLcdBkl(val)
 end
 return Wwursa

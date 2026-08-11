@@ -14,37 +14,37 @@ if not wwursa then return end
 uluaLog('Wwursa for Fenix')
 
 -------------------- Input Keys Binding ---------------------
--- ENG MASTER 1/2 (Buttons 1..4 → bits 0..3)
+-- ENG MASTER 1/2 (Buttons 0..3 → bits 0..3)
 wwursa:CfgRpn(0, '1 (>L:S_ENG_MASTER_1)')
 wwursa:CfgRpn(1, '0 (>L:S_ENG_MASTER_1)')
 wwursa:CfgRpn(2, '1 (>L:S_ENG_MASTER_2)')
 wwursa:CfgRpn(3, '0 (>L:S_ENG_MASTER_2)')
--- ENG MODE CRANK / NORM / START (Buttons 7..9 → bits 6..8)
+-- ENG MODE CRANK / NORM / START (Buttons 6..8 → bits 6..8)
 wwursa:CfgRpn(6, '0 (>L:S_ENG_MODE)')
 wwursa:CfgRpn(7, '1 (>L:S_ENG_MODE)')
 wwursa:CfgRpn(8, '2 (>L:S_ENG_MODE)')
--- A/THR disconnect L/R (Buttons 10..11 → bits 9..10)
+-- A/THR disconnect L/R (Buttons 9..10 → bits 9..10)
 wwursa:CfgRpn(9,
 	'(L:S_FC_THR_INST_DISCONNECT1) ++ (>L:S_FC_THR_INST_DISCONNECT1)',
 	'(L:S_FC_THR_INST_DISCONNECT1) s0 2 % 0 != if{ l0 ++ (>L:S_FC_THR_INST_DISCONNECT1) }')
 wwursa:CfgRpn(10,
 	'(L:S_FC_THR_INST_DISCONNECT2) ++ (>L:S_FC_THR_INST_DISCONNECT2)',
 	'(L:S_FC_THR_INST_DISCONNECT2) s0 2 % 0 != if{ l0 ++ (>L:S_FC_THR_INST_DISCONNECT2) }')
--- Rudder trim RST / L / R (Buttons 25/26/28 → bits 24/25/27)
+-- Rudder trim RST / L / R (Buttons 24/25/27 → bits 24/25/27)
 wwursa:CfgRpn(24, '1 (>L:S_FC_RUDDER_TRIM_RESET)', '0 (>L:S_FC_RUDDER_TRIM_RESET)')
 -- rocker: press direction, release center (mfproj release kept same value — corrected)
 wwursa:CfgRpn(25, '0 (>L:S_FC_RUDDER_TRIM)', '1 (>L:S_FC_RUDDER_TRIM)')
 wwursa:CfgRpn(27, '2 (>L:S_FC_RUDDER_TRIM)', '1 (>L:S_FC_RUDDER_TRIM)')
--- Parking brake OFF / ON (Buttons 29..30 → bits 28..29)
+-- Parking brake OFF / ON (Buttons 28..29 → bits 28..29)
 wwursa:CfgRpn(28, '0 (>L:S_MIP_PARKING_BRAKE)')
 wwursa:CfgRpn(29, '1 (>L:S_MIP_PARKING_BRAKE)')
--- Flaps 4..0 (Buttons 31..35 → bits 30..34)
+-- Flaps 4..0 (Buttons 30..34 → bits 30..34)
 wwursa:CfgRpn(30, '4 (>L:S_FC_FLAPS)')
 wwursa:CfgRpn(31, '3 (>L:S_FC_FLAPS)')
 wwursa:CfgRpn(32, '2 (>L:S_FC_FLAPS)')
 wwursa:CfgRpn(33, '1 (>L:S_FC_FLAPS)')
 wwursa:CfgRpn(34, '0 (>L:S_FC_FLAPS)')
--- Spoiler arm while held (Button 39 → bit 38)
+-- Spoiler arm while held (Button 38 → bit 38)
 wwursa:CfgRpn(38, '0 (>L:A_FC_SPEEDBRAKE)', '1 (>L:A_FC_SPEEDBRAKE)')
 -- Analog axes (throttle / spoiler) stay in sim / HID assignment — not CfgRpn
 
@@ -54,8 +54,8 @@ wwursa:GetFault1('(L:I_ENG_FAULT_1)')
 wwursa:GetFire1('(L:I_ENG_FIRE_1)')
 wwursa:GetFault2('(L:I_ENG_FAULT_2)')
 wwursa:GetFire2('(L:I_ENG_FIRE_2)')
-wwursa:GetVibL('0')
-wwursa:GetVibR('0')
+wwursa:GetVibL('(A:SIM ON GROUND,Bool)')
+wwursa:GetVibR('(A:SIM ON GROUND,Bool)')
 wwursa:GetLcdBkl('(L:A_FCU_LIGHTING_TEXT, Number)', 250)
 
 --====LCD
