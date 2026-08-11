@@ -183,8 +183,11 @@ function Wwursa:formatTrimText(trim, test)
 	trim = tonumber(trim) or 0
 	local v = math.floor(math.abs(trim) * 10 + 0.5) / 10
 	local side = (trim < 0) and 'L' or 'R'
-	local gap = (v < 10) and ' ' or ''
-	return string.format('%s%s%.1f', side, gap, v)
+	if v < 10 then
+		return string.format('%s%.1f', side, v)
+	else
+		return string.format('%s%d.', side, math.floor(v))
+	end
 end
 
 -- ========
