@@ -47,10 +47,10 @@ wwpap3:CfgRpn(26, '40907 (>K:ROTOR_BRAKE)') -- R CRS INC
 
 -- FD Capt / FO maintained (Buttons 28..31 → bits 27..30)
 -- Sync: ON position turns on if off; OFF turns off if on (mfproj RPN was name-swapped)
-wwpap3:CfgRpn(27, '(L:switch_378_73X, number) 0 == if{ 37801 (>K:ROTOR_BRAKE) }')
-wwpap3:CfgRpn(28, '(L:switch_378_73X, number) 0 != if{ 37801 (>K:ROTOR_BRAKE) }')
-wwpap3:CfgRpn(29, '(L:switch_407_73X, number) 0 == if{ 40701 (>K:ROTOR_BRAKE) }')
-wwpap3:CfgRpn(30, '(L:switch_407_73X, number) 0 != if{ 40701 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(27, '(L:switch_378_73X, number) 0 != if{ 37801 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(28, '(L:switch_378_73X, number) 0 == if{ 37801 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(29, '(L:switch_407_73X, number) 0 != if{ 40701 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(30, '(L:switch_407_73X, number) 0 == if{ 40701 (>K:ROTOR_BRAKE) }')
 
 -- A/P disengage (Button 33 → bit 32)
 wwpap3:CfgRpn(32, '40601 (>K:ROTOR_BRAKE)')
@@ -136,16 +136,24 @@ else
 	dr_digit_b = iDataRef:New('(L:ngx_SPDsymbols, number)')
 end
 
+local wwpap3_was_powered = false
+
 GlobalFrameLoopManager:add(function()
 	local hasPower = dr_power:Get() ~= 0
 	local testMode = dr_test:Get() or 50 -- 0 test, 50 normal, 100 dim (PMDG)
 
 	-- Use panel built-in backlight methods (with change detection)
 	if hasPower then
+		if not wwpap3_was_powered then
+			-- power restore / first frame: force all LEDs to re-sync once
+			wwpap3_was_powered = true
+			wwpap3:FreshBits()
+		end
 		wwpap3:SetBkl()
 		wwpap3:SetLcdBkl()
 		wwpap3:SetLedBkl()
 	else
+		wwpap3_was_powered = false
 		wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
 		return
 	end
@@ -176,7 +184,6 @@ GlobalFrameLoopManager:add(function()
 	wwpap3:SetMaCapt()
 	wwpap3:SetMaFo()
 	wwpap3:SetAtSol()
-	wwpap3:Setleds()
 
 	-- LCD update with change detection
 	local spd = dr_spd:Get() or 0
