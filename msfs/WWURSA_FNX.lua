@@ -48,48 +48,67 @@ wwursa:CfgRpn(34, '0 (>L:S_FC_FLAPS)')
 wwursa:CfgRpn(38, '0 (>L:A_FC_SPEEDBRAKE)', '1 (>L:A_FC_SPEEDBRAKE)')
 -- Analog axes (throttle / spoiler) stay in sim / HID assignment — not CfgRpn
 
--------------------- Output ---------------------
-local dr_bkl = iDataRef:New('(L:A_PED_LIGHTING_PEDESTAL)')
-local dr_lcd_pwr = iDataRef:New('(L:B_FCU_POWER, Number)')
-local dr_lcd_lit = iDataRef:New('(L:A_FCU_LIGHTING_TEXT, Number)')
-local dr_annun = iDataRef:New('(L:S_OH_IN_LT_ANN_LT)') -- 0 DIM 1 BRT 2 test
+--====backlight / LEDs
+wwursa:GetBkl('(L:A_PED_LIGHTING_PEDESTAL)')
+wwursa:GetMaker('(L:A_FCU_LIGHTING_TEXT, Number)')
+wwursa:GetFault1('(L:I_ENG_FAULT_1)')
+wwursa:GetFire1('(L:I_ENG_FIRE_1)')
+wwursa:GetFault2('(L:I_ENG_FAULT_2)')
+wwursa:GetFire2('(L:I_ENG_FIRE_2)')
+wwursa:GetVibL('0')
+wwursa:GetVibR('0')
+
+--====LCD
 local dr_trim = iDataRef:New('(L:N_FC_RUDDER_TRIM_DECIMAL, Number)')
-local dr_fault1 = iDataRef:New('(L:I_ENG_FAULT_1)')
-local dr_fire1 = iDataRef:New('(L:I_ENG_FIRE_1)')
-local dr_fault2 = iDataRef:New('(L:I_ENG_FAULT_2)')
-local dr_fire2 = iDataRef:New('(L:I_ENG_FIRE_2)')
+local dr_test = iDataRef:New('(L:S_OH_IN_LT_ANN_LT)') -- 0: DIM 1: BRT 2: test
+local dr_power = iDataRef:New('(L:B_FCU_POWER, Number)')
 
-GlobalFrameLoopManager:add(function()
-	local test = (dr_annun:Get() or 0) == 2
-	local ped = dr_bkl:Get() or 0
-	if ped < 0 then ped = 0 elseif ped > 1 then ped = 1 end
-	local lcdPwr = dr_lcd_pwr:Get() or 0
-	local lcdLit = dr_lcd_lit:Get() or 0
-	if lcdLit < 0 then lcdLit = 0 elseif lcdLit > 1 then lcdLit = 1 end
-	local hasLcd = lcdPwr ~= 0
-	local bkl = math.floor(ped * 255)
-	local lcdBkl = hasLcd and math.floor(lcdLit * 255) or 0
-
-	wwursa:SendLedCmd(wwursa.LEDS_BKL, bkl)
-	wwursa:SendLedCmd(wwursa.LEDS_MAKER, lcdBkl)
-
-	if test then
-		wwursa:SendLedCmd(wwursa.LEDS_FAULT1, 1)
-		wwursa:SendLedCmd(wwursa.LEDS_FIRE1, 1)
-		wwursa:SendLedCmd(wwursa.LEDS_FAULT2, 1)
-		wwursa:SendLedCmd(wwursa.LEDS_FIRE2, 1)
-		wwursa:setLcdText(wwursa:formatTrimText(0, true))
-		return
-	end
-
-	wwursa:SendLedCmd(wwursa.LEDS_FAULT1, ((dr_fault1:Get() or 0) ~= 0) and 1 or 0)
-	wwursa:SendLedCmd(wwursa.LEDS_FIRE1, ((dr_fire1:Get() or 0) ~= 0) and 1 or 0)
-	wwursa:SendLedCmd(wwursa.LEDS_FAULT2, ((dr_fault2:Get() or 0) ~= 0) and 1 or 0)
-	wwursa:SendLedCmd(wwursa.LEDS_FIRE2, ((dr_fire2:Get() or 0) ~= 0) and 1 or 0)
-	wwursa:SendLedCmd(wwursa.LEDS_VIBL, 0)
-	wwursa:SendLedCmd(wwursa.LEDS_VIBR, 0)
-
+function Wwursa_FNX_LCD_Loop()
 	-- mfproj: (L:N_FC_RUDDER_TRIM_DECIMAL) 10 /
 	local trim = (dr_trim:Get() or 0) / 10
 	wwursa:setLcdText(wwursa:formatTrimText(trim, false))
+end
+
+GlobalFrameLoopManager:add(function()
+	-- expert code: cold and dark
+	local b_power
+	if dr_power:ChangedUpdate() then
+		b_power = dr_power:GetOld()
+		if b_power == 0 then
+			wwursa:SetBkl(0, true)
+			wwursa:Setleds(0, true)
+			wwursa:FreshBits()
+		end
+	else
+		b_power = dr_power:Get()
+	end
+	if b_power == 0 then
+		return
+	end
+
+	-- expert code: test mode
+	local b_test
+	if dr_test:ChangedUpdate() then
+		b_test = dr_test:GetOld()
+		if b_test == 2 then
+			wwursa:setLcdText(wwursa:formatTrimText(0, true))
+			wwursa:SetBkl()
+			wwursa:Setleds(0, 1)
+		elseif b_test == 0 then
+			wwursa:SetMaker(30, true)
+		else
+			wwursa:FreshBits()
+		end
+	else
+		b_test = dr_test:Get()
+	end
+
+	if b_test == 2 then
+		return
+	end
+
+	wwursa:SetBkl()
+	wwursa:SetMaker()
+	Wwursa_FNX_LCD_Loop()
+	wwursa:Setleds()
 end)
