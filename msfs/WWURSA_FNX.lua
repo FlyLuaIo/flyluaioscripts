@@ -49,14 +49,16 @@ wwursa:CfgRpn(38, '0 (>L:A_FC_SPEEDBRAKE)', '1 (>L:A_FC_SPEEDBRAKE)')
 -- Analog axes (throttle / spoiler) stay in sim / HID assignment — not CfgRpn
 
 --====backlight / LEDs
+-- GetOverallBkl drives Throttle ch2 (OVERALL brightness master gate) which mirrors
+-- to PAC ch2 (LCD brightness) via SendLedCmd; do NOT add GetLcdBkl (same target)
 wwursa:GetBkl('(L:A_PED_LIGHTING_PEDESTAL)', 250)
+wwursa:GetOverallBkl('(L:A_PED_LIGHTING_PEDESTAL)', 250)
 wwursa:GetFault1('(L:I_ENG_FAULT_1)')
 wwursa:GetFire1('(L:I_ENG_FIRE_1)')
 wwursa:GetFault2('(L:I_ENG_FAULT_2)')
 wwursa:GetFire2('(L:I_ENG_FIRE_2)')
 wwursa:GetVibL('(A:SIM ON GROUND,Bool)')
 wwursa:GetVibR('(A:SIM ON GROUND,Bool)')
-wwursa:GetLcdBkl('(L:A_FCU_LIGHTING_TEXT, Number)', 250)
 
 --====LCD
 local dr_trim = iDataRef:New('(L:N_FC_RUDDER_TRIM_DECIMAL, Number)')
@@ -93,7 +95,7 @@ GlobalFrameLoopManager:add(function()
 			wwursa:setLcdText(wwursa:formatTrimText(0, true))
 			wwursa:Setleds(0, 1)
 		elseif b_test == 0 then
-			wwursa:SetMaker(30)
+			wwursa:SetOverallBkl(30)
 		else
 			wwursa:FreshBits()
 		end
@@ -105,8 +107,6 @@ GlobalFrameLoopManager:add(function()
 		return
 	end ]]
 
-	wwursa:SetBkl()
-	wwursa:SetLcdBkl()
 	Wwursa_FNX_LCD_Loop()
-	wwursa:Setleds()
+	wwursa:Setleds() -- covers SetBkl/SetOverallBkl (+PAC mirror) + all boolean LEDs
 end)

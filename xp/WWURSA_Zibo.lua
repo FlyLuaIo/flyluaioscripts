@@ -80,7 +80,7 @@ GlobalFrameLoopManager:add(function()
 	if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
 	local bkl = hasPower and math.floor(ratio * 255) or 0
 	wwursa:SendLedCmd(wwursa.LEDS_BKL, bkl)
-	wwursa:SendLedCmd(wwursa.LEDS_MAKER, hasPower and 255 or 0)
+	wwursa:SendLedCmd(wwursa.LEDS_OVERALLBKL, hasPower and 255 or 0)
 
 	wwursa:SendLedCmd(wwursa.LEDS_FAULT1, 0)
 	wwursa:SendLedCmd(wwursa.LEDS_FIRE1, dr_fire1:Get() > 0 and 1 or 0)

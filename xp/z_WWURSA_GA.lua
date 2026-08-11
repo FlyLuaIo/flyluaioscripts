@@ -11,7 +11,7 @@ if not wwursa then return end
 uluaLog('Wwursa for GA')
 --[[
 wwursa:GetBkl('')
-wwursa:GetMaker('')
+wwursa:GetOverallBkl('')
 wwursa:GetFault1('')
 wwursa:GetFire1('')
 wwursa:GetFault2('')

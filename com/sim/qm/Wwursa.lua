@@ -14,7 +14,7 @@ function Wwursa:init()
 		self.LcdText = nil
 		_G.ilua_hw_assigned_wwursa = 0
 		self.LEDS_BKL = 0
-		self.LEDS_MAKER = 2
+		self.LEDS_OVERALLBKL = 2 -- OVERALL_LEDS_AND_LCD_BRIGHTNESS master gate (JSON name "Maker")
 		self.LEDS_FAULT1 = 3
 		self.LEDS_FIRE1 = 4
 		self.LEDS_FAULT2 = 5
@@ -23,7 +23,7 @@ function Wwursa:init()
 		self.LEDS_VIBR = 16
 		self.ledIds = {
 			self.LEDS_BKL,
-			self.LEDS_MAKER,
+			self.LEDS_OVERALLBKL,
 			self.LEDS_FAULT1,
 			self.LEDS_FIRE1,
 			self.LEDS_FAULT2,
@@ -33,7 +33,7 @@ function Wwursa:init()
 		}
 		self.PAC_BKL = 0
 		self.PAC_LCDBKL = 2
-		self.ledIds = {
+		self.pacIds = {
 			self.PAC_BKL,
 			self.PAC_LCDBKL
 		}
@@ -79,12 +79,16 @@ function Wwursa.Open(...)
 end
 
 function Wwursa:SendLedCmdPac(LedId, value)
+	value = math.floor(value)
+	if value < 0 then value = 0 elseif value > 255 then value = 255 end
 	local combinedValue = (LedId * 256) + value
 	uluaSet(_G.idr_wwursa_hid_pac_ledcmd, combinedValue)
 end
 
 -- Throttle leds; dimming channels (<3) also mirror to PAC (WINCTRL setLedBrightness)
 function Wwursa:SendLedCmd(LedId, value)
+	value = math.floor(value)
+	if value < 0 then value = 0 elseif value > 255 then value = 255 end
 	local combinedValue = (LedId * 256) + value
 	uluaSet(_G.idr_wwursa_hid_leds_ledcmd, combinedValue)
 	if LedId < 3 then
@@ -212,25 +216,25 @@ function Wwursa:FreshBkl()
 	self.d_bkl:Invalid(-1)
 end
 -- ========
--- Maker / LCD backlight (dimmable, LedId < 3 mirrors to PAC via SendLedCmd)
-function Wwursa:GetMaker(dpath, scale)
-	self.d_mkr_scale = scale == nil and 30 or scale
-	self.d_mkr = iDataRef:New(dpath)
+-- Overall brightness master gate (dimmable, LedId < 3 mirrors to PAC via SendLedCmd)
+function Wwursa:GetOverallBkl(dpath, scale)
+	self.d_ovb_scale = scale == nil and 30 or scale
+	self.d_ovb = iDataRef:New(dpath)
 end
 
-function Wwursa:SetMaker(val)
+function Wwursa:SetOverallBkl(val)
 	if val == nil then
-		if self.d_mkr:ChangedUpdate() then
-			val = self.d_mkr:GetOld() * self.d_mkr_scale
-			self:SendLedCmd(self.LEDS_MAKER, val)
+		if self.d_ovb:ChangedUpdate() then
+			val = self.d_ovb:GetOld() * self.d_ovb_scale
+			self:SendLedCmd(self.LEDS_OVERALLBKL, val)
 		end
 	else
-		self:SendLedCmd(self.LEDS_MAKER, val)
+		self:SendLedCmd(self.LEDS_OVERALLBKL, val)
 	end
 end
 
-function Wwursa:FreshMaker()
-	self.d_mkr:Invalid(-1)
+function Wwursa:FreshOverallBkl()
+	self.d_ovb:Invalid(-1)
 end
 -- ========
 -- LEDS FAULT1
@@ -288,13 +292,13 @@ function Wwursa:SetVibR(valbase, val)
 end
 
 function Wwursa:Setleds(valbase, val)
-	-- BKL / MAKER: custom dimmable channels (single-arg Set*)
+	-- BKL / OVERALLBKL: custom dimmable channels (single-arg Set*)
 	if val == nil then
 		self:SetBkl()
-		self:SetMaker()
+		self:SetOverallBkl()
 	else
 		self:SetBkl(ilua_bool_ternary(val, valbase))
-		self:SetMaker(ilua_bool_ternary(val, valbase))
+		self:SetOverallBkl(ilua_bool_ternary(val, valbase))
 	end
 	-- Boolean LEDs: standard SendBit path
 	self:SetFault1(valbase, val)

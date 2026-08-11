@@ -70,7 +70,7 @@ GlobalFrameLoopManager:add(function()
 	local hasPower = dr_power:Get() ~= 0
 	local bkl = hasPower and math.floor(math.max(0, math.min(1, dr_bkl:Get())) * 255) or 0
 	wwursa:SendLedCmd(wwursa.LEDS_BKL, bkl)
-	wwursa:SendLedCmd(wwursa.LEDS_MAKER, hasPower and 255 or 0)
+	wwursa:SendLedCmd(wwursa.LEDS_OVERALLBKL, hasPower and 255 or 0)
 
 	wwursa:SendLedCmd(wwursa.LEDS_FAULT1, dr_fault1:Get() ~= 0 and 1 or 0)
 	wwursa:SendLedCmd(wwursa.LEDS_FAULT2, dr_fault2:Get() ~= 0 and 1 or 0)
