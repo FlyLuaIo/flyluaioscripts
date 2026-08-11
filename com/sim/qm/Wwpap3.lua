@@ -119,30 +119,54 @@ end
 
 -- ========
 -- LEDS BKL
-function Wwpap3:GetBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_BKL, dpath, revert, base)
+function Wwpap3:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
 end
 
 function Wwpap3:SetBkl(valbase, val)
-	self:SendBit(self.LEDS_BKL, valbase, val)
+	if val == nil then
+		if self.d_bkl:ChangedUpdate() then
+			val = self.d_bkl:GetOld() * self.d_bkl_scale
+			self:SendLedCmd(self.LEDS_BKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_BKL, val)
+	end
 end
 -- ========
 -- LEDS LCDBKL
-function Wwpap3:GetLcdBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_LCDBKL, dpath, revert, base)
+function Wwpap3:GetLcdBkl(dpath, scale)
+	self.d_lcdbkl_scale = scale == nil and 180 or scale
+	self.d_lcdbkl = iDataRef:New(dpath)
 end
 
 function Wwpap3:SetLcdBkl(valbase, val)
-	self:SendBit(self.LEDS_LCDBKL, valbase, val)
+	if val == nil then
+		if self.d_lcdbkl:ChangedUpdate() then
+			val = self.d_lcdbkl:GetOld() * self.d_lcdbkl_scale
+			self:SendLedCmd(self.LEDS_LCDBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_LCDBKL, val)
+	end
 end
 -- ========
 -- LEDS LEDBKL
-function Wwpap3:GetLedBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_LEDBKL, dpath, revert, base)
+function Wwpap3:GetLedBkl(dpath, scale)
+	self.d_ledbkl_scale = scale == nil and 180 or scale
+	self.d_ledbkl = iDataRef:New(dpath)
 end
 
 function Wwpap3:SetLedBkl(valbase, val)
-	self:SendBit(self.LEDS_LEDBKL, valbase, val)
+	if val == nil then
+		if self.d_ledbkl:ChangedUpdate() then
+			val = self.d_ledbkl:GetOld() * self.d_ledbkl_scale
+			self:SendLedCmd(self.LEDS_LEDBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_LEDBKL, val)
+	end
 end
 -- ========
 -- LEDS N1

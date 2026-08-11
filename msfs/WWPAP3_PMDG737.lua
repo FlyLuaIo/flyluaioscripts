@@ -96,7 +96,7 @@ wwpap3:GetAtSol('(L:switch_380_73X, number)')
 
 --====backlight (use panel built-in change detection)
 wwpap3:GetBkl('(L:BL_MainCA, number)', 255)
-wwpap3:GetDigiBkl('(L:BL_MainCA, number)', 255)
+wwpap3:GetLcdBkl('(L:BL_MainCA, number)', 255)
 wwpap3:GetLedBkl('(L:BL_MainCA, number)', 255)
 
 --==== LCD / backlight
@@ -143,13 +143,11 @@ GlobalFrameLoopManager:add(function()
 	-- Use panel built-in backlight methods (with change detection)
 	if hasPower then
 		wwpap3:SetBkl()
-		wwpap3:SetDigiBkl()
+		wwpap3:SetLcdBkl()
 		wwpap3:SetLedBkl()
 	else
-		wwpap3:PowerOff()
-		wwpap3:FreshBkl()
-		wwpap3:FreshDigiBkl()
-		wwpap3:FreshLedBkl()
+		wwpap3:Setleds(0, 0)
+		wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
 		return
 	end
 
