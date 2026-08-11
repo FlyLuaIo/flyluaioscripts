@@ -94,6 +94,11 @@ wwpap3:GetMaCapt('(L:ngx_MCP_FDLeft, Number)')
 wwpap3:GetMaFo('(L:ngx_MCP_FDRight, Number)')
 wwpap3:GetAtSol('(L:switch_380_73X, number)')
 
+--====backlight (use panel built-in change detection)
+wwpap3:GetBkl('(L:BL_MainCA, number)', 255)
+wwpap3:GetDigiBkl('(L:BL_MainCA, number)', 255)
+wwpap3:GetLedBkl('(L:BL_MainCA, number)', 255)
+
 --==== LCD / backlight
 local dr_power
 if uluaFind('pmdg/ng3/data/MCP_indication_powered') then
@@ -101,7 +106,6 @@ if uluaFind('pmdg/ng3/data/MCP_indication_powered') then
 else
 	dr_power = iDataRef:New('pmdg/ng3/data/ELEC_BusPowered[3]')
 end
-local dr_bkl = iDataRef:New('(L:BL_MainCA, number)')
 local dr_test = iDataRef:New('(L:switch_346_73X, number)')
 
 local dr_spd = iDataRef:New('(L:ngx_SPDwindow, number)')
@@ -134,44 +138,50 @@ end
 
 GlobalFrameLoopManager:add(function()
 	local hasPower = dr_power:Get() ~= 0
-	local ratio = dr_bkl:Get() or 0
-	if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
 	local testMode = dr_test:Get() or 50 -- 0 test, 50 normal, 100 dim (PMDG)
-	local bkl = hasPower and math.floor(ratio * 255) or 0
-	if testMode == 100 then
-		bkl = math.floor(bkl / 2)
-	end
-	local ledBkl = hasPower and 180 or 0
-	if testMode == 0 then
-		ledBkl = 255
-	end
-	wwpap3:SendLedCmd(wwpap3.LEDS_BKL, bkl)
-	wwpap3:SendLedCmd(wwpap3.LEDS_LCDBKL, hasPower and 180 or 0)
-	wwpap3:SendLedCmd(wwpap3.LEDS_LEDBKL, ledBkl)
 
+	-- Use panel built-in backlight methods (with change detection)
+	if hasPower then
+		wwpap3:SetBkl()
+		wwpap3:SetDigiBkl()
+		wwpap3:SetLedBkl()
+	else
+		wwpap3:PowerOff()
+		wwpap3:FreshBkl()
+		wwpap3:FreshDigiBkl()
+		wwpap3:FreshLedBkl()
+		return
+	end
+
+	-- Test mode
 	if testMode == 0 then
 		wwpap3:Setleds(0, 1)
-	else
-		wwpap3:SetN1()
-		wwpap3:SetSpeed()
-		wwpap3:SetVnav()
-		wwpap3:SetLvlChg()
-		wwpap3:SetHdgSel()
-		wwpap3:SetLnav()
-		wwpap3:SetVorLoc()
-		wwpap3:SetApp()
-		wwpap3:SetAltHld()
-		wwpap3:SetVs()
-		wwpap3:SetCmdA()
-		wwpap3:SetCwsA()
-		wwpap3:SetCmdB()
-		wwpap3:SetCwsB()
-		wwpap3:SetAtArm()
-		wwpap3:SetMaCapt()
-		wwpap3:SetMaFo()
-		wwpap3:SetAtSol()
+		wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })
+		return
 	end
 
+	-- Update LED indicators (panel internal change detection)
+	wwpap3:SetN1()
+	wwpap3:SetSpeed()
+	wwpap3:SetVnav()
+	wwpap3:SetLvlChg()
+	wwpap3:SetHdgSel()
+	wwpap3:SetLnav()
+	wwpap3:SetVorLoc()
+	wwpap3:SetApp()
+	wwpap3:SetAltHld()
+	wwpap3:SetVs()
+	wwpap3:SetCmdA()
+	wwpap3:SetCwsA()
+	wwpap3:SetCmdB()
+	wwpap3:SetCwsB()
+	wwpap3:SetAtArm()
+	wwpap3:SetMaCapt()
+	wwpap3:SetMaFo()
+	wwpap3:SetAtSol()
+	wwpap3:Setleds()
+
+	-- LCD update with change detection
 	local spd = dr_spd:Get() or 0
 	local spdVisible = true
 	if dr_spd_blank then
@@ -183,8 +193,8 @@ GlobalFrameLoopManager:add(function()
 	end
 
 	wwpap3:setMcpDisplay({
-		displayEnabled = (testMode ~= 0) and hasPower,
-		displayTest = testMode == 0,
+		displayEnabled = hasPower,
+		displayTest = false,
 		showLabels = false,
 		showCourse = true,
 		speed = spd,
