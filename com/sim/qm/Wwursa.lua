@@ -188,22 +188,46 @@ function Wwursa:formatTrimText(trim, test)
 end
 
 -- ========
--- LEDS BKL
-function Wwursa:GetBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_BKL, dpath, revert, base)
+-- Backlight (dimmable, LedId < 3 mirrors to PAC via SendLedCmd)
+function Wwursa:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
 end
 
-function Wwursa:SetBkl(valbase, val)
-	self:SendBit(self.LEDS_BKL, valbase, val)
+function Wwursa:SetBkl(val)
+	if val == nil then
+		if self.d_bkl:ChangedUpdate() then
+			val = self.d_bkl:GetOld() * self.d_bkl_scale
+			self:SendLedCmd(self.LEDS_BKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_BKL, val)
+	end
+end
+
+function Wwursa:FreshBkl()
+	self.d_bkl:Invalid(-1)
 end
 -- ========
--- LEDS MAKER
-function Wwursa:GetMaker(dpath, revert, base)
-	self:GetBit(self.LEDS_MAKER, dpath, revert, base)
+-- Maker / LCD backlight (dimmable, LedId < 3 mirrors to PAC via SendLedCmd)
+function Wwursa:GetMaker(dpath, scale)
+	self.d_mkr_scale = scale == nil and 30 or scale
+	self.d_mkr = iDataRef:New(dpath)
 end
 
-function Wwursa:SetMaker(valbase, val)
-	self:SendBit(self.LEDS_MAKER, valbase, val)
+function Wwursa:SetMaker(val)
+	if val == nil then
+		if self.d_mkr:ChangedUpdate() then
+			val = self.d_mkr:GetOld() * self.d_mkr_scale
+			self:SendLedCmd(self.LEDS_MAKER, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_MAKER, val)
+	end
+end
+
+function Wwursa:FreshMaker()
+	self.d_mkr:Invalid(-1)
 end
 -- ========
 -- LEDS FAULT1
@@ -261,8 +285,15 @@ function Wwursa:SetVibR(valbase, val)
 end
 
 function Wwursa:Setleds(valbase, val)
-	self:SetBkl(valbase, val)
-	self:SetMaker(valbase, val)
+	-- BKL / MAKER: custom dimmable channels (single-arg Set*)
+	if val == nil then
+		self:SetBkl()
+		self:SetMaker()
+	else
+		self:SetBkl(ilua_bool_ternary(val, valbase))
+		self:SetMaker(ilua_bool_ternary(val, valbase))
+	end
+	-- Boolean LEDs: standard SendBit path
 	self:SetFault1(valbase, val)
 	self:SetFire1(valbase, val)
 	self:SetFault2(valbase, val)
@@ -271,16 +302,7 @@ function Wwursa:Setleds(valbase, val)
 	self:SetVibR(valbase, val)
 end
 -- ========
--- PAC BKL
-function Wwursa:GetBkl(dpath, revert, base)
-	self:GetBit(self.PAC_BKL, dpath, revert, base)
-end
-
-function Wwursa:SetBkl(valbase, val)
-	self:SendBit(self.PAC_BKL, valbase, val)
-end
--- ========
--- PAC LCDBKL
+-- PAC LCDBKL (PAC_BKL is auto-mirrored by SendLedCmd when LedId < 3)
 function Wwursa:GetLcdBkl(dpath, revert, base)
 	self:GetBit(self.PAC_LCDBKL, dpath, revert, base)
 end
@@ -290,7 +312,6 @@ function Wwursa:SetLcdBkl(valbase, val)
 end
 
 function Wwursa:Setpac(valbase, val)
-	self:SetBkl(valbase, val)
 	self:SetLcdBkl(valbase, val)
 end
 return Wwursa

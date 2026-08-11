@@ -49,8 +49,8 @@ wwursa:CfgRpn(38, '0 (>L:A_FC_SPEEDBRAKE)', '1 (>L:A_FC_SPEEDBRAKE)')
 -- Analog axes (throttle / spoiler) stay in sim / HID assignment — not CfgRpn
 
 --====backlight / LEDs
-wwursa:GetBkl('(L:A_PED_LIGHTING_PEDESTAL)')
-wwursa:GetMaker('(L:A_FCU_LIGHTING_TEXT, Number)')
+wwursa:GetBkl('(L:A_PED_LIGHTING_PEDESTAL)', 100)
+wwursa:GetMaker('(L:A_FCU_LIGHTING_TEXT, Number)', 100)
 wwursa:GetFault1('(L:I_ENG_FAULT_1)')
 wwursa:GetFire1('(L:I_ENG_FIRE_1)')
 wwursa:GetFault2('(L:I_ENG_FAULT_2)')
@@ -75,7 +75,6 @@ GlobalFrameLoopManager:add(function()
 	if dr_power:ChangedUpdate() then
 		b_power = dr_power:GetOld()
 		if b_power == 0 then
-			wwursa:SetBkl(0, true)
 			wwursa:Setleds(0, true)
 			wwursa:FreshBits()
 		end
@@ -92,10 +91,9 @@ GlobalFrameLoopManager:add(function()
 		b_test = dr_test:GetOld()
 		if b_test == 2 then
 			wwursa:setLcdText(wwursa:formatTrimText(0, true))
-			wwursa:SetBkl()
 			wwursa:Setleds(0, 1)
 		elseif b_test == 0 then
-			wwursa:SetMaker(30, true)
+			wwursa:SetMaker(30)
 		else
 			wwursa:FreshBits()
 		end
