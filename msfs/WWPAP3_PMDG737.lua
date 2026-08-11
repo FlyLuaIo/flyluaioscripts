@@ -146,7 +146,6 @@ GlobalFrameLoopManager:add(function()
 		wwpap3:SetLcdBkl()
 		wwpap3:SetLedBkl()
 	else
-		wwpap3:Setleds(0, 0)
 		wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
 		return
 	end
