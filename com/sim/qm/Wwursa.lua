@@ -292,14 +292,6 @@ function Wwursa:SetVibR(valbase, val)
 end
 
 function Wwursa:Setleds(valbase, val)
-	-- BKL / OVERALLBKL: custom dimmable channels (single-arg Set*)
-	if val == nil then
-		self:SetBkl()
-		self:SetOverallBkl()
-	else
-		self:SetBkl(ilua_bool_ternary(val, valbase))
-		self:SetOverallBkl(ilua_bool_ternary(val, valbase))
-	end
 	-- Boolean LEDs: standard SendBit path
 	self:SetFault1(valbase, val)
 	self:SetFire1(valbase, val)
@@ -332,7 +324,4 @@ function Wwursa:FreshLcdBkl()
 	self.d_lcdbkl:Invalid(-1)
 end
 
-function Wwursa:Setpac(val)
-	self:SetLcdBkl(val)
-end
 return Wwursa

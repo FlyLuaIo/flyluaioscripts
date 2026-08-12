@@ -52,6 +52,7 @@ wwursa:CfgRpn(38, '0 (>L:A_FC_SPEEDBRAKE)', '1 (>L:A_FC_SPEEDBRAKE)')
 -- GetOverallBkl drives Throttle ch2 (OVERALL brightness master gate) which mirrors
 -- to PAC ch2 (LCD brightness) via SendLedCmd; do NOT add GetLcdBkl (same target)
 wwursa:GetBkl('(L:A_PED_LIGHTING_PEDESTAL)', 250)
+wwursa:GetLcdBkl('(L:A_PED_LIGHTING_PEDESTAL)', 250)
 wwursa:GetOverallBkl('(L:A_PED_LIGHTING_PEDESTAL)', 250)
 wwursa:GetFault1('(L:I_ENG_FAULT_1)')
 wwursa:GetFire1('(L:I_ENG_FIRE_1)')
@@ -72,7 +73,7 @@ function Wwursa_FNX_LCD_Loop()
 end
 
 GlobalFrameLoopManager:add(function()
---[[ 	-- expert code: cold and dark
+	--[[ 	-- expert code: cold and dark
 	local b_power
 	if dr_power:ChangedUpdate() then
 		b_power = dr_power:GetOld()
@@ -107,6 +108,9 @@ GlobalFrameLoopManager:add(function()
 		return
 	end ]]
 
-	Wwursa_FNX_LCD_Loop()
+	wwursa:SetBkl()
+	wwursa:SetOverallBkl()
+	wwursa:SetLcdBkl()
 	wwursa:Setleds() -- covers SetBkl/SetOverallBkl (+PAC mirror) + all boolean LEDs
+	Wwursa_FNX_LCD_Loop()
 end)

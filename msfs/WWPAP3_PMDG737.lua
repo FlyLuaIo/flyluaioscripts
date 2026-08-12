@@ -73,8 +73,8 @@ wwpap3:CfgRpn(38, '40107 (>K:ROTOR_BRAKE)') -- VS DEC
 wwpap3:CfgRpn(39, '40108 (>K:ROTOR_BRAKE)') -- VS INC
 
 -- A/T ARM (mfproj duplicated Button 41; PAP3 uses bits 40=ON / 41=OFF like Zibo)
-wwpap3:CfgRpn(40, '(L:switch_380_73X, number) 0 == if{ 38001 (>K:ROTOR_BRAKE) }')
-wwpap3:CfgRpn(41, '(L:switch_380_73X, number) 0 != if{ 38001 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(40, '(L:switch_380_73X, number) 0 != if{ 38001 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(41, '(L:switch_380_73X, number) 0 == if{ 38001 (>K:ROTOR_BRAKE) }')
 
 -------------------- Output LEDs ---------------------
 wwpap3:GetN1('(L:ngx_MCP_N1, number)')
@@ -142,61 +142,52 @@ local wwpap3_was_powered = false
 local wwpap3_was_test = false
 
 GlobalFrameLoopManager:add(function()
-	local hasPower = dr_power:Get() ~= 0
-	local testMode = dr_test:Get() or 50 -- 0 test, 50 normal, 100 dim (PMDG)
-	local poweredChanged = (hasPower == true) ~= wwpap3_was_powered
+	-- 基础功能调试模式：电源同步与测试模式已临时注释
+	-- local hasPower = dr_power:Get() ~= 0
+	-- local testMode = dr_test:Get() or 50 -- 0 test, 50 normal, 100 dim (PMDG)
 
-	if not hasPower then
-		-- power-loss edge only: kill all LEDs/LCD once (no per-frame HID spam)
-		if wwpap3_was_powered then
-			wwpap3_was_powered = false
-			wwpap3_was_test = false
-			wwpap3:Setleds(0, 0)
-			wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
-		end
-		return
-	end
+	-- if not hasPower then
+	-- 	-- power-loss: blackout once
+	-- 	if wwpap3_was_powered then
+	-- 		wwpap3_was_powered = false
+	-- 		wwpap3_was_test = false
+	-- 		wwpap3:Setleds(0, 0)
+	-- 		wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
+	-- 	end
+	-- 	return
+	-- end
 
-	if not wwpap3_was_powered then
-		-- power restore / first frame: force all LEDs to re-sync once
-		wwpap3_was_powered = true
-		wwpap3_was_test = false
-		wwpap3:FreshBits()
-	end
+	-- if not wwpap3_was_powered then
+	-- 	wwpap3_was_powered = true
+	-- 	wwpap3_was_test = false
+	-- 	wwpap3:FreshBits()
+	-- end
 
-	-- backlight channels live outside Bits: invalidate on power edge so
-	-- ChangedUpdate re-sends even when BL_MainCA never dropped
-	if poweredChanged then
-		wwpap3.d_bkl:Invalid()
-		wwpap3.d_lcdbkl:Invalid()
-		wwpap3.d_ledbkl:Invalid()
-	end
+	-- backlight
 	wwpap3:SetBkl()
 	wwpap3:SetLcdBkl()
 	wwpap3:SetLedBkl()
 
-	-- Test mode (mfproj TST LGT: 9 mode annunciators + LCD test)
-	if testMode == 0 then
-		-- test entry edge only: explicit Set*(valbase, val) bypasses change detection
-		if not wwpap3_was_test then
-			wwpap3_was_test = true
-			wwpap3:SetN1(0, 1)
-			wwpap3:SetSpeed(0, 1)
-			wwpap3:SetVnav(0, 1)
-			wwpap3:SetHdgSel(0, 1)
-			wwpap3:SetVorLoc(0, 1)
-			wwpap3:SetApp(0, 1)
-			wwpap3:SetAltHld(0, 1)
-			wwpap3:SetLnav(0, 1)
-			wwpap3:SetLvlChg(0, 1)
-			wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })
-		end
-		return
-	elseif wwpap3_was_test then
-		-- leaving test: force all annunciators to re-sync
-		wwpap3_was_test = false
-		wwpap3:FreshBits()
-	end
+	-- test mode (disabled for basic test)
+	-- if testMode == 0 then
+	-- 	if not wwpap3_was_test then
+	-- 		wwpap3_was_test = true
+	-- 		wwpap3:SetN1(0, 1)
+	-- 		wwpap3:SetSpeed(0, 1)
+	-- 		wwpap3:SetVnav(0, 1)
+	-- 		wwpap3:SetHdgSel(0, 1)
+	-- 		wwpap3:SetVorLoc(0, 1)
+	-- 		wwpap3:SetApp(0, 1)
+	-- 		wwpap3:SetAltHld(0, 1)
+	-- 		wwpap3:SetLnav(0, 1)
+	-- 		wwpap3:SetLvlChg(0, 1)
+	-- 		wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })
+	-- 	end
+	-- 	return
+	-- elseif wwpap3_was_test then
+	-- 	wwpap3_was_test = false
+	-- 	wwpap3:FreshBits()
+	-- end
 
 	-- Update LED indicators (panel internal change detection)
 	wwpap3:SetN1()
@@ -230,7 +221,7 @@ GlobalFrameLoopManager:add(function()
 	end
 
 	wwpap3:setMcpDisplay({
-		displayEnabled = hasPower,
+		displayEnabled = true,
 		displayTest = false,
 		showLabels = false,
 		showCourse = true,
