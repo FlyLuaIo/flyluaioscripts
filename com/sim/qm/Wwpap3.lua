@@ -162,10 +162,10 @@ function Wwpap3:SetLedBkl(valbase, val)
 	if val == nil then
 		if self.d_ledbkl:ChangedUpdate() then
 			val = self.d_ledbkl:GetOld() * self.d_ledbkl_scale
-			self:SendLedCmd(self.LEDS_LEDBKL, val)
+			self:SendLedCmd(self.LEDS_LEDBKL, val ~= 0 and 255 or 0)
 		end
 	else
-		self:SendLedCmd(self.LEDS_LEDBKL, val)
+		self:SendLedCmd(self.LEDS_LEDBKL, val ~= 0 and 255 or 0)
 	end
 end
 -- ========
