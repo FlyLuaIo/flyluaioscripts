@@ -231,10 +231,10 @@ function Wwursa:SetOverallBkl(val)
 	if val == nil then
 		if self.d_ovb:ChangedUpdate() then
 			val = self.d_ovb:GetOld() * self.d_ovb_scale
-			self:SendLedCmd(self.LEDS_OVERALLBKL, val)
+			self:SendLedCmd(self.LEDS_OVERALLBKL, val ~= 0 and 255 or 0)
 		end
 	else
-		self:SendLedCmd(self.LEDS_OVERALLBKL, val)
+		self:SendLedCmd(self.LEDS_OVERALLBKL, val ~= 0 and 255 or 0)
 	end
 end
 
