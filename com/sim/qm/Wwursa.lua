@@ -48,6 +48,7 @@ function Wwursa:absent(FastTurnsPerSecond)
 	_G.idr_wwursa_hid_lcd_lcd6 = uluaFind('cpuwolf/flyluaio/WwUrsa/lcd/lcd6')
 	_G.idr_wwursa_hid_lcd_lcd7 = uluaFind('cpuwolf/flyluaio/WwUrsa/lcd/lcd7')
 	_G.idr_wwursa_hid_lcd_lcd8 = uluaFind('cpuwolf/flyluaio/WwUrsa/lcd/lcd8')
+	_G.idr_wwursa_hid_lcd_lcd9 = uluaFind('cpuwolf/flyluaio/WwUrsa/lcd/lcd9')
 	_G.idr_wwursa_hid_finish_seqnum = uluaFind('cpuwolf/flyluaio/WwUrsa/finish/seqNum')
 	_G.idr_wwursa_hid_invalid = uluaFind('cpuwolf/flyluaio/WwUrsa/invalid')
 	_G.idr_wwursa_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WwUrsa/fastkeypersec')
@@ -110,7 +111,7 @@ function Wwursa:Next()
 end
 
 -- PAC trim LCD (WINCTRL product-ursa-minor-throttle::setLCDText)
--- rowOffsets {53,49,45,41,37,33,29,25,57} → lcd1..lcd8 (dot on lcd8); digitBits 0..3
+-- rowOffsets {53,49,45,41,37,33,29,25,57} → lcd1..lcd9 (dot on lcd8, bit8 on lcd9); digitBits 0..3
 function Wwursa:setLcdText(text)
 	text = tostring(text or '')
 	if text == self.LcdText then return end
@@ -159,8 +160,8 @@ function Wwursa:setLcdText(text)
 	while #charsOnly < 4 do charsOnly = charsOnly .. ' ' end
 	if #charsOnly > 4 then charsOnly = charsOnly:sub(1, 4) end
 
-	-- planes[1..7]=segments A-G, planes[8]=dots (segIndex 7 → byte 25)
-	local planes = { 0, 0, 0, 0, 0, 0, 0, 0 }
+	-- planes[1..7]=segments A-G, planes[8]=dots, planes[9]=mask bit 8 (byte 57)
+	local planes = { 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 	for dig = 0, 3 do
 		local mask = segmap[charsOnly:sub(dig + 1, dig + 1)] or 0
 		for seg = 0, 6 do
@@ -170,6 +171,9 @@ function Wwursa:setLcdText(text)
 		end
 		if bit.band(bit.rshift(dotsMask, dig), 1) ~= 0 then
 			planes[8] = bit.bor(planes[8], bit.lshift(1, dig))
+		end
+		if bit.band(mask, 0x100) ~= 0 then
+			planes[9] = bit.bor(planes[9], bit.lshift(1, dig))
 		end
 	end
 
@@ -182,6 +186,7 @@ function Wwursa:setLcdText(text)
 	uluaSet(_G.idr_wwursa_hid_lcd_lcd6, planes[6])
 	uluaSet(_G.idr_wwursa_hid_lcd_lcd7, planes[7])
 	uluaSet(_G.idr_wwursa_hid_lcd_lcd8, planes[8])
+	uluaSet(_G.idr_wwursa_hid_lcd_lcd9, planes[9])
 	uluaSet(_G.idr_wwursa_hid_lcd_seqnum, pc)
 	uluaSet(_G.idr_wwursa_hid_finish_seqnum, pc)
 end
