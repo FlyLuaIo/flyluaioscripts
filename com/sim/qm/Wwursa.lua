@@ -273,22 +273,46 @@ function Wwursa:SetFire2(valbase, val)
 	self:SendBit(self.LEDS_FIRE2, valbase, val)
 end
 -- ========
--- LEDS VIBL
-function Wwursa:GetVibL(dpath, revert, base)
-	self:GetBit(self.LEDS_VIBL, dpath, revert, base)
+-- LEDS VIBL (dimmable 0-255)
+function Wwursa:GetVibL(dpath, scale)
+	self.d_vibl_scale = scale == nil and 1 or scale
+	self.d_vibl = iDataRef:New(dpath)
 end
 
-function Wwursa:SetVibL(valbase, val)
-	self:SendBit(self.LEDS_VIBL, valbase, val)
+function Wwursa:SetVibL(val)
+	if val == nil then
+		if self.d_vibl:ChangedUpdate() then
+			val = self.d_vibl:GetOld() * self.d_vibl_scale
+			self:SendLedCmd(self.LEDS_VIBL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_VIBL, val)
+	end
+end
+
+function Wwursa:FreshVibL()
+	self.d_vibl:Invalid(-1)
 end
 -- ========
--- LEDS VIBR
-function Wwursa:GetVibR(dpath, revert, base)
-	self:GetBit(self.LEDS_VIBR, dpath, revert, base)
+-- LEDS VIBR (dimmable 0-255)
+function Wwursa:GetVibR(dpath, scale)
+	self.d_vibr_scale = scale == nil and 1 or scale
+	self.d_vibr = iDataRef:New(dpath)
 end
 
-function Wwursa:SetVibR(valbase, val)
-	self:SendBit(self.LEDS_VIBR, valbase, val)
+function Wwursa:SetVibR(val)
+	if val == nil then
+		if self.d_vibr:ChangedUpdate() then
+			val = self.d_vibr:GetOld() * self.d_vibr_scale
+			self:SendLedCmd(self.LEDS_VIBR, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_VIBR, val)
+	end
+end
+
+function Wwursa:FreshVibR()
+	self.d_vibr:Invalid(-1)
 end
 
 function Wwursa:Setleds(valbase, val)
@@ -297,8 +321,6 @@ function Wwursa:Setleds(valbase, val)
 	self:SetFire1(valbase, val)
 	self:SetFault2(valbase, val)
 	self:SetFire2(valbase, val)
-	self:SetVibL(valbase, val)
-	self:SetVibR(valbase, val)
 end
 -- ========
 -- PAC LCDBKL (dimmable, uses SendLedCmdPac for PAC module)
