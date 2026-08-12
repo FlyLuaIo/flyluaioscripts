@@ -57,8 +57,8 @@ wwursa:GetFault1('(L:I_ENG_FAULT_1)')
 wwursa:GetFire1('(L:I_ENG_FIRE_1)')
 wwursa:GetFault2('(L:I_ENG_FAULT_2)')
 wwursa:GetFire2('(L:I_ENG_FIRE_2)')
-wwursa:GetVibL('(A:SIM ON GROUND,Bool)')
-wwursa:GetVibR('(A:SIM ON GROUND,Bool)')
+wwursa:GetVibL('(A:SIM ON GROUND,Bool) (A:GPS GROUND SPEED,Meters per second) * 10 *')
+wwursa:GetVibR('(A:SIM ON GROUND,Bool) (A:GPS GROUND SPEED,Meters per second) * 10 *')
 
 --====LCD
 local dr_trim = iDataRef:New('(L:N_FC_RUDDER_TRIM_DECIMAL, Number)')
