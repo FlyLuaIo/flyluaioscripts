@@ -1,4 +1,3 @@
-
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
@@ -30,12 +29,6 @@ function Wwursa:init()
 			self.LEDS_FIRE2,
 			self.LEDS_VIBL,
 			self.LEDS_VIBR
-		}
-		self.PAC_BKL = 0
-		self.PAC_LCDBKL = 2
-		self.pacIds = {
-			self.PAC_BKL,
-			self.PAC_LCDBKL
 		}
 	end
 end
@@ -124,9 +117,20 @@ function Wwursa:setLcdText(text)
 	self.LcdText = text
 
 	local segmap = {
-		['0'] = 0x3F, ['1'] = 0x06, ['2'] = 0x5B, ['3'] = 0x4F, ['4'] = 0x66,
-		['5'] = 0x6D, ['6'] = 0x7D, ['7'] = 0x07, ['8'] = 0x7F, ['9'] = 0x6F,
-		['A'] = 0x77, ['L'] = 0x38, [' '] = 0x00, ['-'] = 0x40
+		['0'] = 0x3F,
+		['1'] = 0x06,
+		['2'] = 0x5B,
+		['3'] = 0x4F,
+		['4'] = 0x66,
+		['5'] = 0x6D,
+		['6'] = 0x7D,
+		['7'] = 0x07,
+		['8'] = 0x7F,
+		['9'] = 0x6F,
+		['A'] = 0x77,
+		['L'] = 0x38,
+		[' '] = 0x00,
+		['-'] = 0x40
 	}
 
 	local charsOnly = ''
@@ -215,6 +219,7 @@ end
 function Wwursa:FreshBkl()
 	self.d_bkl:Invalid(-1)
 end
+
 -- ========
 -- Overall brightness master gate (dimmable, LedId < 3 mirrors to PAC via SendLedCmd)
 function Wwursa:GetOverallBkl(dpath, scale)
@@ -236,6 +241,7 @@ end
 function Wwursa:FreshOverallBkl()
 	self.d_ovb:Invalid(-1)
 end
+
 -- ========
 -- LEDS FAULT1
 function Wwursa:GetFault1(dpath, revert, base)
@@ -245,6 +251,7 @@ end
 function Wwursa:SetFault1(valbase, val)
 	self:SendBit(self.LEDS_FAULT1, valbase, val)
 end
+
 -- ========
 -- LEDS FIRE1
 function Wwursa:GetFire1(dpath, revert, base)
@@ -254,6 +261,7 @@ end
 function Wwursa:SetFire1(valbase, val)
 	self:SendBit(self.LEDS_FIRE1, valbase, val)
 end
+
 -- ========
 -- LEDS FAULT2
 function Wwursa:GetFault2(dpath, revert, base)
@@ -263,6 +271,7 @@ end
 function Wwursa:SetFault2(valbase, val)
 	self:SendBit(self.LEDS_FAULT2, valbase, val)
 end
+
 -- ========
 -- LEDS FIRE2
 function Wwursa:GetFire2(dpath, revert, base)
@@ -272,6 +281,7 @@ end
 function Wwursa:SetFire2(valbase, val)
 	self:SendBit(self.LEDS_FIRE2, valbase, val)
 end
+
 -- ========
 -- LEDS VIBL (dimmable 0-255)
 function Wwursa:GetVibL(dpath, scale)
@@ -293,6 +303,7 @@ end
 function Wwursa:FreshVibL()
 	self.d_vibl:Invalid(-1)
 end
+
 -- ========
 -- LEDS VIBR (dimmable 0-255)
 function Wwursa:GetVibR(dpath, scale)
@@ -321,29 +332,6 @@ function Wwursa:Setleds(valbase, val)
 	self:SetFire1(valbase, val)
 	self:SetFault2(valbase, val)
 	self:SetFire2(valbase, val)
-end
--- ========
--- PAC LCDBKL (dimmable, uses SendLedCmdPac for PAC module)
-function Wwursa:GetLcdBkl(dpath, scale)
-	self.d_lcdbkl_scale = scale == nil and 30 or scale
-	self.d_lcdbkl = iDataRef:New(dpath)
-end
-
-function Wwursa:SetLcdBkl(val)
-	if val == nil then
-		if self.d_lcdbkl:ChangedUpdate() then
-			val = self.d_lcdbkl:GetOld() * self.d_lcdbkl_scale
-			if val < 0 then val = 0 elseif val > 255 then val = 255 end
-			self:SendLedCmdPac(self.PAC_LCDBKL, math.floor(val))
-		end
-	else
-		if val < 0 then val = 0 elseif val > 255 then val = 255 end
-		self:SendLedCmdPac(self.PAC_LCDBKL, math.floor(val))
-	end
-end
-
-function Wwursa:FreshLcdBkl()
-	self.d_lcdbkl:Invalid(-1)
 end
 
 return Wwursa
