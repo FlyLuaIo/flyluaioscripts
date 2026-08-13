@@ -2,16 +2,10 @@
 -- Don't modify this file
 -- created by Wei Shuai <cpuwolf@gmail.com> 2024-05-25
 -- *****************************************************************
--- USB write protection contract:
--- every uluaSet(idr_qfcu_hid_*) is a USB hardware write and must be protected:
---   1. dataref driven paths (no-arg Set*) -> wrapped in ChangedUpdate()
---   2. value driven paths (explicit args / one-shot power-off) -> Qfcu:_SetChg() write cache
--- *****************************************************************
 local Qfcu = oop.class(com.sim.Qmdev)
 
 function Qfcu:init()
     self.QmdevId = 7
-    self.WCache = {}
     -- uluaLog('Qfcu:init'..self.QmdevId)
 end
 
@@ -23,7 +17,6 @@ function Qfcu:Init()
         return false
     end
     ilua_hw_assigned_qfcu = 1
-    _G.qfcu_dev = self
     return true
 end
 
@@ -31,141 +24,30 @@ function Qfcu.Open(...)
     return com.sim.Qmdev.Open(Qfcu, ...)
 end
 
--- Output side write cache: skip USB write when value unchanged.
-function Qfcu:_SetChg(key, idr, val)
-    if self.WCache[key] ~= val then
-        self.WCache[key] = val
-        uluaSet(idr, val)
-    end
-end
-
--- ========================= Spd
--- IAS Digi: iasmode 1~6 (dashed/managed/mach combinations)
-function Qfcu:GetSpd(d_air, d_dash, d_mach, d_mgd)
-    self.d_spd = iDataRef:New(d_air)
-    self.d_spd_dash = iDataRef:New(d_dash)
-    self.d_spd_mach = iDataRef:New(d_mach)
-    self.d_spd_mgd = iDataRef:New(d_mgd)
-end
-
-function Qfcu:SetSpd()
-    -- evaluate all sources first (no or-chain short-circuit)
-    local c1 = self.d_spd:ChangedUpdate()
-    local c2 = self.d_spd_dash:ChangedUpdate()
-    local c3 = self.d_spd_mach:ChangedUpdate()
-    local c4 = self.d_spd_mgd:ChangedUpdate()
-    if c1 or c2 or c3 or c4 then
-        local air = self.d_spd:GetOld()
-        local dash = self.d_spd_dash:GetOld()
-        local mach = self.d_spd_mach:GetOldBit()
-        local mgd = self.d_spd_mgd:GetOldBit()
-        if dash == 1 then
-            self:_SetChg('iasmode', idr_qfcu_hid_iasmode, mach == 1 and 4 or 2)
-        elseif mgd == 1 then
-            if mach == 1 then
-                self:_SetChg('iasval', idr_qfcu_hid_iasval_f, air)
-                self:_SetChg('iasmode', idr_qfcu_hid_iasmode, 6)
-            else
-                self:_SetChg('iasmode', idr_qfcu_hid_iasmode, 5)
-                self:_SetChg('iasval', idr_qfcu_hid_iasval_i, math.floor(air + 0.5))
-            end
-        else
-            if mach == 1 then
-                self:_SetChg('iasval', idr_qfcu_hid_iasval_f, air)
-                self:_SetChg('iasmode', idr_qfcu_hid_iasmode, 3)
-            else
-                self:_SetChg('iasmode', idr_qfcu_hid_iasmode, 1)
-                self:_SetChg('iasval', idr_qfcu_hid_iasval_i, math.floor(air + 0.5))
-            end
-        end
-    end
-end
-
--- ========================= Hdg
--- HDG Digi: hdgmode 1/2/3 (dashed/managed)
-function Qfcu:GetHdg(d_hdg, d_dash, d_mgd)
-    self.d_hdg = iDataRef:New(d_hdg)
-    self.d_hdg_dash = iDataRef:New(d_dash)
-    self.d_hdg_mgd = iDataRef:New(d_mgd)
-end
-
-function Qfcu:SetHdg()
-    local c1 = self.d_hdg:ChangedUpdate()
-    local c2 = self.d_hdg_dash:ChangedUpdate()
-    local c3 = self.d_hdg_mgd:ChangedUpdate()
-    if c1 or c2 or c3 then
-        local dash = self.d_hdg_dash:Get()
-        local mgd = self.d_hdg_mgd:Get()
-        if dash == 1 then
-            self:_SetChg('hdgmode', idr_qfcu_hid_hdgmode, 2)
-        else
-            self:_SetChg('hdgval', idr_qfcu_hid_hdgval_i, self.d_hdg:Get() % 360)
-            self:_SetChg('hdgmode', idr_qfcu_hid_hdgmode, mgd == 1 and 3 or 1)
-        end
-    end
-end
-
--- ========================= Vs
--- VS/TRK Digi: vsmode / vs_trkmode + invalid channel
-function Qfcu:GetVs(d_vs, d_trk, d_dash)
-    self.d_vs = iDataRef:New(d_vs)
-    self.d_vs_trk = iDataRef:New(d_trk)
-    self.d_vs_dash = iDataRef:New(d_dash)
-end
-
-function Qfcu:SetVs()
-    local c1 = self.d_vs:ChangedUpdate()
-    local c2 = self.d_vs_trk:ChangedUpdate()
-    local c3 = self.d_vs_dash:ChangedUpdate()
-    if c1 or c2 or c3 then
-        local vs = self.d_vs:Get()
-        local trk = self.d_vs_trk:Get()
-        local dash = self.d_vs_dash:Get()
-        if trk == 1 then
-            if dash == 1 then
-                self:_SetChg('vstrkmode', idr_qfcu_hid_vs_trkmode, 2)
-            else
-                self:_SetChg('vstrkval', idr_qfcu_hid_vs_trkval_i, math.abs(vs))
-                self:_SetChg('vstrkmode', idr_qfcu_hid_vs_trkmode, vs < 0 and 3 or 1)
-            end
-            self:_SetChg('invalid', idr_qfcu_hid_invalid, 4)
-        else
-            if dash == 1 then
-                self:_SetChg('vsmode', idr_qfcu_hid_vsmode, 2)
-            else
-                self:_SetChg('vsval', idr_qfcu_hid_vsval_i, math.abs(vs))
-                self:_SetChg('vsmode', idr_qfcu_hid_vsmode, vs < 0 and 3 or 1)
-            end
-            self:_SetChg('invalid', idr_qfcu_hid_invalid, 3)
-        end
-    end
-end
-
 -- ========================= Alt
 -- Alt
-function Qfcu:GetAlt(dpath, d_mgdpath)
+function Qfcu:GetAlt(dpath)
     self.d_alt = iDataRef:New(dpath)
-    self.d_mgd = iDataRef:New(d_mgdpath)
 end
 
 function Qfcu:_SetAlt(dot, val)
     if val > 0 then
-        self:_SetChg('altval', idr_qfcu_hid_altval_i, val)
-        self:_SetChg('altmode', idr_qfcu_hid_altmode, dot > 0 and 2 or 1)
+        uluaSet(idr_qfcu_hid_altval_i, val)
+        if dot then
+            uluaSet(idr_qfcu_hid_altmode, 2)
+        else
+            uluaSet(idr_qfcu_hid_altmode, 1)
+        end
     else
-        self:_SetChg('altmode', idr_qfcu_hid_altmode, 0)
+        uluaSet(idr_qfcu_hid_altmode, 0)
     end
 end
 
--- SetAlt(dot)       : dataref driven, ChangedUpdate protected
--- SetAlt(dot, val)  : value driven, write cache protected
-function Qfcu:SetAlt(val)
+function Qfcu:SetAlt(dot, val)
     if val == nil then
-        if self.d_alt:ChangedUpdate() or self.d_mgd:ChangedUpdate() then
-            self:_SetAlt(self.d_mgd:GetOldBit(), self.d_alt:GetOld())
-        end
+        self:_SetAlt(dot, self.d_alt:Get())
     else
-        self:_SetAlt(self.d_mgd:GetBit(), val)
+        self:_SetAlt(dot, val)
     end
 end
 
@@ -174,120 +56,31 @@ function Qfcu:FreshAlt()
 end
 
 -- ======== L EFIS
--- Baro sources for no-arg SetLBaro()
-function Qfcu:GetLBaro(d_baro, d_unit, d_std)
-    self.d_lbaro = iDataRef:New(d_baro)
-    self.d_lbaro_unit = iDataRef:New(d_unit)
-    self.d_lbaro_std = iDataRef:New(d_std)
-end
-
--- ======== L EFIS
 -- Baro Digi IN/HPA/STD = 1/2/3
--- SetLBaro()        : dataref driven, ChangedUpdate protected
--- SetLBaro(mode,val): value driven, write cache protected
 function Qfcu:SetLBaro(mode, val)
-    if mode == nil then
-        local c1 = self.d_lbaro:ChangedUpdate()
-        local c2 = self.d_lbaro_unit:ChangedUpdate()
-        local c3 = self.d_lbaro_std:ChangedUpdate()
-        if c1 or c2 or c3 then
-            if self.d_lbaro_std:Get() == 1 then
-                self:SetLBaro(3)
-            elseif self.d_lbaro_unit:Get() == 1 then -- hPa mode
-                self:SetLBaro(2, math.floor(self.d_lbaro:Get() * 33.8638895 + 0.5))
-            else
-                self:SetLBaro(1, math.floor(self.d_lbaro:Get() * 100 + 0.5))
-            end
-        end
-        return
+    if mode == 1 then
+        uluaSet(idr_qfcu_hid_lefisval_i, val)
+        uluaSet(idr_qfcu_hid_lefismode, 1) -- IN)
+    elseif mode == 2 then
+        uluaSet(idr_qfcu_hid_lefisval_i, val)
+        uluaSet(idr_qfcu_hid_lefismode, 2) -- HPA)
+    elseif mode == 3 then
+        uluaSet(idr_qfcu_hid_lefismode, 3) -- STD)
     end
-    if mode == 1 or mode == 2 then
-        self:_SetChg('lefisval', idr_qfcu_hid_lefisval_i, val)
-    end
-    self:_SetChg('lefismode', idr_qfcu_hid_lefismode, mode)
-end
-
--- ======== R EFIS
--- Baro sources for no-arg SetRBaro()
-function Qfcu:GetRBaro(d_baro, d_unit, d_std)
-    self.d_rbaro = iDataRef:New(d_baro)
-    self.d_rbaro_unit = iDataRef:New(d_unit)
-    self.d_rbaro_std = iDataRef:New(d_std)
 end
 
 -- ======== R EFIS
 -- Baro Digi IN/HPA/STD = 1/2/3
--- SetRBaro()        : dataref driven, ChangedUpdate protected
--- SetRBaro(mode,val): value driven, write cache protected
 function Qfcu:SetRBaro(mode, val)
-    if mode == nil then
-        local c1 = self.d_rbaro:ChangedUpdate()
-        local c2 = self.d_rbaro_unit:ChangedUpdate()
-        local c3 = self.d_rbaro_std:ChangedUpdate()
-        if c1 or c2 or c3 then
-            if self.d_rbaro_std:Get() == 1 then
-                self:SetRBaro(3)
-            elseif self.d_rbaro_unit:Get() == 1 then -- hPa mode
-                self:SetRBaro(2, math.floor(self.d_rbaro:Get() * 33.8638895 + 0.5))
-            else
-                self:SetRBaro(1, math.floor(self.d_rbaro:Get() * 100 + 0.5))
-            end
-        end
-        return
+    if mode == 1 then
+        uluaSet(idr_qfcu_hid_refisval_i, val)
+        uluaSet(idr_qfcu_hid_refismode, 1) -- IN)
+    elseif mode == 2 then
+        uluaSet(idr_qfcu_hid_refisval_i, val)
+        uluaSet(idr_qfcu_hid_refismode, 2) -- HPA)
+    elseif mode == 3 then
+        uluaSet(idr_qfcu_hid_refismode, 3) -- STD)
     end
-    if mode == 1 or mode == 2 then
-        self:_SetChg('refisval', idr_qfcu_hid_refisval_i, val)
-    end
-    self:_SetChg('refismode', idr_qfcu_hid_refismode, mode)
-end
-
--- ========================= Backlight
--- Panel backlight + display brightness
-function Qfcu:GetBkl(d_light, d_disp)
-    self.d_light = iDataRef:New(d_light)
-    self.d_disp = iDataRef:New(d_disp)
-end
-
-function Qfcu:SetBkl()
-    local c1 = self.d_light:ChangedUpdate()
-    local c2 = self.d_disp:ChangedUpdate()
-    if c1 or c2 then
-        self:_SetChg('brightval', idr_qfcu_hid_brightval_i, math.floor(self.d_light:Get() * self.MaxBrightness))
-        self:_SetChg('dispbrightval', idr_qfcu_hid_dispbrightval_i, math.floor(self.d_disp:Get() * 100 / 25))
-    end
-end
-
--- Annunciator test mode -> indicator brightness
-function Qfcu:GetBrt(d_test)
-    self.d_test = iDataRef:New(d_test)
-end
-
-function Qfcu:SetBrt()
-    if self.d_test:ChangedUpdate() then
-        local test = self.d_test:Get()
-        self:_SetChg('indbrightval', idr_qfcu_hid_indbrightval_i, test + 1)
-        if test ~= 2 then
-            self:SetInv(-1)
-            self:FreshDigi()
-        end
-    end
-end
-
--- Invalid channel (value driven, write cache protected)
-function Qfcu:SetInv(val)
-    self:_SetChg('invalid', idr_qfcu_hid_invalid, val)
-end
-
--- Invalidate all registered display sources and clear write cache,
--- so next frame resends everything, then throttling resumes.
-function Qfcu:FreshDigi()
-    if self.d_spd then self.d_spd:Invalid(-1) end
-    if self.d_hdg then self.d_hdg:Invalid(-1) end
-    if self.d_alt then self.d_alt:Invalid(-1000000) end
-    if self.d_vs_dash then self.d_vs_dash:Invalid(11) end
-    if self.d_lbaro then self.d_lbaro:Invalid(-1) end
-    if self.d_rbaro then self.d_rbaro:Invalid(-1) end
-    self.WCache = {}
 end
 
 -- =========================Leds
@@ -471,14 +264,14 @@ end
 -- Baro Indicator QFE/QNH/OFF = 0/1/2
 function Qfcu:SetLBaroMode(mode)
     if mode == 0 then
-        self:_SetChg('ledslqfe', idr_qfcu_hid_ledslqfe, 1) -- qfe)
-        self:_SetChg('ledslqhn', idr_qfcu_hid_ledslqhn, 0) -- qhn)
+        uluaSet(idr_qfcu_hid_ledslqfe, 1) -- qfe)
+        uluaSet(idr_qfcu_hid_ledslqhn, 0) -- qhn)
     elseif mode == 1 then
-        self:_SetChg('ledslqfe', idr_qfcu_hid_ledslqfe, 0) -- qfe)
-        self:_SetChg('ledslqhn', idr_qfcu_hid_ledslqhn, 1) -- qhn)
+        uluaSet(idr_qfcu_hid_ledslqfe, 0) -- qfe)
+        uluaSet(idr_qfcu_hid_ledslqhn, 1) -- qhn)
     elseif mode == 2 then
-        self:_SetChg('ledslqfe', idr_qfcu_hid_ledslqfe, 0) -- qfe)
-        self:_SetChg('ledslqhn', idr_qfcu_hid_ledslqhn, 0) -- qhn)
+        uluaSet(idr_qfcu_hid_ledslqfe, 0) -- qfe)
+        uluaSet(idr_qfcu_hid_ledslqhn, 0) -- qhn)
     end
 end
 
@@ -580,28 +373,28 @@ end
 -- Baro Indicator QFE/QNH/OFF = 0/1/2
 function Qfcu:SetRBaroMode(mode)
     if mode == 0 then
-        self:_SetChg('ledsrqfe', idr_qfcu_hid_ledsrqfe, 1) -- qfe)
-        self:_SetChg('ledsrqhn', idr_qfcu_hid_ledsrqhn, 0) -- qhn)
+        uluaSet(idr_qfcu_hid_ledsrqfe, 1) -- qfe)
+        uluaSet(idr_qfcu_hid_ledsrqhn, 0) -- qhn)
     elseif mode == 1 then
-        self:_SetChg('ledsrqfe', idr_qfcu_hid_ledsrqfe, 0) -- qfe)
-        self:_SetChg('ledsrqhn', idr_qfcu_hid_ledsrqhn, 1) -- qhn)
+        uluaSet(idr_qfcu_hid_ledsrqfe, 0) -- qfe)
+        uluaSet(idr_qfcu_hid_ledsrqhn, 1) -- qhn)
     elseif mode == 2 then
-        self:_SetChg('ledsrqfe', idr_qfcu_hid_ledsrqfe, 0) -- qfe)
-        self:_SetChg('ledsrqhn', idr_qfcu_hid_ledsrqhn, 0) -- qhn)
+        uluaSet(idr_qfcu_hid_ledsrqfe, 0) -- qfe)
+        uluaSet(idr_qfcu_hid_ledsrqhn, 0) -- qhn)
     end
 end
 
--- ========================= Power off one-shots
--- timer callback string target; routed through instance write cache
+-- turn off all digital Displays
 function QFCU_Off()
-    if _G.qfcu_dev ~= nil then
-        _G.qfcu_dev:_SetChg('indbrightval', idr_qfcu_hid_indbrightval_i, 0)
-    end
+    uluaSet(idr_qfcu_hid_indbrightval_i, 0)
+    -- dr_qfcu_fcu_test:Invalid(os.clock())
 end
 
 function Qfcu:SetDigiBrtOff()
-    self:_SetChg('brightval', idr_qfcu_hid_brightval_i, 0)
-    self:_SetChg('indbrightval', idr_qfcu_hid_indbrightval_i, 1)
+    -- dr_qfcu_fcu_light:Invalid(-1)
+    -- dr_qfcu_fcu_lightDisp:Invalid(-1)
+    uluaSet(idr_qfcu_hid_brightval_i, 0)
+    uluaSet(idr_qfcu_hid_indbrightval_i, 1)
     uluasetTimeout("QFCU_Off()", 200)
 end
 
@@ -612,19 +405,19 @@ function Qfcu:SetLedsOff()
     self:FreshRightLeds()
 
     -- real code
-    self:_SetChg('ledsval', idr_qfcu_hid_ledsval_i, 0)
-    self:_SetChg('ledslval', idr_qfcu_hid_ledslval_i, 0)
-    self:_SetChg('ledsrval', idr_qfcu_hid_ledsrval_i, 0)
+    uluaSet(idr_qfcu_hid_ledsval_i, 0)
+    uluaSet(idr_qfcu_hid_ledslval_i, 0)
+    uluaSet(idr_qfcu_hid_ledsrval_i, 0)
 end
 
 function Qfcu:SetDigiOff()
     -- real code
-    self:_SetChg('iasmode', idr_qfcu_hid_iasmode, 0)
-    self:_SetChg('hdgmode', idr_qfcu_hid_hdgmode, 0)
-    self:_SetChg('altmode', idr_qfcu_hid_altmode, 0)
-    self:_SetChg('vsmode', idr_qfcu_hid_vsmode, 0)
-    self:_SetChg('refismode', idr_qfcu_hid_refismode, 0)
-    self:_SetChg('lefismode', idr_qfcu_hid_lefismode, 0)
+    uluaSet(idr_qfcu_hid_iasmode, 0)
+    uluaSet(idr_qfcu_hid_hdgmode, 0)
+    uluaSet(idr_qfcu_hid_altmode, 0)
+    uluaSet(idr_qfcu_hid_vsmode, 0)
+    uluaSet(idr_qfcu_hid_refismode, 0)
+    uluaSet(idr_qfcu_hid_lefismode, 0)
 end
 
 return Qfcu
