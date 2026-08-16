@@ -2,7 +2,9 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-08-08_03_55_08UTC
 -- *****************************************************************
-
+if ilua_require_msfs() then
+    return
+end
 -- Do not remove below lines: hardware detection
 local wwpap3 = com.sim.qm.Wwpap3.Open()
 if not wwpap3 then return end

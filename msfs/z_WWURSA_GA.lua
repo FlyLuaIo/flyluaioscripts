@@ -1,7 +1,9 @@
 -- *****************************************************************
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-08-08_03_55_08UTC
 -- *****************************************************************
-
+if ilua_require_msfs() then
+    return
+end
 -- Do not remove below lines: hardware detection
 local wwursa = com.sim.qm.Wwursa.Open()
 if not wwursa then return end

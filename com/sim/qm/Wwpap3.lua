@@ -65,6 +65,19 @@ function Wwpap3:absent(FastTurnsPerSecond)
 	if not uluaFind('cpuwolf/flyluaio/WwPap3/leds/ledCmd') then
 		return true
 	end
+	return false
+end
+
+function Wwpap3:Init(FastTurnsPerSecond)
+	local ftps = FastTurnsPerSecond == nil and self.FastTurnsPerSecond or FastTurnsPerSecond
+	if self:absent(ftps) then
+		return false
+	end
+	if _G.ilua_hw_assigned_wwpap3 == 1 then
+		return false
+	end
+	_G.ilua_hw_assigned_wwpap3 = 1
+	--init
 	_G.idr_wwpap3_hid_leds_ledcmd = uluaFind('cpuwolf/flyluaio/WwPap3/leds/ledCmd')
 	_G.idr_wwpap3_hid_init_seqnum = uluaFind('cpuwolf/flyluaio/WwPap3/init/seqNum')
 	_G.idr_wwpap3_hid_lcd_seqnum = uluaFind('cpuwolf/flyluaio/WwPap3/lcd/seqNum')
@@ -81,26 +94,13 @@ function Wwpap3:absent(FastTurnsPerSecond)
 	_G.idr_wwpap3_hid_config_value = uluaFind('cpuwolf/flyluaio/WwPap3/config/configValue')
 	_G.idr_wwpap3_hid_invalid = uluaFind('cpuwolf/flyluaio/WwPap3/invalid')
 	_G.idr_wwpap3_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WwPap3/fastkeypersec')
-	uluaSet(_G.idr_wwpap3_hid_fastkeypersec, FastTurnsPerSecond)
-
-	--self:sendDeviceConfig()
+	uluaSet(_G.idr_wwpap3_hid_fastkeypersec, ftps)
+	self:sendDeviceConfig()
 	self:ensureLcdInit()
 	self:SetBkl(0, 0)
 	self:SetLcdBkl(0, 0)
 	self:SetLedBkl(0, 0)
 	self:clearMcpDisplay()
-	return false
-end
-
-function Wwpap3:Init(FastTurnsPerSecond)
-	local ftps = FastTurnsPerSecond == nil and self.FastTurnsPerSecond or FastTurnsPerSecond
-	if self:absent(ftps) then
-		return false
-	end
-	if _G.ilua_hw_assigned_wwpap3 == 1 then
-		return false
-	end
-	_G.ilua_hw_assigned_wwpap3 = 1
 	return true
 end
 

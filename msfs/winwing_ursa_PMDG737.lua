@@ -28,8 +28,8 @@ wwursa:CfgRpn(2, '(L:switch_689_73X) 100 == if{ 68901 (>K:ROTOR_BRAKE) }')
 wwursa:CfgRpn(3, '(L:switch_689_73X) 0 == if{ 68901 (>K:ROTOR_BRAKE) }')
 
 -- ====vibration
-wwursa:GetVibL('(A:SIM ON GROUND,Bool) (A:GPS GROUND SPEED,Meters per second) * 10 *')
-wwursa:GetVibR('(A:SIM ON GROUND,Bool) (A:GPS GROUND SPEED,Meters per second) * 10 *')
+wwursa:GetVibL('(A:SIM ON GROUND,Bool) (A:GPS GROUND SPEED,Meters per second) *')
+wwursa:GetVibR('(A:SIM ON GROUND,Bool) (A:GPS GROUND SPEED,Meters per second) *')
 
 -- ====rudder trim LCD
 -- setLcdText caches text internally; USB write only when text changes
