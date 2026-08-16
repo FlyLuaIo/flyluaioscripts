@@ -119,8 +119,8 @@ if uluaFind('pmdg/ng3/data/MCP_VertSpeed') then
 else
 	dr_vs = iDataRef:New('(L:ngx_VSwindow)')
 end
-local has_vs_show = uluaFind('(L:ngx_MCP_VS)') ~= nil
-local dr_vs_show = has_vs_show and iDataRef:New('(L:ngx_MCP_VS)') or nil
+
+local dr_vs_show = iDataRef:New('(L:ngx_MCP_VS)')
 local dr_crs_l = iDataRef:New('(L:ngx_CRSwindowL, number)')
 local dr_crs_r = iDataRef:New('(L:ngx_CRSwindowR, number)')
 
@@ -143,25 +143,25 @@ local wwpap3_was_test = false
 
 GlobalFrameLoopManager:add(function()
 	-- 基础功能调试模式：电源同步与测试模式已临时注释
-	-- local hasPower = dr_power:Get() ~= 0
-	-- local testMode = dr_test:Get() or 50 -- 0 test, 50 normal, 100 dim (PMDG)
+	local hasPower = dr_power:Get() ~= 0
+	local testMode = dr_test:Get() or 50 -- 0 test, 50 normal, 100 dim (PMDG)
 
-	-- if not hasPower then
-	-- 	-- power-loss: blackout once
-	-- 	if wwpap3_was_powered then
-	-- 		wwpap3_was_powered = false
-	-- 		wwpap3_was_test = false
-	-- 		wwpap3:Setleds(0, 0)
-	-- 		wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
-	-- 	end
-	-- 	return
-	-- end
+	if not hasPower then
+		-- power-loss: blackout once
+		if wwpap3_was_powered then
+			wwpap3_was_powered = false
+			wwpap3_was_test = false
+			wwpap3:Setleds(0, 0)
+			wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
+		end
+		return
+	end
 
-	-- if not wwpap3_was_powered then
-	-- 	wwpap3_was_powered = true
-	-- 	wwpap3_was_test = false
-	-- 	wwpap3:FreshBits()
-	-- end
+	if not wwpap3_was_powered then
+		wwpap3_was_powered = true
+		wwpap3_was_test = false
+		wwpap3:FreshBits()
+	end
 
 	-- backlight
 	wwpap3:SetBkl()
@@ -169,25 +169,25 @@ GlobalFrameLoopManager:add(function()
 	wwpap3:SetLedBkl()
 
 	-- test mode (disabled for basic test)
-	-- if testMode == 0 then
-	-- 	if not wwpap3_was_test then
-	-- 		wwpap3_was_test = true
-	-- 		wwpap3:SetN1(0, 1)
-	-- 		wwpap3:SetSpeed(0, 1)
-	-- 		wwpap3:SetVnav(0, 1)
-	-- 		wwpap3:SetHdgSel(0, 1)
-	-- 		wwpap3:SetVorLoc(0, 1)
-	-- 		wwpap3:SetApp(0, 1)
-	-- 		wwpap3:SetAltHld(0, 1)
-	-- 		wwpap3:SetLnav(0, 1)
-	-- 		wwpap3:SetLvlChg(0, 1)
-	-- 		wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })
-	-- 	end
-	-- 	return
-	-- elseif wwpap3_was_test then
-	-- 	wwpap3_was_test = false
-	-- 	wwpap3:FreshBits()
-	-- end
+	if testMode == 0 then
+		if not wwpap3_was_test then
+			wwpap3_was_test = true
+			wwpap3:SetN1(0, 1)
+			wwpap3:SetSpeed(0, 1)
+			wwpap3:SetVnav(0, 1)
+			wwpap3:SetHdgSel(0, 1)
+			wwpap3:SetVorLoc(0, 1)
+			wwpap3:SetApp(0, 1)
+			wwpap3:SetAltHld(0, 1)
+			wwpap3:SetLnav(0, 1)
+			wwpap3:SetLvlChg(0, 1)
+			wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })
+		end
+		return
+	elseif wwpap3_was_test then
+		wwpap3_was_test = false
+		wwpap3:FreshBits()
+	end
 
 	-- Update LED indicators (panel internal change detection)
 	wwpap3:SetN1()
@@ -215,10 +215,8 @@ GlobalFrameLoopManager:add(function()
 	if dr_spd_blank then
 		spdVisible = dr_spd_blank:Get() == 0
 	end
-	local vsShow = true
-	if has_vs_show then
-		vsShow = (dr_vs_show:Get() or 0) ~= 0
-	end
+
+	local vs = dr_vs:Get()
 
 	wwpap3:setMcpDisplay({
 		displayEnabled = true,
@@ -232,8 +230,8 @@ GlobalFrameLoopManager:add(function()
 		headingVisible = true,
 		altitude = dr_alt:Get(),
 		altitudeVisible = true,
-		verticalSpeed = dr_vs:Get(),
-		verticalSpeedVisible = vsShow,
+		verticalSpeed = vs,
+		verticalSpeedVisible = (dr_vs_show:Get() ~= 0 and vs ~= 0),
 		crsCapt = dr_crs_l:Get(),
 		crsFo = dr_crs_r:Get(),
 		digitA = (dr_digit_a:Get() or 0) ~= 0,
