@@ -544,33 +544,33 @@ GlobalFrameLoopManager:add(function()
     qmpe:SetRmp()
     qmpe:SetAcp()
     qmpe:SetEcam()
-    if uluaFind("pmdg/ng3/data/MAIN_annunFMC") == nil then
-        qmpe:SetMisc()
+    -- if uluaFind("pmdg/ng3/data/MAIN_annunFMC") == nil then
+    --     qmpe:SetMisc()
+    -- else
+    qmpe:SetWarn()
+    qmpe:SetCaut()
+
+    qmpe:SetLock1()
+    qmpe:SetLock2()
+    qmpe:SetLock3()
+    qmpe:SetUnlock1()
+    qmpe:SetUnlock2()
+    qmpe:SetUnlock3()
+
+    qmpe:SetMsg()
+    qmpe:SetFail()
+    if g_qmpe_pmdg737_use_nav == 0 then
+        qmpe:SetLo()
+        qmpe:SetMed()
     else
-        qmpe:SetWarn()
-        qmpe:SetCaut()
-
-        qmpe:SetLock1()
-        qmpe:SetLock2()
-        qmpe:SetLock3()
-        qmpe:SetUnlock1()
-        qmpe:SetUnlock2()
-        qmpe:SetUnlock3()
-
-        qmpe:SetMsg()
-        qmpe:SetFail()
-        if g_qmpe_pmdg737_use_nav == 0 then
-            qmpe:SetLo()
-            qmpe:SetMed()
-        else
-            uluaSet(idr_qmpe_hid_misc_lo, ilua_bool_ternary(dr_ann_ap:Get() + dr_ann_ap_amber:Get(), 0))
-            uluaSet(idr_qmpe_hid_misc_med, ilua_bool_ternary(dr_ann_at:Get() + dr_ann_at_amber:Get(), 0))
-        end
-        qmpe:SetMax()
-        qmpe:SetTerr()
-        qmpe:SetLand()
-
-        -- brightness
-        qmpe:SetBkl()
+        uluaSet(idr_qmpe_hid_misc_lo, ilua_bool_ternary(dr_ann_ap:Get() + dr_ann_ap_amber:Get(), 0))
+        uluaSet(idr_qmpe_hid_misc_med, ilua_bool_ternary(dr_ann_at:Get() + dr_ann_at_amber:Get(), 0))
     end
+    qmpe:SetMax()
+    qmpe:SetTerr()
+    qmpe:SetLand()
+
+    -- brightness
+    qmpe:SetBkl()
+    -- end
 end)
