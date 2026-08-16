@@ -57,6 +57,8 @@ function Wwpap3:init()
 			self.LEDS_MAFO,
 			self.LEDS_ATSOL
 		}
+		self._lcdInited = false
+		self._lastLcdPayload = nil
 	end
 end
 
@@ -80,6 +82,11 @@ function Wwpap3:absent(FastTurnsPerSecond)
 	_G.idr_wwpap3_hid_invalid = uluaFind('cpuwolf/flyluaio/WwPap3/invalid')
 	_G.idr_wwpap3_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WwPap3/fastkeypersec')
 	uluaSet(_G.idr_wwpap3_hid_fastkeypersec, FastTurnsPerSecond)
+
+	self:ensureLcdInit()
+	self:SetBkl(0, 0)
+	self:SetLcdBkl(0, 0)
+	self:SetLedBkl(0, 0)
 	return false
 end
 
@@ -425,7 +432,22 @@ local function pap3_pack32(payload)
 	return out
 end
 
+function Wwpap3:_lcdPayloadEquals(payload)
+	local last = self._lastLcdPayload
+	if not last then return false end
+	for i = 1, 32 do
+		if (payload[i] or 0) ~= (last[i] or 0) then return false end
+	end
+	return true
+end
+
 function Wwpap3:sendRawLcdPayload(payload)
+	-- 如果 payload 没有变化，跳过发送（节流）
+	if self:_lcdPayloadEquals(payload) then
+		return
+	end
+	self._lastLcdPayload = payload
+
 	self:ensureLcdInit()
 	local words = pap3_pack32(payload)
 	uluaSet(_G.idr_wwpap3_hid_lcd_lcd1, words[1])
