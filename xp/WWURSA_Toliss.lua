@@ -39,26 +39,57 @@ wwursa:CfgVal(34, 'AirbusFBW/FlapLeverRatio', 0)
 wwursa:CfgVal(38, 'sim/cockpit2/controls/speedbrake_ratio', -0.5, 0)
 
 -------------------- Output ---------------------
-local dr_bkl = iDataRef:New('AirbusFBW/PanelBrightnessLevel')
+-- Get/Set mode: datarefs registered once; FrameLoop Set* writes only on
+-- ChangedUpdate edges (no per-frame USB HID traffic in steady state)
+wwursa:GetBkl('AirbusFBW/PanelBrightnessLevel', 255)
+wwursa:GetOverallBkl('sim/cockpit/electrical/avionics_on', 1)
+wwursa:GetFault1('AirbusFBW/OHPLightsATA70_Raw[10]')
+wwursa:GetFire1('AirbusFBW/OHPLightsATA70_Raw[11]')
+wwursa:GetFault2('AirbusFBW/OHPLightsATA70_Raw[12]')
+wwursa:GetFire2('AirbusFBW/OHPLightsATA70_Raw[13]')
+
 local dr_power = iDataRef:New('sim/cockpit/electrical/avionics_on')
 local dr_annun = iDataRef:New('AirbusFBW/AnnunMode')
 local dr_trim = iDataRef:New('AirbusFBW/YawTrimPosition')
-local dr_f1 = iDataRef:New('AirbusFBW/OHPLightsATA70_Raw[10]')
-local dr_fire1 = iDataRef:New('AirbusFBW/OHPLightsATA70_Raw[11]')
-local dr_f2 = iDataRef:New('AirbusFBW/OHPLightsATA70_Raw[12]')
-local dr_fire2 = iDataRef:New('AirbusFBW/OHPLightsATA70_Raw[13]')
+
+local was_powered = false
+local was_test = false
 
 GlobalFrameLoopManager:add(function()
 	local hasPower = dr_power:Get() ~= 0
 	local test = dr_annun:Get() == 2
-	local bkl = hasPower and math.floor(math.max(0, math.min(1, dr_bkl:Get())) * 255) or 0
-	wwursa:SendLedCmd(wwursa.LEDS_BKL, bkl)
-	wwursa:SendLedCmd(wwursa.LEDS_OVERALLBKL, hasPower and 255 or 0)
 
-	wwursa:SendLedCmd(wwursa.LEDS_FAULT1, (dr_f1:Get() > 0 or test) and 1 or 0)
-	wwursa:SendLedCmd(wwursa.LEDS_FIRE1, (dr_fire1:Get() > 0 or test) and 1 or 0)
-	wwursa:SendLedCmd(wwursa.LEDS_FAULT2, (dr_f2:Get() > 0 or test) and 1 or 0)
-	wwursa:SendLedCmd(wwursa.LEDS_FIRE2, (dr_fire2:Get() > 0 or test) and 1 or 0)
+	-- power edge: falling edge zeroes backlight once; rising edge forces resync
+	if hasPower ~= was_powered then
+		was_powered = hasPower
+		if not hasPower then
+			wwursa:SendLedCmd(wwursa.LEDS_BKL, 0)
+			return
+		end
+		wwursa:FreshBkl()
+		wwursa:FreshBits()
+	end
+	if not hasPower then
+		return
+	end
 
+	-- test edge: entering forces all annunciations on once; leaving resyncs bits
+	if test ~= was_test then
+		was_test = test
+		if test then
+			wwursa:SetFault1(nil, 1)
+			wwursa:SetFire1(nil, 1)
+			wwursa:SetFault2(nil, 1)
+			wwursa:SetFire2(nil, 1)
+		else
+			wwursa:FreshBits()
+		end
+	end
+	if not test then
+		wwursa:Setleds() -- boolean LEDs (FIRE/FAULT), ChangedUpdate throttled
+	end
+
+	wwursa:SetBkl()
+	wwursa:SetOverallBkl()
 	wwursa:setLcdText(wwursa:formatTrimText(dr_trim:Get(), test))
 end)
