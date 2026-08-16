@@ -38,6 +38,13 @@ function Wwursa_GA_LCD_Loop()
 	wwursa:setLcdText(wwursa:formatTrimText(dr_trim:Get(), false))
 end
 
+--====backlight
+-- generic XP instrument dimming; SetBkl() is ChangedUpdate throttled
+wwursa:GetBkl('sim/cockpit2/electrical/instrument_brightness_ratio[0]', 255)
+-- GetOverallBkl drives Throttle ch2 (overall brightness master gate) which
+-- mirrors to PAC ch2 (LCD brightness); binary on/off per dimming > 0
+wwursa:GetOverallBkl('sim/cockpit2/electrical/instrument_brightness_ratio[0]', 255)
+
 --[[
 wwursa:GetBkl('')
 wwursa:GetOverallBkl('')
@@ -53,6 +60,8 @@ wwursa:GetLcdBkl('')
 
 
 GlobalFrameLoopManager:add(function()
+	wwursa:SetBkl()
+	wwursa:SetOverallBkl()
 	Wwursa_GA_Vib_Loop()
 	Wwursa_GA_LCD_Loop()
 end)
