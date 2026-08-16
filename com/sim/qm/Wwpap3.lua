@@ -83,30 +83,12 @@ function Wwpap3:absent(FastTurnsPerSecond)
 	_G.idr_wwpap3_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WwPap3/fastkeypersec')
 	uluaSet(_G.idr_wwpap3_hid_fastkeypersec, FastTurnsPerSecond)
 
-	self:sendDeviceConfig()
+	--self:sendDeviceConfig()
 	self:ensureLcdInit()
 	self:SetBkl(0, 0)
 	self:SetLcdBkl(0, 0)
 	self:SetLedBkl(0, 0)
-	self:setMcpDisplay({
-		displayEnabled = false,
-		displayTest = false,
-		showLabels = false,
-		showCourse = true,
-		speed = 0,
-		spdMach = false,
-		speedVisible = false,
-		heading = 0,
-		headingVisible = true,
-		altitude = 0,
-		altitudeVisible = true,
-		verticalSpeed = 0,
-		verticalSpeedVisible = false,
-		crsCapt = 0,
-		crsFo = 0,
-		digitA = false,
-		digitB = false,
-	})
+	self:clearMcpDisplay()
 	return false
 end
 
@@ -680,6 +662,28 @@ function Wwpap3:setMcpDisplay(data)
 	end
 
 	self:sendRawLcdPayload(p)
+end
+
+function Wwpap3:clearMcpDisplay()
+	self:setMcpDisplay({
+		displayEnabled = false,
+		displayTest = false,
+		showLabels = false,
+		showCourse = true,
+		speed = 0,
+		spdMach = false,
+		speedVisible = false,
+		heading = 0,
+		headingVisible = true,
+		altitude = 0,
+		altitudeVisible = true,
+		verticalSpeed = 0,
+		verticalSpeedVisible = false,
+		crsCapt = 0,
+		crsFo = 0,
+		digitA = false,
+		digitB = false,
+	})
 end
 
 return Wwpap3
