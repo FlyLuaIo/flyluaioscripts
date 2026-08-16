@@ -210,8 +210,8 @@ GlobalFrameLoopManager:add(function()
 
 	-- LCD (WINCTRL zibo-pap3-mcp-profile::updateDisplayData)
 	wwpap3:setMcpDisplay({
-		displayEnabled = true, --(testMode ~= 2) and hasPower,
-		displayTest = false, --testMode >= 1,
+		displayEnabled = (testMode ~= 2) and hasPower,
+		displayTest = testMode >= 1,
 		showLabels = false,
 		showCourse = true,
 		speed = dr_spd:Get(),

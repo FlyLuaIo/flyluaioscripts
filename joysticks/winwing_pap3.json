@@ -135,6 +135,31 @@
       ]
     },
     {
+      "FunName": "config",
+      "USB_CMD_length": 14,
+      "HeaderBytes": [
+        "0x02",
+        "0x01",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x04",
+        "0x05",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00",
+        "0x00"
+      ],
+      "SubFunctions": [
+        {
+          "configValue": "i40:24"
+        }
+      ]
+    },
+    {
       "FunName": "init",
       "USB_CMD_length": 64,
       "HeaderBytes": [
