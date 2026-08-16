@@ -75,7 +75,7 @@ end
 function Wwursa:SendLedCmdPac(LedId, value)
 	value = math.floor(value)
 	if value < 0 then value = 0 elseif value > 255 then value = 255 end
-	local combinedValue = (LedId * 256) + value
+	local combinedValue = (value * 256) + LedId
 	uluaSet(_G.idr_wwursa_hid_pac_ledcmd, combinedValue)
 end
 
@@ -83,7 +83,7 @@ end
 function Wwursa:SendLedCmd(LedId, value)
 	value = math.floor(value)
 	if value < 0 then value = 0 elseif value > 255 then value = 255 end
-	local combinedValue = (LedId * 256) + value
+	local combinedValue = (value * 256) + LedId
 	uluaSet(_G.idr_wwursa_hid_leds_ledcmd, combinedValue)
 	if LedId < 3 then
 		self:SendLedCmdPac(LedId, value)

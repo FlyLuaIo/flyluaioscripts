@@ -46,7 +46,7 @@ function Wwpdc3n.Open(...)
 end
 
 function Wwpdc3n:SendLedCmd(LedId, value)
-	local combinedValue = (LedId * 256) + value
+	local combinedValue = (value * 256) + LedId
 	uluaSet(_G.idr_wwpdc3n_hid_leds_ledcmd, combinedValue)
 end
 

@@ -99,7 +99,7 @@ function Wwfcuefisr.Open(...)
 end
 
 function Wwfcuefisr:SendLedCmd(LedId, value)
-	local combinedValue = (LedId * 256) + value
+	local combinedValue = (value * 256) + LedId
 	uluaSet(_G.idr_wwfcuefisr_hid_leds_ledcmd, combinedValue)
 end
 
@@ -117,7 +117,7 @@ function Wwfcuefisr:SendBit(idx, valbase, val)
 end
 
 function Wwfcuefisr:SendLedCmdR(LedId, value)
-	local combinedValue = (LedId * 256) + value
+	local combinedValue = (value * 256) + LedId
 	uluaSet(_G.idr_wwfcuefisr_hid_ledsr_ledcmd, combinedValue)
 end
 
