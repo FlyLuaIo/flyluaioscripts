@@ -68,7 +68,7 @@ wwursa:CfgVal(37, "laminar/B738/flt_ctrls/speedbrake_lever", 0, 0.0889)
 
 -------------------- Output ---------------------
 local dr_power = iDataRef:New('sim/cockpit/electrical/avionics_on')
-local dr_main = iDataRef:New('laminar/B738/electric/main_bus')
+local dr_main = iDataRef:New('sim/cockpit/electrical/avionics_on')
 local dr_panel = iDataRef:New('laminar/B738/electric/panel_brightness[3]')
 local dr_trim = iDataRef:New('sim/cockpit2/controls/rudder_trim')
 local dr_fire1 = iDataRef:New('laminar/B738/annunciator/engine1_fire')
