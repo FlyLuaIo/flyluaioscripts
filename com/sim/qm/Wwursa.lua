@@ -65,6 +65,7 @@ function Wwursa:Init(FastTurnsPerSecond)
 		return false
 	end
 	_G.ilua_hw_assigned_wwursa = 1
+	self:setLcdText('  ')
 	return true
 end
 

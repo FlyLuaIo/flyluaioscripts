@@ -11,43 +11,38 @@ if not wwursa then return end
 
 uluaLog('Wwursa for Zibo')
 
-function wwursa_zibo_seek(posRef, dnCmd, upCmd, target)
-	local dr = uluaFind(posRef)
-	if not dr then return end
-	local cur = uluaGet(dr)
-	local cmdDn = uluaFind(dnCmd)
-	local cmdUp = uluaFind(upCmd)
-	if cur < target then
-		for _ = cur, target - 1 do uluaCmdOnce(cmdUp) end
-	elseif cur > target then
-		for _ = target, cur - 1 do uluaCmdOnce(cmdDn) end
-	end
-end
-
-function wwursa_zibo_multi(...)
-	for i = 1, select('#', ...) do
-		local cmd = uluaFind((select(i, ...)))
-		if cmd then uluaCmdOnce(cmd) end
-	end
-end
-
-_G.wwursa_zibo_flap_last = _G.wwursa_zibo_flap_last or {}
-function wwursa_zibo_flap(cmd, token)
-	if _G.wwursa_zibo_flap_last[cmd] == token then return end
-	_G.wwursa_zibo_flap_last[cmd] = token
-	local c = uluaFind(cmd)
-	if c then uluaCmdOnce(c) end
-end
-
 -------------------- Input Keys Binding ---------------------
 wwursa:CfgCmd(0, 'laminar/B738/engine/mixture1_idle')
 wwursa:CfgCmd(1, 'laminar/B738/engine/mixture1_cutoff')
 wwursa:CfgCmd(2, 'laminar/B738/engine/mixture2_idle')
 wwursa:CfgCmd(3, 'laminar/B738/engine/mixture2_cutoff')
 
-wwursa:CfgFc(6, 'wwursa_zibo_multi("laminar/B738/rotary/eng1_start_grd","laminar/B738/rotary/eng2_start_grd")')
-wwursa:CfgFc(7, 'wwursa_zibo_multi("laminar/B738/rotary/eng1_start_off","laminar/B738/rotary/eng2_start_off")')
-wwursa:CfgFc(8, 'wwursa_zibo_multi("laminar/B738/rotary/eng1_start_cont","laminar/B738/rotary/eng2_start_cont")')
+
+local pswheng1 = QmdevPosSwitchInit("laminar/B738/engine/starter1_pos", 1,
+	"laminar/B738/knob/eng1_start_right",
+	"laminar/B738/knob/eng1_start_left", 500)
+local pswheng2 = QmdevPosSwitchInit("laminar/B738/engine/starter2_pos", 1,
+	"laminar/B738/knob/eng2_start_right",
+	"laminar/B738/knob/eng2_start_left", 500)
+local dr_cmd_ign1 = uluaFind('laminar/B738/toggle_switch/eng_start_source_left')
+local dr_cmd_ign2 = uluaFind('laminar/B738/toggle_switch/eng_start_source_right')
+function eng_starter_select(idx)
+	if idx == 0 then
+		uluaCmdOnce(dr_cmd_ign1)
+		wwursa:CfgPSw(6, pswheng1, 0)
+		wwursa:CfgPSw(7, pswheng1, 1)
+		wwursa:CfgPSw(8, pswheng1, 2)
+	else
+		uluaCmdOnce(dr_cmd_ign2)
+		wwursa:CfgPSw(6, pswheng2, 0)
+		wwursa:CfgPSw(7, pswheng2, 1)
+		wwursa:CfgPSw(8, pswheng2, 2)
+	end
+end
+
+eng_starter_select(0)
+wwursa:CfgFc(4, 'eng_starter_select(0)')
+wwursa:CfgFc(5, 'eng_starter_select(1)')
 
 wwursa:CfgCmd(9, 'laminar/B738/autopilot/left_at_dis_press')
 wwursa:CfgCmd(10, 'laminar/B738/autopilot/right_at_dis_press')
@@ -56,16 +51,18 @@ wwursa:CfgCmd(24, 'sim/flight_controls/rudder_trim_center')
 wwursa:CfgCmd(25, 'sim/flight_controls/rudder_trim_left')
 wwursa:CfgCmd(27, 'sim/flight_controls/rudder_trim_right')
 
-wwursa:CfgFc(28,
-	'wwursa_zibo_seek("laminar/B738/parking_brake_pos","laminar/B738/push_button/park_brake_on_off","laminar/B738/push_button/park_brake_on_off",0)')
-wwursa:CfgFc(29,
-	'wwursa_zibo_seek("laminar/B738/parking_brake_pos","laminar/B738/push_button/park_brake_on_off","laminar/B738/push_button/park_brake_on_off",1)')
+local pswh28 = QmdevPosSwitchInit("laminar/B738/parking_brake_pos", 1,
+	"laminar/B738/push_button/park_brake_on_off",
+	"laminar/B738/push_button/park_brake_on_off")
+-- Parking Brake
+wwursa:CfgPSw(28, pswh28, 0, 1)
 
-wwursa:CfgFc(30, 'wwursa_zibo_flap("laminar/B738/push_button/flaps_30",5)')
-wwursa:CfgFc(31, 'wwursa_zibo_flap("laminar/B738/push_button/flaps_25",4)')
-wwursa:CfgFc(32, 'wwursa_zibo_flap("laminar/B738/push_button/flaps_15",3)')
-wwursa:CfgFc(33, 'wwursa_zibo_flap("laminar/B738/push_button/flaps_5",2)')
-wwursa:CfgFc(34, 'wwursa_zibo_flap("laminar/B738/push_button/flaps_0",1)')
+
+wwursa:CfgVal(30, "laminar/B738/flt_ctrls/flap_lever", 1, nil)
+wwursa:CfgVal(31, "laminar/B738/flt_ctrls/flap_lever", 0.372, nil)
+wwursa:CfgVal(32, "laminar/B738/flt_ctrls/flap_lever", 0.25, nil)
+wwursa:CfgVal(33, "laminar/B738/flt_ctrls/flap_lever", 0.125, nil)
+wwursa:CfgVal(34, "laminar/B738/flt_ctrls/flap_lever", 0, nil)
 
 -------------------- Output ---------------------
 local dr_power = iDataRef:New('sim/cockpit/electrical/avionics_on')
