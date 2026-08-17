@@ -123,17 +123,17 @@ end
 -- explicit SendLedCmd with local throttling (no per-frame USB HID traffic)
 local dr_onground = iDataRef:New('sim/flightmodel/failures/onground_any')
 local dr_gs = iDataRef:New('sim/flightmodel/position/groundspeed')
-local dr_l_tire = iDataRef:New('sim/flightmodel2/gear/tire_vertical_deflection_mtr[1]')
-local dr_r_tire = iDataRef:New('sim/flightmodel2/gear/tire_vertical_deflection_mtr[2]')
+local dr_l_tire = iDataRef:New('sim/flightmodel2/gear/tire_rotation_rate_rad_sec[1]')
+local dr_r_tire = iDataRef:New('sim/flightmodel2/gear/tire_rotation_rate_rad_sec[2]')
 local vib_l_last = 0
 local vib_r_last = 0
 
 function wwursa_zibo_vib_loop()
 	local vib_l, vib_r = 0, 0
 	if dr_onground:Get() ~= 0 then
-		local gs = dr_gs:Get() * 10
-		vib_l = math.floor(gs * dr_l_tire:Get())
-		vib_r = math.floor(gs * dr_r_tire:Get())
+		local gs = dr_gs:Get()
+		vib_l = math.floor(dr_l_tire:Get())
+		vib_r = math.floor(dr_r_tire:Get())
 		if vib_l > 255 then vib_l = 255 end
 		if vib_r > 255 then vib_r = 255 end
 	end
