@@ -68,7 +68,6 @@ wwursa:CfgVal(37, "laminar/B738/flt_ctrls/speedbrake_lever", 0, 0.0889)
 
 -------------------- Output ---------------------
 local dr_power = iDataRef:New('sim/cockpit/electrical/avionics_on')
-local dr_main = iDataRef:New('sim/cockpit/electrical/avionics_on')
 local dr_panel = iDataRef:New('laminar/B738/electric/panel_brightness[3]')
 local dr_trim = iDataRef:New('sim/cockpit2/controls/rudder_trim')
 local dr_fire1 = iDataRef:New('laminar/B738/annunciator/engine1_fire')
@@ -81,8 +80,7 @@ local bkl_last = -1
 
 function wwursa_zibo_bkl_loop()
 	local hasPower = dr_power:Get() ~= 0
-	local hasMain = dr_main:Get() ~= 0
-	local ratio = hasMain and dr_panel:Get() or 0.5
+	local ratio = dr_panel:Get() or 0.5
 	if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
 	local bkl = hasPower and math.floor(ratio * 255) or 0
 	if bkl ~= bkl_last then
@@ -123,8 +121,8 @@ end
 -- explicit SendLedCmd with local throttling (no per-frame USB HID traffic)
 local dr_onground = iDataRef:New('sim/flightmodel/failures/onground_any')
 local dr_gs = iDataRef:New('sim/flightmodel/position/groundspeed')
-local dr_l_tire = iDataRef:New('sim/flightmodel2/gear/tire_rotation_rate_rad_sec[1]')
-local dr_r_tire = iDataRef:New('sim/flightmodel2/gear/tire_rotation_rate_rad_sec[2]')
+local dr_l_tire = iDataRef:New('sim/flightmodel2/gear/tire_rotation_speed_rad_sec[1]')
+local dr_r_tire = iDataRef:New('sim/flightmodel2/gear/tire_rotation_speed_rad_sec[2]')
 local vib_l_last = 0
 local vib_r_last = 0
 
