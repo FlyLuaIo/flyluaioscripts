@@ -103,8 +103,17 @@ function Qmdev:CfgFc(KeyIdx, FuncPressStr, FuncReleaseStr, FuncFastStr)
     self:AddKey(KeyIdx)
     FuncReleaseStr = FuncReleaseStr == nil and "" or FuncReleaseStr
     FuncFastStr = FuncFastStr == nil and "" or FuncFastStr
+    self:ClearKey(KeyIdx)
     uluaQmdevRegisterKey(self.QmdevId, KeyIdx, FuncPressStr, FuncReleaseStr, FuncFastStr)
     -- uluaLog(self.QmdevId .. ', ' .. FuncPressStr .. ', '.. FuncReleaseStr .. ', '.. FuncFastStr)
+end
+
+-- Clear all registered lua script strings of a key, so it can be re-registered.
+-- @KeyIdx: (number) Key index
+-- No return value.
+function Qmdev:ClearKey(KeyIdx)
+    uluaQmdevClearKey(self.QmdevId, KeyIdx)
+    self.KeyTable[KeyIdx] = nil
 end
 
 -- Long press

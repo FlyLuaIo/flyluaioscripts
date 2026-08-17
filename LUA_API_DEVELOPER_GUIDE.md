@@ -380,6 +380,7 @@ Qmdev:CfgVal(KeyIdx, ValStr, PressInt, ReleaseInt)
 Qmdev:CfgValT(KeyIdx, ValStr, value0, value1)
 Qmdev:CfgTog(KeyIdx, BeventStr, RpnStr)
 Qmdev:CfgFc(KeyIdx, FuncPressStr, FuncReleaseStr, FuncFastStr)
+Qmdev:ClearKey(KeyIdx) -- clear a key's registered strings, allow re-registration
 Qmdev:CfgLongFc(KeyIdx, WaitMs, LongPressFunc, ShortPressFunc, InitPressFunc)
 -- LongPressFunc etc. must be Lua functions, not strings
 -- CfgAnalog: keysmap board id from getClassName() (optional self.ProductName override)
@@ -496,6 +497,7 @@ uluaCmdOnce(handle)
 uluaWriteCmd(cmdStr)
 uluaQmdevConfig(qmdevId, configStr)
 uluaQmdevRegisterKey(qmdevId, keyIdx, press, release, fast)
+uluaQmdevClearKey(qmdevId, keyIdx) -- clear registered script strings of a key
 uluasetTimeout(code, delayMs)
 uluaclearTimeout(handle)
 uluagetTimestamp()
