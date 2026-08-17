@@ -64,6 +64,8 @@ wwursa:CfgVal(32, "laminar/B738/flt_ctrls/flap_lever", 0.25, nil)
 wwursa:CfgVal(33, "laminar/B738/flt_ctrls/flap_lever", 0.125, nil)
 wwursa:CfgVal(34, "laminar/B738/flt_ctrls/flap_lever", 0, nil)
 
+wwursa:CfgVal(37, "laminar/B738/flt_ctrls/speedbrake_lever", 0, 0.0889)
+
 -------------------- Output ---------------------
 local dr_power = iDataRef:New('sim/cockpit/electrical/avionics_on')
 local dr_main = iDataRef:New('laminar/B738/electric/main_bus')
@@ -150,5 +152,5 @@ GlobalFrameLoopManager:add(function()
 	wwursa_zibo_led_loop()
 	wwursa_zibo_vib_loop()
 	-- setLcdText caches text internally; USB write only when text changes
-	wwursa:setLcdText(wwursa:formatTrimText(dr_trim:Get(), false))
+	wwursa:setLcdText(wwursa:formatTrimText(dr_trim:Get() * 17.5, false))
 end)
