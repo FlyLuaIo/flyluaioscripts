@@ -95,7 +95,7 @@ function Wwpap3:Init(FastTurnsPerSecond)
 	_G.idr_wwpap3_hid_invalid = uluaFind('cpuwolf/flyluaio/WwPap3/invalid')
 	_G.idr_wwpap3_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WwPap3/fastkeypersec')
 	uluaSet(_G.idr_wwpap3_hid_fastkeypersec, ftps)
-	self:sendDeviceConfig()
+	--self:sendDeviceConfig()
 	self:ensureLcdInit()
 	self:SetBkl(0, 0)
 	self:SetLcdBkl(0, 0)
@@ -178,10 +178,10 @@ function Wwpap3:SetLcdBkl(valbase, val)
 	if val == nil then
 		if self.d_lcdbkl:ChangedUpdate() then
 			val = self.d_lcdbkl:GetOld() * self.d_lcdbkl_scale
-			self:SendLedCmd(self.LEDS_LCDBKL, val)
+			self:SendLedCmd(self.LEDS_LCDBKL, val ~= 0 and 180 or 0)
 		end
 	else
-		self:SendLedCmd(self.LEDS_LCDBKL, val)
+		self:SendLedCmd(self.LEDS_LCDBKL, val ~= 0 and 180 or 0)
 	end
 end
 

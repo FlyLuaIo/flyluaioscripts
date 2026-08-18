@@ -110,24 +110,23 @@ local dr_vs_show = iDataRef:New('(A:AUTOPILOT VERTICAL HOLD,Bool)')
 local dr_crs_l = iDataRef:New('(A:NAV OBS:1,Degrees)')
 local dr_crs_r = iDataRef:New('(A:NAV OBS:2,Degrees)')
 
-local wwpap3_was_powered = false
+local ch_power = iChange:New(false)
 
 GlobalFrameLoopManager:add(function()
     local hasPower = dr_avionics:Get() ~= 0
 
-    if not hasPower then
-        -- power-loss: blackout once
-        if wwpap3_was_powered then
-            wwpap3_was_powered = false
+    if ch_power:ChangedUpdate(hasPower) then
+        if hasPower then
+            wwpap3:FreshBits()
+        else
+            -- power-loss: blackout
             wwpap3:Setleds(0, 0)
             wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
+            return
         end
-        return
     end
-
-    if not wwpap3_was_powered then
-        wwpap3_was_powered = true
-        wwpap3:FreshBits()
+    if not hasPower then
+        return
     end
 
     -- backlight
