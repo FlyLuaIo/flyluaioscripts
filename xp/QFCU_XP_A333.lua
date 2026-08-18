@@ -591,7 +591,7 @@ function JD330_boot()
     end
 end
 
-local qfcu_fcu_power_last = false
+local ch_fcu_power = iChange:New(false)
 function JD330_digi_disp_every_frame()
     local qfcu_altitude = dr_qfcu_altitude:Get()
     local qfcu_hdgtrkmode = dr_qfcu_hdgtrkmode:Get()
@@ -605,12 +605,12 @@ function JD330_digi_disp_every_frame()
     local qfcu_val_condbtn_20 = idr_qfcu_hid_condbtn_20:Get()
     local qfcu_val_condbtn_21 = idr_qfcu_hid_condbtn_21:Get()
 
-    if qfcu_fcu_power_last ~= XP330_is_power_on() then
-        if XP330_is_power_on() then
+    local qfcu_fcu_power_on = XP330_is_power_on()
+    if ch_fcu_power:ChangedUpdate(qfcu_fcu_power_on) then
+        if qfcu_fcu_power_on then
             uluaSet(idr_qfcu_hid_indbrightval_i, qfcu_fcu_test + 1)
             uluaSet(idr_qfcu_hid_invalid, -1)
         end
-        qfcu_fcu_power_last = XP330_is_power_on()
     end
 
     -------------------

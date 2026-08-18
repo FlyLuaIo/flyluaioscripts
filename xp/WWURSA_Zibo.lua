@@ -76,15 +76,14 @@ local dr_fire2 = iDataRef:New('laminar/B738/annunciator/engine2_fire')
 --====backlight
 -- panel brightness ratio scaled to 0-255, gated by avionics power;
 -- local cache: USB write only when computed value changes
-local bkl_last = -1
+local ch_bkl = iChange:New(-1)
 
 function wwursa_zibo_bkl_loop()
 	local hasPower = dr_power:Get() ~= 0
 	local ratio = dr_panel:Get() or 0.5
 	if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
 	local bkl = hasPower and math.floor(ratio * 255) or 0
-	if bkl ~= bkl_last then
-		bkl_last = bkl
+	if ch_bkl:ChangedUpdate(bkl) then
 		wwursa:SendLedCmd(wwursa.LEDS_BKL, bkl)
 		wwursa:SendLedCmd(wwursa.LEDS_OVERALLBKL, hasPower and 255 or 0)
 	end
@@ -92,26 +91,24 @@ end
 
 --====fault/fire LEDs
 -- annunciator binaries, edge-detected (no per-frame USB HID traffic)
-local fault1_last, fire1_last = -1, -1
-local fault2_last, fire2_last = -1, -1
+local ch_fault1 = iChange:New(-1)
+local ch_fire1 = iChange:New(-1)
+local ch_fault2 = iChange:New(-1)
+local ch_fire2 = iChange:New(-1)
 
 function wwursa_zibo_led_loop()
 	local fault1, fire1 = 0, dr_fire1:Get() > 0 and 1 or 0
 	local fault2, fire2 = 0, dr_fire2:Get() > 0 and 1 or 0
-	if fault1 ~= fault1_last then
-		fault1_last = fault1
+	if ch_fault1:ChangedUpdate(fault1) then
 		wwursa:SendLedCmd(wwursa.LEDS_FAULT1, fault1)
 	end
-	if fire1 ~= fire1_last then
-		fire1_last = fire1
+	if ch_fire1:ChangedUpdate(fire1) then
 		wwursa:SendLedCmd(wwursa.LEDS_FIRE1, fire1)
 	end
-	if fault2 ~= fault2_last then
-		fault2_last = fault2
+	if ch_fault2:ChangedUpdate(fault2) then
 		wwursa:SendLedCmd(wwursa.LEDS_FAULT2, fault2)
 	end
-	if fire2 ~= fire2_last then
-		fire2_last = fire2
+	if ch_fire2:ChangedUpdate(fire2) then
 		wwursa:SendLedCmd(wwursa.LEDS_FIRE2, fire2)
 	end
 end
@@ -123,8 +120,8 @@ local dr_onground = iDataRef:New('sim/flightmodel/failures/onground_any')
 local dr_gs = iDataRef:New('sim/flightmodel/position/groundspeed')
 local dr_l_tire = iDataRef:New('sim/flightmodel2/gear/tire_rotation_speed_rad_sec[1]')
 local dr_r_tire = iDataRef:New('sim/flightmodel2/gear/tire_rotation_speed_rad_sec[2]')
-local vib_l_last = 0
-local vib_r_last = 0
+local ch_vib_l = iChange:New(0)
+local ch_vib_r = iChange:New(0)
 
 function wwursa_zibo_vib_loop()
 	local vib_l, vib_r = 0, 0
@@ -135,12 +132,10 @@ function wwursa_zibo_vib_loop()
 		if vib_l > 255 then vib_l = 255 end
 		if vib_r > 255 then vib_r = 255 end
 	end
-	if vib_l ~= vib_l_last then
-		vib_l_last = vib_l
+	if ch_vib_l:ChangedUpdate(vib_l) then
 		wwursa:SendLedCmd(wwursa.LEDS_VIBL, vib_l)
 	end
-	if vib_r ~= vib_r_last then
-		vib_r_last = vib_r
+	if ch_vib_r:ChangedUpdate(vib_r) then
 		wwursa:SendLedCmd(wwursa.LEDS_VIBR, vib_r)
 	end
 end

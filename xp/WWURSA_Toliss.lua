@@ -57,7 +57,7 @@ local dr_trim = iDataRef:New('AirbusFBW/YawTrimPosition')
 -- so ground-roll micro-vibration runs as an explicit loop with local throttling
 local dr_onground = iDataRef:New('sim/flightmodel/failures/onground_any')
 local dr_gs = iDataRef:New('sim/flightmodel/position/groundspeed')
-local vib_last = 0
+local ch_vib = iChange:New(0)
 
 function Wwursa_Toliss_Vib_Loop()
 	local vib = 0
@@ -65,8 +65,7 @@ function Wwursa_Toliss_Vib_Loop()
 		vib = math.floor(dr_gs:Get())
 		if vib > 255 then vib = 255 end
 	end
-	if vib ~= vib_last then
-		vib_last = vib
+	if ch_vib:ChangedUpdate(vib) then
 		wwursa:SendLedCmd(wwursa.LEDS_VIBL, vib)
 		wwursa:SendLedCmd(wwursa.LEDS_VIBR, vib)
 	end

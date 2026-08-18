@@ -284,11 +284,11 @@ local zibo738_cmd_autobrake_up = uluaFind("laminar/B738/knob/autobrake_up")
 --local org_vhf = d_coms
 -- local last_dh_pilot = dh_pilot
 local vhf_toggle_pressed = false
-local taxi_last_press
-local pos78_last_press
-local pos79_last_press
-local sbreak_last = 0
-local abrake_last = 0
+local ch_taxi = iChange:New(nil)
+local ch_pos78 = iChange:New(nil)
+local ch_pos79 = iChange:New(nil)
+local ch_sbreak = iChange:New(0)
+local ch_abrake = iChange:New(0)
 local abrake_turn = 0
 -- local vor1_last = 0
 -- local vor2_last = 0
@@ -336,45 +336,40 @@ function ZB738M_frame_update()
 
     --TAXI Switch
     local taxi = uluaGet(dr_taxi)
-    if qmcp737c_val_condbtn_72 ~= taxi_last_press then
+    if ch_taxi:ChangedUpdate(qmcp737c_val_condbtn_72) then
         if (qmcp737c_val_condbtn_72 == 1 and taxi == 0) or (qmcp737c_val_condbtn_72 == 0 and taxi > 0) then
             uluaCmdOnce(zibo738_cmd_taxi_toggle)
         end
-        taxi_last_press = qmcp737c_val_condbtn_72
     end
 
-    if qmcp737c_val_condbtn_101 ~= sbreak_last then
+    if ch_sbreak:ChangedUpdate(qmcp737c_val_condbtn_101) then
         if qmcp737c_val_condbtn_101 == 1 then
             uluaSet(dr_sbrake, 0.0889)
         elseif qmcp737c_val_condbtn_101 == 2 then
             uluaSet(dr_sbrake, 0.75)
         end
-        sbreak_last = qmcp737c_val_condbtn_101
     end
     --Position
     local position_light = uluaGet(dr_position_light)
-    if qmcp737c_val_condbtn_78 ~= pos78_last_press then
+    if ch_pos78:ChangedUpdate(qmcp737c_val_condbtn_78) then
         if qmcp737c_val_condbtn_78 == 1 and position_light == 0 then
             uluaCmdOnce(zibo738_cmd_pos_down)
         elseif qmcp737c_val_condbtn_78 == 0 and position_light == -1 then
             uluaCmdOnce(zibo738_cmd_pos_up)
         end
-        pos78_last_press = qmcp737c_val_condbtn_78
     end
 
-    if qmcp737c_val_condbtn_79 ~= pos79_last_press then
+    if ch_pos79:ChangedUpdate(qmcp737c_val_condbtn_79) then
         if qmcp737c_val_condbtn_79 == 1 and position_light == 0 then
             uluaCmdOnce(zibo738_cmd_pos_up)
         elseif qmcp737c_val_condbtn_79 == 0 and position_light == 1 then
             uluaCmdOnce(zibo738_cmd_pos_down)
         end
-        pos79_last_press = qmcp737c_val_condbtn_79
     end
     -- -- autobrake position
     local autobreak_pose = uluaGet(dr_autobreak_pose)
-    if qmcp737c_val_condbtn_85 ~= abrake_last then
+    if ch_abrake:ChangedUpdate(qmcp737c_val_condbtn_85) then
         abrake_turn = qmcp737c_val_condbtn_85 - autobreak_pose
-        abrake_last = qmcp737c_val_condbtn_85
     end
     if (abrake_turn < 0) then
         uluaCmdOnce(zibo738_cmd_autobrake_down)
