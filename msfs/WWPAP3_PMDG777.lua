@@ -47,6 +47,10 @@ wwpap3:CfgRpn(28, '(L:switch_202_a) 0 == if{ 20201 (>K:ROTOR_BRAKE) }')
 wwpap3:CfgRpn(29, '(L:switch_230_a) 0 != if{ 23001 (>K:ROTOR_BRAKE) }')
 wwpap3:CfgRpn(30, '(L:switch_230_a) 0 == if{ 23001 (>K:ROTOR_BRAKE) }')
 
+-- A/P disengage paddle (Button 32 Up / Button 33 Down → bits 31/32)
+wwpap3:CfgRpn(32, "(L:switch_214_a, number) 0 == if{ 21401 (>K:ROTOR_BRAKE) }",
+	"(L:switch_214_a, number) 0 != if{ 21401 (>K:ROTOR_BRAKE) }")
+
 wwpap3:CfgRpn(38, '22207 (>K:ROTOR_BRAKE)') -- VS DEC
 wwpap3:CfgRpn(39, '22208 (>K:ROTOR_BRAKE)') -- VS INC
 
