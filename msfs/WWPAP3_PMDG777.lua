@@ -75,9 +75,13 @@ wwpap3:GetMaCapt('(L:switch_202_a)')
 wwpap3:GetMaFo('(L:switch_230_a)')
 wwpap3:GetAtSol('(L:switch_204_a)')
 
+--====backlight (mfproj: BKL=BL_MCP, LCD/LED=180 when battery on)
+wwpap3:GetBkl('(L:BL_MCP, number)', 255)
+wwpap3:GetLcdBkl('(L:BL_MCP, number)', 255)
+wwpap3:GetLedBkl('(L:BL_MCP, number)', 255)
+
 --==== LCD / backlight
 local dr_power = iDataRef:New('(L:Battery)')
-local dr_bkl = iDataRef:New('(L:OH_GS_PANEL_LIGHT_CONTROL, number)')
 
 local dr_spd = iDataRef:New('(L:ngx_SPDwindow, number)')
 local dr_hdg = iDataRef:New('(L:ngx_HDGwindow, number)')
@@ -86,24 +90,30 @@ local dr_vs = iDataRef:New('(L:ngx_VSwindow)')
 local dr_vs_lit = iDataRef:New('(L:switch_2231_a)')
 local dr_hdg_mode = iDataRef:New('(L:ngx_HDGmode)')
 
+local wwpap3_was_powered = false
+
 GlobalFrameLoopManager:add(function()
 	local hasPower = (dr_power:Get() or 0) ~= 0
-	local ratio = dr_bkl:Get() or 0
-	if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
-	local bkl = hasPower and math.floor(ratio * 255) or 0
-	local ledBkl = hasPower and 180 or 0
-	wwpap3:SendLedCmd(wwpap3.LEDS_BKL, bkl)
-	wwpap3:SendLedCmd(wwpap3.LEDS_LCDBKL, hasPower and 180 or 0)
-	wwpap3:SendLedCmd(wwpap3.LEDS_LEDBKL, ledBkl)
 
 	if not hasPower then
-		wwpap3:SendLedCmd(wwpap3.LEDS_BKL, 0)
-		wwpap3:SendLedCmd(wwpap3.LEDS_LCDBKL, 0)
-		wwpap3:SendLedCmd(wwpap3.LEDS_LEDBKL, 0)
-		wwpap3:Setleds(0, 0)
-		wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
+		-- power-loss: blackout once
+		if wwpap3_was_powered then
+			wwpap3_was_powered = false
+			wwpap3:Setleds(0, 0)
+			wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
+		end
 		return
 	end
+
+	if not wwpap3_was_powered then
+		wwpap3_was_powered = true
+		wwpap3:FreshBits()
+	end
+
+	-- backlight (ChangedUpdate throttled)
+	wwpap3:SetBkl()
+	wwpap3:SetLcdBkl()
+	wwpap3:SetLedBkl()
 
 	wwpap3:SetN1()
 	wwpap3:SetSpeed()
