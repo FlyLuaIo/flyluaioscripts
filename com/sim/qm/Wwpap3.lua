@@ -56,7 +56,6 @@ function Wwpap3:init()
 			self.LEDS_MAFO,
 			self.LEDS_ATSOL
 		}
-		self._lcdInited = false
 		self._lastLcdPayload = nil
 	end
 end
@@ -96,11 +95,23 @@ function Wwpap3:Init(FastTurnsPerSecond)
 	_G.idr_wwpap3_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WwPap3/fastkeypersec')
 	uluaSet(_G.idr_wwpap3_hid_fastkeypersec, ftps)
 	--self:sendDeviceConfig()
-	self:ensureLcdInit()
-	self:SetBkl(0, 0)
-	self:SetLcdBkl(0, 0)
-	self:SetLedBkl(0, 0)
-	self:clearMcpDisplay()
+
+
+	for i = 0, 3 do
+		self.PackageConter = 0
+		self:ensureLcdInit()
+		self:SetBkl(0, 0)
+		self:SetLcdBkl(0, 0)
+		self:SetLedBkl(0, 0)
+		self:clearMcpDisplay()
+		self:setMcpDisplay({
+			displayEnabled = true,
+			displayTest = true,
+			showLabels = true,
+			showCourse = true,
+			speed = 100,
+		})
+	end
 	return true
 end
 
@@ -417,8 +428,6 @@ function Wwpap3:Next()
 end
 
 function Wwpap3:ensureLcdInit()
-	if self._lcdInited then return end
-	self._lcdInited = true
 	uluaSet(_G.idr_wwpap3_hid_init_seqnum, self:Next())
 end
 
