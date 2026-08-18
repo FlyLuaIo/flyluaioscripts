@@ -582,14 +582,6 @@ end
 
 local is_load = 0
 local start_time = os.clock()
-function JD330_boot()
-    if is_load == 0 then
-        if os.clock() > (start_time + 10) or XP330_is_power_on() then
-            is_load = 1
-            GlobalFrameLoopManager:add(JD330_digi_disp_every_frame)
-        end
-    end
-end
 
 local ch_fcu_power = iChange:New(false)
 function JD330_digi_disp_every_frame()
@@ -622,6 +614,15 @@ function JD330_digi_disp_every_frame()
         -- digi_disp_powoff_leds()
         -- digi_disp_powoff_mcp()
         digi_disp_set_BrightOff()
+    end
+end
+
+function JD330_boot()
+    if is_load == 0 then
+        if os.clock() > (start_time + 10) or XP330_is_power_on() then
+            is_load = 1
+            GlobalFrameLoopManager:add(JD330_digi_disp_every_frame)
+        end
     end
 end
 

@@ -561,15 +561,6 @@ end
 
 local is_load = 0
 local start_time = os.clock()
-function toliss_boot()
-    if is_load == 0 then
-        local qfcu_fcu_power = dr_qfcu_fcu_power:Get()
-        if os.clock() > start_time + 5 or qfcu_fcu_power > 0 then
-            is_load = 1
-            GlobalFrameLoopManager:add(Toliss320_digi_disp_every_frame)
-        end
-    end
-end
 
 function Toliss320_digi_disp_every_frame()
     local qfcu_fcu_power = dr_qfcu_fcu_power:Get()
@@ -652,6 +643,16 @@ function Toliss320_digi_disp_every_frame()
         digi_disp_set_Bright()
         digi_disp_set_LEDS()
         digi_disp_mcp_rr()
+    end
+end
+
+function toliss_boot()
+    if is_load == 0 then
+        local qfcu_fcu_power = dr_qfcu_fcu_power:Get()
+        if os.clock() > start_time + 5 or qfcu_fcu_power > 0 then
+            is_load = 1
+            GlobalFrameLoopManager:add(Toliss320_digi_disp_every_frame)
+        end
     end
 end
 

@@ -557,15 +557,6 @@ end
 
 local is_load = 0
 local start_time = os.clock()
-function JD330_boot()
-    local qfcu_fcu_power = dr_qfcu_fcu_power:Get()
-    if is_load == 0 then
-        if os.clock() > (start_time + 10) or qfcu_fcu_power > 0 then
-            is_load = 1
-            GlobalFrameLoopManager:add(JD330_digi_disp_every_frame)
-        end
-    end
-end
 
 function JD330_digi_disp_every_frame()
     local qfcu_fcu_power = dr_qfcu_fcu_power:Get()
@@ -689,6 +680,16 @@ function JD330_digi_disp_every_frame()
         -- digi_disp_powoff_leds()
         -- digi_disp_powoff_mcp()
         digi_disp_set_BrightOff()
+    end
+end
+
+function JD330_boot()
+    local qfcu_fcu_power = dr_qfcu_fcu_power:Get()
+    if is_load == 0 then
+        if os.clock() > (start_time + 10) or qfcu_fcu_power > 0 then
+            is_load = 1
+            GlobalFrameLoopManager:add(JD330_digi_disp_every_frame)
+        end
     end
 end
 
