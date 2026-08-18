@@ -95,21 +95,35 @@ function Wwpap3:Init(FastTurnsPerSecond)
 	self._lastLcdPayload = nil
 	--self:sendDeviceConfig()
 
-	for i = 0, 3 do
-		self:ensureLcdInit()
-		self:SetBkl(0, 0)
-		self:SetLcdBkl(0, 0)
-		self:SetLedBkl(0, 0)
-		self:clearMcpDisplay()
-		self:setMcpDisplay({
-			displayEnabled = true,
-			displayTest = true,
-			showLabels = true,
-			showCourse = true,
-			speed = 100,
-		})
-	end
+	self:_runInitSequence(0)
 	return true
+end
+
+-- ========
+-- Non-blocking init sequence: clear -> test, repeated 4 times
+function Wwpap3:_runInitSequence(round)
+	if round >= 3 then return end
+	self:ensureLcdInit()
+	self:SetBkl(0, 0)
+	self:SetLcdBkl(0, 0)
+	self:SetLedBkl(0, 0)
+	self:clearMcpDisplay()
+	_G.ilua_wwpap3_init_self = self
+	uluasetTimeout("_G.ilua_wwpap3_init_self:_runInitTest(" .. tostring(round) .. ")", 2000)
+end
+
+function Wwpap3:_runInitTest(round)
+	self:setMcpDisplay({
+		displayEnabled = true,
+		displayTest = true,
+		showLabels = true,
+		showCourse = true,
+		speed = 100,
+	})
+	self:SetBkl(0, 128)
+	self:SetLcdBkl(0, 128)
+	self:SetLedBkl(0, 255)
+	uluasetTimeout("_G.ilua_wwpap3_init_self:_runInitSequence(" .. tostring(round + 1) .. ")", 1000)
 end
 
 function Wwpap3.Open(...)

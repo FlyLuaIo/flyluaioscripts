@@ -71,11 +71,11 @@ wwpap3:CfgFc(40, "psw_at_action(0, 0)", "psw_at_action(100, 100)")
 
 -------------------- Output LEDs ---------------------
 -- mfproj has no CLB CON / SPEED / HDG SEL / CWS LEDs → '0'
-wwpap3:GetN1('0')
-wwpap3:GetSpeed('0')
+wwpap3:GetN1('(L:switch_2071_a, number)')
+wwpap3:GetSpeed('(L:ngx_MCP_Speed)')
 wwpap3:GetVnav('(L:switch_2121_a, number)')
 wwpap3:GetLvlChg('(L:switch_2131_a, number)') -- FLCH
-wwpap3:GetHdgSel('0')
+wwpap3:GetHdgSel('(L:ngx_MCP_HdgHold)')
 wwpap3:GetLnav('(L:switch_2111_a, number)')
 wwpap3:GetVorLoc('(L:ngx_MCP_Loc, Number)')
 wwpap3:GetApp('(L:ngx_MCP_App, Number)')
@@ -85,9 +85,9 @@ wwpap3:GetCmdA('(L:switch_2031_a, number)') -- AP L
 wwpap3:GetCwsA('0')
 wwpap3:GetCmdB('(L:switch_2291_a)')         -- AP R
 wwpap3:GetCwsB('0')
-wwpap3:GetAtArm('(L:switch_2071_a, number)')
-wwpap3:GetMaCapt('(L:switch_202_a)')
-wwpap3:GetMaFo('(L:switch_230_a)')
+wwpap3:GetAtArm('(L:switch_204_a) ! (L:switch_205_a) ! and')
+wwpap3:GetMaCapt('(L:switch_202_a) !')
+wwpap3:GetMaFo('(L:switch_230_a) !')
 wwpap3:GetAtSol('(L:switch_204_a) ! (L:switch_205_a) ! and')
 
 --====backlight (mfproj: BKL=BL_MCP, LCD/LED=180 when battery on)
