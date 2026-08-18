@@ -11,9 +11,9 @@
 --此处调整加速点, 值越小,越容易进入加速模式,可根据自己的手感调节
 local FastTurnsPerSecond = 40 --How many spins per second  is considered FAST?
 --
-local MaxBightness = 25 --Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
-local SetNav2same = 1 --set Nav2 Freq = NAV1   //设定Nav2和NAV2 相同,值为1有效
-local IsAlreadyInit = 0 --是否已经初始化过了，用来设定首次通电时要执行的内容
+local MaxBightness = 25       --Max brightness set   /背光的最大亮度设定,调小些够用就好,环保省电不刺眼.
+local SetNav2same = 1         --set Nav2 Freq = NAV1   //设定Nav2和NAV2 相同,值为1有效
+local IsAlreadyInit = 0       --是否已经初始化过了，用来设定首次通电时要执行的内容
 
 --
 --laminar/B738/electric/panel_brightness 面板背光，四个数组，浮点
@@ -144,6 +144,7 @@ end
 function digi_disp_powoff_leds()
     uluaSet(idr_qmcp737c_hid_leds, 0)
 end
+
 function digi_disp_powoff_mcp()
     uluaSet(idr_qmcp737c_hid_crs1mod, 0)
     uluaSet(idr_qmcp737c_hid_iasmod, 4)
@@ -163,6 +164,7 @@ function digi_disp_powoff_com()
     uluaSet(idr_qmcp737c_hid_vhfa, i)
     uluaSet(idr_qmcp737c_hid_vhfs, i)
 end
+
 function digi_disp_powoff_nav()
     uluaSet(idr_qmcp737c_hid_navamod, 0)
     uluaSet(idr_qmcp737c_hid_navsmod, 0)
@@ -253,7 +255,7 @@ local dr_zibo_at_arm_pos = uluaFind("laminar/B738/autopilot/autothrottle_arm_pos
 local dr_zibo_ap_disc_pos = uluaFind("laminar/B738/autopilot/disconnect_pos")
 local dr_lg = uluaFind("laminar/B738/switches/landing_gear")
 local dr_position_light = uluaFind("laminar/B738/toggle_switch/position_light_pos") --positon light
-local dr_autobreak_pose = uluaFind("laminar/B738/autobrake/autobrake_pos") -- auto break switch position rto is 0 max is 5
+local dr_autobreak_pose = uluaFind("laminar/B738/autobrake/autobrake_pos")          -- auto break switch position rto is 0 max is 5
 
 local dr_vhf_sen = uluaFind("laminar/B738/comm/rtp_L/hf_sens_ctrl/rheostat")
 --new fix dh display bug
@@ -261,7 +263,7 @@ local dr_vhf_sen = uluaFind("laminar/B738/comm/rtp_L/hf_sens_ctrl/rheostat")
 --*************************************************************************************
 
 ------------------ Spical Switchs  Process  -------------------------------
-local last_left_land = 0 --last landing light left state
+local last_left_land = 0  --last landing light left state
 local last_right_land = 0 --last landing light right state
 
 local zibo738_d_baro_hap = uluaFind("laminar/B738/EFIS_control/capt/baro_in_hpa")
@@ -382,7 +384,7 @@ function ZB738M_frame_update()
 end
 
 GlobalFrameLoopManager:add(ZB738M_frame_update)
-GlobalFrameLoopManager:add(ZB738M_digi_disp_every_frame)
+
 
 -------------------  Send Message Process  ------------------------------------
 -- LED Indicator light
@@ -440,6 +442,7 @@ function digi_disp_set_CRS1()
     uluaSet(idr_qmcp737c_hid_crs1, d_crs1)
     uluaSet(idr_qmcp737c_hid_crs1mod, 1)
 end
+
 --be carefull about:
 ----d_ias_A
 ----d_ias_8
@@ -540,6 +543,7 @@ function digi_disp_set_NAVS()
     uluaSet(idr_qmcp737c_hid_navs, uluaGet(dr_d_navs))
     uluaSet(idr_qmcp737c_hid_navsmod, 1)
 end
+
 --Backlight
 local light_test_last = 0
 local brightness = 0.8
@@ -604,17 +608,19 @@ function digi_disp_mcp_rr()
         digi_disp_mcp_func_table[digi_disp_rr_func_idx]()
     end
 end
+
 function digi_disp_com()
     for i = 1, 2 do
         if digi_disp_com_func_table[i]() then
-        --break
+            --break
         end
     end
 end
+
 function digi_disp_nav()
     for i = 1, 2 do
         if digi_disp_nav_func_table[i]() then
-        --break
+            --break
         end
     end
 end
@@ -649,3 +655,5 @@ function ZB738M_digi_disp_every_frame()
         digi_disp_powoff_nav()
     end
 end
+
+GlobalFrameLoopManager:add(ZB738M_digi_disp_every_frame)
