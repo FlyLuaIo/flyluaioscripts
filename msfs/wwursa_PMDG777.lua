@@ -57,14 +57,14 @@ end
 -- local cache: USB write only when computed value changes
 local dr_power = iDataRef:New('(A:CIRCUIT GENERAL PANEL ON, Bool)')
 local dr_panel = iDataRef:New('(L:BL_Pedestal, number)')
-local vt_bkl = iChange:New(-1)
+local ch_bkl = iChange:New(-1)
 
 function Wwursa_PMDG777_Bkl_Loop()
 	local hasPower = dr_power:Get() ~= 0
 	local ratio = dr_panel:Get()
 	if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
 	local bkl = hasPower and math.floor(ratio * 255) or 0
-	if vt_bkl:ChangedUpdate(bkl) then
+	if ch_bkl:ChangedUpdate(bkl) then
 		wwursa:SendLedCmd(wwursa.LEDS_BKL, bkl)
 		wwursa:SendLedCmd(wwursa.LEDS_OVERALLBKL, hasPower and 255 or 0)
 	end
@@ -74,25 +74,25 @@ end
 -- annunciator binaries, edge-detected (no per-frame USB HID traffic)
 local dr_fire1 = iDataRef:New('(A:ENG FIRE:1,Bool)')
 local dr_fire2 = iDataRef:New('(A:ENG FIRE:2,Bool)')
-local vt_fault1 = iChange:New(-1)
-local vt_fire1 = iChange:New(-1)
-local vt_fault2 = iChange:New(-1)
-local vt_fire2 = iChange:New(-1)
+local ch_fault1 = iChange:New(-1)
+local ch_fire1 = iChange:New(-1)
+local ch_fault2 = iChange:New(-1)
+local ch_fire2 = iChange:New(-1)
 
 function Wwursa_PMDG777_Led_Loop()
 	local fault1, fault2 = 0, 0
 	local fire1 = dr_fire1:Get() ~= 0 and 1 or 0
 	local fire2 = dr_fire2:Get() ~= 0 and 1 or 0
-	if vt_fault1:ChangedUpdate(fault1) then
+	if ch_fault1:ChangedUpdate(fault1) then
 		wwursa:SendLedCmd(wwursa.LEDS_FAULT1, fault1)
 	end
-	if vt_fire1:ChangedUpdate(fire1) then
+	if ch_fire1:ChangedUpdate(fire1) then
 		wwursa:SendLedCmd(wwursa.LEDS_FIRE1, fire1)
 	end
-	if vt_fault2:ChangedUpdate(fault2) then
+	if ch_fault2:ChangedUpdate(fault2) then
 		wwursa:SendLedCmd(wwursa.LEDS_FAULT2, fault2)
 	end
-	if vt_fire2:ChangedUpdate(fire2) then
+	if ch_fire2:ChangedUpdate(fire2) then
 		wwursa:SendLedCmd(wwursa.LEDS_FIRE2, fire2)
 	end
 end
@@ -102,8 +102,8 @@ end
 -- explicit SendLedCmd with local throttling (no per-frame USB HID traffic)
 local dr_onground = iDataRef:New('(A:SIM ON GROUND,Bool)')
 local dr_gs = iDataRef:New('(A:GPS GROUND SPEED,Meters per second)')
-local vt_vib_l = iChange:New(0)
-local vt_vib_r = iChange:New(0)
+local ch_vib_l = iChange:New(0)
+local ch_vib_r = iChange:New(0)
 
 function Wwursa_PMDG777_Vib_Loop()
 	local vib_l, vib_r = 0, 0
@@ -114,10 +114,10 @@ function Wwursa_PMDG777_Vib_Loop()
 		if vib_l > 255 then vib_l = 255 end
 		if vib_r > 255 then vib_r = 255 end
 	end
-	if vt_vib_l:ChangedUpdate(vib_l) then
+	if ch_vib_l:ChangedUpdate(vib_l) then
 		wwursa:SendLedCmd(wwursa.LEDS_VIBL, vib_l)
 	end
-	if vt_vib_r:ChangedUpdate(vib_r) then
+	if ch_vib_r:ChangedUpdate(vib_r) then
 		wwursa:SendLedCmd(wwursa.LEDS_VIBR, vib_r)
 	end
 end

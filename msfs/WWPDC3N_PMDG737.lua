@@ -99,7 +99,7 @@ else
 	dr_power = iDataRef:New('pmdg/ng3/data/ELEC_BusPowered[3]')
 end
 
-local wwpdc3n_last_bkl = -1
+local ch_bkl = iChange:New(-1)
 
 GlobalFrameLoopManager:add(function()
 	local bkl = 0
@@ -108,8 +108,7 @@ GlobalFrameLoopManager:add(function()
 		if bkl < 0 then bkl = 0 elseif bkl > 255 then bkl = 255 end
 	end
 	-- Avoid flooding USB HID with unchanged backlight values
-	if bkl ~= wwpdc3n_last_bkl then
-		wwpdc3n_last_bkl = bkl
+	if ch_bkl:ChangedUpdate(bkl) then
 		wwpdc3n:SendLedCmd(wwpdc3n.LEDS_BKL, bkl)
 	end
 end)
