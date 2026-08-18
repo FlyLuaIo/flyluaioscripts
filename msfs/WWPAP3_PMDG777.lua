@@ -42,17 +42,28 @@ wwpap3:CfgRpn(26, '22501 (>K:ROTOR_BRAKE)', '22501 (>K:ROTOR_BRAKE)')
 
 -- FD Capt / FO maintained (Buttons 28..31 → bits 27..30)
 -- Sync: ON turns on if off; OFF turns off if on (mfproj RPN was name-swapped)
-wwpap3:CfgRpn(27, '(L:switch_202_a) 0 == if{ 20201 (>K:ROTOR_BRAKE) }')
-wwpap3:CfgRpn(28, '(L:switch_202_a) 0 != if{ 20201 (>K:ROTOR_BRAKE) }')
-wwpap3:CfgRpn(29, '(L:switch_230_a) 0 == if{ 23001 (>K:ROTOR_BRAKE) }')
-wwpap3:CfgRpn(30, '(L:switch_230_a) 0 != if{ 23001 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(27, '(L:switch_202_a) 0 != if{ 20201 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(28, '(L:switch_202_a) 0 == if{ 20201 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(29, '(L:switch_230_a) 0 != if{ 23001 (>K:ROTOR_BRAKE) }')
+wwpap3:CfgRpn(30, '(L:switch_230_a) 0 == if{ 23001 (>K:ROTOR_BRAKE) }')
 
 wwpap3:CfgRpn(38, '22207 (>K:ROTOR_BRAKE)') -- VS DEC
 wwpap3:CfgRpn(39, '22208 (>K:ROTOR_BRAKE)') -- VS INC
 
 -- A/T: mfproj dual Button 41 → 20401+20501 (L/R); PAP3 bits 40/41
-wwpap3:CfgRpn(40, '20401 (>K:ROTOR_BRAKE) 20501 (>K:ROTOR_BRAKE)')
-wwpap3:CfgRpn(41, '20401 (>K:ROTOR_BRAKE) 20501 (>K:ROTOR_BRAKE)')
+
+local psw_at1 = QmdevPosSwitchInit("(L:switch_204_a, number)", 100,
+	"20401 (>K:ROTOR_BRAKE)",
+	"20401 (>K:ROTOR_BRAKE)", 500)
+local psw_at2 = QmdevPosSwitchInit("(L:switch_205_a, number)", 100,
+	"20501 (>K:ROTOR_BRAKE)",
+	"20501 (>K:ROTOR_BRAKE)", 500)
+function psw_at_action(cover, val)
+	wwpap3:PSwDelay(psw_at1, 0, cover)
+	wwpap3:PSwDelay(psw_at2, 0, val)
+end
+
+wwpap3:CfgFc(40, "psw_at_action(0, 0)", "psw_at_action(100, 100)")
 
 -------------------- Output LEDs ---------------------
 -- mfproj has no CLB CON / SPEED / HDG SEL / CWS LEDs → '0'
@@ -73,7 +84,7 @@ wwpap3:GetCwsB('0')
 wwpap3:GetAtArm('(L:switch_2071_a, number)')
 wwpap3:GetMaCapt('(L:switch_202_a)')
 wwpap3:GetMaFo('(L:switch_230_a)')
-wwpap3:GetAtSol('(L:switch_204_a)')
+wwpap3:GetAtSol('(L:switch_204_a) ! (L:switch_205_a) ! and')
 
 --====backlight (mfproj: BKL=BL_MCP, LCD/LED=180 when battery on)
 wwpap3:GetBkl('(L:BL_MCP, number)', 255)
