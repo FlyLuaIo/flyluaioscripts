@@ -46,10 +46,10 @@ end
 
 --====backlight
 -- generic XP instrument dimming; SetBkl() is ChangedUpdate throttled
-wwursa:GetBkl('sim/cockpit2/electrical/instrument_brightness_ratio[0]', 255)
+wwursa:GetBkl('sim/cockpit/electrical/cockpit_lights[0]', 255)
 -- GetOverallBkl drives Throttle ch2 (overall brightness master gate) which
 -- mirrors to PAC ch2 (LCD brightness); binary on/off per dimming > 0
-wwursa:GetOverallBkl('sim/cockpit2/electrical/instrument_brightness_ratio[0]', 255)
+wwursa:GetOverallBkl('sim/cockpit/electrical/cockpit_lights[0]', 255)
 
 --[[
 wwursa:GetBkl('')
