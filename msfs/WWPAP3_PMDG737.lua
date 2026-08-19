@@ -172,15 +172,7 @@ GlobalFrameLoopManager:add(function()
 	if testMode == 0 then
 		if not wwpap3_was_test then
 			wwpap3_was_test = true
-			wwpap3:SetN1(0, 1)
-			wwpap3:SetSpeed(0, 1)
-			wwpap3:SetVnav(0, 1)
-			wwpap3:SetHdgSel(0, 1)
-			wwpap3:SetVorLoc(0, 1)
-			wwpap3:SetApp(0, 1)
-			wwpap3:SetAltHld(0, 1)
-			wwpap3:SetLnav(0, 1)
-			wwpap3:SetLvlChg(0, 1)
+			wwpap3:Setleds(0, 1)
 			wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })
 		end
 		return

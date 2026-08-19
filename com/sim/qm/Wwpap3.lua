@@ -407,9 +407,6 @@ function Wwpap3:SetAtSol(valbase, val)
 end
 
 function Wwpap3:Setleds(valbase, val)
-	self:SetBkl(valbase, val)
-	self:SetLcdBkl(valbase, val)
-	self:SetLedBkl(valbase, val)
 	self:SetN1(valbase, val)
 	self:SetSpeed(valbase, val)
 	self:SetVnav(valbase, val)
