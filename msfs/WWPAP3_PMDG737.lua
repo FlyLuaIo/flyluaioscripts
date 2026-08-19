@@ -1,5 +1,5 @@
 -- *****************************************************************
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-08-11
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-08-19
 -- WinWing PAP3 MCP for PMDG 737 (USB HID WwPap3)
 -- MSFS RPN from: PMDG-737.mfproj (WINCTRL 3N PAP only)
 -- *****************************************************************
@@ -138,48 +138,42 @@ else
 	dr_digit_b = iDataRef:New('(L:ngx_SPDsymbols, number)')
 end
 
-local wwpap3_was_powered = false
-local wwpap3_was_test = false
+local ch_power = iChange:New(false)
+local ch_test = iChange:New(false)
 
 GlobalFrameLoopManager:add(function()
-	-- 基础功能调试模式：电源同步与测试模式已临时注释
 	local hasPower = dr_power:Get() ~= 0
 	local testMode = dr_test:Get() or 50 -- 0 test, 50 normal, 100 dim (PMDG)
 
-	if not hasPower then
-		-- power-loss: blackout once
-		if wwpap3_was_powered then
-			wwpap3_was_powered = false
-			wwpap3_was_test = false
+	if ch_power:ChangedUpdate(hasPower) then
+		if not hasPower then
 			wwpap3:Setleds(0, 0)
 			wwpap3:setMcpDisplay({ displayEnabled = false, displayTest = false })
+			ch_test:Update(false)
+			return
 		end
-		return
-	end
-
-	if not wwpap3_was_powered then
-		wwpap3_was_powered = true
-		wwpap3_was_test = false
 		wwpap3:FreshBits()
 	end
+
+	if not hasPower then return end
 
 	-- backlight
 	wwpap3:SetBkl()
 	wwpap3:SetLcdBkl()
 	wwpap3:SetLedBkl()
 
-	-- test mode (disabled for basic test)
-	if testMode == 0 then
-		if not wwpap3_was_test then
-			wwpap3_was_test = true
+	-- test mode
+	local isTest = (testMode == 0)
+	if ch_test:ChangedUpdate(isTest) then
+		if isTest then
 			wwpap3:Setleds(0, 1)
 			wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })
+		else
+			wwpap3:FreshBits()
 		end
-		return
-	elseif wwpap3_was_test then
-		wwpap3_was_test = false
-		wwpap3:FreshBits()
 	end
+
+	if isTest then return end
 
 	-- Update LED indicators (panel internal change detection)
 	wwpap3:SetN1()
