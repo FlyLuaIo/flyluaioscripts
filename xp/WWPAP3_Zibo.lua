@@ -91,103 +91,71 @@ wwpap3:GetAtSol('laminar/B738/autopilot/autothrottle_arm_pos')
 -- Panel dimming source for ChangedUpdate throttling; LCDBKL/LEDBKL are pure
 -- power/test state channels driven explicitly on edges, see FrameLoop below
 wwpap3:GetBkl('laminar/B738/electric/panel_brightness[0]', 255)
+wwpap3:GetLcdBkl('laminar/B738/electric/panel_brightness[0]', 255)
+wwpap3:GetLedBkl('laminar/B738/electric/panel_brightness[0]', 255)
 
-local dr_power = iDataRef:New('sim/cockpit/electrical/avionics_on')
-local dr_main = iDataRef:New('laminar/B738/electric/main_bus')
-local dr_test = iDataRef:New('laminar/B738/dspl_light_test')
-local dr_spd = iDataRef:New('laminar/B738/autopilot/mcp_speed_dial_kts_mach')
-local dr_mach = iDataRef:New('sim/cockpit/autopilot/airspeed_is_mach')
-local dr_hdg = iDataRef:New('laminar/B738/autopilot/mcp_hdg_dial')
-local dr_alt = iDataRef:New('laminar/B738/autopilot/mcp_alt_dial')
-local dr_vs = iDataRef:New('sim/cockpit2/autopilot/vvi_dial_fpm')
-local dr_vs_show = iDataRef:New('laminar/B738/autopilot/vvi_dial_show')
+local dr_power    = iDataRef:New('sim/cockpit/electrical/avionics_on')
+local dr_main     = iDataRef:New('laminar/B738/electric/main_bus')
+local dr_test     = iDataRef:New('laminar/B738/dspl_light_test')
+local dr_spd      = iDataRef:New('laminar/B738/autopilot/mcp_speed_dial_kts_mach')
+local dr_mach     = iDataRef:New('sim/cockpit/autopilot/airspeed_is_mach')
+local dr_hdg      = iDataRef:New('laminar/B738/autopilot/mcp_hdg_dial')
+local dr_alt      = iDataRef:New('laminar/B738/autopilot/mcp_alt_dial')
+local dr_vs       = iDataRef:New('sim/cockpit2/autopilot/vvi_dial_fpm')
+local dr_vs_show  = iDataRef:New('laminar/B738/autopilot/vvi_dial_show')
 local dr_spd_show = iDataRef:New('laminar/B738/autopilot/show_ias')
-local dr_crs_c = iDataRef:New('laminar/B738/autopilot/course_pilot')
-local dr_crs_f = iDataRef:New('laminar/B738/autopilot/course_copilot')
-local dr_digit_a = iDataRef:New('laminar/B738/mcp/digit_A')
-local dr_digit_b = iDataRef:New('laminar/B738/mcp/digit_8')
+local dr_crs_c    = iDataRef:New('laminar/B738/autopilot/course_pilot')
+local dr_crs_f    = iDataRef:New('laminar/B738/autopilot/course_copilot')
+local dr_digit_a  = iDataRef:New('laminar/B738/mcp/digit_A')
+local dr_digit_b  = iDataRef:New('laminar/B738/mcp/digit_8')
 
-local was_powered = false
-local was_main = false
-local was_test = false
-
--- one-shot backlight restore after test mode (SetLedBkl binarizes to 0/255,
--- so LEDBKL uses SendLedCmd directly to keep the original 180 level)
-function wwpap3_zibo_bkl_restore(hasPower, hasMain, testMode)
-	local ratio = hasMain and wwpap3.d_bkl:Get() or 0.5
-	if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
-	wwpap3:SetBkl(nil, hasPower and math.floor(ratio * 255) or 0)
-	wwpap3:SendLedCmd(wwpap3.LEDS_LCDBKL, hasPower and 180 or 0)
-	local ledBkl = (hasPower and hasMain) and 180 or 0
-	if testMode >= 1 then ledBkl = 255 end
-	wwpap3:SendLedCmd(wwpap3.LEDS_LEDBKL, ledBkl)
-end
 
 GlobalFrameLoopManager:add(function()
-	local hasPower = dr_power:Get() ~= 0
+	local hasPower
 	local hasMain = dr_main:Get() ~= 0
-	local testMode = dr_test:Get() or 0
+	local testMode
 
 	-- power edge: falling edge goes dark once (zero traffic while off);
 	-- rising edge invalidates the dimming source and forces LED bits to resync
-	if hasPower ~= was_powered then
-		was_powered = hasPower
+	if dr_power:ChangedUpdate() then
+		hasPower = dr_power:GetOld() ~= 0
 		if not hasPower then
-			wwpap3:SendLedCmd(wwpap3.LEDS_BKL, 0)
-			wwpap3:SendLedCmd(wwpap3.LEDS_LCDBKL, 0)
-			wwpap3:SendLedCmd(wwpap3.LEDS_LEDBKL, 0)
+			wwpap3:SetBkl(0, 0)
+			wwpap3:SetLcdBkl(0, 0)
+			wwpap3:SetLedBkl(0, 0)
 			wwpap3:setMcpDisplay({ displayEnabled = false })
 			return
 		end
-		wwpap3.d_bkl:Invalid(-1)
+		wwpap3:FreshBkls()
 		wwpap3:FreshBits()
-		wwpap3_zibo_bkl_restore(hasPower, hasMain, testMode)
+	else
+		hasPower = dr_power:Get()
 	end
-	if not hasPower then
-		return
-	end
-
-	-- main-bus edge: LEDBKL gate + key backlight dimming-source fallback
-	if hasMain ~= was_main then
-		was_main = hasMain
-		if testMode < 1 then
-			local ratio = hasMain and wwpap3.d_bkl:Get() or 0.5
-			if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
-			wwpap3:SetBkl(nil, math.floor(ratio * 255))
-			wwpap3:SendLedCmd(wwpap3.LEDS_LEDBKL, hasMain and 180 or 0)
-		end
-	end
-
-	-- test edge: entering floods all lamps once; leaving restores backlights
-	-- and forces LED bits to resync with real datarefs
-	if testMode >= 1 and not was_test then
-		was_test = true
-		wwpap3:Setleds(0, 1)
-		-- Setleds also overrides the 3 brightness channels with binary 1;
-		-- restore them (LEDBKL 255 during test, LCDBKL/BKL per power state)
-		wwpap3_zibo_bkl_restore(hasPower, hasMain, testMode)
-	elseif testMode < 1 and was_test then
-		was_test = false
-		wwpap3_zibo_bkl_restore(hasPower, hasMain, testMode)
-		wwpap3:FreshBits()
-	end
-	if testMode >= 1 then
-		wwpap3:setMcpDisplay({
-			displayEnabled = (testMode ~= 2) and hasPower,
-			displayTest = true,
-		})
-		return
-	end
-
-	-- panel dimming: ChangedUpdate throttled (main-bus-off fallback is fixed
-	-- at 0.5 and handled on the main-bus edge above)
-	if hasMain and wwpap3.d_bkl:ChangedUpdate() then
-		local ratio = wwpap3.d_bkl:GetOld()
-		if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
-		wwpap3:SetBkl(nil, math.floor(ratio * 255))
-	end
+	if not hasPower then return end
 
 	wwpap3:SetBkl()
+	wwpap3:SetLcdBkl()
+	wwpap3:SetLedBkl()
+
+	-- test edge: entering floods all lamps once; leaving restores backlights
+	if dr_test:ChangedUpdate() then
+		testMode = dr_test:GetOld()
+		if testMode >= 1 then
+			wwpap3:Setleds(0, 1)
+			wwpap3:setMcpDisplay({
+				displayEnabled = (testMode ~= 2),
+				displayTest = true,
+			})
+			return
+		end
+		wwpap3:FreshBkls()
+		wwpap3:FreshBits()
+	else
+		testMode = dr_test:Get()
+	end
+	if testMode >= 1 then return end
+
+
 
 	wwpap3:SetN1()
 	wwpap3:SetSpeed()

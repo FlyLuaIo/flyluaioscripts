@@ -32,9 +32,6 @@ function Wwpap3:init()
 		self.LEDS_MAFO = 19
 		self.LEDS_ATSOL = 30
 		self.ledIds = {
-			self.LEDS_BKL,
-			self.LEDS_LCDBKL,
-			self.LEDS_LEDBKL,
 			self.LEDS_N1,
 			self.LEDS_SPEED,
 			self.LEDS_VNAV,
@@ -224,6 +221,13 @@ function Wwpap3:SetLedBkl(valbase, val)
 	else
 		self:SendLedCmd(self.LEDS_LEDBKL, val ~= 0 and 255 or 0)
 	end
+end
+
+
+function Wwpap3:FreshBkls()
+	self.d_bkl:Invalid(-1)
+	self.d_lcdbkl:Invalid(-1)
+	self.d_ledbkl:Invalid(-1)
 end
 
 -- ========
