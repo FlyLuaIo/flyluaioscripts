@@ -89,7 +89,7 @@ wwpdc3n:CfgPSw(38, pswh_efisrange, 60)
 wwpdc3n:CfgRpn(39, '-1 (>L:CAMinsKnob, number)') -- MINS DEC
 wwpdc3n:CfgRpn(40, '0 (>L:CAMinsKnob,number)')   -- MINS Neutral
 wwpdc3n:CfgRpn(41, '1 (>L:CAMinsKnob, number)')  -- MINS INC
-wwpdc3n:CfgRpn(42, '1 (>L:CABaroKnob,number)')   -- BARO DEC
+wwpdc3n:CfgRpn(42, '-1 (>L:CABaroKnob,number)')   -- BARO DEC
 wwpdc3n:CfgRpn(43, '0 (>L:CABaroKnob,number)')   -- BARO Neutral
 wwpdc3n:CfgRpn(44, '1 (>L:CABaroKnob,number)')   -- BARO INC
 
