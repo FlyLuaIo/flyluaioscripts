@@ -101,7 +101,7 @@ end
 -- ========
 -- Non-blocking init sequence: clear -> test, repeated 4 times
 function Wwpap3:_runInitSequence(round)
-	if round >= 3 then return end
+	if round >= 1 then return end
 	self:sendDeviceConfig()
 	self:ensureLcdClear()
 	self:ensureLcdInit()
