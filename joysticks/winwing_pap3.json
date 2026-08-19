@@ -160,6 +160,21 @@
       ]
     },
     {
+      "FunName": "lcdclear",
+      "USB_CMD_length": 64,
+      "HeaderBytes": [
+        "0xF0",
+        "0x02",
+        "0x00",
+        "0x00"
+      ],
+      "SubFunctions": [
+        {
+          "seqNum": "i16:8"
+        }
+      ]
+    },
+    {
       "FunName": "init",
       "USB_CMD_length": 64,
       "HeaderBytes": [

@@ -88,13 +88,12 @@ function Wwpap3:Init(FastTurnsPerSecond)
 	_G.idr_wwpap3_hid_empty_seqnum = uluaFind('cpuwolf/flyluaio/WwPap3/empty/seqNum')
 	_G.idr_wwpap3_hid_finish_seqnum = uluaFind('cpuwolf/flyluaio/WwPap3/finish/seqNum')
 	_G.idr_wwpap3_hid_config_value = uluaFind('cpuwolf/flyluaio/WwPap3/config/configValue')
+	_G.idr_wwpap3_hid_lcdclear_seqnum = uluaFind('cpuwolf/flyluaio/WwPap3/lcdclear/seqNum')
 	_G.idr_wwpap3_hid_invalid = uluaFind('cpuwolf/flyluaio/WwPap3/invalid')
 	_G.idr_wwpap3_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/WwPap3/fastkeypersec')
 	uluaSet(_G.idr_wwpap3_hid_fastkeypersec, ftps)
 	self.LcdText = nil
 	self._lastLcdPayload = nil
-	--self:sendDeviceConfig()
-
 	self:_runInitSequence(0)
 	return true
 end
@@ -103,6 +102,8 @@ end
 -- Non-blocking init sequence: clear -> test, repeated 4 times
 function Wwpap3:_runInitSequence(round)
 	if round >= 3 then return end
+	self:sendDeviceConfig()
+	self:ensureLcdClear()
 	self:ensureLcdInit()
 	self:SetBkl(0, 0)
 	self:SetLcdBkl(0, 0)
@@ -121,7 +122,7 @@ function Wwpap3:_runInitTest(round)
 		speed = 100,
 	})
 	self:SetBkl(0, 128)
-	self:SetLcdBkl(0, 128)
+	self:SetLcdBkl(0, 128 + round)
 	self:SetLedBkl(0, 255)
 	uluasetTimeout("_G.ilua_wwpap3_init_self:_runInitSequence(" .. tostring(round + 1) .. ")", 1000)
 end
@@ -200,10 +201,10 @@ function Wwpap3:SetLcdBkl(valbase, val)
 	if val == nil then
 		if self.d_lcdbkl:ChangedUpdate() then
 			val = self.d_lcdbkl:GetOld() * self.d_lcdbkl_scale
-			self:SendLedCmd(self.LEDS_LCDBKL, val ~= 0 and 180 or 0)
+			self:SendLedCmd(self.LEDS_LCDBKL, val)
 		end
 	else
-		self:SendLedCmd(self.LEDS_LCDBKL, val ~= 0 and 180 or 0)
+		self:SendLedCmd(self.LEDS_LCDBKL, val)
 	end
 end
 
@@ -441,6 +442,18 @@ end
 function Wwpap3:ensureLcdInit()
 	self.PackageConter = 0
 	uluaSet(_G.idr_wwpap3_hid_init_seqnum, self:Next())
+end
+
+function Wwpap3:ensureLcdClear()
+	-- 发送 F0 02 ... 预清屏/唤醒帧，必须在 ensureLcdInit 之前调用
+	if not self._lcdclearSeq then
+		self._lcdclearSeq = 0
+	end
+	uluaSet(_G.idr_wwpap3_hid_lcdclear_seqnum, self._lcdclearSeq)
+	self._lcdclearSeq = self._lcdclearSeq + 1
+	if self._lcdclearSeq > 255 then
+		self._lcdclearSeq = 1
+	end
 end
 
 local function pap3_clamp(v, lo, hi)
