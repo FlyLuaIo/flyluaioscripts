@@ -198,6 +198,7 @@ function Wwpap3:SetLcdBkl(valbase, val)
 	if val == nil then
 		if self.d_lcdbkl:ChangedUpdate() then
 			val = self.d_lcdbkl:GetOld() * self.d_lcdbkl_scale
+			val = val < 100 and 100 or val
 			self:SendLedCmd(self.LEDS_LCDBKL, val)
 		end
 	else
@@ -222,7 +223,6 @@ function Wwpap3:SetLedBkl(valbase, val)
 		self:SendLedCmd(self.LEDS_LEDBKL, val ~= 0 and 255 or 0)
 	end
 end
-
 
 function Wwpap3:FreshBkls()
 	self.d_bkl:Invalid(-1)
