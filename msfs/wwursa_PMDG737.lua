@@ -68,14 +68,13 @@ end
 -- ====backlight
 -- panel brightness ratio scaled to 0-255, gated by avionics power;
 -- local cache: USB write only when computed value changes
-local dr_power = iDataRef:New('(A:ELECTRICAL MASTER BATTERY,Bool)')
-local dr_panel = iDataRef:New('(A:LIGHT POTENTIOMETER:3, Percent)')
+local dr_power = iDataRef:New('pmdg/ng3/data/MCP_indication_powered')
+local dr_panel = iDataRef:New('(L:BL_Pedestal)')
 local ch_bkl = iChange:New(-1)
 
 function Wwursa_PMDG737_Bkl_Loop()
 	local hasPower = dr_power:Get() ~= 0
-	local ratio = dr_panel:Get() / 100
-	if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
+	local ratio = dr_panel:Get()
 	local bkl = hasPower and math.floor(ratio * 255) or 0
 	if ch_bkl:ChangedUpdate(bkl) then
 		wwursa:SendLedCmd(wwursa.LEDS_BKL, bkl)
