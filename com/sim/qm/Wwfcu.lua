@@ -72,7 +72,7 @@ function Wwfcu.Open(...)
 end
 
 function Wwfcu:SendLedCmd(LedId, value)
-	local combinedValue = (value * 256) + LedId
+	local combinedValue = (math.floor(value) * 256) + LedId
 	uluaSet(_G.idr_wwfcu_hid_leds_ledcmd, combinedValue)
 end
 
