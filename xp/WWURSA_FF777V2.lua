@@ -54,24 +54,20 @@ wwursa:CfgFc(33, 'wwursa_ff777_flap("1-sim/command/flapLever_set_2",2)')
 wwursa:CfgFc(34, 'wwursa_ff777_flap("1-sim/command/flapLever_set_0",1)')
 
 -------------------- Output ---------------------
-local dr_bkl = iDataRef:New('1-sim/ckpt/lights/aisle')
-local dr_power = iDataRef:New('1-sim/output/mcp/ok')
+--====backlight / LEDs
+wwursa:GetBkl('1-sim/ckpt/lights/aisle', 255)
+wwursa:GetOverallBkl('1-sim/output/mcp/ok', 255)
+wwursa:GetFault1('1-sim/ckpt/lampsGlow/cutoffLeftLGT')
+wwursa:GetFault2('1-sim/ckpt/lampsGlow/cutoffRightLGT')
+wwursa:GetFire1('1-sim/ckpt/lampsGlow/engLeftFireDISCH')
+wwursa:GetFire2('1-sim/ckpt/lampsGlow/engRightFireDISCH')
+
+--====LCD
 local dr_trim = iDataRef:New('sim/flightmodel2/wing/rudder1_deg[11]')
-local dr_fault1 = iDataRef:New('1-sim/ckpt/lampsGlow/cutoffLeftLGT')
-local dr_fault2 = iDataRef:New('1-sim/ckpt/lampsGlow/cutoffRightLGT')
-local dr_fire1 = iDataRef:New('1-sim/ckpt/lampsGlow/engLeftFireDISCH')
-local dr_fire2 = iDataRef:New('1-sim/ckpt/lampsGlow/engRightFireDISCH')
 
 GlobalFrameLoopManager:add(function()
-	local hasPower = dr_power:Get() ~= 0
-	local bkl = hasPower and math.floor(math.max(0, math.min(1, dr_bkl:Get())) * 255) or 0
-	wwursa:SendLedCmd(wwursa.LEDS_BKL, bkl)
-	wwursa:SendLedCmd(wwursa.LEDS_OVERALLBKL, hasPower and 255 or 0)
-
-	wwursa:SendLedCmd(wwursa.LEDS_FAULT1, dr_fault1:Get() ~= 0 and 1 or 0)
-	wwursa:SendLedCmd(wwursa.LEDS_FAULT2, dr_fault2:Get() ~= 0 and 1 or 0)
-	wwursa:SendLedCmd(wwursa.LEDS_FIRE1, dr_fire1:Get() ~= 0 and 1 or 0)
-	wwursa:SendLedCmd(wwursa.LEDS_FIRE2, dr_fire2:Get() ~= 0 and 1 or 0)
-
+	wwursa:SetBkl()
+	wwursa:SetOverallBkl()
+	wwursa:Setleds() -- boolean LEDs only (FIRE/FAULT)
 	wwursa:setLcdText(wwursa:formatTrimText(dr_trim:Get(), false))
 end)
