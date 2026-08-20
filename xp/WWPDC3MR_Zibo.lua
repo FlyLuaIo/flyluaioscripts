@@ -1,6 +1,5 @@
 -- *****************************************************************
 -- WwPdc3mR (FO / 3M R) for Zibo B738
--- Ported from WINCTRL zibo-pdc-profile (3M button index column)
 -- *****************************************************************
 
 if ilua_require_zibo() then return end
@@ -11,19 +10,6 @@ if not wwpdc3mr then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog('Wwpdc3mr for Zibo (FO)')
-
-function wwpdc3mr_zibo_seek(posRef, dnCmd, upCmd, target)
-	local dr = uluaFind(posRef)
-	if not dr then return end
-	local cur = uluaGet(dr)
-	local cmdDn = uluaFind(dnCmd)
-	local cmdUp = uluaFind(upCmd)
-	if cur < target then
-		for _ = cur, target - 1 do uluaCmdOnce(cmdUp) end
-	elseif cur > target then
-		for _ = target, cur - 1 do uluaCmdOnce(cmdDn) end
-	end
-end
 
 -------------------- Input Keys Binding (3M indices) ---------------------
 wwpdc3mr:CfgCmd(0, 'laminar/B738/EFIS_control/fo/push_button/fpv_press')
@@ -37,12 +23,19 @@ wwpdc3mr:CfgCmd(7, 'laminar/B738/EFIS_control/fo/push_button/data_press')
 wwpdc3mr:CfgCmd(8, 'laminar/B738/EFIS_control/fo/push_button/pos_press')
 wwpdc3mr:CfgCmd(9, 'laminar/B738/EFIS_control/fo/push_button/terr_press')
 
-wwpdc3mr:CfgFc(10, 'wwpdc3mr_zibo_seek("laminar/B738/EFIS_control/fo/vor1_off_pos","laminar/B738/EFIS_control/fo/vor1_off_dn","laminar/B738/EFIS_control/fo/vor1_off_up",1)')
-wwpdc3mr:CfgFc(11, 'wwpdc3mr_zibo_seek("laminar/B738/EFIS_control/fo/vor1_off_pos","laminar/B738/EFIS_control/fo/vor1_off_dn","laminar/B738/EFIS_control/fo/vor1_off_up",0)')
-wwpdc3mr:CfgFc(12, 'wwpdc3mr_zibo_seek("laminar/B738/EFIS_control/fo/vor1_off_pos","laminar/B738/EFIS_control/fo/vor1_off_dn","laminar/B738/EFIS_control/fo/vor1_off_up",-1)')
-wwpdc3mr:CfgFc(13, 'wwpdc3mr_zibo_seek("laminar/B738/EFIS_control/fo/vor2_off_pos","laminar/B738/EFIS_control/fo/vor2_off_dn","laminar/B738/EFIS_control/fo/vor2_off_up",1)')
-wwpdc3mr:CfgFc(14, 'wwpdc3mr_zibo_seek("laminar/B738/EFIS_control/fo/vor2_off_pos","laminar/B738/EFIS_control/fo/vor2_off_dn","laminar/B738/EFIS_control/fo/vor2_off_up",0)')
-wwpdc3mr:CfgFc(15, 'wwpdc3mr_zibo_seek("laminar/B738/EFIS_control/fo/vor2_off_pos","laminar/B738/EFIS_control/fo/vor2_off_dn","laminar/B738/EFIS_control/fo/vor2_off_up",-1)')
+-- VOR1 selector (Buttons 11..13 -> bits 10..12: VOR / OFF / ADF)
+local pswh_vor1 = QmdevPosSwitchInit("laminar/B738/EFIS_control/fo/vor1_off_pos", 1,
+	"laminar/B738/EFIS_control/fo/vor1_off_up", "laminar/B738/EFIS_control/fo/vor1_off_dn", 300)
+wwpdc3mr:CfgPSw(10, pswh_vor1, 1)  -- VOR
+wwpdc3mr:CfgPSw(11, pswh_vor1, 0)  -- OFF
+wwpdc3mr:CfgPSw(12, pswh_vor1, -1) -- ADF
+
+-- VOR2 selector (Buttons 14..16 -> bits 13..15: VOR / OFF / ADF)
+local pswh_vor2 = QmdevPosSwitchInit("laminar/B738/EFIS_control/fo/vor2_off_pos", 1,
+	"laminar/B738/EFIS_control/fo/vor2_off_up", "laminar/B738/EFIS_control/fo/vor2_off_dn", 300)
+wwpdc3mr:CfgPSw(13, pswh_vor2, 1)  -- VOR
+wwpdc3mr:CfgPSw(14, pswh_vor2, 0)  -- OFF
+wwpdc3mr:CfgPSw(15, pswh_vor2, -1) -- ADF
 
 wwpdc3mr:CfgCmd(16, 'laminar/B738/EFIS_control/fo/push_button/rst_press')
 wwpdc3mr:CfgCmd(17, 'laminar/B738/EFIS_control/fo/push_button/ctr_press')
@@ -53,10 +46,16 @@ wwpdc3mr:CfgCmd(21, 'laminar/B738/EFIS_control/fo/map_range_up')
 wwpdc3mr:CfgCmd(22, 'laminar/B738/copilot/barometer_down')
 wwpdc3mr:CfgCmd(23, 'laminar/B738/copilot/barometer_up')
 
-wwpdc3mr:CfgFc(24, 'wwpdc3mr_zibo_seek("laminar/B738/EFIS_control/fo/minimums","laminar/B738/EFIS_control/fo/minimums_up","laminar/B738/EFIS_control/fo/minimums_dn",0)')
-wwpdc3mr:CfgFc(25, 'wwpdc3mr_zibo_seek("laminar/B738/EFIS_control/fo/minimums","laminar/B738/EFIS_control/fo/minimums_up","laminar/B738/EFIS_control/fo/minimums_dn",1)')
-wwpdc3mr:CfgFc(26, 'wwpdc3mr_zibo_seek("laminar/B738/EFIS_control/fo/baro_in_hpa","laminar/B738/EFIS_control/fo/baro_in_hpa_dn","laminar/B738/EFIS_control/fo/baro_in_hpa_up",0)')
-wwpdc3mr:CfgFc(27, 'wwpdc3mr_zibo_seek("laminar/B738/EFIS_control/fo/baro_in_hpa","laminar/B738/EFIS_control/fo/baro_in_hpa_dn","laminar/B738/EFIS_control/fo/baro_in_hpa_up",1)')
+-- mins RADIO/BARO: up/dn inverted in Zibo (WINCTRL note)
+local pswh_mins = QmdevPosSwitchInit("laminar/B738/EFIS_control/fo/minimums", 1,
+	"laminar/B738/EFIS_control/fo/minimums_dn", "laminar/B738/EFIS_control/fo/minimums_up", 300)
+wwpdc3mr:CfgPSw(24, pswh_mins, 0) -- RADIO
+wwpdc3mr:CfgPSw(25, pswh_mins, 1) -- BARO
+
+local pswh_baro = QmdevPosSwitchInit("laminar/B738/EFIS_control/fo/baro_in_hpa", 1,
+	"laminar/B738/EFIS_control/fo/baro_in_hpa_up", "laminar/B738/EFIS_control/fo/baro_in_hpa_dn", 300)
+wwpdc3mr:CfgPSw(26, pswh_baro, 0) -- IN
+wwpdc3mr:CfgPSw(27, pswh_baro, 1) -- HPA
 
 wwpdc3mr:CfgVal(28, 'laminar/B738/EFIS_control/fo/map_mode_pos', 0)
 wwpdc3mr:CfgVal(29, 'laminar/B738/EFIS_control/fo/map_mode_pos', 1)

@@ -1,5 +1,5 @@
 -- *****************************************************************
--- WwUrsa for FF777 V2 (ported from WINCTRL ff777-ursa-minor-throttle-profile)
+-- WwUrsa for FF777 V2
 -- *****************************************************************
 
 if ilua_require_ff777(true) then return end
@@ -11,19 +11,6 @@ if not wwursa then return end
 
 uluaLog('Wwursa for FF777 V2')
 
-function wwursa_ff777_seek(posRef, dnCmd, upCmd, target)
-	local dr = uluaFind(posRef)
-	if not dr then return end
-	local cur = uluaGet(dr)
-	local cmdDn = uluaFind(dnCmd)
-	local cmdUp = uluaFind(upCmd)
-	if cur < target then
-		for _ = cur, target - 1 do uluaCmdOnce(cmdUp) end
-	elseif cur > target then
-		for _ = target, cur - 1 do uluaCmdOnce(cmdDn) end
-	end
-end
-
 _G.wwursa_ff777_flap_last = _G.wwursa_ff777_flap_last or {}
 function wwursa_ff777_flap(cmd, token)
 	if _G.wwursa_ff777_flap_last[cmd] == token then return end
@@ -33,10 +20,16 @@ function wwursa_ff777_flap(cmd, token)
 end
 
 -------------------- Input Keys Binding ---------------------
-wwursa:CfgFc(0, 'wwursa_ff777_seek("1-sim/ckpt/cutoffLeftLever/anim","1-sim/command/cutoffLeftLever_trigger","1-sim/command/cutoffLeftLever_trigger",1)')
-wwursa:CfgFc(1, 'wwursa_ff777_seek("1-sim/ckpt/cutoffLeftLever/anim","1-sim/command/cutoffLeftLever_trigger","1-sim/command/cutoffLeftLever_trigger",0)')
-wwursa:CfgFc(2, 'wwursa_ff777_seek("1-sim/ckpt/cutoffRightLever/anim","1-sim/command/cutoffRightLever_trigger","1-sim/command/cutoffRightLever_trigger",1)')
-wwursa:CfgFc(3, 'wwursa_ff777_seek("1-sim/ckpt/cutoffRightLever/anim","1-sim/command/cutoffRightLever_trigger","1-sim/command/cutoffRightLever_trigger",0)')
+-- Cutoff levers (Buttons 1..4 -> bits 0..3)
+local pswh_cutoffL = QmdevPosSwitchInit("1-sim/ckpt/cutoffLeftLever/anim", 1,
+	"1-sim/command/cutoffLeftLever_trigger", "1-sim/command/cutoffLeftLever_trigger", 300)
+wwursa:CfgPSw(0, pswh_cutoffL, 1) -- ON
+wwursa:CfgPSw(1, pswh_cutoffL, 0) -- OFF
+
+local pswh_cutoffR = QmdevPosSwitchInit("1-sim/ckpt/cutoffRightLever/anim", 1,
+	"1-sim/command/cutoffRightLever_trigger", "1-sim/command/cutoffRightLever_trigger", 300)
+wwursa:CfgPSw(2, pswh_cutoffR, 1) -- ON
+wwursa:CfgPSw(3, pswh_cutoffR, 0) -- OFF
 
 wwursa:CfgCmd(6, '1-sim/command/eecStartLeftSwitch_set_0')
 wwursa:CfgCmd(7, '1-sim/command/eecStartLeftSwitch_set_1')
@@ -48,8 +41,11 @@ wwursa:CfgCmd(24, '1-sim/command/rudderTrimCancleButton_button')
 wwursa:CfgCmd(25, '1-sim/command/rudderTrimRotary_rotary-')
 wwursa:CfgCmd(27, '1-sim/command/rudderTrimRotary_rotary+')
 
-wwursa:CfgFc(28, 'wwursa_ff777_seek("sim/flightmodel/controls/parkbrake","1-sim/command/parkbrake_trigger","1-sim/command/parkbrake_trigger",0)')
-wwursa:CfgFc(29, 'wwursa_ff777_seek("sim/flightmodel/controls/parkbrake","1-sim/command/parkbrake_trigger","1-sim/command/parkbrake_trigger",1)')
+-- Park brake (Buttons 29..30 -> bits 28..29)
+local pswh_parkbrake = QmdevPosSwitchInit("sim/flightmodel/controls/parkbrake", 1,
+	"1-sim/command/parkbrake_trigger", "1-sim/command/parkbrake_trigger", 2000)
+wwursa:CfgPSw(28, pswh_parkbrake, 0) -- OFF
+wwursa:CfgPSw(29, pswh_parkbrake, 1) -- ON
 
 wwursa:CfgFc(30, 'wwursa_ff777_flap("1-sim/command/flapLever_set_6",5)')
 wwursa:CfgFc(31, 'wwursa_ff777_flap("1-sim/command/flapLever_set_5",4)')
@@ -60,7 +56,7 @@ wwursa:CfgFc(34, 'wwursa_ff777_flap("1-sim/command/flapLever_set_0",1)')
 -------------------- Output ---------------------
 local dr_bkl = iDataRef:New('1-sim/ckpt/lights/aisle')
 local dr_power = iDataRef:New('1-sim/output/mcp/ok')
-local dr_trim = iDataRef:New('sim/flightmodel/controls/vstab2_rud1def')
+local dr_trim = iDataRef:New('sim/flightmodel2/wing/rudder1_deg[11]')
 local dr_fault1 = iDataRef:New('1-sim/ckpt/lampsGlow/cutoffLeftLGT')
 local dr_fault2 = iDataRef:New('1-sim/ckpt/lampsGlow/cutoffRightLGT')
 local dr_fire1 = iDataRef:New('1-sim/ckpt/lampsGlow/engLeftFireDISCH')
