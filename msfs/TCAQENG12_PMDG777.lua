@@ -30,3 +30,30 @@ local pswh15 = QmdevPosSwitchInit("(L:switch_292_a, number)", 10, "29207 (>K:ROT
 tcaqeng12:CfgPSw(21, pswh15, 10, 0)
 tcaqeng12:CfgPSw(22, pswh15, 40)
 tcaqeng12:CfgPSw(23, pswh15, 50)
+
+--- eng_starter_select
+local pswheng1 = QmdevPosSwitchInit("(L:switch_94_a, number)", 100, "9402 (>K:ROTOR_BRAKE)",
+    "9401 (>K:ROTOR_BRAKE)",
+    500)
+
+local pswheng2 = QmdevPosSwitchInit("(L:switch_95_a, number)", 100, "9502 (>K:ROTOR_BRAKE)",
+    "9501 (>K:ROTOR_BRAKE)",
+    500)
+
+function eng_starter_select(idx)
+    if idx == 0 then
+        --uluaCmdOnce(dr_cmd_ign1)
+        tcaqeng12:CfgPSw(6, pswheng1, 0)
+        tcaqeng12:CfgPSw(7, pswheng1, 100)
+        tcaqeng12:CfgPSw(8, pswheng1, 100)
+    else
+        --uluaCmdOnce(dr_cmd_ign2)
+        tcaqeng12:CfgPSw(6, pswheng2, 0)
+        tcaqeng12:CfgPSw(7, pswheng2, 100)
+        tcaqeng12:CfgPSw(8, pswheng2, 100)
+    end
+end
+
+eng_starter_select(0)
+tcaqeng12:CfgFc(4, 'eng_starter_select(0)')
+tcaqeng12:CfgFc(5, 'eng_starter_select(1)')

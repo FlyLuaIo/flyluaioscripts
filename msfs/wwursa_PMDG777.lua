@@ -43,6 +43,33 @@ wwursa:CfgRpn(3, '(L:switch_521_a) 0 == if{ 52101 (>K:ROTOR_BRAKE) }')
 
 -- TODO: bits 25/27 (TOGA press/release): PMDG 777 ROTOR_BRAKE code unverified
 
+--- eng_starter_select
+local pswheng1 = QmdevPosSwitchInit("(L:switch_94_a, number)", 100, "9402 (>K:ROTOR_BRAKE)",
+	"9401 (>K:ROTOR_BRAKE)",
+	500)
+
+local pswheng2 = QmdevPosSwitchInit("(L:switch_95_a, number)", 100, "9502 (>K:ROTOR_BRAKE)",
+	"9501 (>K:ROTOR_BRAKE)",
+	500)
+
+function eng_starter_select(idx)
+	if idx == 0 then
+		--uluaCmdOnce(dr_cmd_ign1)
+		wwursa:CfgPSw(6, pswheng1, 0)
+		wwursa:CfgPSw(7, pswheng1, 100)
+		wwursa:CfgPSw(8, pswheng1, 100)
+	else
+		--uluaCmdOnce(dr_cmd_ign2)
+		wwursa:CfgPSw(6, pswheng2, 0)
+		wwursa:CfgPSw(7, pswheng2, 100)
+		wwursa:CfgPSw(8, pswheng2, 100)
+	end
+end
+
+eng_starter_select(0)
+wwursa:CfgFc(4, 'eng_starter_select(0)')
+wwursa:CfgFc(5, 'eng_starter_select(1)')
+
 -- ====backlight / LEDs
 wwursa:GetBkl('(L:BL_Pedestal, number)', 255)
 wwursa:GetOverallBkl('(A:CIRCUIT GENERAL PANEL ON, Bool)', 255)
