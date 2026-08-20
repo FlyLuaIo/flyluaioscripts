@@ -152,7 +152,7 @@ function Wwpap3:sendDeviceConfig()
 end
 
 function Wwpap3:SendLedCmd(LedId, value)
-	local combinedValue = (value * 256) + LedId
+	local combinedValue = (math.floor(value) * 256) + LedId
 	uluaSet(_G.idr_wwpap3_hid_leds_ledcmd, combinedValue)
 end
 
@@ -217,10 +217,12 @@ function Wwpap3:SetLedBkl(valbase, val)
 	if val == nil then
 		if self.d_ledbkl:ChangedUpdate() then
 			val = self.d_ledbkl:GetOld() * self.d_ledbkl_scale
-			self:SendLedCmd(self.LEDS_LEDBKL, val ~= 0 and 255 or 0)
+			val = val ~= 0 and 255 or val
+			self:SendLedCmd(self.LEDS_LEDBKL, val)
 		end
 	else
-		self:SendLedCmd(self.LEDS_LEDBKL, val ~= 0 and 255 or 0)
+		val = val ~= 0 and 255 or val
+		self:SendLedCmd(self.LEDS_LEDBKL, val)
 	end
 end
 
