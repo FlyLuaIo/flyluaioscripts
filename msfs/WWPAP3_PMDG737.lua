@@ -164,7 +164,7 @@ GlobalFrameLoopManager:add(function()
 
 	-- test mode
 	local isTest = (testMode == 0)
-	if ch_test:ChangedUpdate(isTest) then
+	if ch_test:ChangedUpdate() then
 		if isTest then
 			wwpap3:Setleds(0, 1)
 			wwpap3:setMcpDisplay({ displayEnabled = true, displayTest = true })

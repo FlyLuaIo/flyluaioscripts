@@ -3,6 +3,9 @@
   "ProductName": "WwPap3",
   "USB_VID": "0x4098",
   "USB_PID": "0xBF0F",
+  "USB_AXIS_OFFSET": 152,
+  "USB_AXIS_MAX": 16,
+  "USB_AXIS_NUM": 1,
   "LightKey": 0,
   "LightKeyName": "N1",
   "Functions": [
