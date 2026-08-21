@@ -105,6 +105,15 @@ local dr_vs = iDataRef:New('(L:ngx_VSwindow)')
 local dr_vs_lit = iDataRef:New('(L:switch_2231_a)')
 local dr_hdg_mode = iDataRef:New('(L:ngx_HDGmode)')
 
+
+local dr_spd_hide = uluaFind("pmdg/ng3/data/MCP_IASBlank")
+if dr_spd_hide == nil then
+	dr_spd_hide = iDataRef:New("(L:ngx_SPDwindow)")
+else
+	dr_spd_hide = iDataRef:New("pmdg/ng3/data/MCP_IASBlank")
+end
+
+
 local wwpap3_was_powered = false
 
 GlobalFrameLoopManager:add(function()
@@ -161,7 +170,7 @@ GlobalFrameLoopManager:add(function()
 		showCourse = false, -- 777 MCP profile has no CRS windows
 		speed = spd,
 		spdMach = spd > 0 and spd < 1,
-		speedVisible = true,
+		speedVisible = dr_spd_hide:Get() > 0,
 		heading = dr_hdg:Get(),
 		headingVisible = true,
 		altitude = dr_alt:Get(),
