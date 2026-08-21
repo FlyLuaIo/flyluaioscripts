@@ -15,7 +15,7 @@ wwpap3:CfgCmd(0, 'sim/autopilot/n1_hold')        -- N1
 wwpap3:CfgCmd(1, 'sim/autopilot/airspeed_hold')  -- SPEED
 wwpap3:CfgCmd(2, 'sim/autopilot/level_change')   -- VNAV (share LVL CHG)
 wwpap3:CfgCmd(3, 'sim/autopilot/level_change')   -- LVL CHG
-wwpap3:CfgCmd(4, 'sim/autopilot/heading_hold')   -- HDG SEL
+wwpap3:CfgCmd(4, 'sim/autopilot/heading')   -- HDG SEL
 wwpap3:CfgCmd(5, 'sim/autopilot/nav_hold')       -- LNAV
 wwpap3:CfgCmd(6, 'sim/autopilot/nav_hold')       -- VOR LOC
 wwpap3:CfgCmd(7, 'sim/autopilot/approach')       -- APP
@@ -58,8 +58,8 @@ wwpap3:CfgCmd(38, 'sim/autopilot/vertical_speed_down') -- VS DEC
 wwpap3:CfgCmd(39, 'sim/autopilot/vertical_speed_up')   -- VS INC
 
 -- A/T ARM ON/OFF (bits 40/41)
-wwpap3:CfgCmd(40, 'sim/autopilot/autothrottle_toggle')
-wwpap3:CfgCmd(41, 'sim/autopilot/autothrottle_toggle')
+wwpap3:CfgCmd(40, 'sim/autopilot/autothrottle_on')
+wwpap3:CfgCmd(41, 'sim/autopilot/autothrottle_off')
 
 -------------------- Output LEDs (sources from QMCP737C GA) ---------------------
 wwpap3:GetN1('sim/cockpit2/autopilot/TOGA_status')
