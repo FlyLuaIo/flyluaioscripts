@@ -139,6 +139,7 @@ function Wwpap3:SendConfigParam(configType, deviceParam, configValue)
 end
 
 function Wwpap3:sendDeviceConfig()
+	uluaSet(_G.idr_wwpap3_hid_lcdclear_seqnum, 1)
 	self:SendConfigParam(0x01, 0x00, 0x00)
 	self:SendConfigParam(0x01, 0x01, 0x00)
 	self:SendConfigParam(0x01, 0x02, 0x00)
@@ -449,14 +450,7 @@ end
 
 function Wwpap3:ensureLcdClear()
 	-- 发送 F0 02 ... 预清屏/唤醒帧，必须在 ensureLcdInit 之前调用
-	if not self._lcdclearSeq then
-		self._lcdclearSeq = 0
-	end
-	uluaSet(_G.idr_wwpap3_hid_lcdclear_seqnum, self._lcdclearSeq)
-	self._lcdclearSeq = self._lcdclearSeq + 1
-	if self._lcdclearSeq > 255 then
-		self._lcdclearSeq = 1
-	end
+	uluaSet(_G.idr_wwpap3_hid_lcdclear_seqnum, 0)
 end
 
 local function pap3_clamp(v, lo, hi)
