@@ -15,7 +15,7 @@ wwpap3:CfgCmd(0, 'sim/autopilot/n1_hold')        -- N1
 wwpap3:CfgCmd(1, 'sim/autopilot/airspeed_hold')  -- SPEED
 wwpap3:CfgCmd(2, 'sim/autopilot/level_change')   -- VNAV (share LVL CHG)
 wwpap3:CfgCmd(3, 'sim/autopilot/level_change')   -- LVL CHG
-wwpap3:CfgCmd(4, 'sim/autopilot/heading')   -- HDG SEL
+wwpap3:CfgCmd(4, 'sim/autopilot/heading')        -- HDG SEL
 wwpap3:CfgCmd(5, 'sim/autopilot/nav_hold')       -- LNAV
 wwpap3:CfgCmd(6, 'sim/autopilot/nav_hold')       -- VOR LOC
 wwpap3:CfgCmd(7, 'sim/autopilot/approach')       -- APP
@@ -99,6 +99,8 @@ local dr_crs_r = iDataRef:New('sim/cockpit/radios/nav2_obs_degm')
 
 local ch_power = iChange:New(false)
 
+local dr_bkl_ctrl = iDataRef:New('sim/cockpit/electrical/cockpit_lights')
+
 GlobalFrameLoopManager:add(function()
     -- local hasPower = dr_avionics:Get() ~= 0
 
@@ -164,4 +166,10 @@ GlobalFrameLoopManager:add(function()
         digitA = false,
         digitB = false,
     })
+    -- winwing lighting sensor
+    if wwpap3.dr_axis:ChangedUpdate() then
+        local axis = wwpap3:scale16bits(wwpap3.dr_axis:GetOld())
+        uluaLog(string.format("pap3 axis %f", axis))
+        dr_bkl_ctrl:Set(axis)
+    end
 end)
