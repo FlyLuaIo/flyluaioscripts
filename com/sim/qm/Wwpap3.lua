@@ -98,7 +98,7 @@ end
 -- ========
 -- Non-blocking init sequence: clear -> test, repeated 4 times
 function Wwpap3:_runInitSequence(round)
-	if round >= 1 then return end
+	if round >= 2 then return end
 	self:sendDeviceConfig()
 	self:ensureLcdClear()
 	self:ensureLcdInit()
@@ -139,8 +139,10 @@ function Wwpap3:SendConfigParam(configType, deviceParam, configValue)
 end
 
 function Wwpap3:sendDeviceConfig()
-	uluaSet(_G.idr_wwpap3_hid_lcdclear_seqnum, 1)
-	self:SendConfigParam(0x01, 0x00, 0x00)
+	-- rubbish config frame
+	self:SendConfigParam(0x01, 0x00, 0xFF)
+	--rubbish lcd clear frame
+	uluaSet(_G.idr_wwpap3_hid_lcdclear_seqnum, 0xFF)
 	self:SendConfigParam(0x01, 0x01, 0x00)
 	self:SendConfigParam(0x01, 0x02, 0x00)
 	self:SendConfigParam(0x01, 0x03, 0x00)
