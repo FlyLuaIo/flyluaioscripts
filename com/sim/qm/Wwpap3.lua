@@ -588,12 +588,14 @@ function Wwpap3:setMcpDisplay(data)
 			if mach >= 1.0 then mach = mach / 100.0 end
 			mach = pap3_clamp(mach, 0.0, 0.9999)
 			if (data.machDigits or 2) >= 3 then
+				-- ".xxx"
 				local three = pap3_clamp(math.floor(mach * 1000.0 + 0.5), 0, 999)
 				pap3_drawDigit(PAP3_G0, p, 0x04, math.floor(three / 100) % 10)
 				pap3_drawDigit(PAP3_G0, p, 0x02, math.floor(three / 10) % 10)
 				pap3_drawDigit(PAP3_G0, p, 0x01, three % 10)
 				pap3_apply(p, 0x1E, 0x80, true)
 			else
+				-- "0.xx"
 				local two = pap3_clamp(math.floor(mach * 100.0 + 0.5), 0, 99)
 				pap3_drawDigit(PAP3_G0, p, 0x02, math.floor(two / 10) % 10)
 				pap3_drawDigit(PAP3_G0, p, 0x01, two % 10)

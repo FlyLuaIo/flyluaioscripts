@@ -170,6 +170,7 @@ GlobalFrameLoopManager:add(function()
 		showCourse = false, -- 777 MCP profile has no CRS windows
 		speed = spd,
 		spdMach = spd > 0 and spd < 1,
+		machDigits = 3,
 		speedVisible = dr_spd_hide:Get() > 0,
 		heading = dr_hdg:Get(),
 		headingVisible = true,
