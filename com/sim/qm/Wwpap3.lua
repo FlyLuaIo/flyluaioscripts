@@ -723,9 +723,10 @@ function Wwpap3:clearMcpDisplay()
 	})
 end
 
-function Wwpap3:scale16bits(x)
+function Wwpap3:scale16bits(x, newMin, newMax)
 	local oldMin, oldMax = 0, 4096
-	local newMin, newMax = 0, 1
+	newMin = newMin == nil and 0.1 or newMin
+	newMax = newMax == nil and 1 or newMax
 
 	-- Linear mapping formula
 	return (x - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin

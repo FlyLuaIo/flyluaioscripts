@@ -138,6 +138,8 @@ else
 	dr_digit_b = iDataRef:New('(L:ngx_SPDsymbols, number)')
 end
 
+
+
 local ch_power = iChange:New(false)
 local ch_test = iChange:New(false)
 
@@ -223,4 +225,11 @@ GlobalFrameLoopManager:add(function()
 		digitA = (dr_digit_a:Get() or 0) ~= 0,
 		digitB = (dr_digit_b:Get() or 0) ~= 0,
 	})
+
+	-- winwing lighting sensor
+	if wwpap3.dr_axis:ChangedUpdate() then
+		local axis = wwpap3:scale16bits(wwpap3.dr_axis:GetOld(), 10, 299)
+		uluaLog(string.format("pap3 axis %f", axis))
+		uluaWriteCmd(tostring(math.floor(300 - axis)) .. ' (>L:CA_MAIN_PANEL_LIGHT_CONTROL, number)')
+	end
 end)

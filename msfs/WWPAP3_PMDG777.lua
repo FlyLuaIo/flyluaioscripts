@@ -183,4 +183,11 @@ GlobalFrameLoopManager:add(function()
 		digitA = false,
 		digitB = false,
 	})
+
+	-- winwing lighting sensor
+	if wwpap3.dr_axis:ChangedUpdate() then
+		local axis = wwpap3:scale16bits(wwpap3.dr_axis:GetOld(), 10, 100)
+		uluaLog(string.format("pap3 axis %f", axis))
+		uluaWriteCmd(tostring(math.floor(100 - axis)) .. ' (>L:OH_MASTER_BRIGHT_ROTATE, number)')
+	end
 end)
