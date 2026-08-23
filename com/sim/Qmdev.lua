@@ -453,7 +453,7 @@ _G.QmdevPosSwitchSetAction = function(idx)
 
     if steps > 0 then
         for uup = 1, steps do
-            uluaLog("UP")
+            uluaLog(string.format("UP %s", _G.QmdevPosSwitch.RpnIncStr[idx]))
             if uluaCmdBegin == nil then
                 uluaWriteCmd(_G.QmdevPosSwitch.RpnIncStr[idx])
             else
@@ -469,7 +469,7 @@ _G.QmdevPosSwitchSetAction = function(idx)
     elseif steps < 0 then
         steps = steps * -1
         for ddn = 1, steps do
-            uluaLog("DOWN")
+            uluaLog(string.format("DOWN %s", _G.QmdevPosSwitch.RpnDecStr[idx]))
             if uluaCmdBegin == nil then
                 uluaWriteCmd(_G.QmdevPosSwitch.RpnDecStr[idx])
             else
