@@ -377,19 +377,19 @@ qmpe:GetEClr("AirbusFBW/OHPLightsATA31[42]")
 qmpe:GetESts("AirbusFBW/OHPLightsATA31[41]")
 
 -- =====MISC
-qmpe:GetWarn("AirbusFBW/OHPLightsATA31[3]")
-qmpe:GetCaut("AirbusFBW/OHPLightsATA31[4]")
+qmpe:GetWarn("AirbusFBW/OHPLightsATA31[3]", false, 0.1)
+qmpe:GetCaut("AirbusFBW/OHPLightsATA31[4]", false, 0.1)
 
 qmpe:GetMsg("AirbusFBW/ACP2Lights[15]")
-qmpe:GetFail("AirbusFBW/OHPLightsATA31[1]")
-qmpe:GetLand("AirbusFBW/OHPLightsATA31[1]")
+qmpe:GetFail("AirbusFBW/OHPLightsATA31[1]", false, 0.1)
+qmpe:GetLand("AirbusFBW/OHPLightsATA31[1]", false, 0.1)
 
-qmpe:GetTerr("AirbusFBW/OHPLightsATA34[24]")
+qmpe:GetTerr("AirbusFBW/OHPLightsATA34[24]", false, 0.1)
 
 if not isINIA340 then
-    qmpe:GetLo("AirbusFBW/OHPLightsATA32[12]")
-    qmpe:GetMed("AirbusFBW/OHPLightsATA32[14]")
-    qmpe:GetMax("AirbusFBW/OHPLightsATA32[16]")
+    qmpe:GetLo("AirbusFBW/OHPLightsATA32[12]", false, 0.1)
+    qmpe:GetMed("AirbusFBW/OHPLightsATA32[14]", false, 0.1)
+    qmpe:GetMax("AirbusFBW/OHPLightsATA32[16]", false, 0.1)
 else
     qmpe:GetLo("AirbusFBW/AutoBrkLo")
     qmpe:GetMed("AirbusFBW/AutoBrkMed")
@@ -398,13 +398,13 @@ end
 
 qmpe:GetBkl("AirbusFBW/PanelBrightnessLevel", 60)
 
-qmpe:GetLock1("AirbusFBW/OHPLightsATA32[2]")
-qmpe:GetLock2("AirbusFBW/OHPLightsATA32[0]")
-qmpe:GetLock3("AirbusFBW/OHPLightsATA32[4]")
+qmpe:GetLock1("AirbusFBW/OHPLightsATA32[2]", false, 0.1)
+qmpe:GetLock2("AirbusFBW/OHPLightsATA32[0]", false, 0.1)
+qmpe:GetLock3("AirbusFBW/OHPLightsATA32[4]", false, 0.1)
 
-qmpe:GetUnlock1("AirbusFBW/OHPLightsATA32[3]")
-qmpe:GetUnlock2("AirbusFBW/OHPLightsATA32[1]")
-qmpe:GetUnlock3("AirbusFBW/OHPLightsATA32[5]")
+qmpe:GetUnlock1("AirbusFBW/OHPLightsATA32[3]", false, 0.1)
+qmpe:GetUnlock2("AirbusFBW/OHPLightsATA32[1]", false, 0.1)
+qmpe:GetUnlock3("AirbusFBW/OHPLightsATA32[5]", false, 0.1)
 
 -- =====RMP radio
 qmpe:GetRmp1("sim/cockpit2/radios/actuators/com1_left_frequency_hz_833",
