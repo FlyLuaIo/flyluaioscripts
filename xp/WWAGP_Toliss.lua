@@ -70,8 +70,8 @@ wwagp:CfgCmd(23, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/lan
 
 
 --====backlight
-wwagp:GetBkl('AirbusFBW/PanelBrightnessLevel', 255)
-wwagp:GetDigiBkl('sim/cockpit2/switches/avionics_power_on', 250) -- 0~1
+wwagp:GetBkl('sim/cockpit2/electrical/panel_brightness_ratio[3]', 255)
+wwagp:GetDigiBkl('AirbusFBW/RMP1Available', 250)                -- 0~1
 wwagp:GetLedBkl('sim/cockpit2/switches/avionics_power_on', 250)  -- 0~1
 --================================ Input LED/LCD ===
 wwagp:GetUlockL('AirbusFBW/OHPLightsATA32[3]')
@@ -166,8 +166,8 @@ function Wwagp_GA_LCD_Loop()
 	wwagp:setLcdStr(gChrono, utc, elapsed_time)
 end
 
-local dr_test = iDataRef:New('AirbusFBW/AnnunMode')                      -- 0: normal 2:test
-local dr_power = iDataRef:New('sim/cockpit2/switches/avionics_power_on') -- 0: OFF 1: ON
+local dr_test = iDataRef:New('AirbusFBW/AnnunMode')                       -- 0: normal 2:test
+local dr_power = iDataRef:New('AirbusFBW/RMP1Available') -- 0: OFF 1: ON
 local drf_brk_sel
 local drf_brk_max
 local drf_brk_pos = iDataRef:New('cpuwolf/flyluaio/WwAgp/condbtn[2]')
