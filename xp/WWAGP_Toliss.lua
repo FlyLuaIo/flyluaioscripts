@@ -70,9 +70,9 @@ wwagp:CfgCmd(23, 'sim/flight_controls/landing_gear_up', 'sim/flight_controls/lan
 
 
 --====backlight
-wwagp:GetBkl('AirbusFBW/PanelBrightnessLevel', 100)
-wwagp:GetDigiBkl('sim/cockpit2/switches/avionics_power_on', 200) -- 0~1
-wwagp:GetLedBkl('sim/cockpit2/switches/avionics_power_on', 200)  -- 0~1
+wwagp:GetBkl('AirbusFBW/PanelBrightnessLevel', 255)
+wwagp:GetDigiBkl('sim/cockpit2/switches/avionics_power_on', 250) -- 0~1
+wwagp:GetLedBkl('sim/cockpit2/switches/avionics_power_on', 250)  -- 0~1
 --================================ Input LED/LCD ===
 wwagp:GetUlockL('AirbusFBW/OHPLightsATA32[3]')
 wwagp:GetUlockN('AirbusFBW/OHPLightsATA32[1]')

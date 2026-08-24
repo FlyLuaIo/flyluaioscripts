@@ -126,8 +126,7 @@ function Wwagp:Next()
 end
 
 function Wwagp:SendLedCmd(LedId, value)
-	local val = math.floor(value) % 255
-	local combinedValue = (val * 256) + LedId
+	local combinedValue = (math.floor(value) * 256) + LedId
 	uluaSet(_G.idr_wwagp_hid_leds_ledcmd, combinedValue)
 end
 
@@ -164,9 +163,11 @@ function Wwagp:SetLedBkl(val)
 	if val == nil then
 		if self.d_ledbkl:ChangedUpdate() then
 			val = self.d_ledbkl:GetOld() * self.d_ledbkl_scale
+			val = val < 100 and 100 or val
 			self:SendLedCmd(self.LED_OVERALL_LEDS_BRIGHTNESS, val)
 		end
 	else
+		val = val < 100 and 100 or val
 		self:SendLedCmd(self.LED_OVERALL_LEDS_BRIGHTNESS, val)
 	end
 end
