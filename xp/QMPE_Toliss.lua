@@ -150,7 +150,7 @@ qmpe:CfgCmd(79, "sim/annunciator/clear_master_warning")
 -- qmpe:CfgCmd(45, "1 (>L:A32NX_DCDU_ATC_MSG_ACK)")
 
 -- INTEG LT
-qmpe:CfgEncFull(46, 47, "AirbusFBW/PanelBrightnessLevel", 0.0185, 0.0185, 1, 0, 1)
+qmpe:CfgEncFull(46, 47, "AirbusFBW/PanelBrightnessLevel", 0.0185, 0.4, 1, 0, 1)
 
 -- ECAM
 -- TO CONFIG
