@@ -72,12 +72,15 @@ function Wwursa_FNX_LCD_Loop()
 end
 
 GlobalFrameLoopManager:add(function()
-	--[[ 	-- expert code: cold and dark
+	-- expert code: cold and dark
 	local b_power
 	if dr_power:ChangedUpdate() then
 		b_power = dr_power:GetOld()
 		if b_power == 0 then
-			wwursa:Setleds(0, true)
+			wwursa:SetOverallBkl(0)
+			wwursa:Setleds(0, 0)
+		else
+			wwursa:FreshOverallBkl()
 			wwursa:FreshBits()
 		end
 	else
@@ -105,7 +108,7 @@ GlobalFrameLoopManager:add(function()
 
 	if b_test == 2 then
 		return
-	end ]]
+	end
 
 	wwursa:SetBkl()
 	wwursa:SetOverallBkl()
