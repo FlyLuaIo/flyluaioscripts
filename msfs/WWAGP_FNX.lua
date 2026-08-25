@@ -47,9 +47,9 @@ wwagp:CfgRpn(23, '0 (>L:S_MIP_GEAR)')
 wwagp:CfgRpn(24, '1 (>L:S_MIP_GEAR)')
 
 --====backlight
-wwagp:GetBkl('(L:A_PED_LIGHTING_PEDESTAL)', 100)           -- 0~1
+wwagp:GetBkl('(L:A_PED_LIGHTING_PEDESTAL)', 255)           -- 0~1
 wwagp:GetDigiBkl('(L:B_ELEC_BUS_POWER_AC_ESS, Bool)', 200) -- 0~1
-wwagp:GetLedBkl('(L:B_ELEC_BUS_POWER_AC_ESS, Bool)', 200)  -- 0~1
+wwagp:GetLedBkl('(L:B_PED_RMP1_POWER, Bool)', 200)         -- 0~1
 --================================ Input LED/LCD ===
 -- Gear 1=L, 2=N, 3=R
 wwagp:GetUlockL('(L:I_MIP_GEAR_1_U)')
@@ -123,8 +123,9 @@ function Wwagp_GA_LCD_Loop()
 end
 
 -- =====Annunciator test
-local dr_test = iDataRef:New('(L:S_OH_IN_LT_ANN_LT)')              -- 0: DIM 1: BRT 2: test
-local dr_power = iDataRef:New('(L:B_ELEC_BUS_POWER_AC_ESS, Bool)') -- 0: OFF 1: ON
+local dr_test = iDataRef:New('(L:S_OH_IN_LT_ANN_LT)')                -- 0: DIM 1: BRT 2: test
+local dr_power = iDataRef:New('(L:B_ELEC_BUS_POWER_DC_BAT, Bool)')   -- 0: OFF 1: ON
+local dr_acpower = iDataRef:New('(L:B_ELEC_BUS_POWER_AC_ESS, Bool)') -- 0: OFF 1: ON
 
 GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark
@@ -133,7 +134,7 @@ GlobalFrameLoopManager:add(function()
 		b_power = dr_power:GetOld()
 		if b_power == 0 then
 			wwagp:PowerOff()
-			wwagp:FreshBkl()
+		else
 			wwagp:FreshDigiBkl()
 			wwagp:FreshLedBkl()
 			wwagp:FreshBits()
@@ -144,6 +145,22 @@ GlobalFrameLoopManager:add(function()
 	if b_power == 0 then
 		return
 	end
+	-- expert code: cold and dark
+	local b_power_ac
+	if dr_acpower:ChangedUpdate() then
+		b_power_ac = dr_acpower:GetOld()
+		if b_power_ac == 0 then
+			wwagp:SetBkl(0)
+		else
+			wwagp:FreshBkl()
+		end
+	else
+		b_power_ac = dr_acpower:Get()
+	end
+	if b_power_ac ~= 0 then
+		wwagp:SetBkl()
+	end
+	
 	-- expert code: test mode
 	local b_test
 	if dr_test:ChangedUpdate() then
@@ -169,7 +186,7 @@ GlobalFrameLoopManager:add(function()
 		--test mode don't need refresh data
 		return
 	end
-	wwagp:SetBkl()
+	
 	wwagp:SetDigiBkl()
 	wwagp:SetLedBkl()
 	Wwagp_GA_LCD_Loop()
