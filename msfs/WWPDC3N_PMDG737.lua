@@ -51,7 +51,6 @@ wwpdc3n:CfgRpn(18, '36701 (>K:ROTOR_BRAKE)') -- BARO push (STD)
 wwpdc3n:CfgRpn(19, '(L:CAMinsKnob,number) 50 - -50 max (>L:CAMinsKnob,number)', '0 (>L:CAMinsKnob,number)')
 wwpdc3n:CfgRpn(20, '(L:CAMinsKnob,number) 50 + 50 min (>L:CAMinsKnob,number)', '0 (>L:CAMinsKnob,number)')
 
-
 wwpdc3n:CfgRpn(21, '(L:CABaroKnob,number) 50 - -50 max (>L:CABaroKnob,number)', '0 (>L:CABaroKnob,number)')
 wwpdc3n:CfgRpn(22, '(L:CABaroKnob,number) 50 + 50 min (>L:CABaroKnob,number)', '0 (>L:CABaroKnob,number)')
 
@@ -85,12 +84,12 @@ wwpdc3n:CfgPSw(38, pswh_efisrange, 70)
 
 -- MINS / BARO knob turns (Buttons 40..45 -> bits 39..44)
 -- onHold repeats the same ROTOR_BRAKE step (keysmap fast-repeat)
-wwpdc3n:CfgRpn(39, '35508 (>K:ROTOR_BRAKE)')   -- MINS DEC
-wwpdc3n:CfgRpn(40, '0 (>L:CAMinsKnob,number)') -- MINS Neutral
-wwpdc3n:CfgRpn(41, '35507 (>K:ROTOR_BRAKE)')   -- MINS INC
-wwpdc3n:CfgRpn(42, '36508 (>K:ROTOR_BRAKE)')   -- BARO DEC
-wwpdc3n:CfgRpn(43, '0 (>L:CABaroKnob,number)') -- BARO Neutral
-wwpdc3n:CfgRpn(44, '36507 (>K:ROTOR_BRAKE)')   -- BARO INC
+wwpdc3n:CfgRpn(39, '-1 (>L:CAMinsKnob,number)') -- MINS DEC
+wwpdc3n:CfgRpn(40, '0 (>L:CAMinsKnob,number)')  -- MINS Neutral
+wwpdc3n:CfgRpn(41, '1 (>L:CAMinsKnob,number)')  -- MINS INC
+wwpdc3n:CfgRpn(42, '-1 (>L:CABaroKnob,number)') -- BARO DEC
+wwpdc3n:CfgRpn(43, '0 (>L:CABaroKnob,number)')  -- BARO Neutral
+wwpdc3n:CfgRpn(44, '1 (>L:CABaroKnob,number)')  -- BARO INC
 
 -------------------- Backlight ---------------------
 -- mfproj BACKLIGHT: (L:BL_MainCA, number) $*100; HID BKL takes 0..255
