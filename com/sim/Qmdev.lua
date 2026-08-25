@@ -122,6 +122,7 @@ _G.LongPressTimeoutHandle = {}
 _G.LongPressFunc = {}
 _G.ShortPressFunc = {}
 _G.InitPressFunc = {}
+_G.ReleaseFunc = {}
 
 -- global callback function
 _G.QmdevPressTimeoutCallBackFunc = function(KeyIdx)
@@ -140,10 +141,16 @@ end
 _G.QmdevReleaseCallBackFunc = function(KeyIdx, WaitMs)
     if uluagetTimestamp() - _G.LongPressStartTime[KeyIdx] > WaitMs then
         uluaLog("Long Press key " .. KeyIdx)
+        if _G.ReleaseFunc[KeyIdx] ~= nil then
+            _G.ReleaseFunc[KeyIdx]()
+        end
     else
         uluaLog("Short Press key " .. KeyIdx)
         uluaclearTimeout(_G.LongPressTimeoutHandle[KeyIdx])
         _G.ShortPressFunc[KeyIdx]()
+        if _G.ReleaseFunc[KeyIdx] ~= nil then
+            _G.ReleaseFunc[KeyIdx]()
+        end
     end
 end
 -- @KeyIdx: (number) Key index
@@ -153,7 +160,7 @@ end
 -- @InitPressFunc: (function, optional) when key down call back function
 -- Qmdev:CfgLongFc(2, 1000, FlapsSet, FlapsSet)
 -- No return value.
-function Qmdev:CfgLongFc(KeyIdx, WaitMs, LongPressFunc, ShortPressFunc, InitPressFunc)
+function Qmdev:CfgLongFc(KeyIdx, WaitMs, LongPressFunc, ShortPressFunc, InitPressFunc, ReleaseFunc)
     self:AddKey(KeyIdx)
     if type(LongPressFunc) == "function" then
         _G.LongPressFunc[KeyIdx] = LongPressFunc
@@ -170,6 +177,13 @@ function Qmdev:CfgLongFc(KeyIdx, WaitMs, LongPressFunc, ShortPressFunc, InitPres
             _G.InitPressFunc[KeyIdx] = InitPressFunc
         else
             uluaLog("CfgLongFc: wrong params 3")
+        end
+    end
+    if ReleaseFunc ~= nil then
+        if type(ReleaseFunc) == "function" then
+            _G.ReleaseFunc[KeyIdx] = ReleaseFunc
+        else
+            uluaLog("CfgLongFc: wrong params 4")
         end
     end
     strpress = "_G.QmdevPressCallBackFunc(" .. tostring(KeyIdx) .. "," .. tostring(WaitMs) .. ")"
