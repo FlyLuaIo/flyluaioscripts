@@ -71,9 +71,27 @@ kayeroof:CfgRpn(14, '1702 (>K:ROTOR_BRAKE)')
 -- bit 15 CREW SUPPLY ← PMDG737 GEN 1 ON
 kayeroof:CfgRpn(15, '2701 (>K:ROTOR_BRAKE)')
 -- bit 16 BAT1 ← PMDG737 BAT ON/OFF
-kayeroof:CfgRpn(16, '201 (>K:ROTOR_BRAKE)')
+--kayeroof:CfgRpn(16, '201 (>K:ROTOR_BRAKE)')
+function key_59_long_func()
+	uluaWriteCmd("101 (>K:ROTOR_BRAKE)")
+end
+
+function key_59_short_func()
+	uluaWriteCmd("201 (>K:ROTOR_BRAKE)")
+end
+
+kayeroof:CfgLongFc(16, 1000, key_59_long_func, key_59_short_func)
 -- bit 17 BAT2 ← PMDG737 EMER EXIT LIGHTS ARM/OFF
-kayeroof:CfgRpn(17, '10101 (>K:ROTOR_BRAKE)')
+--kayeroof:CfgRpn(17, '10101 (>K:ROTOR_BRAKE)')
+function key_17_long_func()
+	uluaWriteCmd("10101 (>K:ROTOR_BRAKE)")
+end
+
+function key_17_short_func()
+	uluaWriteCmd("97401 (>K:ROTOR_BRAKE) 501 (>K:ROTOR_BRAKE) 601 (>K:ROTOR_BRAKE)")
+end
+
+kayeroof:CfgLongFc(17, 1000, key_17_long_func, key_17_short_func)
 -- bit 18 LTK PUMPS1 ← PMDG737 FUEL PUMPS AFT L ON/OFF
 kayeroof:CfgRpn(18, '3701 (>K:ROTOR_BRAKE)')
 -- bit 19 LTK PUMPS2 ← PMDG737 FUEL PUMPS FWD L ON/OFF
