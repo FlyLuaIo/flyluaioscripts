@@ -198,55 +198,27 @@ kayeroof:GetBacklight('(L:A_OH_LIGHTING_OVD)', 100) -- OVHD INTEG LT
 -- PAP3 LedModule "BAT 1+2": BAT1 + BAT2 voltages → one segment write
 kayeroof:GetBat12('(L:N_ELEC_VOLT_BAT_1)', '(L:N_ELEC_VOLT_BAT_2)') -- BAT 1+2 DISPLAY
 
+local dr_power = iDataRef:New("(L:B_ELEC_BUS_POWER_AC_ESS, Bool)")
+
 GlobalFrameLoopManager:add(function()
-	kayeroof:SetFireL()
-	kayeroof:SetAntiIceEng2Up()
-	kayeroof:SetAntiIceEng1Down()
-	kayeroof:SetAntiIceEng2Down()
-	kayeroof:SetAntiIceWingDown()
-	kayeroof:SetApuBleedDown()
-	kayeroof:SetExtPwrDown()
-	kayeroof:SetElecPumpDown()
-	kayeroof:SetFireC()
-	kayeroof:SetBat1Down()
-	kayeroof:SetBat2Up()
-	kayeroof:SetBat2Down()
-	kayeroof:SetFireR()
-	kayeroof:SetIr1Lower()
-	kayeroof:SetIr1Up()
-	kayeroof:SetIr2Lower()
-	kayeroof:SetIr3Lower()
-	kayeroof:SetExtPwrUp()
-	kayeroof:SetAntiIceWingUp()
-	kayeroof:SetApuBleedUp()
-	kayeroof:SetElecPumpUp()
-	kayeroof:SetAntiIceEng1Up()
-	kayeroof:SetCrewSupply()
-	kayeroof:SetGndCtl()
-	kayeroof:SetBat1Up()
-	kayeroof:SetLtkPumps1Up()
-	kayeroof:SetLtkPumps2Down()
-	kayeroof:SetIr3Up()
-	kayeroof:SetIr2Up()
-	kayeroof:SetRtkPumps1Up()
-	kayeroof:SetLtkPumps1Down()
-	kayeroof:SetLtkPumps2Up()
-	kayeroof:SetPump1Up()
-	kayeroof:SetModeSelDown()
-	kayeroof:SetPump2Down()
-	kayeroof:SetPump1Down()
-	kayeroof:SetStartDown()
-	kayeroof:SetPump2Up()
-	kayeroof:SetModeSelUp()
-	kayeroof:SetRtkPumps2Down()
-	kayeroof:SetRtkPumps1Down()
-	kayeroof:SetRtkPumps2Up()
-	kayeroof:SetXFeedUp()
-	kayeroof:SetXFeedDown()
-	kayeroof:SetMasterSwUp()
-	kayeroof:SetMasterSwDown()
-	kayeroof:SetStartUp()
-	kayeroof:SetBat1v2()
+	-- expert code: cold and dark
+	local b_power
+	if dr_power:ChangedUpdate() then
+		b_power = dr_power:GetOld()
+		if b_power == 0 then
+			kayeroof:SetBacklight(0)
+			kayeroof:SetLedsOff()
+		else
+			kayeroof:FreshBacklight()
+			kayeroof:FreshBits()
+		end
+	else
+		b_power = dr_power:Get()
+	end
+	if b_power == 0 then
+		return
+	end
 	kayeroof:SetBacklight()
+	kayeroof:SetLeds()
 	kayeroof:SetBat12()
 end)
