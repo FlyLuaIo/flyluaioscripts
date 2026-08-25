@@ -193,7 +193,7 @@ kayeroof:GetStartUp('(L:I_OH_ELEC_APU_START_U)')       -- APU START AVAIL
 kayeroof:GetBat1v2('(L:N_ELEC_VOLT_BAT_1) 0 != (L:N_ELEC_VOLT_BAT_2) 0 != or') -- BAT2V|BAT1V PINS
 
 -- BACKLIGHT (mfproj: A_OH_LIGHTING_OVD * 100)
-kayeroof:GetBacklight('(L:A_OH_LIGHTING_OVD)', 100) -- OVHD INTEG LT
+kayeroof:GetBacklight('(L:A_OH_LIGHTING_OVD)', 255) -- OVHD INTEG LT
 
 -- PAP3 LedModule "BAT 1+2": BAT1 + BAT2 voltages → one segment write
 kayeroof:GetBat12('(L:N_ELEC_VOLT_BAT_1)', '(L:N_ELEC_VOLT_BAT_2)') -- BAT 1+2 DISPLAY
