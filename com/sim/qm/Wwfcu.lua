@@ -7,7 +7,7 @@
 
 local Wwfcu = oop.class(com.sim.Qmdev)
 function Wwfcu:init()
-	self.QmdevId = 0x073B8C7B
+	self.QmdevId = 0x2BA2DB51
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwfcu == nil then
 		self.PackageConter = 0
