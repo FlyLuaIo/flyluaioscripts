@@ -24,9 +24,6 @@ function Wwfcu:init()
 		self.LEDS_APPR = 13
 		self.LEDS_EXPEDBKL = 30
 		self.ledIds = {
-			self.LEDS_BKL,
-			self.LEDS_SCRBKL,
-			self.LEDS_LEDBKL,
 			self.LEDS_LOC,
 			self.LEDS_AP1,
 			self.LEDS_AP2,
@@ -90,31 +87,69 @@ function Wwfcu:SendBit(idx, valbase, val)
 end
 
 -- ========
--- LEDS BKL
-function Wwfcu:GetBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_BKL, dpath, revert, base)
+-- Backlight
+function Wwfcu:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
 end
 
-function Wwfcu:SetBkl(valbase, val)
-	self:SendBit(self.LEDS_BKL, valbase, val)
+function Wwfcu:SetBkl(val)
+	if val == nil then
+		if self.d_bkl:ChangedUpdate() then
+			val = self.d_bkl:GetOld() * self.d_bkl_scale
+			self:SendLedCmd(self.LEDS_BKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_BKL, val)
+	end
 end
+
+function Wwfcu:FreshBkl()
+	self.d_bkl:Invalid(-1)
+end
+
 -- ========
--- LEDS SCRBKL
-function Wwfcu:GetScrBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_SCRBKL, dpath, revert, base)
+-- Scr Backlight
+function Wwfcu:GetScrBkl(dpath, scale)
+	self.d_scrbkl_scale = scale == nil and 30 or scale
+	self.d_scrbkl = iDataRef:New(dpath)
 end
 
-function Wwfcu:SetScrBkl(valbase, val)
-	self:SendBit(self.LEDS_SCRBKL, valbase, val)
+function Wwfcu:SetScrBkl(val)
+	if val == nil then
+		if self.d_scrbkl:ChangedUpdate() then
+			val = self.d_scrbkl:GetOld() * self.d_scrbkl_scale
+			self:SendLedCmd(self.LEDS_SCRBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_SCRBKL, val)
+	end
 end
+
+function Wwfcu:FreshScrBkl()
+	self.d_scrbkl:Invalid(-1)
+end
+
 -- ========
--- LEDS LEDBKL
-function Wwfcu:GetLedBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_LEDBKL, dpath, revert, base)
+-- Led Backlight
+function Wwfcu:GetLedBkl(dpath, scale)
+	self.d_ledbkl_scale = scale == nil and 30 or scale
+	self.d_ledbkl = iDataRef:New(dpath)
 end
 
-function Wwfcu:SetLedBkl(valbase, val)
-	self:SendBit(self.LEDS_LEDBKL, valbase, val)
+function Wwfcu:SetLedBkl(val)
+	if val == nil then
+		if self.d_ledbkl:ChangedUpdate() then
+			val = self.d_ledbkl:GetOld() * self.d_ledbkl_scale
+			self:SendLedCmd(self.LEDS_LEDBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_LEDBKL, val)
+	end
+end
+
+function Wwfcu:FreshLedBkl()
+	self.d_ledbkl:Invalid(-1)
 end
 -- ========
 -- LEDS LOC
@@ -181,9 +216,6 @@ function Wwfcu:SetExpedBkl(valbase, val)
 end
 
 function Wwfcu:Setleds(valbase, val)
-	self:SetBkl(valbase, val)
-	self:SetScrBkl(valbase, val)
-	self:SetLedBkl(valbase, val)
 	self:SetLoc(valbase, val)
 	self:SetAp1(valbase, val)
 	self:SetAp2(valbase, val)

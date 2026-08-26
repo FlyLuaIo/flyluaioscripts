@@ -24,9 +24,6 @@ function Wwfcuefis:init()
 		self.LEDS_APPR = 13
 		self.LEDS_EXPEDBKL = 30
 		self.ledIds = {
-			self.LEDS_BKL,
-			self.LEDS_SCRBKL,
-			self.LEDS_LEDBKL,
 			self.LEDS_LOC,
 			self.LEDS_AP1,
 			self.LEDS_AP2,
@@ -46,9 +43,6 @@ function Wwfcuefis:init()
 		self.LEDSR_NDB = 8
 		self.LEDSR_ARPT = 9
 		self.ledIds = {
-			self.LEDSR_BKL,
-			self.LEDSR_SCRBKL,
-			self.LEDSR_LEDBKL,
 			self.LEDSR_FD,
 			self.LEDSR_LS,
 			self.LEDSR_CSTR,
@@ -68,9 +62,6 @@ function Wwfcuefis:init()
 		self.LEDSL_NDB = 8
 		self.LEDSL_ARPT = 9
 		self.ledIds = {
-			self.LEDSL_BKL,
-			self.LEDSL_SCRBKL,
-			self.LEDSL_LEDBKL,
 			self.LEDSL_FD,
 			self.LEDSL_LS,
 			self.LEDSL_CSTR,
@@ -154,31 +145,69 @@ function Wwfcuefis:SendLedCmdL(LedId, value)
 end
 
 -- ========
--- LEDS BKL
-function Wwfcuefis:GetBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_BKL, dpath, revert, base)
+-- Backlight
+function Wwfcuefis:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
 end
 
-function Wwfcuefis:SetBkl(valbase, val)
-	self:SendBit(self.LEDS_BKL, valbase, val)
+function Wwfcuefis:SetBkl(val)
+	if val == nil then
+		if self.d_bkl:ChangedUpdate() then
+			val = self.d_bkl:GetOld() * self.d_bkl_scale
+			self:SendLedCmd(self.LEDS_BKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_BKL, val)
+	end
 end
+
+function Wwfcuefis:FreshBkl()
+	self.d_bkl:Invalid(-1)
+end
+
 -- ========
--- LEDS SCRBKL
-function Wwfcuefis:GetScrBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_SCRBKL, dpath, revert, base)
+-- Scr Backlight
+function Wwfcuefis:GetScrBkl(dpath, scale)
+	self.d_scrbkl_scale = scale == nil and 30 or scale
+	self.d_scrbkl = iDataRef:New(dpath)
 end
 
-function Wwfcuefis:SetScrBkl(valbase, val)
-	self:SendBit(self.LEDS_SCRBKL, valbase, val)
+function Wwfcuefis:SetScrBkl(val)
+	if val == nil then
+		if self.d_scrbkl:ChangedUpdate() then
+			val = self.d_scrbkl:GetOld() * self.d_scrbkl_scale
+			self:SendLedCmd(self.LEDS_SCRBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_SCRBKL, val)
+	end
 end
+
+function Wwfcuefis:FreshScrBkl()
+	self.d_scrbkl:Invalid(-1)
+end
+
 -- ========
--- LEDS LEDBKL
-function Wwfcuefis:GetLedBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_LEDBKL, dpath, revert, base)
+-- Led Backlight
+function Wwfcuefis:GetLedBkl(dpath, scale)
+	self.d_ledbkl_scale = scale == nil and 30 or scale
+	self.d_ledbkl = iDataRef:New(dpath)
 end
 
-function Wwfcuefis:SetLedBkl(valbase, val)
-	self:SendBit(self.LEDS_LEDBKL, valbase, val)
+function Wwfcuefis:SetLedBkl(val)
+	if val == nil then
+		if self.d_ledbkl:ChangedUpdate() then
+			val = self.d_ledbkl:GetOld() * self.d_ledbkl_scale
+			self:SendLedCmd(self.LEDS_LEDBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_LEDBKL, val)
+	end
+end
+
+function Wwfcuefis:FreshLedBkl()
+	self.d_ledbkl:Invalid(-1)
 end
 -- ========
 -- LEDS LOC
@@ -245,9 +274,6 @@ function Wwfcuefis:SetExpedBkl(valbase, val)
 end
 
 function Wwfcuefis:Setleds(valbase, val)
-	self:SetBkl(valbase, val)
-	self:SetScrBkl(valbase, val)
-	self:SetLedBkl(valbase, val)
 	self:SetLoc(valbase, val)
 	self:SetAp1(valbase, val)
 	self:SetAp2(valbase, val)
@@ -258,30 +284,68 @@ function Wwfcuefis:Setleds(valbase, val)
 end
 -- ========
 -- LEDSR BKL
-function Wwfcuefis:GetBkl(dpath, revert, base)
-	self:GetBit(self.LEDSR_BKL, dpath, revert, base)
+function Wwfcuefis:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
 end
 
-function Wwfcuefis:SetBkl(valbase, val)
-	self:SendBit(self.LEDSR_BKL, valbase, val)
+function Wwfcuefis:SetBkl(val)
+	if val == nil then
+		if self.d_bkl:ChangedUpdate() then
+			val = self.d_bkl:GetOld() * self.d_bkl_scale
+			self:SendLedCmd(self.LEDSR_BKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDSR_BKL, val)
+	end
 end
+
+function Wwfcuefis:FreshBkl()
+	self.d_bkl:Invalid(-1)
+end
+
 -- ========
 -- LEDSR SCRBKL
-function Wwfcuefis:GetScrBkl(dpath, revert, base)
-	self:GetBit(self.LEDSR_SCRBKL, dpath, revert, base)
+function Wwfcuefis:GetScrBkl(dpath, scale)
+	self.d_scrbkl_scale = scale == nil and 30 or scale
+	self.d_scrbkl = iDataRef:New(dpath)
 end
 
-function Wwfcuefis:SetScrBkl(valbase, val)
-	self:SendBit(self.LEDSR_SCRBKL, valbase, val)
+function Wwfcuefis:SetScrBkl(val)
+	if val == nil then
+		if self.d_scrbkl:ChangedUpdate() then
+			val = self.d_scrbkl:GetOld() * self.d_scrbkl_scale
+			self:SendLedCmd(self.LEDSR_SCRBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDSR_SCRBKL, val)
+	end
 end
+
+function Wwfcuefis:FreshScrBkl()
+	self.d_scrbkl:Invalid(-1)
+end
+
 -- ========
 -- LEDSR LEDBKL
-function Wwfcuefis:GetLedBkl(dpath, revert, base)
-	self:GetBit(self.LEDSR_LEDBKL, dpath, revert, base)
+function Wwfcuefis:GetLedBkl(dpath, scale)
+	self.d_ledbkl_scale = scale == nil and 30 or scale
+	self.d_ledbkl = iDataRef:New(dpath)
 end
 
-function Wwfcuefis:SetLedBkl(valbase, val)
-	self:SendBit(self.LEDSR_LEDBKL, valbase, val)
+function Wwfcuefis:SetLedBkl(val)
+	if val == nil then
+		if self.d_ledbkl:ChangedUpdate() then
+			val = self.d_ledbkl:GetOld() * self.d_ledbkl_scale
+			self:SendLedCmd(self.LEDSR_LEDBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDSR_LEDBKL, val)
+	end
+end
+
+function Wwfcuefis:FreshLedBkl()
+	self.d_ledbkl:Invalid(-1)
 end
 -- ========
 -- LEDSR FD
@@ -348,9 +412,6 @@ function Wwfcuefis:SetArpt(valbase, val)
 end
 
 function Wwfcuefis:SetledsR(valbase, val)
-	self:SetBkl(valbase, val)
-	self:SetScrBkl(valbase, val)
-	self:SetLedBkl(valbase, val)
 	self:SetFd(valbase, val)
 	self:SetLs(valbase, val)
 	self:SetCstr(valbase, val)
@@ -361,30 +422,68 @@ function Wwfcuefis:SetledsR(valbase, val)
 end
 -- ========
 -- LEDSL BKL
-function Wwfcuefis:GetBkl(dpath, revert, base)
-	self:GetBit(self.LEDSL_BKL, dpath, revert, base)
+function Wwfcuefis:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
 end
 
-function Wwfcuefis:SetBkl(valbase, val)
-	self:SendBit(self.LEDSL_BKL, valbase, val)
+function Wwfcuefis:SetBkl(val)
+	if val == nil then
+		if self.d_bkl:ChangedUpdate() then
+			val = self.d_bkl:GetOld() * self.d_bkl_scale
+			self:SendLedCmd(self.LEDSL_BKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDSL_BKL, val)
+	end
 end
+
+function Wwfcuefis:FreshBkl()
+	self.d_bkl:Invalid(-1)
+end
+
 -- ========
 -- LEDSL SCRBKL
-function Wwfcuefis:GetScrBkl(dpath, revert, base)
-	self:GetBit(self.LEDSL_SCRBKL, dpath, revert, base)
+function Wwfcuefis:GetScrBkl(dpath, scale)
+	self.d_scrbkl_scale = scale == nil and 30 or scale
+	self.d_scrbkl = iDataRef:New(dpath)
 end
 
-function Wwfcuefis:SetScrBkl(valbase, val)
-	self:SendBit(self.LEDSL_SCRBKL, valbase, val)
+function Wwfcuefis:SetScrBkl(val)
+	if val == nil then
+		if self.d_scrbkl:ChangedUpdate() then
+			val = self.d_scrbkl:GetOld() * self.d_scrbkl_scale
+			self:SendLedCmd(self.LEDSL_SCRBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDSL_SCRBKL, val)
+	end
 end
+
+function Wwfcuefis:FreshScrBkl()
+	self.d_scrbkl:Invalid(-1)
+end
+
 -- ========
 -- LEDSL LEDBKL
-function Wwfcuefis:GetLedBkl(dpath, revert, base)
-	self:GetBit(self.LEDSL_LEDBKL, dpath, revert, base)
+function Wwfcuefis:GetLedBkl(dpath, scale)
+	self.d_ledbkl_scale = scale == nil and 30 or scale
+	self.d_ledbkl = iDataRef:New(dpath)
 end
 
-function Wwfcuefis:SetLedBkl(valbase, val)
-	self:SendBit(self.LEDSL_LEDBKL, valbase, val)
+function Wwfcuefis:SetLedBkl(val)
+	if val == nil then
+		if self.d_ledbkl:ChangedUpdate() then
+			val = self.d_ledbkl:GetOld() * self.d_ledbkl_scale
+			self:SendLedCmd(self.LEDSL_LEDBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDSL_LEDBKL, val)
+	end
+end
+
+function Wwfcuefis:FreshLedBkl()
+	self.d_ledbkl:Invalid(-1)
 end
 -- ========
 -- LEDSL FD
@@ -451,9 +550,6 @@ function Wwfcuefis:SetArpt(valbase, val)
 end
 
 function Wwfcuefis:SetledsL(valbase, val)
-	self:SetBkl(valbase, val)
-	self:SetScrBkl(valbase, val)
-	self:SetLedBkl(valbase, val)
 	self:SetFd(valbase, val)
 	self:SetLs(valbase, val)
 	self:SetCstr(valbase, val)

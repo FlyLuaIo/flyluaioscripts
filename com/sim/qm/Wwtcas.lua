@@ -18,9 +18,6 @@ function Wwtcas:init()
 		self.LEDS_LEDBKL = 2
 		self.LEDS_ATCFAIL = 3
 		self.ledIds = {
-			self.LEDS_BKL,
-			self.LEDS_LCDBKL,
-			self.LEDS_LEDBKL,
 			self.LEDS_ATCFAIL
 		}
 	end
@@ -81,31 +78,69 @@ function Wwtcas:SendBit(idx, valbase, val)
 end
 
 -- ========
--- LEDS BKL
-function Wwtcas:GetBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_BKL, dpath, revert, base)
+-- Backlight
+function Wwtcas:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
 end
 
-function Wwtcas:SetBkl(valbase, val)
-	self:SendBit(self.LEDS_BKL, valbase, val)
+function Wwtcas:SetBkl(val)
+	if val == nil then
+		if self.d_bkl:ChangedUpdate() then
+			val = self.d_bkl:GetOld() * self.d_bkl_scale
+			self:SendLedCmd(self.LEDS_BKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_BKL, val)
+	end
 end
+
+function Wwtcas:FreshBkl()
+	self.d_bkl:Invalid(-1)
+end
+
 -- ========
--- LEDS LCDBKL
-function Wwtcas:GetLcdBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_LCDBKL, dpath, revert, base)
+-- Lcd Backlight
+function Wwtcas:GetLcdBkl(dpath, scale)
+	self.d_lcdbkl_scale = scale == nil and 30 or scale
+	self.d_lcdbkl = iDataRef:New(dpath)
 end
 
-function Wwtcas:SetLcdBkl(valbase, val)
-	self:SendBit(self.LEDS_LCDBKL, valbase, val)
+function Wwtcas:SetLcdBkl(val)
+	if val == nil then
+		if self.d_lcdbkl:ChangedUpdate() then
+			val = self.d_lcdbkl:GetOld() * self.d_lcdbkl_scale
+			self:SendLedCmd(self.LEDS_LCDBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_LCDBKL, val)
+	end
 end
+
+function Wwtcas:FreshLcdBkl()
+	self.d_lcdbkl:Invalid(-1)
+end
+
 -- ========
--- LEDS LEDBKL
-function Wwtcas:GetLedBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_LEDBKL, dpath, revert, base)
+-- Led Backlight
+function Wwtcas:GetLedBkl(dpath, scale)
+	self.d_ledbkl_scale = scale == nil and 30 or scale
+	self.d_ledbkl = iDataRef:New(dpath)
 end
 
-function Wwtcas:SetLedBkl(valbase, val)
-	self:SendBit(self.LEDS_LEDBKL, valbase, val)
+function Wwtcas:SetLedBkl(val)
+	if val == nil then
+		if self.d_ledbkl:ChangedUpdate() then
+			val = self.d_ledbkl:GetOld() * self.d_ledbkl_scale
+			self:SendLedCmd(self.LEDS_LEDBKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_LEDBKL, val)
+	end
+end
+
+function Wwtcas:FreshLedBkl()
+	self.d_ledbkl:Invalid(-1)
 end
 -- ========
 -- LEDS ATCFAIL
@@ -118,9 +153,6 @@ function Wwtcas:SetAtcFail(valbase, val)
 end
 
 function Wwtcas:Setleds(valbase, val)
-	self:SetBkl(valbase, val)
-	self:SetLcdBkl(valbase, val)
-	self:SetLedBkl(valbase, val)
 	self:SetAtcFail(valbase, val)
 end
 

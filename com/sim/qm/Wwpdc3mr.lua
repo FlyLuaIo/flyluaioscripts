@@ -13,7 +13,6 @@ function Wwpdc3mr:init()
 		_G.ilua_hw_assigned_wwpdc3mr = 0
 		self.LEDS_BKL = 0
 		self.ledIds = {
-			self.LEDS_BKL
 		}
 	end
 end
@@ -64,16 +63,27 @@ function Wwpdc3mr:SendBit(idx, valbase, val)
 end
 
 -- ========
--- LEDS BKL
-function Wwpdc3mr:GetBkl(dpath, revert, base)
-	self:GetBit(self.LEDS_BKL, dpath, revert, base)
+-- Backlight
+function Wwpdc3mr:GetBkl(dpath, scale)
+	self.d_bkl_scale = scale == nil and 30 or scale
+	self.d_bkl = iDataRef:New(dpath)
 end
 
-function Wwpdc3mr:SetBkl(valbase, val)
-	self:SendBit(self.LEDS_BKL, valbase, val)
+function Wwpdc3mr:SetBkl(val)
+	if val == nil then
+		if self.d_bkl:ChangedUpdate() then
+			val = self.d_bkl:GetOld() * self.d_bkl_scale
+			self:SendLedCmd(self.LEDS_BKL, val)
+		end
+	else
+		self:SendLedCmd(self.LEDS_BKL, val)
+	end
+end
+
+function Wwpdc3mr:FreshBkl()
+	self.d_bkl:Invalid(-1)
 end
 
 function Wwpdc3mr:Setleds(valbase, val)
-	self:SetBkl(valbase, val)
 end
 return Wwpdc3mr
