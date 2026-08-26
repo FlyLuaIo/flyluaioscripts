@@ -1,28 +1,14 @@
-
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-08-08_03_55_08UTC
 -- *****************************************************************
 
-local Wwfcuefisl = oop.class(com.sim.Qmdev)
+local Wwfcuefisl = oop.class(com.sim.qm.Wwfcu)
 function Wwfcuefisl:init()
 	self.QmdevId = 0x2BA2DB51
-	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwfcuefisl == nil then
-		self.PackageConter = 0
-		self.LcdText = nil
 		_G.ilua_hw_assigned_wwfcuefisl = 0
-		self.LEDS_BKL = 0
-		self.LEDS_SCRBKL = 1
-		self.LEDS_LEDBKL = 2
-		self.LEDS_LOC = 3
-		self.LEDS_AP1 = 5
-		self.LEDS_AP2 = 7
-		self.LEDS_ATHR = 9
-		self.LEDS_EXPED = 11
-		self.LEDS_APPR = 13
-		self.LEDS_EXPEDBKL = 30
 		self.ledIds = {
 			self.LEDS_LOC,
 			self.LEDS_AP1,
@@ -30,19 +16,7 @@ function Wwfcuefisl:init()
 			self.LEDS_ATHR,
 			self.LEDS_EXPED,
 			self.LEDS_APPR,
-			self.LEDS_EXPEDBKL
-		}
-		self.LEDSL_BKL = 0
-		self.LEDSL_SCRBKL = 1
-		self.LEDSL_LEDBKL = 2
-		self.LEDSL_FD = 3
-		self.LEDSL_LS = 4
-		self.LEDSL_CSTR = 5
-		self.LEDSL_WPT = 6
-		self.LEDSL_VORD = 7
-		self.LEDSL_NDB = 8
-		self.LEDSL_ARPT = 9
-		self.ledIds = {
+			self.LEDS_EXPEDBKL,
 			self.LEDSL_FD,
 			self.LEDSL_LS,
 			self.LEDSL_CSTR,
@@ -180,6 +154,7 @@ end
 function Wwfcuefisl:FreshLedBkl()
 	self.d_ledbkl:Invalid(-1)
 end
+
 -- ========
 -- LEDS LOC
 function Wwfcuefisl:GetLoc(dpath, revert, base)
@@ -189,6 +164,7 @@ end
 function Wwfcuefisl:SetLoc(valbase, val)
 	self:SendBit(self.LEDS_LOC, valbase, val)
 end
+
 -- ========
 -- LEDS AP1
 function Wwfcuefisl:GetAp1(dpath, revert, base)
@@ -198,6 +174,7 @@ end
 function Wwfcuefisl:SetAp1(valbase, val)
 	self:SendBit(self.LEDS_AP1, valbase, val)
 end
+
 -- ========
 -- LEDS AP2
 function Wwfcuefisl:GetAp2(dpath, revert, base)
@@ -207,6 +184,7 @@ end
 function Wwfcuefisl:SetAp2(valbase, val)
 	self:SendBit(self.LEDS_AP2, valbase, val)
 end
+
 -- ========
 -- LEDS ATHR
 function Wwfcuefisl:GetAthr(dpath, revert, base)
@@ -216,6 +194,7 @@ end
 function Wwfcuefisl:SetAthr(valbase, val)
 	self:SendBit(self.LEDS_ATHR, valbase, val)
 end
+
 -- ========
 -- LEDS EXPED
 function Wwfcuefisl:GetExped(dpath, revert, base)
@@ -225,6 +204,7 @@ end
 function Wwfcuefisl:SetExped(valbase, val)
 	self:SendBit(self.LEDS_EXPED, valbase, val)
 end
+
 -- ========
 -- LEDS APPR
 function Wwfcuefisl:GetAppr(dpath, revert, base)
@@ -234,6 +214,7 @@ end
 function Wwfcuefisl:SetAppr(valbase, val)
 	self:SendBit(self.LEDS_APPR, valbase, val)
 end
+
 -- ========
 -- LEDS EXPEDBKL
 function Wwfcuefisl:GetExpedBkl(dpath, revert, base)
@@ -253,6 +234,7 @@ function Wwfcuefisl:Setleds(valbase, val)
 	self:SetAppr(valbase, val)
 	self:SetExpedBkl(valbase, val)
 end
+
 -- ========
 -- LEDSL BKL
 function Wwfcuefisl:GetBkl(dpath, scale)
@@ -318,6 +300,7 @@ end
 function Wwfcuefisl:FreshLedBkl()
 	self.d_ledbkl:Invalid(-1)
 end
+
 -- ========
 -- LEDSL FD
 function Wwfcuefisl:GetFd(dpath, revert, base)
@@ -327,6 +310,7 @@ end
 function Wwfcuefisl:SetFd(valbase, val)
 	self:SendBit(self.LEDSL_FD, valbase, val)
 end
+
 -- ========
 -- LEDSL LS
 function Wwfcuefisl:GetLs(dpath, revert, base)
@@ -336,6 +320,7 @@ end
 function Wwfcuefisl:SetLs(valbase, val)
 	self:SendBit(self.LEDSL_LS, valbase, val)
 end
+
 -- ========
 -- LEDSL CSTR
 function Wwfcuefisl:GetCstr(dpath, revert, base)
@@ -345,6 +330,7 @@ end
 function Wwfcuefisl:SetCstr(valbase, val)
 	self:SendBit(self.LEDSL_CSTR, valbase, val)
 end
+
 -- ========
 -- LEDSL WPT
 function Wwfcuefisl:GetWpt(dpath, revert, base)
@@ -354,6 +340,7 @@ end
 function Wwfcuefisl:SetWpt(valbase, val)
 	self:SendBit(self.LEDSL_WPT, valbase, val)
 end
+
 -- ========
 -- LEDSL VORD
 function Wwfcuefisl:GetVord(dpath, revert, base)
@@ -363,6 +350,7 @@ end
 function Wwfcuefisl:SetVord(valbase, val)
 	self:SendBit(self.LEDSL_VORD, valbase, val)
 end
+
 -- ========
 -- LEDSL NDB
 function Wwfcuefisl:GetNdb(dpath, revert, base)
@@ -372,6 +360,7 @@ end
 function Wwfcuefisl:SetNdb(valbase, val)
 	self:SendBit(self.LEDSL_NDB, valbase, val)
 end
+
 -- ========
 -- LEDSL ARPT
 function Wwfcuefisl:GetArpt(dpath, revert, base)
@@ -391,4 +380,5 @@ function Wwfcuefisl:SetledsL(valbase, val)
 	self:SetNdb(valbase, val)
 	self:SetArpt(valbase, val)
 end
+
 return Wwfcuefisl
