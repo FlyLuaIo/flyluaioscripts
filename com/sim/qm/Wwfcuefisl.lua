@@ -7,7 +7,7 @@
 
 local Wwfcuefisl = oop.class(com.sim.Qmdev)
 function Wwfcuefisl:init()
-	self.QmdevId = 0x0926AC01
+	self.QmdevId = 0x2BA2DB51
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwfcuefisl == nil then
 		self.PackageConter = 0
