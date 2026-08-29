@@ -203,14 +203,14 @@ local dr_dc_bus = iDataRef:New("(L:B_ELEC_BUS_POWER_DC_BAT, Bool)")
 
 GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark
-    local b_ac_bus
-    local b_dc_bus
+	local b_ac_bus
+	local b_dc_bus
 	if dr_ac_bus:ChangedUpdate() then
 		b_ac_bus = dr_ac_bus:GetOld()
 		b_dc_bus = dr_dc_bus:GetOld()
 		if b_ac_bus == 1 then
 			-- kayeroof:SetLedsOff()
-		-- else
+			-- else
 			kayeroof:FreshBacklight()
 			kayeroof:FreshBits()
 		end
@@ -220,11 +220,10 @@ GlobalFrameLoopManager:add(function()
 	end
 
 	kayeroof:SetLeds()
+	kayeroof:SetBat12()
 	if b_ac_bus == 1 then
 		kayeroof:SetBacklight()
-		kayeroof:SetBat12()
 	else
 		kayeroof:SetBacklight(0)
 	end
-
 end)

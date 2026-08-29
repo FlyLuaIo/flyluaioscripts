@@ -40,6 +40,10 @@ function key_trim_l_long_func()
 end
 
 function key_trim_l_short_func()
+	if key_trim_l_timeout_handle ~= nil then
+		uluaclearTimeout(key_trim_l_timeout_handle)
+		key_trim_l_timeout_handle = nil
+	end
 	uluaWriteCmd("0 (>L:S_FC_RUDDER_TRIM)")
 end
 
@@ -47,6 +51,7 @@ function key_trim_l_release_func()
 	uluaWriteCmd("1 (>L:S_FC_RUDDER_TRIM)")
 	if key_trim_l_timeout_handle ~= nil then
 		uluaclearTimeout(key_trim_l_timeout_handle)
+		key_trim_l_timeout_handle = nil
 	end
 end
 
@@ -60,6 +65,10 @@ function key_trim_r_long_func()
 end
 
 function key_trim_r_short_func()
+	if key_trim_r_timeout_handle ~= nil then
+		uluaclearTimeout(key_trim_r_timeout_handle)
+		key_trim_r_timeout_handle = nil
+	end
 	uluaWriteCmd("2 (>L:S_FC_RUDDER_TRIM)")
 end
 
@@ -67,6 +76,7 @@ function key_trim_r_release_func()
 	uluaWriteCmd("1 (>L:S_FC_RUDDER_TRIM)")
 	if key_trim_r_timeout_handle ~= nil then
 		uluaclearTimeout(key_trim_r_timeout_handle)
+		key_trim_r_timeout_handle = nil
 	end
 end
 

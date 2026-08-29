@@ -125,8 +125,20 @@ kayeroof:CfgFc(53,
 -- ADIRU
 kayeroof:CfgRpn(60, '5901 (>K:ROTOR_BRAKE)')
 -- EMER LIGHTS（短按切换ARMED关盖/OFF，长按OFF开盖）
-kayeroof:CfgRpn(59, '5001 (>K:ROTOR_BRAKE)')
+--kayeroof:CfgRpn(59, '5001 (>K:ROTOR_BRAKE)')
 
+-- bit 59 IR3 ← PMDG737 EMER EXIT LIGHTS ARM/OFF
+--kayeroof:CfgRpn(17, '10101 (>K:ROTOR_BRAKE)')
+function key_59_long_func()
+	uluaWriteCmd(
+	"100 (L:switch_49_a) - 50 div s0 :1 l0 0 > if{ 4907 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 4908 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }")
+end
+
+function key_59_short_func()
+	uluaWriteCmd("5001 (>K:ROTOR_BRAKE)")
+end
+
+kayeroof:CfgLongFc(59, 1000, key_59_long_func, key_59_short_func)
 -- WINDOW HEAT
 kayeroof:CfgRpn(58, '4601 (>K:ROTOR_BRAKE) , 4501 (>K:ROTOR_BRAKE) , 4701 (>K:ROTOR_BRAKE) , 4801 (>K:ROTOR_BRAKE)')
 
