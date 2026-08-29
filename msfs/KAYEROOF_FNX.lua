@@ -198,27 +198,33 @@ kayeroof:GetBacklight('(L:A_OH_LIGHTING_OVD)', 255) -- OVHD INTEG LT
 -- PAP3 LedModule "BAT 1+2": BAT1 + BAT2 voltages → one segment write
 kayeroof:GetBat12('(L:N_ELEC_VOLT_BAT_1)', '(L:N_ELEC_VOLT_BAT_2)') -- BAT 1+2 DISPLAY
 
-local dr_power = iDataRef:New("(L:B_ELEC_BUS_POWER_AC_ESS, Bool)")
+local dr_ac_bus = iDataRef:New("(L:B_ELEC_BUS_POWER_AC_ESS, Bool)")
+local dr_dc_bus = iDataRef:New("(L:B_ELEC_BUS_POWER_DC_BAT, Bool)")
 
 GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark
-	local b_power
-	if dr_power:ChangedUpdate() then
-		b_power = dr_power:GetOld()
-		if b_power == 0 then
-			kayeroof:SetBacklight(0)
-			kayeroof:SetLedsOff()
-		else
+    local b_ac_bus
+    local b_dc_bus
+	if dr_ac_bus:ChangedUpdate() then
+		b_ac_bus = dr_ac_bus:GetOld()
+		b_dc_bus = dr_dc_bus:GetOld()
+		if b_ac_bus == 1 then
+			-- kayeroof:SetLedsOff()
+		-- else
 			kayeroof:FreshBacklight()
 			kayeroof:FreshBits()
 		end
 	else
-		b_power = dr_power:Get()
+		b_ac_bus = dr_ac_bus:Get()
+		b_dc_bus = dr_dc_bus:Get()
 	end
-	if b_power == 0 then
-		return
-	end
-	kayeroof:SetBacklight()
+
 	kayeroof:SetLeds()
-	kayeroof:SetBat12()
+	if b_ac_bus == 1 then
+		kayeroof:SetBacklight()
+		kayeroof:SetBat12()
+	else
+		kayeroof:SetBacklight(0)
+	end
+
 end)

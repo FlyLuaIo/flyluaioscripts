@@ -84,11 +84,11 @@ kayeroof:CfgLongFc(16, 1000, key_59_long_func, key_59_short_func)
 -- bit 17 BAT2 ← PMDG737 EMER EXIT LIGHTS ARM/OFF
 --kayeroof:CfgRpn(17, '10101 (>K:ROTOR_BRAKE)')
 function key_17_long_func()
-	uluaWriteCmd("10101 (>K:ROTOR_BRAKE)")
+	uluaWriteCmd("0 (L:switch_100_73X) - 50 div s0 :1 l0 0 > if{ 10001 (>K:ROTOR_BRAKE) l0 -- s0 g1 } l0 0 < if{ 10002 (>K:ROTOR_BRAKE) l0 ++ s0 g1 }")
 end
 
 function key_17_short_func()
-	uluaWriteCmd("97401 (>K:ROTOR_BRAKE) 501 (>K:ROTOR_BRAKE) 601 (>K:ROTOR_BRAKE)")
+	uluaWriteCmd("10101 (>K:ROTOR_BRAKE)")
 end
 
 kayeroof:CfgLongFc(17, 1000, key_17_long_func, key_17_short_func)
