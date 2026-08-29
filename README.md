@@ -1,8 +1,8 @@
 # flyluaioscripts
 
-Lua hardware mapping profiles for [FlyLuaIO](https://github.com/cpuwolf/flyluaio) — the successor to qmdev.
+Lua hardware mapping profiles for [FlyLuaIO](https://gitee.com/FlyLuaIo/flyluaio) — the successor to qmdev.
 
-FlyLuaIO bridges USB HID cockpit panels to **X-Plane 11/12** and **Microsoft Flight Simulator 2020/2024**. This repository contains the shared Lua framework and aircraft-specific profile scripts loaded by the FlyLuaIO plugin.
+FlyLuaIO bridges USB HID/MobiFlight cockpit panels to **X-Plane 11/12** and **Microsoft Flight Simulator 2020/2024**. This repository contains the shared Lua framework and aircraft-specific profile scripts loaded by the FlyLuaIO plugin.
 
 ## Performance note (plugin runtime)
 
@@ -10,7 +10,7 @@ FlyLuaIO’s **embedded LuaJIT** is not the same performance model as typical ma
 
 ## Requirements
 
-- [FlyLuaIO](https://github.com/cpuwolf/flyluaio) plugin installed in your simulator
+- [FlyLuaIO](https://gitee.com/FlyLuaIo/flyluaio) plugin installed in your simulator
   - Download: <https://gitee.com/FlyLuaIo/flyluaio/releases>
 - Supported FlyLuaIO hardware (MCP, CDU, FCU, G1000, overhead panel, etc.)
 
