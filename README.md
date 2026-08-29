@@ -4,6 +4,10 @@ Lua hardware mapping profiles for [FlyLuaIO](https://gitee.com/FlyLuaIo/flyluaio
 
 FlyLuaIO bridges USB HID/MobiFlight cockpit panels to **X-Plane 11/12** and **Microsoft Flight Simulator 2020/2024**. This repository contains the shared Lua framework and aircraft-specific profile scripts loaded by the FlyLuaIO plugin.
 
+## Demo Video
+
+[![FlyLuaIO Demo](https://img.youtube.com/vi/_XclGSgAJ6c/hqdefault.jpg)](https://youtu.be/_XclGSgAJ6c)
+
 # Features
 
 *   **Real-Time Add Device**: Json + Lua is a new Device without compiling code
