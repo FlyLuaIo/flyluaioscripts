@@ -4,6 +4,25 @@ Lua hardware mapping profiles for [FlyLuaIO](https://gitee.com/FlyLuaIo/flyluaio
 
 FlyLuaIO bridges USB HID/MobiFlight cockpit panels to **X-Plane 11/12** and **Microsoft Flight Simulator 2020/2024**. This repository contains the shared Lua framework and aircraft-specific profile scripts loaded by the FlyLuaIO plugin.
 
+# Features
+
+*   **Real-Time Add Device**: Json + Lua is a new Device without compiling code
+*   **ZERO X-Plane FPS impact**: Embedded LuaJIT is *not* the same performance model as typical market LuaJIT plugins (XLua, SASL, FlyWithLua). Those usually run Lua every frame on the sim / flight-loop thread (community reports show material frametime cost on complex aircraft); FlyLuaIo runs script work off that path — **absolutely zero impact on X-Plane FPS**.
+*   **Automatic Flight Device Key Assignment**: Say goodbye to the pain of manually setting hundreds of keys.
+*   **Smooth Aircraft Switching**: Say goodbye to the hassle of searching the entire internet for configuration files.
+*   **Rotary Knob Acceleration**: Optimizes your operational experience.
+*   **Built-in Lua Language Engine**: Simple to use and easy to customize.
+*   **Easy Debugging**：Automatically reload Lua scripts After Editing the Lua file, speeding up the debugging process.
+*   **Aircraft State Synchronization**: Supports cold and dark cockpit state synchronization.
+*   **Simulated Failure Synchronization**: Supports synchronization of simulated aircraft failure states.
+*   **Cross-platform Operation**: Fully supports Windows, Linux, and Mac systems.
+*   **Native Apple ARM Support**: Provides native support for Apple M-series chips.
+*   **JSON defined USB HID**: Add Json, add a USB HID Device
+*   **JSON defined MobiFlight**: Add Json, add a MobiFlight serial device
+*   **MobiFlight Serial Auto-Match**: Boards matched by serial from `mobiflight/*.json`
+*   **MobiFlight IO Bridge**: Buttons, encoders, steppers, servos, shift registers, segment/LCD
+*   **Skunkcrafts Support**: Easy update software small changes
+
 ## Performance note (plugin runtime)
 
 FlyLuaIO’s **embedded LuaJIT** is not the same performance model as typical market LuaJIT plugins (**XLua**, **SASL**, **FlyWithLua**), which usually run Lua every frame on the X-Plane sim / flight-loop thread. FlyLuaIO runs script work on a dedicated worker path; the product claim is **ZERO X-Plane FPS impact**. (This repo only ships scripts; the runtime lives in the plugin.)
