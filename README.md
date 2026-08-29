@@ -11,6 +11,7 @@ FlyLuaIO’s **embedded LuaJIT** is not the same performance model as typical ma
 ## Requirements
 
 - [FlyLuaIO](https://github.com/cpuwolf/flyluaio) plugin installed in your simulator
+  - Download: <https://gitee.com/FlyLuaIo/flyluaio/releases>
 - Supported FlyLuaIO hardware (MCP, CDU, FCU, G1000, overhead panel, etc.)
 
 ## Repository layout
@@ -30,17 +31,35 @@ flyluaioscripts/
 | `com/oop/` | Lua OOP infrastructure |
 | `com/sim/qm/` | Hardware device classes (Qmcp737c, Qcdua, Qfcu, …) |
 | `com/sim/wf/` | Wingflex / third-party adapters |
-| `com/sim/mf/` | MobiFlight integration |
+| `com/sim/mf/` | MobiFlight device classes (CfMega, CfNano, KayeRoof, RfA107, RfA112) |
 | `xp/` | X-Plane mapping scripts (`{DEVICE}_{AIRCRAFT}.lua`) |
 | `msfs/` | MSFS mapping scripts |
 | `joysticks/` | HID panel configs validated by `joystick-config.schema.json` |
-| `mobiflight/` | MobiFlight configs validated by `mobiflight-config.schema.json` |
+| `mobiflight/` | MobiFlight device JSON configs (see [MobiFlight](#mobiflight) below) |
 
 Profile naming:
 
 - `{DEVICE}_{AIRCRAFT/ADDON}.lua` — aircraft-specific mapping
 - `z_{DEVICE}_GA.lua` — General Aviation fallback
 - `z_{DEVICE}_no_msfs.lua` — disable on MSFS
+
+## MobiFlight
+
+FlyLuaIO supports [MobiFlight](https://mobiflight.com/) hardware modules as an alternative to USB HID panels — especially useful for custom home-cockpit builds with Arduino-based boards.
+
+**Supported devices:**
+
+| Device class | Hardware | Description |
+|---|---|---|
+| `CfMega` | MobiFlight Mega | Full-featured board (256 KB flash, many I/O pins) |
+| `CfNano` | MobiFlight Nano | Compact board (Pro Micro based) |
+| `KayeRoof` | KayeRoof custom board | Large overhead panel |
+| `RfA107` | Rowsfire A107 | Overhead panel module |
+| `RfA112` | Rowsfire A112 | Overhead panel module |
+
+Each device has a JSON definition in `mobiflight/` (validated by `mobiflight-config.schema.json`) and a generated Lua class in `com/sim/mf/`. Aircraft-specific binding scripts live under `msfs/` (prefix `CF*`, `RF*`, `KAYEROOF_*`).
+
+For XP generic / GA fallback, see `xp/z_*_GA.lua` files.
 
 ## Documentation
 
