@@ -1,0 +1,446 @@
+{
+  "$schema": "./mobiflight-config.schema.json",
+  "ProductName": "MiniFCU",
+  "ModuleName": "miniCOCKPIT miniFCU",
+  "ModuleSerial": "SN-1G1-B56",
+  "outputs": {
+    "Output": {
+      "AP1": [
+        {
+          "Name": "AP1",
+          "Pin": "AP1"
+        }
+      ],
+      "AP2": [
+        {
+          "Name": "AP2",
+          "Pin": "AP2"
+        }
+      ],
+      "APPR": [
+        {
+          "Name": "APPR",
+          "Pin": "APPR"
+        }
+      ],
+      "ATHR": [
+        {
+          "Name": "ATHR",
+          "Pin": "ATHR"
+        }
+      ],
+      "EXPED": [
+        {
+          "Name": "EXPED",
+          "Pin": "EXPED"
+        }
+      ],
+      "LOC": [
+        {
+          "Name": "LOC",
+          "Pin": "LOC"
+        }
+      ]
+    },
+    "Display Module": {
+      "LedModule": [
+        {
+          "Name": "miniFCU LCD"
+        },
+        {
+          "Name": "miniEFIS LED and LCD"
+        }
+      ]
+    }
+  },
+  "inputs": {
+    "Button": {
+      "MACH Button": [
+        {
+          "Name": "TOLISS - FCU - SPD/MACH",
+          "Pin": 0,
+          "MapToBit": 0
+        }
+      ],
+      "TRK Button": [
+        {
+          "Name": "TOLISS - FCU - HDG/TRK",
+          "Pin": 0,
+          "MapToBit": 1
+        }
+      ],
+      "AP1 Button": [
+        {
+          "Name": "TOLISS - FCU - AP1 - BUTTON",
+          "Pin": 0,
+          "MapToBit": 2
+        }
+      ],
+      "AP2 Button": [
+        {
+          "Name": "TOLISS - FCU - AP 2 - BUTTON",
+          "Pin": 0,
+          "MapToBit": 3
+        }
+      ],
+      "METRIC Button": [
+        {
+          "Name": "TOLISS - FCU - METRIC ALT Button",
+          "Pin": 0,
+          "MapToBit": 4
+        }
+      ],
+      "ATHR Button": [
+        {
+          "Name": "TOLISS - FCU - ATHR - BUTTON",
+          "Pin": 0,
+          "MapToBit": 5
+        }
+      ],
+      "EXPED Button": [
+        {
+          "Name": "TOLISS - FCU - EXPED - BUTTON",
+          "Pin": 0,
+          "MapToBit": 6
+        }
+      ],
+      "LOC Button": [
+        {
+          "Name": "TOLISS - FCU - LOC - BUTTON",
+          "Pin": 0,
+          "MapToBit": 7
+        }
+      ],
+      "APPR Button": [
+        {
+          "Name": "TOLISS - FCU - APPR - BUTTON",
+          "Pin": 0,
+          "MapToBit": 8
+        }
+      ],
+      "SPD PUSH": [
+        {
+          "Name": "TOLISS - FCU - SPD - PUSH",
+          "Pin": 0,
+          "MapToBit": 9
+        }
+      ],
+      "SPD PULL": [
+        {
+          "Name": "TOLISS - FCU - SPD - PULL",
+          "Pin": 0,
+          "MapToBit": 10
+        }
+      ],
+      "HDG PUSH": [
+        {
+          "Name": "TOLISS - FCU - HDG - PUSH",
+          "Pin": 0,
+          "MapToBit": 11
+        }
+      ],
+      "HDG PULL": [
+        {
+          "Name": "TOLISS - FCU - HDG - PULL",
+          "Pin": 0,
+          "MapToBit": 12
+        }
+      ],
+      "ALT PUSH": [
+        {
+          "Name": "TOLISS - FCU - ALT - PUSH",
+          "Pin": 0,
+          "MapToBit": 13
+        }
+      ],
+      "ALT PULL": [
+        {
+          "Name": "TOLISS - FCU - ALT - PULL",
+          "Pin": 0,
+          "MapToBit": 14
+        }
+      ],
+      "VS PUSH": [
+        {
+          "Name": "TOLISS - FCU - VS - PUSH",
+          "Pin": 0,
+          "MapToBit": 15
+        }
+      ],
+      "VS PULL": [
+        {
+          "Name": "TOLISS - FCU - VS - PULL",
+          "Pin": 0,
+          "MapToBit": 16
+        }
+      ],
+      "ALTINC": [
+        {
+          "Name": "TOLISS - FCU - ALT 100/1000",
+          "Pin": 0,
+          "MapToBit": 17
+        }
+      ],
+      "EFIS-CSTR": [
+        {
+          "Name": "TOLISS - EFIS - CSTR",
+          "Pin": 0,
+          "MapToBit": 18
+        }
+      ],
+      "EFIS-WPT": [
+        {
+          "Name": "TOLISS - EFIS - WPT",
+          "Pin": 0,
+          "MapToBit": 19
+        }
+      ],
+      "EFIS-VORD": [
+        {
+          "Name": "TOLISS - EFIS - VORD",
+          "Pin": 0,
+          "MapToBit": 20
+        }
+      ],
+      "EFIS-NDB": [
+        {
+          "Name": "TOLISS - EFIS - NDB",
+          "Pin": 0,
+          "MapToBit": 21
+        }
+      ],
+      "EFIS-ARPT": [
+        {
+          "Name": "TOLISS - EFIS - ARPT",
+          "Pin": 0,
+          "MapToBit": 22
+        }
+      ],
+      "EFIS-FD": [
+        {
+          "Name": "TOLISS - EFIS - FD",
+          "Pin": 0,
+          "MapToBit": 23
+        }
+      ],
+      "EFIS-LS": [
+        {
+          "Name": "TOLISS - EFIS - LS",
+          "Pin": 0,
+          "MapToBit": 24
+        }
+      ],
+      "EFIS-CHRONO": [
+        {
+          "Name": "TOLISS - EFIS - CHRONO",
+          "Pin": 0,
+          "MapToBit": 25
+        }
+      ],
+      "EFIS-ROSE_LS": [
+        {
+          "Name": "TOLISS - EFIS - ROSE LS",
+          "Pin": 0,
+          "MapToBit": 26
+        }
+      ],
+      "EFIS-ROSE_VOR": [
+        {
+          "Name": "TOLISS - EFIS - ROSE VOR",
+          "Pin": 0,
+          "MapToBit": 27
+        }
+      ],
+      "EFIS-ROSE_NAV": [
+        {
+          "Name": "TOLISS - EFIS - ROSE NAV",
+          "Pin": 0,
+          "MapToBit": 28
+        }
+      ],
+      "EFIS-ROSE_ARC": [
+        {
+          "Name": "TOLISS - EFIS - ROSE ARC",
+          "Pin": 0,
+          "MapToBit": 29
+        }
+      ],
+      "EFIS-ROSE_HIDDEN": [
+        {
+          "Name": "TOLISS - EFIS - ROSE HIDDEN ",
+          "Pin": 0,
+          "MapToBit": 30
+        }
+      ],
+      "EFIS-RANGE_10": [
+        {
+          "Name": "TOLISS - EFIS - RANGE 10",
+          "Pin": 0,
+          "MapToBit": 31
+        }
+      ],
+      "EFIS-RANGE_20": [
+        {
+          "Name": "TOLISS - EFIS - RANGE 20",
+          "Pin": 0,
+          "MapToBit": 32
+        }
+      ],
+      "EFIS-RANGE_40": [
+        {
+          "Name": "TOLISS - EFIS - RANGE 40",
+          "Pin": 0,
+          "MapToBit": 33
+        }
+      ],
+      "EFIS-RANGE_80": [
+        {
+          "Name": "TOLISS - EFIS - RANGE 80",
+          "Pin": 0,
+          "MapToBit": 34
+        }
+      ],
+      "EFIS-RANGE_160": [
+        {
+          "Name": "TOLISS - EFIS - RANGE 160",
+          "Pin": 0,
+          "MapToBit": 35
+        }
+      ],
+      "EFIS-RANGE_320": [
+        {
+          "Name": "TOLISS - EFIS - RANGE 320",
+          "Pin": 0,
+          "MapToBit": 36
+        }
+      ],
+      "EFIS-1_ADF": [
+        {
+          "Name": "TOLISS - EFIS - ADF 1",
+          "Pin": 0,
+          "MapToBit": 37
+        }
+      ],
+      "EFIS-1_NULL": [
+        {
+          "Name": "TOLISS - EFIS - OFF 1",
+          "Pin": 0,
+          "MapToBit": 38
+        }
+      ],
+      "EFIS-1_VOR": [
+        {
+          "Name": "TOLISS - EFIS - VOR 1",
+          "Pin": 0,
+          "MapToBit": 39
+        }
+      ],
+      "EFIS-2_ADF": [
+        {
+          "Name": "TOLISS - EFIS - ADF 2",
+          "Pin": 0,
+          "MapToBit": 40
+        }
+      ],
+      "EFIS-2_NULL": [
+        {
+          "Name": "TOLISS - EFIS - OFF 2",
+          "Pin": 0,
+          "MapToBit": 41
+        }
+      ],
+      "EFIS-2_VOR": [
+        {
+          "Name": "TOLISS - EFIS - VOR 2",
+          "Pin": 0,
+          "MapToBit": 42
+        }
+      ],
+      "EFIS-hPa": [
+        {
+          "Name": "TOLISS - EFIS - BARO UNIT HPA",
+          "Pin": 0,
+          "MapToBit": 43
+        }
+      ],
+      "EFIS-inHg": [
+        {
+          "Name": "TOLISS - EFIS - BARO UNIT INHG",
+          "Pin": 0,
+          "MapToBit": 44
+        }
+      ],
+      "EFIS-PULL": [
+        {
+          "Name": "TOLISS - EFIS - BARO PULL",
+          "Pin": 0,
+          "MapToBit": 45
+        }
+      ],
+      "EFIS-PUSH": [
+        {
+          "Name": "TOLISS - EFIS - BARO PUSH",
+          "Pin": 0,
+          "MapToBit": 46
+        }
+      ]
+    },
+    "Encoder": {
+      "ALT Encoder": [
+        {
+          "Name": "TOLISS - FCU - ALT - ENCODER",
+          "MapToBits": [
+            47,
+            48,
+            49,
+            50
+          ]
+        }
+      ],
+      "SPD Encoder": [
+        {
+          "Name": "TOLISS - FCU - SPD - ENCODER",
+          "MapToBits": [
+            51,
+            52,
+            53,
+            54
+          ]
+        }
+      ],
+      "HDG Encoder": [
+        {
+          "Name": "TOLISS - FCU - HDG - ENCODER",
+          "MapToBits": [
+            55,
+            56,
+            57,
+            58
+          ]
+        }
+      ],
+      "VS Encoder": [
+        {
+          "Name": "TOLISS - FCU - VS - ENCODER",
+          "MapToBits": [
+            59,
+            60,
+            61,
+            62
+          ]
+        }
+      ],
+      "EFIS-BARO Encoder": [
+        {
+          "Name": "TOLISS - EFIS - BAR ENCODER HPA",
+          "MapToBits": [
+            63,
+            64,
+            65,
+            66
+          ]
+        }
+      ]
+    }
+  }
+}
