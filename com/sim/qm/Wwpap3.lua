@@ -556,6 +556,7 @@ function Wwpap3:setMcpDisplay(data)
 	data = data or {}
 	local enabled = data.displayEnabled ~= false
 	local test = data.displayTest and true or false
+	local istrkmode = data.headingMode and true or false
 	local key = table.concat({
 		tostring(enabled), tostring(test),
 		tostring(data.speed or 0), tostring(data.spdMach), tostring(data.speedVisible),
@@ -563,7 +564,8 @@ function Wwpap3:setMcpDisplay(data)
 		tostring(data.altitude or 0), tostring(data.altitudeVisible),
 		tostring(data.verticalSpeed or 0), tostring(data.verticalSpeedVisible),
 		tostring(data.crsCapt or 0), tostring(data.crsFo or 0),
-		tostring(data.digitA), tostring(data.digitB), tostring(data.showLabels)
+		tostring(data.digitA), tostring(data.digitB), tostring(data.showLabels),
+		tostring(istrkmode)
 	}, '|')
 	if key == self.LcdText then return end
 	self.LcdText = key
@@ -647,8 +649,12 @@ function Wwpap3:setMcpDisplay(data)
 		pap3_drawDigit(PAP3_G1, p, 0x40, math.floor(hdg / 100) % 10)
 		pap3_drawDigit(PAP3_G1, p, 0x20, math.floor(hdg / 10) % 10)
 		pap3_drawDigit(PAP3_G1, p, 0x10, hdg % 10)
-		pap3_apply(p, 0x36, 0x08, showLabels)
-		pap3_apply(p, 0x32, 0x08, showLabels)
+		-- HDG label
+		pap3_apply(p, 0x36, 0x08, showLabels and not istrkmode)
+		pap3_apply(p, 0x32, 0x08, showLabels and not istrkmode)
+		-- TRK label
+		pap3_apply(p, 0x2E, 0x08, showLabels and istrkmode)
+		pap3_apply(p, 0x2A, 0x08, showLabels and istrkmode)
 	elseif data.showDashesWhenInactive then
 		pap3_drawDash(PAP3_G1, p, 0x40)
 		pap3_drawDash(PAP3_G1, p, 0x20)

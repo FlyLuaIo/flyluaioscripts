@@ -160,13 +160,14 @@ GlobalFrameLoopManager:add(function()
 
 	local spd = dr_spd:Get() or 0
 	local vsLit = (dr_vs_lit:Get() or 0) ~= 0
-	-- ngx_HDGmode: show HDG/TRK label strip when in TRK (non-zero) if available
-	local showLabels = (dr_hdg_mode:Get() or 0) ~= 0
+	-- ngx_HDGmode: show HDG/TRK label strip when in TRK (non-zero) if available 1:HDG 2:TRK
+	local istrk = (dr_hdg_mode:Get() or 1) > 1
 
 	wwpap3:setMcpDisplay({
 		displayEnabled = true,
 		displayTest = false,
-		showLabels = showLabels,
+		showLabels = true,
+		headingMode = istrk,
 		showCourse = false, -- 777 MCP profile has no CRS windows
 		speed = spd,
 		spdMach = spd > 0 and spd < 1,
