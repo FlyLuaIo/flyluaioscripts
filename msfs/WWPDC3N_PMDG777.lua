@@ -41,7 +41,7 @@ wwpdc3n:CfgPSw(13, pswh_efisvor2, 50)
 wwpdc3n:CfgPSw(14, pswh_efisvor2, 100)
 
 -- Push buttons (Buttons 16..19 -> bits 15..18)
-wwpdc3n:CfgRpn(15, '18101 (>K:ROTOR_BRAKE)') -- MINS push (CAP)
+wwpdc3n:CfgRpn(15, '18301 (>K:ROTOR_BRAKE)') -- MINS push (CAP)
 wwpdc3n:CfgRpn(16, '18601 (>K:ROTOR_BRAKE)') -- CTR
 wwpdc3n:CfgRpn(17, '18801 (>K:ROTOR_BRAKE)') -- TFC
 wwpdc3n:CfgRpn(18, '19201 (>K:ROTOR_BRAKE)') -- BARO push (STD)
