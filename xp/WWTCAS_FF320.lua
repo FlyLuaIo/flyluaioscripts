@@ -26,6 +26,31 @@ wwtcas:CfgCmd(8, "a320/Pedestal/ATC_Num9_button")
 wwtcas:CfgCmd(9, "sim/radios/transponder_ident")
 
 
+-- XPDR STBY/AUTO/ON
+wwtcas:CfgVal(10, "a320/Pedestal/ATC_Mode", 0, 1)
+-- 43 is middle key reserved
+-- wwtcas:CfgVal(43, "a320/Pedestal/ATC_Mode", 2, 3)
+wwtcas:CfgVal(12, "a320/Pedestal/ATC_Mode", 2, 1)
+
+-- ATC SYS 1/2
+wwtcas:CfgVal(13, "a320/Pedestal/ATC_System", 0)
+wwtcas:CfgVal(14, "a320/Pedestal/ATC_System", 1)
+
+-- ALT RPTG OFF/ON
+wwtcas:CfgVal(15, "a320/Pedestal/ATC_Alt", 0)
+wwtcas:CfgVal(16, "a320/Pedestal/ATC_Alt", 1)
+
+-- TCAS THRT/ALL/ABV/BLW
+wwtcas:CfgVal(17, "a320/Pedestal/TCAS_Show", 0)
+wwtcas:CfgVal(18, "a320/Pedestal/TCAS_Show", 1)
+wwtcas:CfgVal(19, "a320/Pedestal/TCAS_Show", 2)
+wwtcas:CfgVal(20, "a320/Pedestal/TCAS_Show", 3)
+
+-- TCAS STBY/TA/TARA
+wwtcas:CfgVal(21, "a320/Pedestal/TCAS_Traffic", 0, 1)
+-- 41 is middle key reserved
+-- wwtcas:CfgVal(41, "a320/Pedestal/TCAS_Traffic", 3, 0)
+wwtcas:CfgVal(23, "a320/Pedestal/TCAS_Traffic", 2, 1)
 -- ===========================================================
 -- Read data
 -- Expert: FF320 own logic
