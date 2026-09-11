@@ -237,7 +237,7 @@ function Wwtcas:EncXpdr(xcode, diginum)
 		val = 9
 		txt = '0'
 	end
-	if xcode == 0 and diginum == 0 then
+	if diginum == 0 then
 		val = 9
 		txt = ''
 	end
