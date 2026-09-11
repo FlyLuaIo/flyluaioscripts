@@ -29,11 +29,18 @@ wwtcas:CfgPSw(14, xpdr_sys, 100)
 wwtcas:CfgPSw(15, xpdr_tara, 10)
 
 -- TCAS THRT/ALL/ABV/BLW
+local xpdr_dirl = QmdevPosSwitchInit("(L:switch_7431_a, number)", 10, "743107 (>K:ROTOR_BRAKE)",
+    "743108 (>K:ROTOR_BRAKE)", 300)
 local xpdr_dir = QmdevPosSwitchInit("(L:switch_7433_a, number)", 10, "743307 (>K:ROTOR_BRAKE)",
     "743308 (>K:ROTOR_BRAKE)", 300)
-wwtcas:CfgPSw(18, xpdr_dir, 50)
-wwtcas:CfgPSw(19, xpdr_dir, 0)
-wwtcas:CfgPSw(20, xpdr_dir, 100)
+function dir_action(val)
+    wwtcas:PSwDelay(xpdr_dirl, 0, val)
+    wwtcas:PSwDelay(xpdr_dir, 100, val)
+end
+wwtcas:CfgFc(17, "dir_action(50)")
+wwtcas:CfgFc(19, "dir_action(0)")
+wwtcas:CfgFc(20, "dir_action(100)")
+
 
 -- TCAS STBY/TA/TARA
 wwtcas:CfgPSw(21, xpdr_tara, 0)
