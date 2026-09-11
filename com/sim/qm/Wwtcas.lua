@@ -1,4 +1,3 @@
-
 -- *****************************************************************
 -- Don't modify this file, unless you know what you are doing
 -- Most of the code are auto generated
@@ -142,6 +141,7 @@ end
 function Wwtcas:FreshLedBkl()
 	self.d_ledbkl:Invalid(-1)
 end
+
 -- ========
 -- LEDS ATCFAIL
 function Wwtcas:GetAtcFail(dpath, revert, base)
@@ -180,9 +180,18 @@ function Wwtcas:setLcdText(code)
 		return
 	end
 	local segmap = {
-		['0'] = 0x3F, ['1'] = 0x06, ['2'] = 0x5B, ['3'] = 0x4F, ['4'] = 0x66,
-		['5'] = 0x6D, ['6'] = 0x7D, ['7'] = 0x07, ['8'] = 0x7F, ['9'] = 0x6F,
-		[' '] = 0x00, ['-'] = 0x40
+		['0'] = 0x3F,
+		['1'] = 0x06,
+		['2'] = 0x5B,
+		['3'] = 0x4F,
+		['4'] = 0x66,
+		['5'] = 0x6D,
+		['6'] = 0x7D,
+		['7'] = 0x07,
+		['8'] = 0x7F,
+		['9'] = 0x6F,
+		[' '] = 0x00,
+		['-'] = 0x40
 	}
 	local planes = { 0, 0, 0, 0, 0, 0, 0 }
 	for dig = 0, 3 do
@@ -203,6 +212,207 @@ function Wwtcas:setLcdText(code)
 	uluaSet(_G.idr_wwtcas_hid_lcd_lcd7, planes[7])
 	uluaSet(_G.idr_wwtcas_hid_lcd_seqnum, pc)
 	uluaSet(_G.idr_wwtcas_hid_finish_seqnum, pc)
+end
+
+-- ========================= XPDR
+-- XPDR code 1~4 digi
+-- conver number to string
+function Wwtcas:EncXpdr(xcode, diginum)
+	local val = xcode
+	local txt = tostring(xcode)
+	diginum = diginum == nil and 4 or diginum
+	if xcode < 1000 and diginum >= 4 then
+		val = val + 9000
+		txt = '0' .. txt
+	end
+	if xcode < 100 and diginum >= 3 then
+		val = val + 900
+		txt = '0' .. txt
+	end
+	if xcode < 10 and diginum >= 2 then
+		val = val + 90
+		txt = '0' .. txt
+	end
+	if xcode == 0 and diginum == 1 then
+		val = 9
+		txt = '0'
+	end
+	return txt
+end
+
+-- digial 9 is hidden digi
+-- return xcode, diginum
+function Wwtcas:XpdrDecode9(xcode)
+	local newcode = 0
+	local diginum = 0
+	local digis = {}
+	-- extract 1234={1, 2, 3, 4}
+	local val = math.floor(xcode / 1000)
+	digis[1] = val
+	xcode = xcode - val * 1000
+	val = math.floor(xcode / 100)
+	digis[2] = val
+	xcode = xcode - val * 100
+	val = math.floor(xcode / 10)
+	digis[3] = val
+	xcode = xcode - val * 10
+	val = xcode
+	digis[4] = val
+
+	for i = 1, 4 do
+		if digis[i] == 9 then
+			break
+		else
+			diginum = diginum + 1
+		end
+	end
+
+	for i = 1, diginum do
+		newcode = newcode + (digis[i] * (10 ^ (diginum - i)))
+	end
+
+	return newcode, diginum
+end
+
+-- ========================= Fake tranponder
+-- fake tranponder standby code
+-- when you key in 1,2,3,4,5, "5" will clear "1234" by default
+_G.WwtcasFakeXpdrKeyNumAutoClr = true
+-- Fast CLR, when press CLR twice, will clear all
+_G.WwtcasFakeXpdrFastClr = false
+_G.WwtcasFakeXpdrFastClrTimeOut = 99999
+_G.WwtcasFakeXpdrFastClrIdleTime = os.clock()
+-- XPDR standby timeout
+_G.WwtcasFakeXpdrKeyTimeOut = -1
+_G.WwtcasFakeXpdrKeyIdleTime = os.clock()
+-- XPDR standby code
+_G.WwtcasFakeXpdrKeyNum = 0
+_G.WwtcasFakeXpdrKeyTable = { 0, 0, 0, 0 }
+-- global callback function
+_G.WwtcasFakeXpdrKeyCallBackFunc = function(KeyCode)
+	uluaLog('key press->' .. tostring(KeyCode))
+	-- handle timeout
+	if os.clock() - _G.WwtcasFakeXpdrKeyIdleTime > WwtcasFakeXpdrKeyTimeOut then
+		if _G.WwtcasFakeXpdrKeyNumAutoClr then
+			_G.WwtcasFakeXpdrKeyNum = 0
+		end
+		uluaLog('WwtcasFakeXpdr timeout\n')
+	end
+
+	-- handle keycode: we use 9 as CLR
+	if KeyCode ~= 9 then
+		if _G.WwtcasFakeXpdrKeyNum < 4 then
+			_G.WwtcasFakeXpdrKeyNum = _G.WwtcasFakeXpdrKeyNum + 1
+			_G.WwtcasFakeXpdrKeyTable[_G.WwtcasFakeXpdrKeyNum] = KeyCode
+		else
+			if _G.WwtcasFakeXpdrKeyNumAutoClr then
+				_G.WwtcasFakeXpdrKeyNum = 1
+				_G.WwtcasFakeXpdrKeyTable[_G.WwtcasFakeXpdrKeyNum] = KeyCode
+			end
+		end
+		_G.WwtcasFakeXpdrFastClr = false
+	else
+		-- handle FAST CLR
+		if _G.WwtcasFakeXpdrFastClr and os.clock() - _G.WwtcasFakeXpdrFastClrIdleTime < WwtcasFakeXpdrFastClrTimeOut then
+			_G.WwtcasFakeXpdrKeyNum = 0
+			uluaLog('WwtcasFakeXpdr FAST CLR\n')
+			_G.WwtcasFakeXpdrFastClr = false
+		else
+			_G.WwtcasFakeXpdrFastClr = true
+		end
+
+		if _G.WwtcasFakeXpdrKeyNum > 0 then
+			_G.WwtcasFakeXpdrKeyNum = _G.WwtcasFakeXpdrKeyNum - 1
+		end
+		-- update FAST CLR timer
+		_G.WwtcasFakeXpdrFastClrIdleTime = os.clock()
+	end
+	-- reset timer
+	_G.WwtcasFakeXpdrKeyIdleTime = os.clock()
+end
+
+-- @ FuncCbName: is string of a global function name
+-- @ timeout: can be empty
+function Wwtcas:FakeXpdrInit(autoclr, timeout, fastclrtm)
+	_G.WwtcasFakeXpdrKeyNumAutoClr = autoclr == nil and true or autoclr
+	_G.WwtcasFakeXpdrKeyTimeOut = timeout == nil and 99999 or timeout
+	_G.WwtcasFakeXpdrFastClrTimeOut = fastclrtm == nil and -1 or fastclrtm
+
+	-- XPRD ATC Keypad
+	-- CLR faked as number 9
+	-- zero faked as number 8
+	self:CfgFc(0, "_G.WwtcasFakeXpdrKeyCallBackFunc(1)")
+	self:CfgFc(1, "_G.WwtcasFakeXpdrKeyCallBackFunc(2)")
+	self:CfgFc(2, "_G.WwtcasFakeXpdrKeyCallBackFunc(3)")
+	self:CfgFc(3, "_G.WwtcasFakeXpdrKeyCallBackFunc(4)")
+	self:CfgFc(4, "_G.WwtcasFakeXpdrKeyCallBackFunc(5)")
+	self:CfgFc(5, "_G.WwtcasFakeXpdrKeyCallBackFunc(6)")
+	self:CfgFc(6, "_G.WwtcasFakeXpdrKeyCallBackFunc(7)")
+	self:CfgFc(7, "_G.WwtcasFakeXpdrKeyCallBackFunc(0)")
+	self:CfgFc(8, "_G.WwtcasFakeXpdrKeyCallBackFunc(9)")
+end
+
+function Wwtcas:FakeXpdrClear()
+	_G.WwtcasFakeXpdrKeyNum = 0
+end
+
+function Wwtcas:FakeXpdrCopy(xcode)
+	xcode = xcode == nil and self.d_xpdr:Get() or xcode
+
+	_G.WwtcasFakeXpdrKeyNum = 4
+	-- extract 1234={1, 2, 3, 4}
+	local val = math.floor(xcode / 1000)
+	-- uluaLog('XPDR CPY1 ' .. tostring(val))
+	_G.WwtcasFakeXpdrKeyTable[1] = val
+	xcode = xcode - val * 1000
+	val = math.floor(xcode / 100)
+	-- uluaLog('XPDR CPY2 ' .. tostring(val))
+	_G.WwtcasFakeXpdrKeyTable[2] = val
+	xcode = xcode - val * 100
+	val = math.floor(xcode / 10)
+	-- uluaLog('XPDR CPY3 ' .. tostring(val))
+	_G.WwtcasFakeXpdrKeyTable[3] = val
+	xcode = xcode - val * 10
+	val = xcode
+	-- uluaLog('XPDR CPY4 ' .. tostring(val))
+	_G.WwtcasFakeXpdrKeyTable[4] = val
+end
+
+function Wwtcas:XpdrBc016(xcode)
+	local bc016 = 0
+	-- extract 1234={1, 2, 3, 4}
+	local val = math.floor(xcode / 1000)
+	-- uluaLog('XPDR CPY1 ' .. tostring(val))
+	bc016 = bc016 + val * 4096
+	xcode = xcode - val * 1000
+	val = math.floor(xcode / 100)
+	-- uluaLog('XPDR CPY2 ' .. tostring(val))
+	bc016 = bc016 + val * 256
+	xcode = xcode - val * 100
+	val = math.floor(xcode / 10)
+	-- uluaLog('XPDR CPY3 ' .. tostring(val))
+	bc016 = bc016 + val * 16
+	xcode = xcode - val * 10
+	val = xcode
+	-- uluaLog('XPDR CPY4 ' .. tostring(val))
+	bc016 = bc016 + val
+	return bc016
+end
+
+function Wwtcas:FakeXpdrGet()
+	local FakeXpdr = 0
+	if _G.WwtcasFakeXpdrKeyNum > 0 then
+		for i = 1, _G.WwtcasFakeXpdrKeyNum do
+			-- uluaLog(tostring(i) .. '---' .. tostring(_G.WwtcasFakeXpdrKeyTable[i]))
+			FakeXpdr = FakeXpdr + (_G.WwtcasFakeXpdrKeyTable[i] * (10 ^ (_G.WwtcasFakeXpdrKeyNum - i)))
+		end
+		-- uluaLog('XPDR ' .. tostring(FakeXpdr))
+	end
+	return FakeXpdr, _G.WwtcasFakeXpdrKeyNum
+end
+
+function Wwtcas:FakeXpdrIsTimeOut()
+	return os.clock() - _G.WwtcasFakeXpdrKeyIdleTime > WwtcasFakeXpdrKeyTimeOut
 end
 
 return Wwtcas
