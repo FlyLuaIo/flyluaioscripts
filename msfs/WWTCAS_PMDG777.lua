@@ -78,8 +78,8 @@ local function xpdr_update()
 end
 
 wwtcas:GetBkl("(L:BL_Pedestal)", 200)                 -- 0~1
-wwtcas:GetLcdBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200) -- 0~1
-wwtcas:GetLedBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200) -- 0~1
+wwtcas:GetLcdBkl("(L:Battery)", 200) -- 0~1
+wwtcas:GetLedBkl("(L:Battery)", 200) -- 0~1
 wwtcas:GetAtcFail(
     "(L:switch_751_a,number) 0 != if{ (L:Failure_XPNDR_2_FAIL) } els{ (L:Failure_XPNDR_1_FAIL) }")
 
