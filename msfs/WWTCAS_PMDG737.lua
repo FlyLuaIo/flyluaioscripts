@@ -42,7 +42,12 @@ wwtcas:CfgPSw(23, xpdr_tara, 40)
 -- @ TIMEOUT = 2s
 wwtcas:FakeXpdrInit(false, 2)
 local b_xpdr_act = iDataRef:New("(A:TRANSPONDER CODE:1, Number)")
+local dr_test = iDataRef:New("(L:switch_346_73X,number)") -- 100: DIM 50: BRT 0: test mode
 local function xpdr_update()
+    if dr_test:Get() == 0 then
+        wwtcas:setLcdText('8888')
+        return
+    end
     if wwtcas:FakeXpdrIsTimeOut() or b_xpdr_act:ChangedUpdate() then
         -- wwtcas:FakeXpdrCopy()
         wwtcas:FakeXpdrClear()
@@ -59,7 +64,7 @@ local function xpdr_update()
 end
 
 wwtcas:GetBkl("(L:BL_Pedestal)", 200)                 -- 0~1
-wwtcas:GetLcdBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200) -- 0~1
+wwtcas:GetLcdBkl("(L:BatteryFreq)", 200)                  -- 0~1
 wwtcas:GetLedBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200) -- 0~1
 wwtcas:GetAtcFail("(L:switch_799_73X, number)")
 --[[
