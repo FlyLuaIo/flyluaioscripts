@@ -37,6 +37,7 @@ function dir_action(val)
     wwtcas:PSwDelay(xpdr_dirl, 0, val)
     wwtcas:PSwDelay(xpdr_dir, 100, val)
 end
+
 wwtcas:CfgFc(17, "dir_action(50)")
 wwtcas:CfgFc(19, "dir_action(0)")
 wwtcas:CfgFc(20, "dir_action(100)")
@@ -55,7 +56,12 @@ wwtcas:CfgPSw(23, xpdr_tara, 40)
 -- @ TIMEOUT = 2s
 wwtcas:FakeXpdrInit(false, 2)
 local b_xpdr_act = iDataRef:New("(A:TRANSPONDER CODE:1, Number)")
+local dr_test = iDataRef:New("(L:switch_118_a,number)") -- 0: test 50: BRT 100: DIM
 local function xpdr_update()
+    if dr_test:Get() == 0 then
+        wwtcas:setLcdText('8888')
+        return
+    end
     if wwtcas:FakeXpdrIsTimeOut() or b_xpdr_act:ChangedUpdate() then
         -- wwtcas:FakeXpdrCopy()
         wwtcas:FakeXpdrClear()
@@ -74,10 +80,9 @@ end
 wwtcas:GetBkl("(L:BL_Pedestal)", 200)                 -- 0~1
 wwtcas:GetLcdBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200) -- 0~1
 wwtcas:GetLedBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200) -- 0~1
-wwtcas:GetAtcFail("(L:switch_799_73X, number)")
---[[
-wwtcas:GetAtcFail('')
-]] --
+wwtcas:GetAtcFail(
+    "(L:switch_751_a,number) 0 != if{ (L:Failure_XPNDR_2_FAIL) } els{ (L:Failure_XPNDR_1_FAIL) }")
+
 GlobalFrameLoopManager:add(function()
     wwtcas:SetBkl()
     wwtcas:SetLcdBkl()
