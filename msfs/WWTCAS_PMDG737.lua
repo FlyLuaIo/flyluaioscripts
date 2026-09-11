@@ -19,6 +19,12 @@ local xpdr_tara = QmdevPosSwitchInit("(L:switch_800_73X, number)", 10, "80007 (>
 wwtcas:CfgPSw(10, xpdr_tara, 0)
 wwtcas:CfgPSw(11, xpdr_tara, 30)
 
+-- ATC SYS 1/2
+local xpdr_sys = QmdevPosSwitchInit("(L:switch_798_73X, number)", 10, "79801 (>K:ROTOR_BRAKE)",
+    "79801 (>K:ROTOR_BRAKE)", 300)
+wwtcas:CfgPSw(13, xpdr_sys, 0)
+wwtcas:CfgPSw(14, xpdr_sys, 100)
+
 -- ALT RPTG OFF/ON
 wwtcas:CfgPSw(15, xpdr_tara, 10)
 
@@ -52,9 +58,10 @@ local function xpdr_update()
     end
 end
 
-wwtcas:GetBkl("(L:BL_Pedestal)", 200)                    -- 0~1
-wwtcas:GetLcdBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200)   -- 0~1
-wwtcas:GetLedBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200)   -- 0~1
+wwtcas:GetBkl("(L:BL_Pedestal)", 200)                 -- 0~1
+wwtcas:GetLcdBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200) -- 0~1
+wwtcas:GetLedBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200) -- 0~1
+wwtcas:GetAtcFail("(L:switch_799_73X, number)")
 --[[
 wwtcas:GetAtcFail('')
 ]] --
@@ -62,5 +69,6 @@ GlobalFrameLoopManager:add(function()
     wwtcas:SetBkl()
     wwtcas:SetLcdBkl()
     wwtcas:SetLedBkl()
+    wwtcas:SetAtcFail()
     xpdr_update()
 end)
