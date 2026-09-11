@@ -1,18 +1,32 @@
 -- *****************************************************************
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-08-08_03_55_08UTC
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-09-11
 -- *****************************************************************
-if ilua_require_msfs() then
-    return
-end
+if ilua_require_pmdg_737() then return end
+
 -- Do not remove below lines: hardware detection
 local wwtcas = com.sim.qm.Wwtcas.Open()
 if not wwtcas then return end
 -- Do not remove above lines: hardware detection
 
-uluaLog('Wwtcas for GA')
+uluaLog('Wwtcas for PMDG 737')
 
 -- XDRD IDENT
 wwtcas:CfgRpn(9, "(>K:XPNDR_IDENT_ON)")
+
+-- XPDR STBY/AUTO/ON
+local xpdr_tara = QmdevPosSwitchInit("(L:switch_800_73X, number)", 10, "80007 (>K:ROTOR_BRAKE)",
+    "80008 (>K:ROTOR_BRAKE)", 300)
+wwtcas:CfgPSw(10, xpdr_tara, 0)
+wwtcas:CfgPSw(11, xpdr_tara, 30)
+
+-- ALT RPTG OFF/ON
+wwtcas:CfgPSw(15, xpdr_tara, 10)
+
+
+-- TCAS STBY/TA/TARA
+wwtcas:CfgPSw(21, xpdr_tara, 0)
+wwtcas:CfgPSw(22, xpdr_tara, 30)
+wwtcas:CfgPSw(23, xpdr_tara, 40)
 
 -- ===========================================================
 -- Read data
@@ -38,9 +52,9 @@ local function xpdr_update()
     end
 end
 
-wwtcas:GetBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 2) -- 0~100
-wwtcas:GetLcdBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200)     -- 0~1
-wwtcas:GetLedBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200)     -- 0~1
+wwtcas:GetBkl("(L:BL_Pedestal)", 200)                    -- 0~1
+wwtcas:GetLcdBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200)   -- 0~1
+wwtcas:GetLedBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200)   -- 0~1
 --[[
 wwtcas:GetAtcFail('')
 ]] --

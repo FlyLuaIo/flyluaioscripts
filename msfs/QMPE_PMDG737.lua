@@ -422,7 +422,7 @@ else
 end
 -- brightness
 if MSFS_VERSION == 0 then
-    qmpe:GetBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 0.3) -- 0~100
+    qmpe:GetBkl("(L:BL_Pedestal)", 100) -- 0~100
 else
     qmpe:GetBkl("(L:PED_PANEL_LIGHT_CONTROL, number)", 0.3) -- 0~300
 end
