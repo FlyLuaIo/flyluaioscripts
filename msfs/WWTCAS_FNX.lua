@@ -53,28 +53,15 @@ wwtcas:CfgRpn(23, "2 (>L:S_XPDR_MODE)")
 
 -- =====XPDR
 -- Expert: Fenix own logic
-local b_xpdr_fail = iDataRef:New("(L:I_XPDR_FAIL)")
-local b_xpdr_power1 = iDataRef:New("(L:I_XPDR_ATC_1)")
-local b_xpdr_power2 = iDataRef:New("(L:I_XPDR_ATC_2)")
-
--- XPDR
 local b_xpdr_c_num = iDataRef:New("(L:N_PED_XPDR_CHAR_DISPLAYED)")
 local b_xpdr_act = iDataRef:New("(L:N_FREQ_XPDR_SELECTED)")
 local b_xpdr_stby = iDataRef:New("(L:N_FREQ_STANDBY_XPDR_SELECTED)")
 
 local dr_test = iDataRef:New("(L:S_OH_IN_LT_ANN_LT)") -- 0: DIM 1: BRT 2: test mode
 local function xpdr_update()
-    -- if b_xpdr_fail:Get() == 1 or (b_xpdr_power1:Get() == 0 and b_xpdr_power2:Get() == 0) then
-    --     wwtcas:setLcdText()
-    --     return
-    -- end
-    if b_xpdr_power1:Get() == 0 and b_xpdr_power2:Get() == 0 then
-        wwtcas:setLcdText()
-        return
-    end
     local stdr_num = b_xpdr_c_num:Get()
-
     local code
+
     if stdr_num == 4 then
         code = b_xpdr_act:Get()
     else
@@ -88,11 +75,9 @@ local function xpdr_update()
 end
 
 wwtcas:GetBkl("(L:N_PED_LIGHTING_PEDESTAL)", 125) -- 0~2
-wwtcas:GetLcdBkl("(L:I_XPDR_ATC_1)", 200)         -- 0~1
-wwtcas:GetLedBkl("(L:I_XPDR_ATC_1)", 200)         -- 0~1
+wwtcas:GetLcdBkl("(L:B_PED_RMP1_POWER)", 200)     -- 0~1
+wwtcas:GetLedBkl("(L:B_PED_RMP1_POWER)", 200)     -- 0~1
 wwtcas:GetAtcFail("(L:I_XPDR_FAIL)")
-
-
 
 GlobalFrameLoopManager:add(function()
     wwtcas:SetBkl()
