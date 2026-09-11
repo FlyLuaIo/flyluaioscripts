@@ -7,7 +7,7 @@
 
 local Wwtcas = oop.class(com.sim.Qmdev)
 function Wwtcas:init()
-	self.QmdevId = 0x08702393
+	self.QmdevId = 0x13CA5335
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwtcas == nil then
 		self.PackageConter = 0

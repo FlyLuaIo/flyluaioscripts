@@ -55,26 +55,25 @@ else
 end
 
 -------------------- Output ---------------------
-local dr_bkl = iDataRef:New('AirbusFBW/PanelBrightnessLevel')
 local dr_power = iDataRef:New('sim/cockpit/electrical/avionics_on')
-local dr_fcu = iDataRef:New('AirbusFBW/FCUAvail')
 local dr_annun = iDataRef:New('AirbusFBW/AnnunMode')
 local dr_xpdr = iDataRef:New('AirbusFBW/XPDRString')
 
+wwtcas:GetBkl('AirbusFBW/PanelBrightnessLevel', 255)
+wwtcas:GetLcdBkl('AirbusFBW/RMP1Available', 250)                 -- 0~1
+wwtcas:GetLedBkl('sim/cockpit2/switches/avionics_power_on', 250) -- 0~1
+
+wwtcas:GetAtcFail("AirbusFBW/OHPLightsATA31[1]", false, 0.1)
+
 GlobalFrameLoopManager:add(function()
 	local hasPower = dr_power:Get() ~= 0
-	local hasEss = dr_fcu:Get() ~= 0
-	local bkl = 0
-	if hasPower then
-		bkl = math.floor(math.max(0, math.min(1, dr_bkl:Get())) * 255)
-	end
-	wwtcas:SendLedCmd(wwtcas.LEDS_BKL, bkl)
-	wwtcas:SendLedCmd(wwtcas.LEDS_LCDBKL, hasEss and 255 or 0)
-	wwtcas:SendLedCmd(wwtcas.LEDS_LEDBKL, hasEss and 255 or 0)
+
+	wwtcas:SetBkl()
+	wwtcas:SetLcdBkl()
+	wwtcas:SetLedBkl()
+	wwtcas:SetAtcFail()
 
 	local test = (dr_annun:Get() == 2) and hasPower
-	wwtcas:SendLedCmd(wwtcas.LEDS_ATCFAIL, test and 255 or 0)
-
 	local code = test and '8888' or tostring(dr_xpdr:Get() or '')
 	wwtcas:setLcdText(code)
 end)
