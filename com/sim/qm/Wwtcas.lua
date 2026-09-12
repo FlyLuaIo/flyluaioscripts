@@ -10,7 +10,7 @@ function Wwtcas:init()
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwtcas == nil then
 		self.PackageConter = 0
-		self.LcdText = nil
+		self.LcdText = iChange:New()
 		_G.ilua_hw_assigned_wwtcas = 0
 		self.LEDS_BKL = 0
 		self.LEDS_LCDBKL = 1
@@ -162,21 +162,13 @@ function Wwtcas:Next()
 	return val
 end
 
-function Wwtcas:IsLcdTextChanged(newtext)
-	if newtext ~= self.LcdText then
-		self.LcdText = newtext
-		return true
-	end
-	return false
-end
-
 -- 4-digit squawk → 7 segment planes (lcd1..lcd7), then finish commit
 function Wwtcas:setLcdText(code)
 	if code == nil then
 		code = ''
 	end
 	code = string.sub(tostring(code) .. '    ', 1, 4)
-	if not self:IsLcdTextChanged(code) then
+	if not self.LcdText:ChangedUpdate(code) then
 		return
 	end
 	local segmap = {

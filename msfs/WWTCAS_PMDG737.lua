@@ -43,6 +43,8 @@ wwtcas:CfgPSw(23, xpdr_tara, 40)
 wwtcas:FakeXpdrInit(false, 2)
 local b_xpdr_act = iDataRef:New("(A:TRANSPONDER CODE:1, Number)")
 local dr_test = iDataRef:New("(L:switch_346_73X,number)") -- 100: DIM 50: BRT 0: test mode
+
+wwtcas:setLcdText('----')
 local function xpdr_update()
     if dr_test:Get() == 0 then
         wwtcas:setLcdText('8888')
