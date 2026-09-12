@@ -64,7 +64,7 @@ local function xpdr_update()
 end
 
 wwtcas:GetBkl("(L:BL_Pedestal)", 200)                 -- 0~1
-wwtcas:GetLcdBkl("(L:BatteryFreq)", 200)                  -- 0~1
+wwtcas:GetLcdBkl("pmdg/ng3/data/ELEC_BusPowered[3]", 200) -- 0~1
 wwtcas:GetLedBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200) -- 0~1
 wwtcas:GetAtcFail("(L:switch_799_73X, number)")
 --[[
