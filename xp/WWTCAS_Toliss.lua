@@ -59,14 +59,30 @@ local dr_power = iDataRef:New('sim/cockpit/electrical/avionics_on')
 local dr_annun = iDataRef:New('AirbusFBW/AnnunMode')
 local dr_xpdr = iDataRef:New('AirbusFBW/XPDRString')
 
-wwtcas:GetBkl('AirbusFBW/PanelBrightnessLevel', 255)
-wwtcas:GetLcdBkl('AirbusFBW/RMP1Available', 250)                 -- 0~1
+wwtcas:GetBkl('AirbusFBW/PanelBrightnessLevel', 250)
+wwtcas:GetLcdBkl('sim/cockpit2/switches/avionics_power_on', 250) -- 0~1
 wwtcas:GetLedBkl('sim/cockpit2/switches/avionics_power_on', 250) -- 0~1
 
 wwtcas:GetAtcFail("AirbusFBW/OHPLightsATA31[1]", false, 0.1)
 
 GlobalFrameLoopManager:add(function()
-	local hasPower = dr_power:Get() ~= 0
+	local hasPower
+	if dr_power:ChangedUpdate() then
+		hasPower = dr_power:GetOld() ~= 0
+		if not hasPower then
+			wwtcas:SetBkl(0)
+			wwtcas:SetLcdBkl(0)
+		else
+			wwtcas:FreshBkl()
+			wwtcas:FreshLcdBkl()
+		end
+	else
+		hasPower = dr_power:Get() ~= 0
+	end
+
+	if not hasPower then
+		return
+	end
 
 	wwtcas:SetBkl()
 	wwtcas:SetLcdBkl()
@@ -74,6 +90,7 @@ GlobalFrameLoopManager:add(function()
 	wwtcas:SetAtcFail()
 
 	local test = (dr_annun:Get() == 2) and hasPower
-	local code = test and '8888' or tostring(dr_xpdr:Get() or '')
+
+	local code = tostring(dr_xpdr:Get())
 	wwtcas:setLcdText(code)
 end)
