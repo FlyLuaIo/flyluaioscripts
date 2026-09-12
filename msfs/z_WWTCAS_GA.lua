@@ -14,6 +14,18 @@ uluaLog('Wwtcas for GA')
 -- XDRD IDENT
 wwtcas:CfgRpn(9, "(>K:XPNDR_IDENT_ON)")
 
+
+-- XPDR STBY/AUTO/ON
+wwtcas:CfgRpn(10, "1 (>A:TRANSPONDER STATE:1, Enum)")
+wwtcas:CfgRpn(11, "3 (>A:TRANSPONDER STATE:1, Enum)")
+wwtcas:CfgRpn(12, "4 (>A:TRANSPONDER STATE:1, Enum)")
+
+
+-- ALT RPTG OFF/ON
+wwtcas:CfgRpn(15, "0 (>A:TRANSPONDER STATE:1, Enum)")
+wwtcas:CfgRpn(16, "4 (>A:TRANSPONDER STATE:1, Enum)")
+
+
 -- ===========================================================
 -- Read data
 -- =====XPDR
@@ -39,8 +51,8 @@ local function xpdr_update()
 end
 
 wwtcas:GetBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 2) -- 0~100
-wwtcas:GetLcdBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200)     -- 0~1
-wwtcas:GetLedBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200)     -- 0~1
+wwtcas:GetLcdBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200)   -- 0~1
+wwtcas:GetLedBkl("(A:CIRCUIT AVIONICS ON,Bool)", 200)   -- 0~1
 --[[
 wwtcas:GetAtcFail('')
 ]] --

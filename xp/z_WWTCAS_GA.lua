@@ -7,11 +7,35 @@ local wwtcas = com.sim.qm.Wwtcas.Open()
 if not wwtcas then return end
 -- Do not remove above lines: hardware detection
 
-uluaLog('Wwtcas for GA')
+uluaLog('Wwtcas for X-Plane GA')
 
 -- XDRD IDENT
 wwtcas:CfgCmd(9, 'sim/radios/transponder_ident')
 
+-- XPDR STBY/AUTO/ON
+wwtcas:CfgVal(10, 'sim/cockpit/radios/transponder_mode', 1)
+wwtcas:CfgVal(11, 'sim/cockpit/radios/transponder_mode', 2)
+wwtcas:CfgVal(12, 'sim/cockpit/radios/transponder_mode', 3)
+
+-- ATC SYS 1/2
+wwtcas:CfgVal(13, 'sim/cockpit2/radios/actuators/tcas_sys_select', 0)
+wwtcas:CfgVal(14, 'sim/cockpit2/radios/actuators/tcas_sys_select', 1)
+
+
+-- ALT RPTG OFF/ON
+wwtcas:CfgVal(15, 'sim/cockpit/radios/transponder_mode', 0)
+wwtcas:CfgVal(16, 'sim/cockpit/radios/transponder_mode', 3)
+
+-- TCAS THRT/ALL/ABV/BLW
+wwtcas:CfgVal(17, 'sim/cockpit2/radios/actuators/tcas_filter', 0)
+wwtcas:CfgVal(18, 'sim/cockpit2/radios/actuators/tcas_filter', 1)
+wwtcas:CfgVal(19, 'sim/cockpit2/radios/actuators/tcas_filter', 2)
+wwtcas:CfgVal(20, 'sim/cockpit2/radios/actuators/tcas_filter', 3)
+
+-- TCAS STBY/TA/TARA
+wwtcas:CfgVal(21, 'sim/cockpit/radios/transponder_mode', 1)
+wwtcas:CfgVal(22, 'sim/cockpit/radios/transponder_mode', 6)
+wwtcas:CfgVal(23, 'sim/cockpit/radios/transponder_mode', 7)
 
 -- ===========================================================
 -- Read data
