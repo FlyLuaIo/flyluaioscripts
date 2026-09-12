@@ -58,6 +58,7 @@ local b_xpdr_act = iDataRef:New("(L:N_FREQ_XPDR_SELECTED)")
 local b_xpdr_stby = iDataRef:New("(L:N_FREQ_STANDBY_XPDR_SELECTED)")
 
 local dr_test = iDataRef:New("(L:S_OH_IN_LT_ANN_LT)") -- 0: DIM 1: BRT 2: test mode
+wwtcas:setLcdText('----')
 local function xpdr_update()
     local stdr_num = b_xpdr_c_num:Get()
     local code

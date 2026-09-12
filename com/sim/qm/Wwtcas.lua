@@ -167,10 +167,12 @@ function Wwtcas:setLcdText(code)
 	if code == nil then
 		code = ''
 	end
-	code = string.sub(tostring(code) .. '    ', 1, 4)
+
 	if not self.LcdText:ChangedUpdate(code) then
 		return
 	end
+	code = string.sub(tostring(code) .. '    ', 1, 4)
+	-- uluaLog(code .. '->' .. tostring(self.LcdText:GetLast()))
 	local segmap = {
 		['0'] = 0x3F,
 		['1'] = 0x06,
