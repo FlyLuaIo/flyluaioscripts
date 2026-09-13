@@ -57,7 +57,7 @@ wwtcas:CfgVal(23, "a320/Pedestal/TCAS_Traffic", 2, 1)
 local b_xpdr_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on")
 
 local b_xpdr_act = iDataRef:New("a320/Aircraft/Navigation/ATC/DisplayCode")
-
+wwtcas:setLcdText('----')
 local function xpdr_update()
     if b_xpdr_power:Get() == 0 then
         wwtcas:setLcdText()

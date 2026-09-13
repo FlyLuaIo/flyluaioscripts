@@ -49,7 +49,7 @@ local b_xpdr_power = iDataRef:New('sim/cockpit2/switches/avionics_power_on')
 wwtcas:FakeXpdrInit(false, 2)
 
 local b_xpdr_act = iDataRef:New('sim/cockpit2/radios/actuators/transponder_code')
-
+wwtcas:setLcdText('----')
 local function xpdr_update()
     if b_xpdr_power:Get() == 0 then
         wwtcas:setLcdText('    ')

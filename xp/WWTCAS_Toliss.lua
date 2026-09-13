@@ -65,6 +65,7 @@ wwtcas:GetLedBkl('sim/cockpit2/switches/avionics_power_on', 250) -- 0~1
 
 wwtcas:GetAtcFail("AirbusFBW/OHPLightsATA31[1]", false, 0.1)
 
+wwtcas:setLcdText('----')
 GlobalFrameLoopManager:add(function()
 	local hasPower
 	if dr_power:ChangedUpdate() then
