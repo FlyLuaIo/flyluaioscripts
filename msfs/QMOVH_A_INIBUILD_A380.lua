@@ -106,9 +106,9 @@ if MSFS_VERSION == 0 then
     qmovha:CfgVal(25, "B:AIRLINER_CPT_WIPER_SWITCH", 1)
     qmovha:CfgVal(26, "B:AIRLINER_CPT_WIPER_SWITCH", 2)
 else
-    qmovha:CfgRpn(24, "0 (>B:AIRLINER_CPT_WIPER_SWITCH_Set) 0 (>B:AIRLINER_FO_WIPER_SWITCH_Set)")
-    qmovha:CfgRpn(25, "1 (>B:AIRLINER_CPT_WIPER_SWITCH_Set) 1 (>B:AIRLINER_FO_WIPER_SWITCH_Set)")
-    qmovha:CfgRpn(26, "2 (>B:AIRLINER_CPT_WIPER_SWITCH_Set) 2 (>B:AIRLINER_FO_WIPER_SWITCH_Set)")
+    qmovha:CfgRpn(24, "0 (>B:AIRLINER_WIPER_LEFT_Set) 0 (>B:AIRLINER_WIPER_RIGHT_Set)")
+    qmovha:CfgRpn(25, "1 (>B:AIRLINER_WIPER_LEFT_Set) 1 (>B:AIRLINER_WIPER_RIGHT_Set)")
+    qmovha:CfgRpn(26, "2 (>B:AIRLINER_WIPER_LEFT_Set) 2 (>B:AIRLINER_WIPER_RIGHT_Set)")
 end
 -- OXYGEN CREW SUPPLY
 qmovha:CfgRpn(38, "(L:INI_CREW_SUPPLY) ! (>L:INI_CREW_SUPPLY)")
@@ -129,24 +129,24 @@ qmovha:CfgRpn(52, "(L:INI_GPWS_FLAP_MODE) ! (>L:INI_GPWS_FLAP_MODE)")
 qmovha:CfgRpn(53, "(L:INI_GND_CTL) ! (>L:INI_GND_CTL)")
 
 -- ADIRS 2,3,1
-qmovha:CfgRpn(55, "(L:INI_ADR3_BUTTON) ! (>L:INI_ADR3_BUTTON)")
-qmovha:CfgRpn(56, "(L:INI_ADR2_BUTTON) ! (>L:INI_ADR2_BUTTON)")
+qmovha:CfgRpn(55, "(L:INI_ADR2_BUTTON) ! (>L:INI_ADR2_BUTTON)")
+qmovha:CfgRpn(56, "(L:INI_ADR3_BUTTON) ! (>L:INI_ADR3_BUTTON)")
 qmovha:CfgRpn(57, "(L:INI_ADR1_BUTTON) ! (>L:INI_ADR1_BUTTON)")
 
 -- IR1
-qmovha:CfgVal(73, "B:AIRLINER_ADIRS1_MODE", 0)
-qmovha:CfgVal(74, "B:AIRLINER_ADIRS1_MODE", 1)
-qmovha:CfgVal(75, "B:AIRLINER_ADIRS1_MODE", 2)
+qmovha:CfgVal(73, "B:AIRLINER_ADIRS_KNOB_1", 0)
+qmovha:CfgVal(74, "B:AIRLINER_ADIRS_KNOB_1", 1)
+qmovha:CfgVal(75, "B:AIRLINER_ADIRS_KNOB_1", 2)
 
 -- IR3
-qmovha:CfgVal(79, "B:AIRLINER_ADIRS3_MODE", 0)
-qmovha:CfgVal(80, "B:AIRLINER_ADIRS3_MODE", 1)
-qmovha:CfgVal(81, "B:AIRLINER_ADIRS3_MODE", 2)
+qmovha:CfgVal(79, "B:AIRLINER_ADIRS_KNOB_3", 0)
+qmovha:CfgVal(80, "B:AIRLINER_ADIRS_KNOB_3", 1)
+qmovha:CfgVal(81, "B:AIRLINER_ADIRS_KNOB_3", 2)
 
 -- IR2
-qmovha:CfgVal(76, "B:AIRLINER_ADIRS2_MODE", 0)
-qmovha:CfgVal(77, "B:AIRLINER_ADIRS2_MODE", 1)
-qmovha:CfgVal(78, "B:AIRLINER_ADIRS2_MODE", 2)
+qmovha:CfgVal(76, "B:AIRLINER_ADIRS_KNOB_2", 0)
+qmovha:CfgVal(77, "B:AIRLINER_ADIRS_KNOB_2", 1)
+qmovha:CfgVal(78, "B:AIRLINER_ADIRS_KNOB_2", 2)
 
 -- BAT 1&2
 ---- GEN1
@@ -203,11 +203,11 @@ qmovha:CfgRpn(83, "1 (>B:AIRLINER_FIRE_APU_Cover_Set) 1 (>L:INI_FIRE_APU_FIRE_PB
 qmovha:CfgRpn(84, "1 (>B:AIRLINER_FIRE_ENG_2_Cover_Set) 1 (>L:INI_FIRE_ENG_2_FIRE_PB)", "0 (>L:INI_FIRE_ENG_2_FIRE_PB)")
 
 ---- ENG1 Test
-qmovha:CfgRpn(85, "1 (>L:INI_FIRE_TEST)", "0 (>L:INI_FIRE_TEST)")
+qmovha:CfgRpn(85, "1 (>B:AIRLINER_FIRE_TEST_PUSH)", "1 (>B:AIRLINER_FIRE_TEST_RELEASE)")
 ---- APU Test
-qmovha:CfgRpn(86, "1 (>B:AIRLINER_APU_AGENT_TEST_Inc)", "0 (>B:AIRLINER_APU_AGENT_TEST_Dec)")
+qmovha:CfgRpn(86, "1 (>B:AIRLINER_FIRE_TEST_PUSH)", "1 (>B:AIRLINER_FIRE_TEST_RELEASE)")
 ---- ENG2 Test
-qmovha:CfgRpn(87, "1 (>L:INI_FIRE_TEST)", "0 (>L:INI_FIRE_TEST)")
+qmovha:CfgRpn(87, "1 (>B:AIRLINER_FIRE_TEST_PUSH)", "1 (>B:AIRLINER_FIRE_TEST_RELEASE)")
 
 -- ===========================================================
 -- Read data for lights
@@ -254,10 +254,10 @@ qmovha:GetUpled1Flap3('(L:INI_GPWS_FLAP3_MODE)')
 
 qmovha:GetUpled1Adr1Up('(L:INI_ADR1_FAULT)')
 qmovha:GetUpled1Adr1Dn('(L:INI_ADR1_BUTTON) !')
-qmovha:GetUpled1Adr3Up('(L:INI_ADR2_FAULT)')
-qmovha:GetUpled1Adr3Dn('(L:INI_ADR2_BUTTON) !')
-qmovha:GetUpled1Adr2Up('(L:INI_ADR3_FAULT)')
-qmovha:GetUpled1Adr2Dn('(L:INI_ADR3_BUTTON) !')
+qmovha:GetUpled1Adr3Up('(L:INI_ADR3_FAULT)')
+qmovha:GetUpled1Adr3Dn('(L:INI_ADR3_BUTTON) !')
+qmovha:GetUpled1Adr2Up('(L:INI_ADR2_FAULT)')
+qmovha:GetUpled1Adr2Dn('(L:INI_ADR2_BUTTON) !')
 qmovha:GetUpled1Onbat('(L:INI_IRS_ON_BATTERY)')
 
 qmovha:GetUpled1Ltk1Up('(L:INI_INNER_PUMP_1_FAULT)')
@@ -278,7 +278,7 @@ qmovha:GetUpled2XfeedDn(
     '(L:INI_XFEED_TRANSFER_ON) (L:INI_XFEED_TRANSFER2_ON) (L:INI_XFEED_TRANSFER3_ON) (L:INI_XFEED_TRANSFER4_ON) or')
 
 qmovha:GetUpled1Fire2('(L:INI_FIRE_TEST) (L:INI_FIRE_ENG_2_FIRE) or')
-qmovha:GetUpled1Firea('(L:INI_APU_FIRE_TEST)')
+qmovha:GetUpled1Firea('(L:INI_APU_FIRE_TEST) (L:INI_FIRE_TEST) or') -- ini380 bug patch
 qmovha:GetUpled1Fire1('(L:INI_FIRE_TEST) (L:INI_FIRE_ENG_1_FIRE) or')
 qmovha:GetUpled2Eng1ag1('(L:INI_FIRE_TEST) (L:INI_ENG1_AGENT1_SQUIB) or')
 qmovha:GetUpled2Eng1ag2('(L:INI_FIRE_TEST) (L:INI_ENG1_AGENT2_SQUIB) or')
