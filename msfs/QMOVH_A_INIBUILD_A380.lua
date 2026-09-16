@@ -13,63 +13,63 @@ uluaLog("QMOVH-A of Inibuild A380")
 -- ===========================================================
 -- buttons binding
 -- POS/Strobe
-qmovha:CfgVal(0, "B:AIRLINER_STROBE_TOGGLE", 0, nil)
-qmovha:CfgVal(41, "B:AIRLINER_STROBE_TOGGLE", 1, nil)
-qmovha:CfgVal(1, "B:AIRLINER_STROBE_TOGGLE", 2, nil)
+qmovha:CfgVal(0, "B:AIRLINER_LIGHTS_EXT_STROBE", 0, nil)
+qmovha:CfgVal(41, "B:AIRLINER_LIGHTS_EXT_STROBE", 1, nil)
+qmovha:CfgVal(1, "B:AIRLINER_LIGHTS_EXT_STROBE", 2, nil)
 
 -- BEACON lights
-qmovha:CfgVal(2, "B:AIRLINER_BEACON_TOGGLE", 1, 0)
+qmovha:CfgVal(2, "B:AIRLINER_LIGHTS_EXT_BEACON", 0, 1)
 
 -- Wing lights
-qmovha:CfgVal(3, "B:AIRLINER_WING_TOGGLE", 1, 0)
+qmovha:CfgVal(3, "B:AIRLINER_LIGHTS_EXT_WING", 0, 1)
 
 -- NAV&Logo lights
-qmovha:CfgVal(4, "B:AIRLINER_NAVLOGO_TOGGLE", 0, nil)
-qmovha:CfgVal(42, "B:AIRLINER_NAVLOGO_TOGGLE", 1, nil)
-qmovha:CfgVal(5, "B:AIRLINER_NAVLOGO_TOGGLE", 2, nil)
+qmovha:CfgVal(4, "B:AIRLINER_LIGHTS_EXT_LOGO", 0, nil)
+qmovha:CfgVal(42, "B:AIRLINER_LIGHTS_EXT_LOGO", 1, nil)
+qmovha:CfgVal(5, "B:AIRLINER_LIGHTS_EXT_LOGO", 2, nil)
 
 -- Nose lights
-qmovha:CfgVal(6, "B:AIRLINER_TAXILIGHT_TOGGLE", 0, nil)
-qmovha:CfgVal(45, "B:AIRLINER_TAXILIGHT_TOGGLE", 1, nil)
-qmovha:CfgVal(7, "B:AIRLINER_TAXILIGHT_TOGGLE", 2, nil)
+qmovha:CfgVal(6, "B:AIRLINER_LIGHTS_EXT_NOSE", 0, nil)
+qmovha:CfgVal(45, "B:AIRLINER_LIGHTS_EXT_NOSE", 1, nil)
+qmovha:CfgVal(7, "B:AIRLINER_LIGHTS_EXT_NOSE", 2, nil)
 
 -- R Landing lights
-qmovha:CfgVal(8, "B:AIRLINER_LDGLIGHT_TOGGLE", 1, nil)
-qmovha:CfgVal(44, "B:AIRLINER_LDGLIGHT_TOGGLE", 0, nil)
-qmovha:CfgVal(9, "B:AIRLINER_LDGLIGHT_TOGGLE", 0, nil)
+qmovha:CfgVal(8, "B:AIRLINER_LIGHTS_EXT_LANDING", 0, nil)
+qmovha:CfgVal(44, "B:AIRLINER_LIGHTS_EXT_LANDING", 1, nil)
+qmovha:CfgVal(9, "B:AIRLINER_LIGHTS_EXT_LANDING", 1, nil)
 -- L Landing lights
-qmovha:CfgRpn(10, "1 (>L:INI_LIGHTS_LANDING)")
-qmovha:CfgRpn(43, "0 (>L:INI_LIGHTS_LANDING)")
-qmovha:CfgRpn(11, "0 (>L:INI_LIGHTS_LANDING)")
+qmovha:CfgRpn(10, "0 (>B:AIRLINER_LIGHTS_EXT_LANDING_Set)")
+qmovha:CfgRpn(43, "1 (>B:AIRLINER_LIGHTS_EXT_LANDING_Set)")
+qmovha:CfgRpn(11, "1 (>B:AIRLINER_LIGHTS_EXT_LANDING_Set)")
 
 -- Runway Turn Off lights
-qmovha:CfgVal(12, "B:AIRLINER_RWYTURN_TOGGLE", 1, 0)
+qmovha:CfgVal(12, "B:AIRLINER_LIGHTS_EXT_TURNOFF", 0, 1)
 
 -- OVHD INTEG LT KNOBS  BRT <-> OFF
 qmovha:CfgRpn(17, "1 (>B:AIRLINER_PED_INTEG_LT_Dec)")
 qmovha:CfgRpn(16, "1 (>B:AIRLINER_PED_INTEG_LT_Inc)")
 
 -- SEAT BELTS
-qmovha:CfgVal(13, "B:AIRLINER_SEATBELTS_TOGGLE", 0, 2)
+qmovha:CfgVal(13, "B:AIRLINER_SIGNS_SEAT_BELTS", 0, 2)
 -- NO SMOKING
-qmovha:CfgVal(14, "B:AIRLINER_NOSMOKING_TOGGLE", 0, nil)
-qmovha:CfgVal(48, "B:AIRLINER_NOSMOKING_TOGGLE", 1, nil)
-qmovha:CfgVal(15, "B:AIRLINER_NOSMOKING_TOGGLE", 2, nil)
+qmovha:CfgVal(14, "B:AIRLINER_SIGNS_NO_MOBILE", 0, nil)
+qmovha:CfgVal(48, "B:AIRLINER_SIGNS_NO_MOBILE", 1, nil)
+qmovha:CfgVal(15, "B:AIRLINER_SIGNS_NO_MOBILE", 2, nil)
 
 -- DOME
-qmovha:CfgRpn(18, "0 (>B:AIRLINER_STORM_TOGGLE_Set) 1 (>B:AIRLINER_CTL_TOGGLE_Set)")
-qmovha:CfgRpn(46, "1 (>B:AIRLINER_STORM_TOGGLE_Set) 1 (>B:AIRLINER_CTL_TOGGLE_Set)")
-qmovha:CfgRpn(19, "2 (>B:AIRLINER_STORM_TOGGLE_Set) 0 (>B:AIRLINER_CTL_TOGGLE_Set)")
+qmovha:CfgRpn(18, "0 (>B:AIRLINER_LIGHTS_INT_STORM_Set)")
+qmovha:CfgRpn(46, "1 (>B:AIRLINER_LIGHTS_INT_STORM_Set)")
+qmovha:CfgRpn(19, "1 (>B:AIRLINER_LIGHTS_INT_STORM_Set)")
 
 -- ANN LT
-qmovha:CfgVal(20, "B:AIRLINER_ANNLT_TOGGLE", 0, nil)
-qmovha:CfgVal(47, "B:AIRLINER_ANNLT_TOGGLE", 1, nil)
-qmovha:CfgVal(21, "B:AIRLINER_ANNLT_TOGGLE", 2, nil)
+qmovha:CfgVal(20, "B:AIRLINER_LIGHTS_INT_ANN_LT", 0, nil)
+qmovha:CfgVal(47, "B:AIRLINER_LIGHTS_INT_ANN_LT", 1, nil)
+qmovha:CfgVal(21, "B:AIRLINER_LIGHTS_INT_ANN_LT", 2, nil)
 
 -- EMER EXIT LT
-qmovha:CfgVal(22, "B:AIRLINER_EMER_EXIT_TOGGLE", 0, nil)
-qmovha:CfgVal(49, "B:AIRLINER_EMER_EXIT_TOGGLE", 1, nil)
-qmovha:CfgVal(23, "B:AIRLINER_EMER_EXIT_TOGGLE", 2, nil)
+qmovha:CfgVal(22, "B:AIRLINER_SIGNS_EMER_EXIT", 0, nil)
+qmovha:CfgVal(49, "B:AIRLINER_SIGNS_EMER_EXIT", 1, nil)
+qmovha:CfgVal(23, "B:AIRLINER_SIGNS_EMER_EXIT", 2, nil)
 
 -- APU
 ---- start
@@ -115,7 +115,7 @@ qmovha:CfgRpn(38, "(L:INI_CREW_SUPPLY) ! (>L:INI_CREW_SUPPLY)")
 
 -- CALLS ALL
 qmovha:CfgRpn(40, "1 (>L:INI_CALLS_ALL)", "0 (>L:INI_CALLS_ALL)")
-qmovha:CfgVal(40, "B:AIRLINER_CALLS_PURS", 2, 0)
+qmovha:CfgVal(40, "B:AIRLINER_CALLS_ALL", 2, 0)
 
 -- GPWS
 ---- TERR
