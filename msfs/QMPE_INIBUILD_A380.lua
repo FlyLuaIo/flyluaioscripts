@@ -26,15 +26,15 @@ qmpe:CfgRpn(7, "1 (>L:INI_SELECTED_RADIO_CPT)")
 qmpe:CfgRpn(6, "2 (>L:INI_SELECTED_RADIO_CPT)")
 
 -- VHF1 RX
-qmpe:CfgTog(10, "B:AIRLINER_CPT_VHF1_VOL_Button", "(L:INI_RMP1_1_RECEIVE_SEL)")
+qmpe:CfgTog(10, "B:AIRLINER_RMP_VHF1_VOL_1_BUTTON", "(L:INI_RMP1_1_RECEIVE_SEL)")
 -- VHF2 RX
-qmpe:CfgTog(11, "B:AIRLINER_CPT_VHF2_VOL_Button", "(L:INI_RMP1_2_RECEIVE_SEL)")
+qmpe:CfgTog(11, "B:AIRLINER_RMP_VHF2_VOL_1_BUTTON", "(L:INI_RMP1_2_RECEIVE_SEL)")
 -- INT RX
-qmpe:CfgTog(12, "B:AIRLINER_CPT_INT_VOL_Button", "(L:INI_RMP1_8_RECEIVE_SEL)")
+qmpe:CfgTog(12, "B:AIRLINER_RMP_INT_VOL_1_BUTTON", "(L:INI_RMP1_8_RECEIVE_SEL)")
 -- CAB RX
-qmpe:CfgTog(13, "B:AIRLINER_CPT_CAB_VOL_Button", "(L:INI_RMP1_11_RECEIVE_SEL)")
+qmpe:CfgTog(13, "B:AIRLINER_RMP_CAB_VOL_1_BUTTON", "(L:INI_RMP1_11_RECEIVE_SEL)")
 -- PA RX
-qmpe:CfgTog(14, "B:AIRLINER_CPT_PA_VOL_Button", "(L:INI_RMP1_9_RECEIVE_SEL)")
+qmpe:CfgTog(14, "B:AIRLINER_RMP_PA_VOL_1_BUTTON", "(L:INI_RMP1_9_RECEIVE_SEL)")
 -- VHF1 TX
 qmpe:CfgRpn(15, "1 (>L:INI_RMP1_TRANSMIT_CHANNEL)")
 -- VHF2 TX
@@ -44,37 +44,27 @@ qmpe:CfgRpn(25, "8 (>L:INI_RMP1_TRANSMIT_CHANNEL)")
 -- CAB TX
 qmpe:CfgRpn(26, "11 (>L:INI_RMP1_TRANSMIT_CHANNEL)")
 -- PA TX, Airbus PA send is not latched
-qmpe:CfgRpn(27, "1 (>B:AIRLINER_CPT_BTN_PA_Push)", "0 (>B:AIRLINER_CPT_BTN_PA_Release)")
+qmpe:CfgRpn(27, "1 (>B:AIRLINER_RMP_PA_CALL_1_PUSH)", "0 (>B:AIRLINER_RMP_PA_CALL_1_RELEASE)")
 
 -- VHF1 RX volume
-qmpe:CfgFc(16,
-    'uluaSet(uluaFind("B:AIRLINER_CPT_VHF1_VOL"), uluaGet(uluaFind("(L:INI_RMP1_1_VOLUME)"))-5)')
-qmpe:CfgFc(17,
-    'uluaSet(uluaFind("B:AIRLINER_CPT_VHF1_VOL"), uluaGet(uluaFind("(L:INI_RMP1_1_VOLUME)"))+5)')
+qmpe:CfgRpn(16, '1 (>B:AIRLINER_RMP_VHF1_VOL_1_Dec)')
+qmpe:CfgRpn(17, '1 (>B:AIRLINER_RMP_VHF1_VOL_1_Inc)')
 
 -- VHF2 RX volume
-qmpe:CfgFc(18,
-    'uluaSet(uluaFind("B:AIRLINER_CPT_VHF2_VOL"), uluaGet(uluaFind("(L:INI_RMP1_2_VOLUME)"))-5)')
-qmpe:CfgFc(19,
-    'uluaSet(uluaFind("B:AIRLINER_CPT_VHF2_VOL"), uluaGet(uluaFind("(L:INI_RMP1_2_VOLUME)"))+5)')
+qmpe:CfgRpn(18, '1 (>B:AIRLINER_RMP_VHF2_VOL_1_Dec)')
+qmpe:CfgRpn(19, '1 (>B:AIRLINER_RMP_VHF2_VOL_1_Inc)')
 
 -- INT RX volume
-qmpe:CfgFc(20,
-    'uluaSet(uluaFind("B:AIRLINER_CPT_INT_VOL"), uluaGet(uluaFind("(L:INI_RMP1_8_VOLUME)"))-5)')
-qmpe:CfgFc(21,
-    'uluaSet(uluaFind("B:AIRLINER_CPT_INT_VOL"), uluaGet(uluaFind("(L:INI_RMP1_8_VOLUME)"))+5)')
+qmpe:CfgRpn(20, '1 (>B:AIRLINER_RMP_INT_VOL_1_Dec)')
+qmpe:CfgRpn(21, '1 (>B:AIRLINER_RMP_INT_VOL_1_Inc)')
 
 -- CAB RX volume
-qmpe:CfgFc(22,
-    'uluaSet(uluaFind("B:AIRLINER_CPT_CAB_VOL"), uluaGet(uluaFind("(L:INI_RMP1_11_VOLUME)"))-5)')
-qmpe:CfgFc(23,
-    'uluaSet(uluaFind("B:AIRLINER_CPT_CAB_VOL"), uluaGet(uluaFind("(L:INI_RMP1_11_VOLUME)"))+5)')
+qmpe:CfgRpn(22, '1 (>B:AIRLINER_RMP_CAB_VOL_1_Dec)')
+qmpe:CfgRpn(23, '1 (>B:AIRLINER_RMP_CAB_VOL_1_Inc)')
 
 -- PA volume
-qmpe:CfgFc(8,
-    'uluaSet(uluaFind("B:AIRLINER_CPT_PA_VOL"), uluaGet(uluaFind("(L:INI_RMP1_9_VOLUME)"))-5)')
-qmpe:CfgFc(9,
-    'uluaSet(uluaFind("B:AIRLINER_CPT_PA_VOL"), uluaGet(uluaFind("(L:INI_RMP1_9_VOLUME)"))+5)')
+qmpe:CfgRpn(8, '1 (>B:AIRLINER_RMP_PA_VOL_1_Dec)')
+qmpe:CfgRpn(9, '1 (>B:AIRLINER_RMP_PA_VOL_1_Inc)')
 
 -- RMP2
 -- VHF1
@@ -113,8 +103,8 @@ qmpe:CfgRpn(79, "1 (>L:INI_MASTER_WARNING_COMMAND)", "0 (>L:INI_MASTER_WARNING_C
 qmpe:CfgRpn(45, "1 (>L:A32NX_DCDU_ATC_MSG_ACK)")
 
 -- INTEG LT
-qmpe:CfgRpn(46, "1 (>B:AIRLINER_INTEG_LT_KNOB_Dec)")
-qmpe:CfgRpn(47, "1 (>B:AIRLINER_INTEG_LT_KNOB_Inc)")
+qmpe:CfgRpn(46, "1 (>B:AIRLINER_PED_INTEG_LT_Dec)")
+qmpe:CfgRpn(47, "1 (>B:AIRLINER_PED_INTEG_LT_Inc)")
 
 -- ECAM
 -- TO CONFIG
@@ -301,7 +291,7 @@ qmpe:GetMed("(L:INI_AUTOBRAKE_LEVEL) 3 ==")
 qmpe:GetMax("(L:INI_AUTOBRAKE_LEVEL) 4 ==")
 
 
-qmpe:GetBkl("(A:LIGHT POTENTIOMETER:15, Percent)", 0.3) -- 0~100
+qmpe:GetBkl("(L:INI_CKPT_LT_INTEG)", 1) -- 0~100
 
 qmpe:GetLock1("(L:INI_GEAR1_POSITION) 50 ==")
 qmpe:GetLock2("(L:INI_GEAR0_POSITION) 50 ==")

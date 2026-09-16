@@ -293,7 +293,7 @@ qmovha:GetUpled2Eng1ag2('(L:INI_FIRE_TEST) (L:INI_ENG1_AGENT2_SQUIB) or')
 qmovha:GetUpled2Eng2ag1('(L:INI_FIRE_TEST) (L:INI_ENG2_AGENT1_SQUIB) or')
 qmovha:GetUpled2Eng2ag2('(L:INI_FIRE_TEST) (L:INI_ENG3_AGENT2_SQUIB) or')
 
-qmovha:GetBkl('(L:INI_CKPT_LT_INTEG, Percent)', 0.5)                            -- 0~100
+qmovha:GetBkl('(L:INI_CKPT_LT_INTEG)', 1)                            -- 0~100
 
 qmovha:GetBrtDim("(L:INI_ANNLT_SWITCH)", 1)                                     -- 2: DIM 1: BRT 0: test mode
 -- Airbus cockpit on the overhead panel is approximately 18C~30C
