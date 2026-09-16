@@ -86,7 +86,7 @@ qmpe:CfgVal(39, "B:AIRLINER_WX_PWS", 1, nil)
 
 -- XPDR STBY/TA/TARA
 qmpe:CfgRpn(40, "0 (>L:INI_tcas_mode_pedestal)")
-qmpe:CfgRpn(41, "1 (>L:INI_tcas_mode_pedestal)")
+qmpe:CfgRpn(41, "3 (>L:INI_tcas_mode_pedestal)")
 qmpe:CfgRpn(81, "2 (>L:INI_tcas_mode_pedestal)")
 
 -- XPDR STBY/AUTO/ON
@@ -144,8 +144,7 @@ qmpe:CfgVal(62, "B:AIRLINER_PED_ECP_RCL_LAST", 2, 0)
 qmpe:CfgRpn(63, "(L:INI_TERR_ON_CAPT) ! (>L:INI_TERR_ON_CAPT)")
 
 -- XDRD IDENT
--- qmpe:CfgRpn(64, "(>H:A320_Neo_ATC_BTN_IDENT)")
-qmpe:CfgRpn(64, "(>K:XPNDR_IDENT_ON)")
+qmpe:CfgRpn(64, "(>L:INI_TRIGGER_IDENT)")
 
 -- Chrone
 qmpe:CfgRpn(65, "1 (>L:INI_CPT_CHRONO_BUTTON)")
