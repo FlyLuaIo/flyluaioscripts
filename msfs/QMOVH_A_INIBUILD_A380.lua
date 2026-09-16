@@ -162,7 +162,7 @@ qmovha:CfgRpn(62, "(L:INI_GEN_4_SWITCH) ! (>L:INI_GEN_4_SWITCH) (L:INI_GEN_4_SWI
 
 -- EXT PWR
 qmovha:CfgRpn(61,
-    "(L:INI_GPU_AVAIL) 1 == if{ (L:INI_GEN_EXT_A_ONLINE) ! (>L:INI_GEN_EXT_A_ONLINE) } (L:INI_GPU_AVAIL) 1 == if{ (L:INI_GEN_EXT_B_ONLINE) ! (>L:INI_GEN_EXT_B_ONLINE) }")
+    "(L:INI_GPU_AVAIL) 1 == if{ (L:INI_GEN_EXT_1_ONLINE) ! (>L:INI_GEN_EXT_1_ONLINE) (L:INI_GEN_EXT_1_ONLINE) (>L:INI_GEN_EXT_2_ONLINE) (L:INI_GEN_EXT_1_ONLINE) (>L:INI_GEN_EXT_3_ONLINE) (L:INI_GEN_EXT_1_ONLINE) (>L:INI_GEN_EXT_4_ONLINE) }")
 
 -- FUEL
 ---- L1
@@ -229,8 +229,9 @@ qmovha:GetUpled2Bat1Up('(L:INI_BATTERY_1_FAULT)')
 qmovha:GetUpled2Bat1Dn('(L:INI_BATTERY_1_SWITCH) !')
 qmovha:GetUpled2Bat2Up('(L:INI_BATTERY_2_FAULT)')
 qmovha:GetUpled2Bat2Dn('(L:INI_BATTERY_2_SWITCH) !')
-qmovha:GetUpled2ExtUp('(L:INI_GPU_AVAIL) (L:INI_GEN_EXT_A_ONLINE, Bool) ! and')
-qmovha:GetUpled2ExtDn('(L:INI_GEN_EXT_A_ONLINE, Bool)')
+qmovha:GetUpled2ExtUp('(L:INI_GPU_AVAIL) (L:INI_GEN_EXT_1_ONLINE, Bool) ! and')
+qmovha:GetUpled2ExtDn(
+'(L:INI_GEN_EXT_1_ONLINE) (L:INI_GEN_EXT_2_ONLINE) and (L:INI_GEN_EXT_3_ONLINE) and (L:INI_GEN_EXT_4_ONLINE)')
 
 qmovha:GetEng2Up('(L:INI_ENG_ANTI_ICE3_FAULT)')
 qmovha:GetEng2Dn('(L:INI_ENG_ANTI_ICE3_STATE)')
