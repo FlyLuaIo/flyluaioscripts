@@ -73,10 +73,10 @@ qmpe:CfgRpn(34, "1 (>L:INI_SELECTED_RADIO_FO)")
 qmpe:CfgRpn(35, "2 (>L:INI_SELECTED_RADIO_FO)")
 
 -- weather SYS 1/OFF/2
-qmpe:CfgRpn(36, "0 (>L:INI_WX_SYS_SWITCH)")
+qmpe:CfgRpn(36, "1 (>B:AIRLINER_PED_SURV_WXR_SYS_1_Set)")
 -- 80 is middle key
-qmpe:CfgRpn(80, "1 (>L:INI_WX_SYS_SWITCH)")
-qmpe:CfgRpn(37, "2 (>L:INI_WX_SYS_SWITCH)")
+--qmpe:CfgRpn(80, "1 (>B:AIRLINER_PED_SURV_WXR_SYS_1_OFF) 1 (>B:AIRLINER_PED_SURV_WXR_SYS_2_OFF)")
+qmpe:CfgRpn(37, "1 (>B:AIRLINER_PED_SURV_WXR_SYS_2_Set)")
 
 -- weather PWS off/auto
 qmpe:CfgVal(38, "B:AIRLINER_WX_PWS", 0, nil)
