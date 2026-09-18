@@ -159,13 +159,31 @@ qmpe:CfgRpn(71, "1 (>L:INI_TCAS_6_COMMAND)")
 qmpe:CfgRpn(72, "1 (>L:INI_TCAS_7_COMMAND)")
 qmpe:CfgRpn(73, "1 (>L:INI_TCAS_0_COMMAND)")
 qmpe:CfgRpn(74, "1 (>L:INI_TCAS_CLR_COMMAND)")
+
 -- autobrake
 qmpe:CfgRpn(75,
-    "(L:INI_AUTOBRAKE_LEVEL, number) 5 != if{ 5 (>L:INI_AUTOBRAKE_LEVEL, number) } els{ 0 (>L:INI_AUTOBRAKE_LEVEL, number) }")
+    "(L:INI_LG_ABRK_LEVEL, number) 2 != if{ 2 (>L:INI_LG_ABRK_LEVEL, number) } els{ 0 (>L:INI_LG_ABRK_LEVEL, number) }")
 qmpe:CfgRpn(76,
-    "(L:INI_AUTOBRAKE_LEVEL, number) 3 != if{ 3 (>L:INI_AUTOBRAKE_LEVEL, number) } els{ 0 (>L:INI_AUTOBRAKE_LEVEL, number) }")
-qmpe:CfgRpn(77,
-    "(L:INI_AUTOBRAKE_LEVEL, number) 4 != if{ 4 (>L:INI_AUTOBRAKE_LEVEL, number) } els{ 0 (>L:INI_AUTOBRAKE_LEVEL, number) }")
+    "(L:INI_LG_ABRK_LEVEL, number) 3 != if{ 3 (>L:INI_LG_ABRK_LEVEL, number) } els{ 0 (>L:INI_LG_ABRK_LEVEL, number) }")
+local drf_brk_pos = iDataRef:New("(L:INI_LG_ABRK_LEVEL, number)")
+function key_brkmax_long_end_func()
+    uluaWriteCmd('1 (>B:AIRLINER_MIP_LG_ABRK_RTO_Set)')
+end
+
+function key_brkmax_long_func()
+    uluaWriteCmd('0 (>L:INI_LG_ABRK_LEVEL, number)')
+    uluasetTimeout('key_brkmax_long_end_func()', 2000)
+end
+
+function key_brkmax_short_func()
+    if drf_brk_pos:Get() == 5 then
+        uluaWriteCmd('0 (>L:INI_LG_ABRK_LEVEL, number)')
+    else
+        uluaWriteCmd('5 (>L:INI_LG_ABRK_LEVEL, number)')
+    end
+end
+
+qmpe:CfgLongFc(77, 1000, key_brkmax_long_func, key_brkmax_short_func)
 
 ---- RMP1
 -- inner
