@@ -199,11 +199,12 @@ qmovha:CfgRpn(71, "(L:INI_FIRE_ENG_1_AGENT_2_DISCH) ! (>L:INI_FIRE_ENG_1_AGENT_2
 qmovha:CfgRpn(72, "(L:INI_FIRE_ENG_1_AGENT_1_DISCH) ! (>L:INI_FIRE_ENG_1_AGENT_1_DISCH)")
 
 ---- ENG1
-qmovha:CfgRpn(82, "1 (>B:AIRLINER_FIRE_ENG_1_Cover_Set) 1 (>L:INI_FIRE_ENG_1_FIRE_PB)", "0 (>L:INI_FIRE_ENG_1_FIRE_PB)")
+qmovha:CfgRpn(82, "1 (>B:AIRLINER_FIRE_PB_ENG_1_Cover_Set) 1 (>L:INI_FIRE_ENG_1_FIRE_PB)", "0 (>L:INI_FIRE_ENG_1_FIRE_PB)")
 ---- APU
-qmovha:CfgRpn(83, "1 (>B:AIRLINER_FIRE_APU_Cover_Set) 1 (>L:INI_FIRE_APU_FIRE_PB)", "0 (>L:INI_FIRE_APU_FIRE_PB)")
+qmovha:CfgRpn(83, "1 (>B:AIRLINER_FIRE_PB_APU_COVER_Set) 1 (>L:INI_FIRE_APU_FIRE_PB)",
+    "0 (>L:INI_FIRE_APU_FIRE_PB) 0 (>B:AIRLINER_FIRE_PB_APU_COVER_Set)")
 ---- ENG2
-qmovha:CfgRpn(84, "1 (>B:AIRLINER_FIRE_ENG_2_Cover_Set) 1 (>L:INI_FIRE_ENG_2_FIRE_PB)", "0 (>L:INI_FIRE_ENG_2_FIRE_PB)")
+qmovha:CfgRpn(84, "1 (>B:AIRLINER_FIRE_PB_ENG_2_Cover_Set) 1 (>L:INI_FIRE_ENG_2_FIRE_PB)", "0 (>L:INI_FIRE_ENG_2_FIRE_PB)")
 
 ---- ENG1 Test
 qmovha:CfgRpn(85, "1 (>B:AIRLINER_FIRE_TEST_PUSH)", "1 (>B:AIRLINER_FIRE_TEST_RELEASE)")
@@ -231,7 +232,7 @@ qmovha:GetUpled2Bat2Up('(L:INI_BATTERY_2_FAULT)')
 qmovha:GetUpled2Bat2Dn('(L:INI_BATTERY_2_SWITCH) !')
 qmovha:GetUpled2ExtUp('(L:INI_GPU_AVAIL) (L:INI_GEN_EXT_1_ONLINE, Bool) ! and')
 qmovha:GetUpled2ExtDn(
-'(L:INI_GEN_EXT_1_ONLINE) (L:INI_GEN_EXT_2_ONLINE) and (L:INI_GEN_EXT_3_ONLINE) and (L:INI_GEN_EXT_4_ONLINE)')
+    '(L:INI_GEN_EXT_1_ONLINE) (L:INI_GEN_EXT_2_ONLINE) and (L:INI_GEN_EXT_3_ONLINE) and (L:INI_GEN_EXT_4_ONLINE)')
 
 qmovha:GetEng2Up('(L:INI_ENG_ANTI_ICE3_FAULT)')
 qmovha:GetEng2Dn('(L:INI_ENG_ANTI_ICE3_STATE)')
@@ -293,7 +294,7 @@ qmovha:GetUpled2Eng1ag2('(L:INI_FIRE_TEST) (L:INI_ENG1_AGENT2_SQUIB) or')
 qmovha:GetUpled2Eng2ag1('(L:INI_FIRE_TEST) (L:INI_ENG2_AGENT1_SQUIB) or')
 qmovha:GetUpled2Eng2ag2('(L:INI_FIRE_TEST) (L:INI_ENG3_AGENT2_SQUIB) or')
 
-qmovha:GetBkl('(L:INI_CKPT_LT_INTEG)', 1)                            -- 0~100
+qmovha:GetBkl('(L:INI_CKPT_LT_INTEG)', 1)                                       -- 0~100
 
 qmovha:GetBrtDim("(L:INI_ANNLT_SWITCH)", 1)                                     -- 2: DIM 1: BRT 0: test mode
 -- Airbus cockpit on the overhead panel is approximately 18C~30C
