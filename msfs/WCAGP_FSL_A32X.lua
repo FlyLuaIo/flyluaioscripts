@@ -28,13 +28,19 @@ wcagp:CfgRpn(8, '75135 (>K:ROTOR_BRAKE)', '75135 2 + (>K:ROTOR_BRAKE)')
 wcagp:CfgRpn(11, '75139 (>K:ROTOR_BRAKE)', '75139 2 + (>K:ROTOR_BRAKE)')
 -- DATE
 wcagp:CfgRpn(14, '75143 (>K:ROTOR_BRAKE)', '75143 2 + (>K:ROTOR_BRAKE)')
+-- UTC selector GPS / INT / SET
+local pswh15 = QmdevPosSwitchInit("(L:VC_MIP_CHRONO_GMT_SEL_Switch, number)", 10, "75146 2 + (>K:ROTOR_BRAKE)",
+	"75146 1 + (>K:ROTOR_BRAKE)", 500)
+wcagp:CfgPSw(16, pswh15, 0)
+wcagp:CfgPSw(17, pswh15, 10)
+wcagp:CfgPSw(18, pswh15, 20)
 
-wcagp:CfgRpn(16, '2 (>L:INI_CLOCK_GPS_STATE)')
-wcagp:CfgRpn(17, '1 (>L:INI_CLOCK_GPS_STATE)')
-wcagp:CfgRpn(18, '0 (>L:INI_CLOCK_GPS_STATE)')
+local pswhrun = QmdevPosSwitchInit("(L:VC_MIP_CHRONO_ELAPS_SEL_Switch, number)", 10, "75150 2 + (>K:ROTOR_BRAKE)",
+	"75150 1 + (>K:ROTOR_BRAKE)", 500)
+wcagp:CfgPSw(19, pswhrun, 0)
+wcagp:CfgPSw(20, pswhrun, 10)
+wcagp:CfgPSw(21, pswhrun, 20)
 
-wcagp:CfgRpn(19, '75150 1 + (>K:ROTOR_BRAKE)', '75151 1 + (>K:ROTOR_BRAKE)')
-wcagp:CfgRpn(21, '75151 1 + (>K:ROTOR_BRAKE)', '75151 2 + (>K:ROTOR_BRAKE)')
 
 
 -- Terrain FO:75092
