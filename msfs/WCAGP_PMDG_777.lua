@@ -1,0 +1,164 @@
+-- *****************************************************************
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-16
+-- Modify by Carson Lou <carsonlu@sohu.com> 2026-05-09
+-- *****************************************************************
+
+if ilua_require_pmdg_777() then return end
+
+-- Do not remove below lines: hardware detection
+local wcagp = com.sim.qm.Wcagp.Open()
+if not wcagp then return end
+-- Do not remove above lines: hardware detection
+
+uluaLog('WinCtrl AGP for PMDG777')
+
+--================================ Output key binding
+--
+--================================ Output key binding
+-- BRK FAN as FLAP OVRD
+wcagp:CfgRpn(0,
+	'(L:switch_302_a, number) 100 != if{ 30201 (>K:ROTOR_BRAKE) } els{ 30203 (>K:ROTOR_BRAKE) } 30100 1 + (>K:ROTOR_BRAKE)',
+	'30100 1 + (>K:ROTOR_BRAKE) (L:switch_302_a, number) 0 != if{ 30201 (>K:ROTOR_BRAKE) }')
+-- autobrake
+local dr_autobrake = iDataRef:New('(L:switch_292_a, number)')
+local pswh_autobrake = QmdevPosSwitchInit("(L:switch_292_a, number)", 10, "29207 (>K:ROTOR_BRAKE)",
+	"29208 (>K:ROTOR_BRAKE)", 100)
+
+function autobrake_low()
+	if dr_autobrake:Get() == 10 then
+		QmdevPosSwitchSet(pswh_autobrake, 30)
+	else
+		QmdevPosSwitchSet(pswh_autobrake, 10)
+	end
+end
+
+function autobrake_med()
+	if dr_autobrake:Get() == 10 then
+		QmdevPosSwitchSet(pswh_autobrake, 40)
+	else
+		QmdevPosSwitchSet(pswh_autobrake, 10)
+	end
+end
+
+wcagp:CfgFc(2, 'autobrake_low()')
+wcagp:CfgFc(3, 'autobrake_med()')
+
+function key_max_long_func()
+	if dr_autobrake:Get() == 10 then
+		QmdevPosSwitchSet(pswh_autobrake, 0)
+	else
+		QmdevPosSwitchSet(pswh_autobrake, 10)
+	end
+end
+
+function key_max_short_func()
+	if dr_autobrake:Get() == 10 then
+		QmdevPosSwitchSet(pswh_autobrake, 70)
+	else
+		QmdevPosSwitchSet(pswh_autobrake, 10)
+	end
+end
+
+wcagp:CfgLongFc(4, 1000, key_max_long_func, key_max_short_func)
+-- SKID
+wcagp:CfgRpn(5, '29900 1 + (>K:ROTOR_BRAKE) (L:switch_300_a, number) 0 != if{ 30001 (>K:ROTOR_BRAKE) }',
+	'(L:switch_300_a, number) 100 != if{ 30001 (>K:ROTOR_BRAKE) } els{ 30003 (>K:ROTOR_BRAKE) } 29900 1 + (>K:ROTOR_BRAKE)')
+
+--Chrono
+wcagp:CfgRpn(8, "314102 (>K:ROTOR_BRAKE)")
+wcagp:CfgRpn(11, "17101 (>K:ROTOR_BRAKE)")
+--ET
+wcagp:CfgRpn(19, "17307 (>K:ROTOR_BRAKE)", "17308 (>K:ROTOR_BRAKE)")
+wcagp:CfgRpn(21, "17308 (>K:ROTOR_BRAKE)")
+
+-- TERR
+wcagp:CfgRpn(22, "20101 (>K:ROTOR_BRAKE)", "20104 (>K:ROTOR_BRAKE)")
+
+wcagp:CfgRpn(23, '(>K:GEAR_UP)', '(>K:GEAR_DOWN)')
+
+
+--====backlight
+wcagp:GetBkl('(L:BL_MCP, number) 100 * near', 2)
+wcagp:GetDigiBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 2) -- 0~100
+wcagp:GetLedBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 2)  -- 0~100
+--================================ Input LED/LCD ===
+wcagp:GetUlockL("(L:MSATR_GEAR_LEFT_UNLK_LT)")
+wcagp:GetUlockN("(L:MSATR_GEAR_NOSE_UNLK_LT)")
+wcagp:GetUlockR("(L:MSATR_GEAR_RIGHT_UNLK_LT)")
+wcagp:GetBrakeHot('cpuwolf/flyluaio/WwAgp/condbtn[1]')
+wcagp:GetLockL("(A:GEAR LEFT POSITION, percent over 100)")
+wcagp:GetLockN("(A:GEAR CENTER POSITION, percent over 100)")
+wcagp:GetLockR("(A:GEAR RIGHT POSITION, percent over 100)")
+wcagp:GetBrakeOn('(L:switch_301_a)')
+wcagp:GetLowD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
+wcagp:GetMedD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
+wcagp:GetMaxD('cpuwolf/flyluaio/WwAgp/condbtn[1]')
+wcagp:GetLow('(L:switch_292_a) 30 ==')
+wcagp:GetMed('(L:switch_292_a) 40 ==')
+wcagp:GetMax('(L:switch_292_a) 70 == (L:switch_292_a) 0 == or')
+wcagp:GetTerr('(L:A32NX_EFIS_TERR_L_ACTIVE)')
+wcagp:GetLever('cpuwolf/flyluaio/WwAgp/condbtn[1]')
+
+
+
+--====LCD
+local dr_chrono = iDataRef:New('(E:SIMULATION TIME, second)')
+
+local dr_utc_year = iDataRef:New('(E:ZULU YEAR, number)')
+local dr_utc_mon = iDataRef:New('(E:ZULU MONTH OF YEAR, number)')
+local dr_utc_day = iDataRef:New('(E:ZULU DAY OF MONTH, number)')
+
+local dr_utc_sec = iDataRef:New('(E:ZULU TIME, second)')
+
+local dr_et_sec = iDataRef:New('(E:SIMULATION TIME, second)')
+
+local dr_utc_is_date = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[14]')
+
+local gChrono = ""
+local gUtc = ""
+local elapsed_time = ""
+
+wcagp:FakeChrInit()
+wcagp:FakeEtInit()
+function Wwagp_GA_LCD_Loop()
+	--Chrone
+	gChrono = wcagp:FakeChrShow()
+
+	-- UTC time
+	if dr_utc_is_date:ChangedUpdate() then
+		dr_utc_year:Invalid()
+		dr_utc_mon:Invalid()
+		dr_utc_day:Invalid()
+		dr_utc_sec:Invalid()
+	end
+	if dr_utc_is_date:GetOld() > 0 then
+		if dr_utc_year:ChangedUpdate() or dr_utc_mon:ChangedUpdate() or dr_utc_day:ChangedUpdate() then
+			local mm = dr_utc_mon:GetOld() % 12
+			local yy = dr_utc_year:GetOld() % 100
+			gUtc = string.format("%02d:%02d:%02d", mm, dr_utc_day:GetOld(), yy)
+		end
+	else
+		if dr_utc_sec:ChangedUpdate() then
+			local totalSeconds = math.floor(dr_utc_sec:GetOld())
+			local h = math.floor(totalSeconds / 3600)
+			local m = math.floor((totalSeconds % 3600) / 60)
+			local s = totalSeconds % 60
+			gUtc = string.format("%02d:%02d:%02d", h, m, s)
+		end
+	end
+
+	-- ET
+	elapsed_time = wcagp:FakeEtShow()
+
+	-- Write to hardware
+	wcagp:setLcdStr(gChrono, gUtc, elapsed_time)
+end
+
+GlobalFrameLoopManager:add(function()
+	wcagp:SetBkl()
+	wcagp:SetDigiBkl()
+	wcagp:SetLedBkl()
+	Wwagp_GA_LCD_Loop()
+	-- update LEDs
+	wcagp:Setleds()
+end)
