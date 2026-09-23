@@ -285,10 +285,10 @@ qmpe:GetEFuel("(L:INI_ECAM_ACTIVE_PAGE) 8 ==")
 qmpe:GetEApu("(L:INI_ECAM_ACTIVE_PAGE) 9 ==")
 qmpe:GetECond("(L:INI_ECAM_ACTIVE_PAGE) 6 ==")
 qmpe:GetEDoor("(L:INI_ECAM_ACTIVE_PAGE) 11 ==")
-qmpe:GetEWheel("(L:INI_ECAM_ACTIVE_PAGE) 12 ==")
+qmpe:GetEWheel("(L:INI_ECAM_ACTIVE_PAGE) 12 == (L:INI_ECAM_LIGHT) and")
 qmpe:GetEFctl("(L:INI_ECAM_ACTIVE_PAGE) 10 ==")
 
-qmpe:GetEClr("(L:INI_ATLEASTONEMASTERCAUTION, Bool)")
+qmpe:GetEClr("(L:INI_ECAM_CLR_LIGHT, Bool)")
 qmpe:GetESts("(L:INI_ECAM_ACTIVE_PAGE) 14 ==")
 
 
