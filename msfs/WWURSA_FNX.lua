@@ -42,10 +42,9 @@ end
 
 function key_trim_l_release_func()
 	uluaWriteCmd("1 (>L:S_FC_RUDDER_TRIM)")
-	if key_trim_l_timeout_handle ~= nil then
-		uluaclearTimeout(key_trim_l_timeout_handle)
-		key_trim_l_timeout_handle = nil
-	end
+
+	uluaclearTimeout(key_trim_l_timeout_handle)
+	key_trim_l_timeout_handle = nil
 end
 
 wwursa:CfgFc(25, 'key_trim_l_long_func()', 'key_trim_l_release_func()')
@@ -60,10 +59,9 @@ end
 
 function key_trim_r_release_func()
 	uluaWriteCmd("1 (>L:S_FC_RUDDER_TRIM)")
-	if key_trim_r_timeout_handle ~= nil then
-		uluaclearTimeout(key_trim_r_timeout_handle)
-		key_trim_r_timeout_handle = nil
-	end
+
+	uluaclearTimeout(key_trim_r_timeout_handle)
+	key_trim_r_timeout_handle = nil
 end
 
 wwursa:CfgFc(27, 'key_trim_r_long_func()', 'key_trim_r_release_func()')
