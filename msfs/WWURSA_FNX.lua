@@ -34,17 +34,10 @@ wwursa:CfgRpn(10,
 wwursa:CfgRpn(24, '1 (>L:S_FC_RUDDER_TRIM_RESET)', '0 (>L:S_FC_RUDDER_TRIM_RESET)')
 -- rocker: press direction, release center
 local key_trim_l_timeout_handle = nil
+
 function key_trim_l_long_func()
 	uluaWriteCmd("0 (>L:S_FC_RUDDER_TRIM)")
-	key_trim_l_timeout_handle = uluasetTimeout("key_trim_l_long_func()", 20)
-end
-
-function key_trim_l_short_func()
-	if key_trim_l_timeout_handle ~= nil then
-		uluaclearTimeout(key_trim_l_timeout_handle)
-		key_trim_l_timeout_handle = nil
-	end
-	uluaWriteCmd("0 (>L:S_FC_RUDDER_TRIM)")
+	key_trim_l_timeout_handle = uluasetTimeout("key_trim_l_long_func()", 50)
 end
 
 function key_trim_l_release_func()
@@ -55,21 +48,14 @@ function key_trim_l_release_func()
 	end
 end
 
-wwursa:CfgLongFc(25, 100, key_trim_l_long_func, key_trim_l_short_func, nil, key_trim_l_release_func)
+wwursa:CfgFc(25, 'key_trim_l_long_func()', 'key_trim_l_release_func()')
 
 --trim right
 local key_trim_r_timeout_handle = nil
+
 function key_trim_r_long_func()
 	uluaWriteCmd("2 (>L:S_FC_RUDDER_TRIM)")
-	key_trim_r_timeout_handle = uluasetTimeout("key_trim_r_long_func()", 20)
-end
-
-function key_trim_r_short_func()
-	if key_trim_r_timeout_handle ~= nil then
-		uluaclearTimeout(key_trim_r_timeout_handle)
-		key_trim_r_timeout_handle = nil
-	end
-	uluaWriteCmd("2 (>L:S_FC_RUDDER_TRIM)")
+	key_trim_r_timeout_handle = uluasetTimeout("key_trim_r_long_func()", 50)
 end
 
 function key_trim_r_release_func()
@@ -80,7 +66,7 @@ function key_trim_r_release_func()
 	end
 end
 
-wwursa:CfgLongFc(27, 100, key_trim_r_long_func, key_trim_r_short_func, nil, key_trim_r_release_func)
+wwursa:CfgFc(27, 'key_trim_r_long_func()', 'key_trim_r_release_func()')
 
 
 -- Parking brake OFF / ON (Buttons 28..29 → bits 28..29)
