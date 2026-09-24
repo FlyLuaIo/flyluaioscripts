@@ -52,8 +52,8 @@ wwagp:CfgRpn(23, '(>K:GEAR_UP)', '(>K:GEAR_DOWN)')
 
 --====backlight
 wwagp:GetBkl('(L:TLS_INT_LT_MCDU1_INTEG_LT_LEVEL)', 100) --0~1
-wwagp:GetDigiBkl("(L:TLS_FCU_AVAILABLE, Bool)", 120) -- 0~1
-wwagp:GetLedBkl("(L:TLS_FCU_AVAILABLE, Bool)", 120)  -- 0~1
+wwagp:GetDigiBkl("(L:TLS_FCU_AVAILABLE, Bool)", 120)     -- 0~1
+wwagp:GetLedBkl("(L:TLS_FCU_AVAILABLE, Bool)", 120)      -- 0~1
 --================================ Input LED/LCD ===
 wwagp:GetUlockL("(L:AB_MPL_GEAR_UNLOCK_LIGHT_L)")
 wwagp:GetUlockN("(L:AB_MPL_GEAR_UNLOCK_LIGHT_C) (L:AB_MPL_GEAR_UNLOCK_LIGHT_C2) or")
@@ -90,17 +90,12 @@ local dr_utc_is_date = iDataRef:New('(L:AB_MPL_CLOCK_DATE)')
 local gChrono = ""
 local gUtc = ""
 local elapsed_time = ""
+
+wwagp:FakeChrInit(2)
+wwagp:FakeEtInit()
 function Wwagp_GA_LCD_Loop()
 	--Chrone
-	if dr_chrono:ChangedUpdate() then
-		local chr = dr_chrono:GetOld()
-		if math.floor(chr) == 0 then
-			gChrono = "     "
-		else
-			gChrono = wwagp:formatChronoStr(chr)
-			gChrono = "CPU"
-		end
-	end
+	gChrono = wwagp:FakeChrShow()
 
 	-- UTC time
 	if dr_utc_is_date:ChangedUpdate() then
@@ -126,13 +121,7 @@ function Wwagp_GA_LCD_Loop()
 	end
 
 	-- ET
-	if dr_et_sec:ChangedUpdate() then
-		local totalSeconds = math.floor(dr_et_sec:GetOld())
-		local h = math.floor(totalSeconds / 3600)
-		local m = math.floor((totalSeconds % 3600) / 60)
-		elapsed_time = string.format("%02d:%02d", h, m)
-	end
-	elapsed_time = "UULF"
+	elapsed_time = wwagp:FakeEtShow()
 
 	-- Write to hardware
 	wwagp:setLcdStr(gChrono, gUtc, elapsed_time)
