@@ -32,45 +32,61 @@ wwursa:CfgRpn(10,
 	'(L:S_FC_THR_INST_DISCONNECT2) s0 2 % 0 != if{ l0 ++ (>L:S_FC_THR_INST_DISCONNECT2) }')
 -- Rudder trim RST / L / R (Buttons 24/25/27 → bits 24/25/27)
 wwursa:CfgRpn(24, '1 (>L:S_FC_RUDDER_TRIM_RESET)', '0 (>L:S_FC_RUDDER_TRIM_RESET)')
--- rocker: press direction, release center
-local key_trim_l_timeout_handle = nil
+-- rocker: press = trim rate, release = center.
+-- L:S_FC_RUDDER_TRIM is a pulse input (one write = one trim step), so a held
+-- direction has to keep writing. No timeout handle is kept on purpose:
+--   * uluaclearTimeout(nil) raises a Lua error, so a release must never need a handle
+--   * clearing a handle from inside its own callback releases a time block that is
+--     already being released, and every release of a time block leaks it in C++
+--   * a stale tick (key-up lost on unplug/re-enumerate, script reload, keymap
+--     re-read) sees held == false and exits instead of running forever
+local ROCKER_REPEAT_MS = 50
+local ROCKER_MAX_TICKS = 200 -- hard stop (~10s): lost key-up must not run the trim away
+local ROCKER_NEUTRAL = '1 (>L:S_FC_RUDDER_TRIM)'
 
-function key_trim_l_long_func()
-	uluaWriteCmd("0 (>L:S_FC_RUDDER_TRIM)")
-	if key_trim_l_timeout_handle ~= nil then
-		uluaclearTimeout(key_trim_l_timeout_handle)
+local rocker = {
+	[25] = { cmd = '0 (>L:S_FC_RUDDER_TRIM)', held = false, armed = false, ticks = 0 },
+	[27] = { cmd = '2 (>L:S_FC_RUDDER_TRIM)', held = false, armed = false, ticks = 0 },
+}
+
+function rocker_tick(key)
+	local s = rocker[key]
+	if not s then return end
+	s.armed = false -- this chain ends here, re-armed below only if still held
+	if not s.held then return end
+	if s.ticks >= ROCKER_MAX_TICKS then
+		s.held = false
+		uluaWriteCmd(ROCKER_NEUTRAL)
+		return
 	end
-	key_trim_l_timeout_handle = uluasetTimeout("key_trim_l_long_func()", 50)
+	s.ticks = s.ticks + 1
+	uluaWriteCmd(s.cmd)
+	s.armed = true
+	uluasetTimeout("rocker_tick(" .. key .. ")", ROCKER_REPEAT_MS)
 end
 
-function key_trim_l_release_func()
-	uluaWriteCmd("1 (>L:S_FC_RUDDER_TRIM)")
-
-	uluaclearTimeout(key_trim_l_timeout_handle)
-	key_trim_l_timeout_handle = nil
-end
-
-wwursa:CfgFc(25, 'key_trim_l_long_func()', 'key_trim_l_release_func()')
-
---trim right
-local key_trim_r_timeout_handle = nil
-
-function key_trim_r_long_func()
-	uluaWriteCmd("2 (>L:S_FC_RUDDER_TRIM)")
-	if key_trim_r_timeout_handle ~= nil then
-		uluaclearTimeout(key_trim_r_timeout_handle)
+function rocker_press(key)
+	local s = rocker[key]
+	if not s then return end
+	s.held = true
+	s.ticks = 0
+	uluaWriteCmd(s.cmd)
+	if not s.armed then -- duplicate press (keymap re-read while held) must not add a chain
+		s.armed = true
+		uluasetTimeout("rocker_tick(" .. key .. ")", ROCKER_REPEAT_MS)
 	end
-	key_trim_r_timeout_handle = uluasetTimeout("key_trim_r_long_func()", 50)
 end
 
-function key_trim_r_release_func()
-	uluaWriteCmd("1 (>L:S_FC_RUDDER_TRIM)")
-
-	uluaclearTimeout(key_trim_r_timeout_handle)
-	key_trim_r_timeout_handle = nil
+function rocker_release(key)
+	local s = rocker[key]
+	if not s then return end
+	s.held = false -- the pending tick stops itself, nothing to clear
+	s.ticks = 0
+	uluaWriteCmd(ROCKER_NEUTRAL)
 end
 
-wwursa:CfgFc(27, 'key_trim_r_long_func()', 'key_trim_r_release_func()')
+wwursa:CfgFc(25, 'rocker_press(25)', 'rocker_release(25)')
+wwursa:CfgFc(27, 'rocker_press(27)', 'rocker_release(27)')
 
 
 -- Parking brake OFF / ON (Buttons 28..29 → bits 28..29)
