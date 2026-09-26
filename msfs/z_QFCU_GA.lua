@@ -46,19 +46,19 @@ qfcu:CfgRpn(2, "(>K:FLIGHT_LEVEL_CHANGE) (A:AIRSPEED INDICATED, knots) (>K:AP_SP
 qfcu:CfgRpn(3, "(>K:AUTOPILOT_DISENGAGE_TOGGLE)") -- SPD PULL：断开/接管 AP
 
 -- HDG
-qfcu:CfgRpn(4, "1 (>K:HEADING_BUG_DEC)") -- HDG DEC
-qfcu:CfgRpn(5, "1 (>K:HEADING_BUG_INC)") -- HDG INC
+qfcu:CfgRpn(4, "1 (>K:HEADING_BUG_DEC)")                              -- HDG DEC
+qfcu:CfgRpn(5, "1 (>K:HEADING_BUG_INC)")                              -- HDG INC
 qfcu:CfgRpn(6, "(A:HEADING INDICATOR, degrees) (>K:HEADING_BUG_SET)") -- HDG PUSH：同步机头
-qfcu:CfgRpn(7, "(>K:AP_PANEL_HEADING_HOLD)")                        -- HDG PULL：HDG 保持
+qfcu:CfgRpn(7, "(>K:AP_PANEL_HEADING_HOLD)")                          -- HDG PULL：HDG 保持
 
 -- AP 模式
-qfcu:CfgRpn(8, "(>K:AP_NAV1_HOLD)")                     -- LOC
-qfcu:CfgRpn(9, "(>K:AP_MASTER)")                        -- AP2
-qfcu:CfgRpn(10, "(>K:AP_MASTER)")                       -- AP1
-qfcu:CfgRpn(11, "(>K:AUTOPILOT_AUTOTHROTTLE_TOGGLE)")   -- A/THR
-qfcu:CfgRpn(12, "(>K:AP_BC_HOLD)")                      -- EXPED：GA 无加速爬升，改为反向进近 BC
-qfcu:CfgRpn(13, "(>K:AP_APR_HOLD)")                     -- APPR
-qfcu:CfgRpn(14, "(>K:YAW_DAMPER_TOGGLE)")               -- METRIC ALT：GA 无米制，改为偏航阻尼 YD
+qfcu:CfgRpn(8, "(>K:AP_NAV1_HOLD)")                   -- LOC
+qfcu:CfgRpn(9, "(>K:AP_MASTER)")                      -- AP2
+qfcu:CfgRpn(10, "(>K:AP_MASTER)")                     -- AP1
+qfcu:CfgRpn(11, "(>K:AUTOPILOT_AUTOTHROTTLE_TOGGLE)") -- A/THR
+qfcu:CfgRpn(12, "(>K:AP_BC_HOLD)")                    -- EXPED：GA 无加速爬升，改为反向进近 BC
+qfcu:CfgRpn(13, "(>K:AP_APR_HOLD)")                   -- APPR
+qfcu:CfgRpn(14, "(>K:YAW_DAMPER_TOGGLE)")             -- METRIC ALT：GA 无米制，改为偏航阻尼 YD
 
 -- ALT
 -- 15 切换旋钮步长（100 / 1000），16/17 按步长增减
@@ -79,40 +79,40 @@ qfcu:CfgRpn(22, "(>K:AP_PANEL_VS_HOLD)") -- VS PUSH：VS 保持
 qfcu:CfgRpn(23, "(A:VERTICAL SPEED, feet per minute) near (>K:AP_VS_VAR_SET_ENGLISH)")
 
 -- 54/55：GA 无 TRK/FPA 与 MACH 速度选择，降级为 FD / SPD-MACH 显示切换
-qfcu:CfgRpn(54, "(>K:TOGGLE_FLIGHT_DIRECTOR)")              -- HDG/TRK VS/FPV → FD
-qfcu:CfgRpn(55, "(>K:AP_MANAGED_SPEED_IN_MACH_TOGGLE)")     -- SPD/MACH
+qfcu:CfgRpn(54, "(>K:TOGGLE_FLIGHT_DIRECTOR)")          -- HDG/TRK VS/FPV → FD
+qfcu:CfgRpn(55, "(>K:AP_MANAGED_SPEED_IN_MACH_TOGGLE)") -- SPD/MACH
 
 -- ---- 左 EFIS 半区：G1000 PFD ----
 -- 24-28 ND 模式键 → PFD 软键 1-5
-qfcu:CfgRpn(24, "(>H:AS1000_PFD_SOFTKEYS_1)") -- ILS MAP MODE
-qfcu:CfgRpn(25, "(>H:AS1000_PFD_SOFTKEYS_2)") -- VOR MAP MODE
-qfcu:CfgRpn(26, "(>H:AS1000_PFD_SOFTKEYS_3)") -- NAV MAP MODE
-qfcu:CfgRpn(27, "(>H:AS1000_PFD_SOFTKEYS_4)") -- ARC MAP MODE
-qfcu:CfgRpn(28, "(>H:AS1000_PFD_SOFTKEYS_5)") -- PLN MAP MODE
+qfcu:CfgRpn(24, "(>H:AS1000_PFD_SOFTKEYS_1)")     -- ILS MAP MODE
+qfcu:CfgRpn(25, "(>H:AS1000_PFD_SOFTKEYS_2)")     -- VOR MAP MODE
+qfcu:CfgRpn(26, "(>H:AS1000_PFD_SOFTKEYS_3)")     -- NAV MAP MODE
+qfcu:CfgRpn(27, "(>H:AS1000_PFD_SOFTKEYS_4)")     -- ARC MAP MODE
+qfcu:CfgRpn(28, "(>H:AS1000_PFD_SOFTKEYS_5)")     -- PLN MAP MODE
 -- 29-34 距离/光标
-qfcu:CfgRpn(29, "(>H:AS1000_PFD_RANGE_DEC)")   -- RANGE 10
-qfcu:CfgRpn(30, "(>H:AS1000_PFD_RANGE_INC)")   -- RANGE 20
-qfcu:CfgRpn(31, "(>H:AS1000_PFD_JOYSTICK_UP)") -- RANGE 40
-qfcu:CfgRpn(32, "(>H:AS1000_PFD_JOYSTICK_DOWN)") -- RANGE 80
-qfcu:CfgRpn(33, "(>H:AS1000_PFD_JOYSTICK_LEFT)") -- RANGE 160
+qfcu:CfgRpn(29, "(>H:AS1000_PFD_RANGE_DEC)")      -- RANGE 10
+qfcu:CfgRpn(30, "(>H:AS1000_PFD_RANGE_INC)")      -- RANGE 20
+qfcu:CfgRpn(31, "(>H:AS1000_PFD_JOYSTICK_UP)")    -- RANGE 40
+qfcu:CfgRpn(32, "(>H:AS1000_PFD_JOYSTICK_DOWN)")  -- RANGE 80
+qfcu:CfgRpn(33, "(>H:AS1000_PFD_JOYSTICK_LEFT)")  -- RANGE 160
 qfcu:CfgRpn(34, "(>H:AS1000_PFD_JOYSTICK_RIGHT)") -- RANGE 320
 -- 35-41 导航点过滤键 → PFD 软键 6-12
-qfcu:CfgRpn(35, "(>H:AS1000_PFD_SOFTKEYS_6)")  -- LEFT CSTR
-qfcu:CfgRpn(36, "(>H:AS1000_PFD_SOFTKEYS_7)")  -- LEFT WPT
-qfcu:CfgRpn(37, "(>H:AS1000_PFD_SOFTKEYS_8)")  -- LEFT VOR D
-qfcu:CfgRpn(38, "(>H:AS1000_PFD_SOFTKEYS_9)")  -- LEFT NDB
-qfcu:CfgRpn(39, "(>H:AS1000_PFD_SOFTKEYS_10)") -- LEFT ARPT
-qfcu:CfgRpn(40, "(>H:AS1000_PFD_SOFTKEYS_11)") -- LEFT FD
-qfcu:CfgRpn(41, "(>H:AS1000_PFD_SOFTKEYS_12)") -- LEFT ILS
+qfcu:CfgRpn(35, "(>H:AS1000_PFD_SOFTKEYS_6)")     -- LEFT CSTR
+qfcu:CfgRpn(36, "(>H:AS1000_PFD_SOFTKEYS_7)")     -- LEFT WPT
+qfcu:CfgRpn(37, "(>H:AS1000_PFD_SOFTKEYS_8)")     -- LEFT VOR D
+qfcu:CfgRpn(38, "(>H:AS1000_PFD_SOFTKEYS_9)")     -- LEFT NDB
+qfcu:CfgRpn(39, "(>H:AS1000_PFD_SOFTKEYS_10)")    -- LEFT ARPT
+qfcu:CfgRpn(40, "(>H:AS1000_PFD_SOFTKEYS_11)")    -- LEFT FD
+qfcu:CfgRpn(41, "(>H:AS1000_PFD_SOFTKEYS_12)")    -- LEFT ILS
 -- 42-45 ADF/VOR 选择键 → PFD 功能键
-qfcu:CfgRpn(42, "(>H:AS1000_PFD_DIRECTTO)")   -- ADF 1
-qfcu:CfgRpn(43, "(>H:AS1000_PFD_FPL_Push)")   -- VOR 1
-qfcu:CfgRpn(44, "(>H:AS1000_PFD_PROC_Push)")  -- ADF 2
-qfcu:CfgRpn(45, "(>H:AS1000_PFD_MENU_Push)")  -- VOR 2
+qfcu:CfgRpn(42, "(>H:AS1000_PFD_DIRECTTO)")       -- ADF 1
+qfcu:CfgRpn(43, "(>H:AS1000_PFD_FPL_Push)")       -- VOR 1
+qfcu:CfgRpn(44, "(>H:AS1000_PFD_PROC_Push)")      -- ADF 2
+qfcu:CfgRpn(45, "(>H:AS1000_PFD_MENU_Push)")      -- VOR 2
 -- 46-50 左气压表
-qfcu:CfgRpn(46, "(>H:AS1000_PFD_BARO_DEC)") -- Left Baro DEC
-qfcu:CfgRpn(47, "(>H:AS1000_PFD_BARO_INC)") -- Left Baro INC
-qfcu:CfgRpn(48, "(>K:BAROMETRIC_STD_PRESSURE)") -- Left Baro PUSH：STD 29.92
+qfcu:CfgRpn(46, "(>H:AS1000_PFD_BARO_DEC)")       -- Left Baro DEC
+qfcu:CfgRpn(47, "(>H:AS1000_PFD_BARO_INC)")       -- Left Baro INC
+qfcu:CfgRpn(48, "(>K:BAROMETRIC_STD_PRESSURE)")   -- Left Baro PUSH：STD 29.92
 -- Left Baro PULL：回到真实 QNH（同源的 A:KOHLSMAN SETTING 系列，mbars*16 与仓内 FBW profile 一致）
 qfcu:CfgRpn(49, "(A:SEA LEVEL PRESSURE, millibars) 16 * (>K:KOHLSMAN_SET)")
 -- Left Baro INHG/HPA：切换气压单位（Asobo G1000 变量）
@@ -120,36 +120,36 @@ qfcu:CfgRpn(50, "(L:XMLVAR_Baro_Selector_HPA_1, bool) ! (>L:XMLVAR_Baro_Selector
 
 -- ---- 右 EFIS 半区：G1000 MFD ----
 -- 56-60 ND 模式键 → MFD 软键 1-5
-qfcu:CfgRpn(56, "(>H:AS1000_MFD_SOFTKEYS_1)") -- ILS MAP MODE
-qfcu:CfgRpn(57, "(>H:AS1000_MFD_SOFTKEYS_2)") -- VOR MAP MODE
-qfcu:CfgRpn(58, "(>H:AS1000_MFD_SOFTKEYS_3)") -- NAV MAP MODE
-qfcu:CfgRpn(59, "(>H:AS1000_MFD_SOFTKEYS_4)") -- ARC MAP MODE
-qfcu:CfgRpn(60, "(>H:AS1000_MFD_SOFTKEYS_5)") -- PLN MAP MODE
+qfcu:CfgRpn(56, "(>H:AS1000_MFD_SOFTKEYS_1)")                                                   -- ILS MAP MODE
+qfcu:CfgRpn(57, "(>H:AS1000_MFD_SOFTKEYS_2)")                                                   -- VOR MAP MODE
+qfcu:CfgRpn(58, "(>H:AS1000_MFD_SOFTKEYS_3)")                                                   -- NAV MAP MODE
+qfcu:CfgRpn(59, "(>H:AS1000_MFD_SOFTKEYS_4)")                                                   -- ARC MAP MODE
+qfcu:CfgRpn(60, "(>H:AS1000_MFD_SOFTKEYS_5)")                                                   -- PLN MAP MODE
 -- 61-66 距离/光标
-qfcu:CfgRpn(61, "(>H:AS1000_MFD_RANGE_DEC)")     -- RANGE 10
-qfcu:CfgRpn(62, "(>H:AS1000_MFD_RANGE_INC)")     -- RANGE 20
-qfcu:CfgRpn(63, "(>H:AS1000_MFD_JOYSTICK_UP)")   -- RANGE 40
-qfcu:CfgRpn(64, "(>H:AS1000_MFD_JOYSTICK_DOWN)") -- RANGE 80
-qfcu:CfgRpn(65, "(>H:AS1000_MFD_JOYSTICK_LEFT)") -- RANGE 160
-qfcu:CfgRpn(66, "(>H:AS1000_MFD_JOYSTICK_RIGHT)") -- RANGE 320
+qfcu:CfgRpn(61, "(>H:AS1000_MFD_RANGE_DEC)")                                                    -- RANGE 10
+qfcu:CfgRpn(62, "(>H:AS1000_MFD_RANGE_INC)")                                                    -- RANGE 20
+qfcu:CfgRpn(63, "(>H:AS1000_MFD_JOYSTICK_UP)")                                                  -- RANGE 40
+qfcu:CfgRpn(64, "(>H:AS1000_MFD_JOYSTICK_DOWN)")                                                -- RANGE 80
+qfcu:CfgRpn(65, "(>H:AS1000_MFD_JOYSTICK_LEFT)")                                                -- RANGE 160
+qfcu:CfgRpn(66, "(>H:AS1000_MFD_JOYSTICK_RIGHT)")                                               -- RANGE 320
 -- 67-73 导航点过滤键 → MFD 软键 6-12
-qfcu:CfgRpn(67, "(>H:AS1000_MFD_SOFTKEYS_6)")  -- Right CSTR
-qfcu:CfgRpn(68, "(>H:AS1000_MFD_SOFTKEYS_7)")  -- Right WPT
-qfcu:CfgRpn(69, "(>H:AS1000_MFD_SOFTKEYS_8)")  -- Right VOR D
-qfcu:CfgRpn(70, "(>H:AS1000_MFD_SOFTKEYS_9)")  -- Right NDB
-qfcu:CfgRpn(71, "(>H:AS1000_MFD_SOFTKEYS_10)") -- Right ARPT
-qfcu:CfgRpn(72, "(>H:AS1000_MFD_SOFTKEYS_11)") -- Right FD
-qfcu:CfgRpn(73, "(>H:AS1000_MFD_SOFTKEYS_12)") -- Right ILS
+qfcu:CfgRpn(67, "(>H:AS1000_MFD_SOFTKEYS_6)")                                                   -- Right CSTR
+qfcu:CfgRpn(68, "(>H:AS1000_MFD_SOFTKEYS_7)")                                                   -- Right WPT
+qfcu:CfgRpn(69, "(>H:AS1000_MFD_SOFTKEYS_8)")                                                   -- Right VOR D
+qfcu:CfgRpn(70, "(>H:AS1000_MFD_SOFTKEYS_9)")                                                   -- Right NDB
+qfcu:CfgRpn(71, "(>H:AS1000_MFD_SOFTKEYS_10)")                                                  -- Right ARPT
+qfcu:CfgRpn(72, "(>H:AS1000_MFD_SOFTKEYS_11)")                                                  -- Right FD
+qfcu:CfgRpn(73, "(>H:AS1000_MFD_SOFTKEYS_12)")                                                  -- Right ILS
 -- 74-77 ADF/VOR 选择键 → MFD 功能键
-qfcu:CfgRpn(74, "(>H:AS1000_MFD_DIRECTTO)")  -- ADF 1
-qfcu:CfgRpn(75, "(>H:AS1000_MFD_FPL_Push)")  -- VOR 1
-qfcu:CfgRpn(76, "(>H:AS1000_MFD_PROC_Push)") -- ADF 2
-qfcu:CfgRpn(77, "(>H:AS1000_MFD_MENU_Push)") -- VOR 2
+qfcu:CfgRpn(74, "(>H:AS1000_MFD_DIRECTTO)")                                                     -- ADF 1
+qfcu:CfgRpn(75, "(>H:AS1000_MFD_FPL_Push)")                                                     -- VOR 1
+qfcu:CfgRpn(76, "(>H:AS1000_MFD_PROC_Push)")                                                    -- ADF 2
+qfcu:CfgRpn(77, "(>H:AS1000_MFD_MENU_Push)")                                                    -- VOR 2
 -- 78/79/51/52/53 右气压表（GA 只有一个气压表，与左侧作用于同一 A:KOHLSMAN）
-qfcu:CfgRpn(78, "(>H:AS1000_PFD_BARO_DEC)") -- Right Baro DEC
-qfcu:CfgRpn(79, "(>H:AS1000_PFD_BARO_INC)") -- Right Baro INC
-qfcu:CfgRpn(51, "(>K:BAROMETRIC_STD_PRESSURE)") -- Right Baro PUSH
-qfcu:CfgRpn(52, "(A:SEA LEVEL PRESSURE, millibars) 16 * (>K:KOHLSMAN_SET)") -- Right Baro PULL
+qfcu:CfgRpn(78, "(>H:AS1000_PFD_BARO_DEC)")                                                     -- Right Baro DEC
+qfcu:CfgRpn(79, "(>H:AS1000_PFD_BARO_INC)")                                                     -- Right Baro INC
+qfcu:CfgRpn(51, "(>K:BAROMETRIC_STD_PRESSURE)")                                                 -- Right Baro PUSH
+qfcu:CfgRpn(52, "(A:SEA LEVEL PRESSURE, millibars) 16 * (>K:KOHLSMAN_SET)")                     -- Right Baro PULL
 qfcu:CfgRpn(53, "(L:XMLVAR_Baro_Selector_HPA_1, bool) ! (>L:XMLVAR_Baro_Selector_HPA_1, bool)") -- Right Baro INHG/HPA
 
 -- ===========================================================
@@ -242,7 +242,7 @@ end
 
 -- QNH/QFE 指示灯在 GA 上表示气压单位（1=HPA / 0=inHg）
 local function ga_qfcu_baro_unit_mode()
-    if d_baro_hpa_unit ~= nil and d_baro_hpa_unit:Get() > 0 then
+    if d_baro_hpa_unit:Get() >= 0 then
         return 2, 1 -- HPA 数字, 指示灯 qhn
     end
     return 1, 0     -- inHg 数字, 指示灯 qfe
@@ -281,7 +281,7 @@ function ga_qfcu_digi_disp_set_Bright()
 end
 
 function ga_qfcu_digi_disp_power_on()
-    uluaSet(idr_qfcu_hid_indbrightval_i, 3)
+    uluaSet(idr_qfcu_hid_indbrightval_i, 2)
     uluaSet(idr_qfcu_hid_invalid, -1)
     qfcu:FreshMidLeds()
     qfcu:FreshLeftLeds()
