@@ -291,7 +291,7 @@ end
 function ga_qfcu_digi_disp_set_Bright()
     local bright = uluaGet(ga_brightness)
     uluaSet(idr_qfcu_hid_brightval_i, math.floor(bright * MaxBrightness))
-    uluaSet(idr_qfcu_hid_dispbrightval_i, math.floor(bright * 4))
+    uluaSet(idr_qfcu_hid_dispbrightval_i, 2) --1~4
 end
 
 function ga_qfcu_digi_disp_power_on()
