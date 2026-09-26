@@ -29,105 +29,107 @@ uluaLog("QFCU for GA")
 -- ---- FCU 半区：自动飞行 ----
 -- SPD 旋钮（编码器）
 qfcu:CfgEncFull(0, 1, "sim/cockpit2/autopilot/airspeed_dial_kts_mach", 1, 5, 0, 0, 500)
-qfcu:CfgCmd(2, "sim/autopilot/level_change")     -- SPD PUSH：FLC
-qfcu:CfgCmd(3, "sim/autopilot/servos_off_any")   -- SPD PULL：断开/接管 AP
+qfcu:CfgCmd(2, "sim/autopilot/level_change")   -- SPD PUSH：FLC
+qfcu:CfgCmd(3, "sim/autopilot/servos_off_any") -- SPD PULL：断开/接管 AP
 
 -- HDG 旋钮（编码器）
 qfcu:CfgEncFull(4, 5, "sim/cockpit/autopilot/heading_mag", 1, 5, 0, 0, 360)
-qfcu:CfgCmd(6, "sim/autopilot/heading_sync")     -- HDG PUSH：同步机头
-qfcu:CfgCmd(7, "sim/autopilot/heading")          -- HDG PULL：HDG 保持
+qfcu:CfgCmd(6, "sim/autopilot/heading_sync") -- HDG PUSH：同步机头
+qfcu:CfgCmd(7, "sim/autopilot/heading")      -- HDG PULL：HDG 保持
 
 -- AP 模式
-qfcu:CfgCmd(8, "sim/autopilot/NAV")               -- LOC
-qfcu:CfgCmd(9, "sim/autopilot/servos_toggle")     -- AP2
-qfcu:CfgCmd(10, "sim/autopilot/servos_toggle")    -- AP1
+qfcu:CfgCmd(8, "sim/autopilot/NAV")                  -- LOC
+qfcu:CfgCmd(9, "sim/autopilot/servos_toggle")        -- AP2
+qfcu:CfgCmd(10, "sim/autopilot/servos_toggle")       -- AP1
 qfcu:CfgCmd(11, "sim/autopilot/autothrottle_toggle") -- A/THR
-qfcu:CfgCmd(12, "sim/GPS/g1000n1_bc")             -- EXPED：GA 无加速爬升，改为反向进近 BC
-qfcu:CfgCmd(13, "sim/autopilot/approach")         -- APPR
-qfcu:CfgCmd(14, "sim/systems/yaw_damper_toggle")  -- METRIC ALT：GA 无米制，改为偏航阻尼 YD
+qfcu:CfgCmd(12, "sim/GPS/g1000n1_bc")                -- EXPED：GA 无加速爬升，改为反向进近 BC
+qfcu:CfgCmd(13, "sim/autopilot/approach")            -- APPR
+qfcu:CfgCmd(14, "sim/systems/yaw_damper_toggle")     -- METRIC ALT：GA 无米制，改为偏航阻尼 YD
 
 -- ALT
 -- 16/17 旋钮：慢转 100ft / 快转 1000ft（加速点见 Qmdev.FastTurnsPerSecond）
 qfcu:CfgEncFull(16, 17, "sim/cockpit/autopilot/altitude", 100, 1000, 0, 0, 50000)
 -- XP 没有 100/1000 步长状态可切，此键按源 xp/z_QMCP737C_GA.lua 默认机 KeyIdx 22 的用法做 ALT 预位
-qfcu:CfgCmd(15, "sim/autopilot/altitude_arm")     -- ALT 100/1000 → ALT 预位
-qfcu:CfgCmd(18, "sim/GPS/g1000n1_alt")            -- ALT PUSH：高度保持
-qfcu:CfgCmd(19, "sim/autopilot/altitude_sync")    -- ALT PULL：接管当前高度
+qfcu:CfgCmd(15, "sim/autopilot/altitude_arm")  -- ALT 100/1000 → ALT 预位
+qfcu:CfgCmd(18, "sim/GPS/g1000n1_alt")         -- ALT PUSH：高度保持
+qfcu:CfgCmd(19, "sim/autopilot/altitude_sync") -- ALT PULL：接管当前高度
 
 -- VS 旋钮（编码器）
 qfcu:CfgEncFull(20, 21, "sim/cockpit2/autopilot/vvi_dial_fpm", 100, 1000, 0, -9000, 9000)
-qfcu:CfgCmd(22, "sim/autopilot/vertical_speed")   -- VS PUSH：VS 保持
-qfcu:CfgFc(23, "ga_qfcu_vs_pull()")               -- VS PULL：接管当前垂直速度
+qfcu:CfgCmd(22, "sim/autopilot/vertical_speed") -- VS PUSH：VS 保持
+qfcu:CfgFc(23, "ga_qfcu_vs_pull()")             -- VS PULL：接管当前垂直速度
 
 -- 54/55：GA 无 TRK/FPA 与 MACH 速度选择，降级为 FD / SPD-MACH 显示切换
-qfcu:CfgCmd(54, "sim/GPS/g1000n1_fd")             -- HDG/TRK VS/FPV → FD
+qfcu:CfgCmd(54, "sim/GPS/g1000n1_fd")              -- HDG/TRK VS/FPV → FD
 qfcu:CfgCmd(55, "sim/autopilot/knots_mach_toggle") -- SPD/MACH
 
 -- ---- 左 EFIS 半区：G1000 PFD (g1000n1) ----
 -- 24-28 ND 模式键 → PFD 软键 1-5
-qfcu:CfgCmd(24, "sim/GPS/g1000n1_softkey1")       -- ILS MAP MODE
-qfcu:CfgCmd(25, "sim/GPS/g1000n1_softkey2")       -- VOR MAP MODE
-qfcu:CfgCmd(26, "sim/GPS/g1000n1_softkey3")       -- NAV MAP MODE
-qfcu:CfgCmd(27, "sim/GPS/g1000n1_softkey4")       -- ARC MAP MODE
-qfcu:CfgCmd(28, "sim/GPS/g1000n1_softkey5")       -- PLN MAP MODE
+qfcu:CfgCmd(24, "sim/GPS/g1000n1_softkey1")   -- ILS MAP MODE
+qfcu:CfgCmd(25, "sim/GPS/g1000n1_softkey2")   -- VOR MAP MODE
+qfcu:CfgCmd(26, "sim/GPS/g1000n1_softkey3")   -- NAV MAP MODE
+qfcu:CfgCmd(27, "sim/GPS/g1000n1_softkey4")   -- ARC MAP MODE
+qfcu:CfgCmd(28, "sim/GPS/g1000n1_softkey5")   -- PLN MAP MODE
 -- 29-34 距离/光标
-qfcu:CfgCmd(29, "sim/GPS/g1000n1_range_down")     -- RANGE 10
-qfcu:CfgCmd(30, "sim/GPS/g1000n1_range_up")       -- RANGE 20
-qfcu:CfgCmd(31, "sim/GPS/g1000n1_pan_up")         -- RANGE 40
-qfcu:CfgCmd(32, "sim/GPS/g1000n1_pan_down")       -- RANGE 80
-qfcu:CfgCmd(33, "sim/GPS/g1000n1_pan_left")       -- RANGE 160
-qfcu:CfgCmd(34, "sim/GPS/g1000n1_pan_right")      -- RANGE 320
+qfcu:CfgCmd(29, "sim/GPS/g1000n1_range_down") -- RANGE 10
+qfcu:CfgCmd(30, "sim/GPS/g1000n1_range_up")   -- RANGE 20
+qfcu:CfgCmd(31, "sim/GPS/g1000n1_pan_up")     -- RANGE 40
+qfcu:CfgCmd(32, "sim/GPS/g1000n1_pan_down")   -- RANGE 80
+qfcu:CfgCmd(33, "sim/GPS/g1000n1_pan_left")   -- RANGE 160
+qfcu:CfgCmd(34, "sim/GPS/g1000n1_pan_right")  -- RANGE 320
 -- 35-41 导航点过滤键 → PFD 软键 6-12
-qfcu:CfgCmd(35, "sim/GPS/g1000n1_softkey6")       -- LEFT CSTR
-qfcu:CfgCmd(36, "sim/GPS/g1000n1_softkey7")       -- LEFT WPT
-qfcu:CfgCmd(37, "sim/GPS/g1000n1_softkey8")       -- LEFT VOR D
-qfcu:CfgCmd(38, "sim/GPS/g1000n1_softkey9")       -- LEFT NDB
-qfcu:CfgCmd(39, "sim/GPS/g1000n1_softkey10")      -- LEFT ARPT
-qfcu:CfgCmd(40, "sim/GPS/g1000n1_softkey11")      -- LEFT FD
-qfcu:CfgCmd(41, "sim/GPS/g1000n1_softkey12")      -- LEFT ILS
+qfcu:CfgCmd(35, "sim/GPS/g1000n1_softkey6")   -- LEFT CSTR
+qfcu:CfgCmd(36, "sim/GPS/g1000n1_softkey7")   -- LEFT WPT
+qfcu:CfgCmd(37, "sim/GPS/g1000n1_softkey8")   -- LEFT VOR D
+qfcu:CfgCmd(38, "sim/GPS/g1000n1_softkey9")   -- LEFT NDB
+qfcu:CfgCmd(39, "sim/GPS/g1000n1_softkey10")  -- LEFT ARPT
+qfcu:CfgCmd(40, "sim/GPS/g1000n1_softkey11")  -- LEFT FD
+qfcu:CfgCmd(41, "sim/GPS/g1000n1_softkey12")  -- LEFT ILS
 -- 42-45 ADF/VOR 选择键 → PFD 功能键
-qfcu:CfgCmd(42, "sim/GPS/g1000n1_direct")         -- ADF 1
-qfcu:CfgCmd(43, "sim/GPS/g1000n1_fpl")            -- VOR 1
-qfcu:CfgCmd(44, "sim/GPS/g1000n1_proc")           -- ADF 2
-qfcu:CfgCmd(45, "sim/GPS/g1000n1_menu")           -- VOR 2
+qfcu:CfgCmd(42, "sim/GPS/g1000n1_direct")     -- ADF 1
+qfcu:CfgCmd(43, "sim/GPS/g1000n1_fpl")        -- VOR 1
+qfcu:CfgCmd(44, "sim/GPS/g1000n1_proc")       -- ADF 2
+qfcu:CfgCmd(45, "sim/GPS/g1000n1_menu")       -- VOR 2
 -- 46-50 左气压表（condbtn + Lua，支持 inHg/hPa 双单位）
-qfcu:CfgEncFull(46, 47, "cpuwolf/flyluaio/QFCU/condbtn[46]", 1, 10, 0, -39500, 39500)
-qfcu:CfgCmd(48, "sim/instruments/barometer_2992")  -- Left Baro PUSH：STD 29.92
-qfcu:CfgFc(49, "ga_qfcu_baro_sync()")              -- Left Baro PULL：回到真实 QNH
-qfcu:CfgFc(50, "ga_qfcu_baro_unit_toggle()")       -- Left Baro INHG/HPA：显示单位切换
+qfcu:CfgCmd(46, 'sim/instruments/barometer_down', 'sim/operation/test_none')
+qfcu:CfgCmd(47, 'sim/instruments/barometer_up', 'sim/operation/test_none')
+qfcu:CfgCmd(48, "sim/instruments/barometer_2992") -- Left Baro PUSH：STD 29.92
+qfcu:CfgFc(49, "ga_qfcu_baro_sync()")             -- Left Baro PULL：回到真实 QNH
+qfcu:CfgFc(50, "ga_qfcu_baro_unit_toggle()")      -- Left Baro INHG/HPA：显示单位切换
 
 -- ---- 右 EFIS 半区：G1000 MFD (g1000n3) ----
 -- 56-60 ND 模式键 → MFD 软键 1-5
-qfcu:CfgCmd(56, "sim/GPS/g1000n3_softkey1")       -- ILS MAP MODE
-qfcu:CfgCmd(57, "sim/GPS/g1000n3_softkey2")       -- VOR MAP MODE
-qfcu:CfgCmd(58, "sim/GPS/g1000n3_softkey3")       -- NAV MAP MODE
-qfcu:CfgCmd(59, "sim/GPS/g1000n3_softkey4")       -- ARC MAP MODE
-qfcu:CfgCmd(60, "sim/GPS/g1000n3_softkey5")       -- PLN MAP MODE
+qfcu:CfgCmd(56, "sim/GPS/g1000n3_softkey1")   -- ILS MAP MODE
+qfcu:CfgCmd(57, "sim/GPS/g1000n3_softkey2")   -- VOR MAP MODE
+qfcu:CfgCmd(58, "sim/GPS/g1000n3_softkey3")   -- NAV MAP MODE
+qfcu:CfgCmd(59, "sim/GPS/g1000n3_softkey4")   -- ARC MAP MODE
+qfcu:CfgCmd(60, "sim/GPS/g1000n3_softkey5")   -- PLN MAP MODE
 -- 61-66 距离/光标
-qfcu:CfgCmd(61, "sim/GPS/g1000n3_range_down")     -- RANGE 10
-qfcu:CfgCmd(62, "sim/GPS/g1000n3_range_up")       -- RANGE 20
-qfcu:CfgCmd(63, "sim/GPS/g1000n3_pan_up")         -- RANGE 40
-qfcu:CfgCmd(64, "sim/GPS/g1000n3_pan_down")       -- RANGE 80
-qfcu:CfgCmd(65, "sim/GPS/g1000n3_pan_left")       -- RANGE 160
-qfcu:CfgCmd(66, "sim/GPS/g1000n3_pan_right")      -- RANGE 320
+qfcu:CfgCmd(61, "sim/GPS/g1000n3_range_down") -- RANGE 10
+qfcu:CfgCmd(62, "sim/GPS/g1000n3_range_up")   -- RANGE 20
+qfcu:CfgCmd(63, "sim/GPS/g1000n3_pan_up")     -- RANGE 40
+qfcu:CfgCmd(64, "sim/GPS/g1000n3_pan_down")   -- RANGE 80
+qfcu:CfgCmd(65, "sim/GPS/g1000n3_pan_left")   -- RANGE 160
+qfcu:CfgCmd(66, "sim/GPS/g1000n3_pan_right")  -- RANGE 320
 -- 67-73 导航点过滤键 → MFD 软键 6-12
-qfcu:CfgCmd(67, "sim/GPS/g1000n3_softkey6")       -- Right CSTR
-qfcu:CfgCmd(68, "sim/GPS/g1000n3_softkey7")       -- Right WPT
-qfcu:CfgCmd(69, "sim/GPS/g1000n3_softkey8")       -- Right VOR D
-qfcu:CfgCmd(70, "sim/GPS/g1000n3_softkey9")       -- Right NDB
-qfcu:CfgCmd(71, "sim/GPS/g1000n3_softkey10")      -- Right ARPT
-qfcu:CfgCmd(72, "sim/GPS/g1000n3_softkey11")      -- Right FD
-qfcu:CfgCmd(73, "sim/GPS/g1000n3_softkey12")      -- Right ILS
+qfcu:CfgCmd(67, "sim/GPS/g1000n3_softkey6")   -- Right CSTR
+qfcu:CfgCmd(68, "sim/GPS/g1000n3_softkey7")   -- Right WPT
+qfcu:CfgCmd(69, "sim/GPS/g1000n3_softkey8")   -- Right VOR D
+qfcu:CfgCmd(70, "sim/GPS/g1000n3_softkey9")   -- Right NDB
+qfcu:CfgCmd(71, "sim/GPS/g1000n3_softkey10")  -- Right ARPT
+qfcu:CfgCmd(72, "sim/GPS/g1000n3_softkey11")  -- Right FD
+qfcu:CfgCmd(73, "sim/GPS/g1000n3_softkey12")  -- Right ILS
 -- 74-77 ADF/VOR 选择键 → MFD 功能键
-qfcu:CfgCmd(74, "sim/GPS/g1000n3_direct")         -- ADF 1
-qfcu:CfgCmd(75, "sim/GPS/g1000n3_fpl")            -- VOR 1
-qfcu:CfgCmd(76, "sim/GPS/g1000n3_proc")           -- ADF 2
-qfcu:CfgCmd(77, "sim/GPS/g1000n3_menu")           -- VOR 2
+qfcu:CfgCmd(74, "sim/GPS/g1000n3_direct")     -- ADF 1
+qfcu:CfgCmd(75, "sim/GPS/g1000n3_fpl")        -- VOR 1
+qfcu:CfgCmd(76, "sim/GPS/g1000n3_proc")       -- ADF 2
+qfcu:CfgCmd(77, "sim/GPS/g1000n3_menu")       -- VOR 2
 -- 78/79/51/52/53 右气压表（GA 只有一个气压表，与左侧作用于同一 sim/cockpit/misc/barometer_setting）
-qfcu:CfgEncFull(78, 79, "cpuwolf/flyluaio/QFCU/condbtn[78]", 1, 10, 0, -39500, 39500)
-qfcu:CfgCmd(51, "sim/instruments/barometer_2992")  -- Right Baro PUSH
-qfcu:CfgFc(52, "ga_qfcu_baro_sync()")              -- Right Baro PULL
-qfcu:CfgFc(53, "ga_qfcu_baro_unit_toggle()")       -- Right Baro INHG/HPA
+qfcu:CfgCmd(78, 'sim/instruments/barometer_down', 'sim/operation/test_none')
+qfcu:CfgCmd(79, 'sim/instruments/barometer_up', 'sim/operation/test_none')
+qfcu:CfgCmd(51, "sim/instruments/barometer_2992") -- Right Baro PUSH
+qfcu:CfgFc(52, "ga_qfcu_baro_sync()")             -- Right Baro PULL
+qfcu:CfgFc(53, "ga_qfcu_baro_unit_toggle()")      -- Right Baro INHG/HPA
 
 -- ===========================================================
 -- 数据读取
@@ -259,7 +261,7 @@ end
 
 -- QNH/QFE 指示灯在 GA 上表示显示单位（1=HPA / 0=inHg）
 function ga_qfcu_digi_disp_set_BARO()
-    local inHg = uluaGet(d_baro_in)
+    local inHg = dr_baro_in:Get()
     local mode, led_mode, val
     if ga_qfcu_baro_hpa == 1 then
         mode, led_mode = 2, 1
