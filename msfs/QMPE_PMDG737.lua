@@ -405,7 +405,7 @@ qmpe:GetWarn("(L:switch_3471_73X, number)")
 qmpe:GetCaut("(L:switch_3481_73X, number)")
 
 qmpe:GetMsg("(L:A32NX_DCDU_ATC_MSG_WAITING, bool)")
-qmpe:GetFail("(L:I_XPDR_FAIL)")
+qmpe:GetFail("(L:switch_799_73X, number)")
 qmpe:GetLand("(L:I_MIP_AUTOLAND_CAPT)")
 
 qmpe:GetTerr("(L:A32NX_EFIS_TERR_L_ACTIVE)")
@@ -422,7 +422,7 @@ else
 end
 -- brightness
 if MSFS_VERSION == 0 then
-    qmpe:GetBkl("(L:BL_Pedestal)", 100) -- 0~100
+    qmpe:GetBkl("(L:BL_Pedestal)", 100)                     -- 0~100
 else
     qmpe:GetBkl("(L:PED_PANEL_LIGHT_CONTROL, number)", 0.3) -- 0~300
 end
