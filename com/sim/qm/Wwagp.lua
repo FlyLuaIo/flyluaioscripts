@@ -8,7 +8,10 @@ local bit = require("bit")
 local Wwagp = oop.class(com.sim.Qmdev)
 
 function Wwagp:init()
-	self.QmdevId = 0x3AEBEE64
+	-- WinCtrl old firmware
+	-- self.QmdevId = 0x3AEBEE64
+	-- WinCtrl new firmware
+	self.QmdevId = 0x158040CC
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_wwagp == nil then
 		_G.ilua_hw_assigned_wwagp = 0
