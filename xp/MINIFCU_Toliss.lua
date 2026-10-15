@@ -99,7 +99,7 @@ minifcu:CfgCmd(15, "AirbusFBW/PushVSSel")
 -- VS PULL
 minifcu:CfgCmd(16, "AirbusFBW/PullVSSel")
 -- ALT 100/1000 toggle
-minifcu:CfgValT(17, "AirbusFBW/ALT100_1000")
+minifcu:CfgVal(17, "AirbusFBW/ALT100_1000", 1, 0)
 
 -- ===================== INPUT: EFIS Buttons (bit 18–46) =====================
 
@@ -328,14 +328,7 @@ GlobalFrameLoopManager:add(function()
 	if baro_unit == 0 then
 		minifcu:SetBaroHpa(math.floor(baro * 33.864 + 0.5))
 	else
-		minifcu:SetBaroHpa(0)
-	end
-
-	-- MT 10 (miniEFIS LED and LCD): baro inHg (only in inHg mode)
-	if baro_unit == 1 then
 		minifcu:SetBaroInhg(math.floor(baro * 100 + 0.5))
-	else
-		minifcu:SetBaroInhg(0)
 	end
 
 	-- MT 0,1,2,3,4 (miniEFIS LED and LCD): EFIS flags
