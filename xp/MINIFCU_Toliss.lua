@@ -158,8 +158,10 @@ minifcu:CfgCmd(57, "sim/autopilot/heading_up")
 minifcu:CfgCmd(59, "sim/autopilot/vertical_speed_down")
 minifcu:CfgCmd(61, "sim/autopilot/vertical_speed_up")
 -- BARO encoder (hPa/inHg aware)
-minifcu:CfgFc(63, "minifcu_baro_enc_left()")
-minifcu:CfgFc(65, "minifcu_baro_enc_right()")
+-- minifcu:CfgFc(63, "minifcu_baro_enc_left()")
+-- minifcu:CfgFc(65, "minifcu_baro_enc_right()")
+minifcu:CfgCmd(63, "sim/instruments/barometer_down")
+minifcu:CfgCmd(65, "sim/instruments/barometer_up")
 
 -- ===================== OUTPUT: LEDs =====================
 

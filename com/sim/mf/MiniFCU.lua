@@ -835,132 +835,184 @@ end
 
 -- SpdVal — miniFCU LCD (MessageType 0)
 function MiniFCU:GetSpdVal(dpath, scale) return self:GetTolissFcuSpdValue(dpath, scale) end
+
 function MiniFCU:SetSpdVal(val) return self:SetTolissFcuSpdValue(val) end
+
 function MiniFCU:FreshSpdVal() return self:FreshTolissFcuSpdValue() end
 
 -- MachVal — miniFCU LCD (MessageType 1)
 function MiniFCU:GetMachVal(dpath, scale) return self:GetTolissFcuMachValue(dpath, scale) end
+
 function MiniFCU:SetMachVal(val) return self:SetTolissFcuMachValue(val) end
+
 function MiniFCU:FreshMachVal() return self:FreshTolissFcuMachValue() end
 
 -- SpdMode — miniFCU LCD (MessageType 2)
 function MiniFCU:GetSpdMode(dpath, scale) return self:GetTolissFcuSpdMachMode(dpath, scale) end
+
 function MiniFCU:SetSpdMode(val) return self:SetTolissFcuSpdMachMode(val) end
+
 function MiniFCU:FreshSpdMode() return self:FreshTolissFcuSpdMachMode() end
 
 -- SpdDashes — miniFCU LCD (MessageType 3)
 function MiniFCU:GetSpdDashes(dpath, scale) return self:GetTolissFcuSpdDashes(dpath, scale) end
+
 function MiniFCU:SetSpdDashes(val) return self:SetTolissFcuSpdDashes(val) end
+
 function MiniFCU:FreshSpdDashes() return self:FreshTolissFcuSpdDashes() end
 
 -- SpdDot — miniFCU LCD (MessageType 4)
 function MiniFCU:GetSpdDot(dpath, scale) return self:GetTolissFcuSpdDot(dpath, scale) end
+
 function MiniFCU:SetSpdDot(val) return self:SetTolissFcuSpdDot(val) end
+
 function MiniFCU:FreshSpdDot() return self:FreshTolissFcuSpdDot() end
 
 -- HdgVal — miniFCU LCD (MessageType 5)
 function MiniFCU:GetHdgVal(dpath, scale) return self:GetTolissFcuHdgValue(dpath, scale) end
+
 function MiniFCU:SetHdgVal(val) return self:SetTolissFcuHdgValue(val) end
+
 function MiniFCU:FreshHdgVal() return self:FreshTolissFcuHdgValue() end
 
 -- HdgDashes — miniFCU LCD (MessageType 6)
 function MiniFCU:GetHdgDashes(dpath, scale) return self:GetTolissFcuHdgDashes(dpath, scale) end
+
 function MiniFCU:SetHdgDashes(val) return self:SetTolissFcuHdgDashes(val) end
+
 function MiniFCU:FreshHdgDashes() return self:FreshTolissFcuHdgDashes() end
 
 -- HdgDot — miniFCU LCD (MessageType 7)
 function MiniFCU:GetHdgDot(dpath, scale) return self:GetTolissFcuHdgDot(dpath, scale) end
+
 function MiniFCU:SetHdgDot(val) return self:SetTolissFcuHdgDot(val) end
+
 function MiniFCU:FreshHdgDot() return self:FreshTolissFcuHdgDot() end
 
 -- AltVal — miniFCU LCD (MessageType 8)
 function MiniFCU:GetAltVal(dpath, scale) return self:GetTolissFcuAltValue(dpath, scale) end
+
 function MiniFCU:SetAltVal(val) return self:SetTolissFcuAltValue(val) end
+
 function MiniFCU:FreshAltVal() return self:FreshTolissFcuAltValue() end
 
 -- AltDot — miniFCU LCD (MessageType 9)
 function MiniFCU:GetAltDot(dpath, scale) return self:GetTolissFcuAltDot(dpath, scale) end
+
 function MiniFCU:SetAltDot(val) return self:SetTolissFcuAltDot(val) end
+
 function MiniFCU:FreshAltDot() return self:FreshTolissFcuAltDot() end
 
 -- VsVal — miniFCU LCD (MessageType 10)
 function MiniFCU:GetVsVal(dpath, scale) return self:GetTolissFcuVsValue(dpath, scale) end
+
 function MiniFCU:SetVsVal(val) return self:SetTolissFcuVsValue(val) end
+
 function MiniFCU:FreshVsVal() return self:FreshTolissFcuVsValue() end
 
 -- FpaVal — miniFCU LCD (MessageType 11)
 function MiniFCU:GetFpaVal(dpath, scale) return self:GetTolissFcuFpaValue(dpath, scale) end
+
 function MiniFCU:SetFpaVal(val) return self:SetTolissFcuFpaValue(val) end
+
 function MiniFCU:FreshFpaVal() return self:FreshTolissFcuFpaValue() end
 
 -- VsDashes — miniFCU LCD (MessageType 12)
 function MiniFCU:GetVsDashes(dpath, scale) return self:GetTolissFcuVsDashes(dpath, scale) end
+
 function MiniFCU:SetVsDashes(val) return self:SetTolissFcuVsDashes(val) end
+
 function MiniFCU:FreshVsDashes() return self:FreshTolissFcuVsDashes() end
 
 -- HdgtrkMode — miniFCU LCD (MessageType 13)
 function MiniFCU:GetHdgtrkMode(dpath, scale) return self:GetTolissFcuHdgTrkMode(dpath, scale) end
+
 function MiniFCU:SetHdgtrkMode(val) return self:SetTolissFcuHdgTrkMode(val) end
+
 function MiniFCU:FreshHdgtrkMode() return self:FreshTolissFcuHdgTrkMode() end
 
 -- Cstr — miniEFIS LED and LCD (MessageType 0)
 function MiniFCU:GetCstr(dpath, scale) return self:GetTolissEfisCstr(dpath, scale) end
+
 function MiniFCU:SetCstr(val) return self:SetTolissEfisCstr(val) end
+
 function MiniFCU:FreshCstr() return self:FreshTolissEfisCstr() end
 
 -- Wpt — miniEFIS LED and LCD (MessageType 1)
 function MiniFCU:GetWpt(dpath, scale) return self:GetTolissEfisWpt(dpath, scale) end
+
 function MiniFCU:SetWpt(val) return self:SetTolissEfisWpt(val) end
+
 function MiniFCU:FreshWpt() return self:FreshTolissEfisWpt() end
 
 -- Vord — miniEFIS LED and LCD (MessageType 2)
 function MiniFCU:GetVord(dpath, scale) return self:GetTolissEfisVord(dpath, scale) end
+
 function MiniFCU:SetVord(val) return self:SetTolissEfisVord(val) end
+
 function MiniFCU:FreshVord() return self:FreshTolissEfisVord() end
 
 -- Ndb — miniEFIS LED and LCD (MessageType 3)
 function MiniFCU:GetNdb(dpath, scale) return self:GetTolissEfisNdb(dpath, scale) end
+
 function MiniFCU:SetNdb(val) return self:SetTolissEfisNdb(val) end
+
 function MiniFCU:FreshNdb() return self:FreshTolissEfisNdb() end
 
 -- Arpt — miniEFIS LED and LCD (MessageType 4)
 function MiniFCU:GetArpt(dpath, scale) return self:GetTolissEfisArpt(dpath, scale) end
+
 function MiniFCU:SetArpt(val) return self:SetTolissEfisArpt(val) end
+
 function MiniFCU:FreshArpt() return self:FreshTolissEfisArpt() end
 
 -- Fd — miniEFIS LED and LCD (MessageType 5)
 function MiniFCU:GetFd(dpath, scale) return self:GetTolissFcuFdValue(dpath, scale) end
+
 function MiniFCU:SetFd(val) return self:SetTolissFcuFdValue(val) end
+
 function MiniFCU:FreshFd() return self:FreshTolissFcuFdValue() end
 
 -- Ls — miniEFIS LED and LCD (MessageType 6)
 function MiniFCU:GetLs(dpath, scale) return self:GetTolissFcuLsValue(dpath, scale) end
+
 function MiniFCU:SetLs(val) return self:SetTolissFcuLsValue(val) end
+
 function MiniFCU:FreshLs() return self:FreshTolissFcuLsValue() end
 
 -- Qnh — miniEFIS LED and LCD (MessageType 7)
 function MiniFCU:GetQnh(dpath, scale) return self:GetTolissEfisBaroQnnh1(dpath, scale) end
+
 function MiniFCU:SetQnh(val) return self:SetTolissEfisBaroQnnh1(val) end
+
 function MiniFCU:FreshQnh() return self:FreshTolissEfisBaroQnnh1() end
 
 -- BaroStd — miniEFIS LED and LCD (MessageType 8)
 function MiniFCU:GetBaroStd(dpath, scale) return self:GetTolissEfisBaroStd1(dpath, scale) end
+
 function MiniFCU:SetBaroStd(val) return self:SetTolissEfisBaroStd1(val) end
+
 function MiniFCU:FreshBaroStd() return self:FreshTolissEfisBaroStd1() end
 
 -- BaroUnit — miniEFIS LED and LCD (MessageType 9)
 function MiniFCU:GetBaroUnit(dpath, scale) return self:GetTolissEfisBaroInhgHpaUnit(dpath, scale) end
+
 function MiniFCU:SetBaroUnit(val) return self:SetTolissEfisBaroInhgHpaUnit(val) end
+
 function MiniFCU:FreshBaroUnit() return self:FreshTolissEfisBaroInhgHpaUnit() end
 
 -- BaroInhg — miniEFIS LED and LCD (MessageType 10)
 function MiniFCU:GetBaroInhg(dpath, scale) return self:GetTolissEfisBaroInhg(dpath, scale) end
+
 function MiniFCU:SetBaroInhg(val) return self:SetTolissEfisBaroInhg(val) end
+
 function MiniFCU:FreshBaroInhg() return self:FreshTolissEfisBaroInhg() end
 
 -- BaroHpa — miniEFIS LED and LCD (MessageType 11)
 function MiniFCU:GetBaroHpa(dpath, scale) return self:GetTolissEfisBaro(dpath, scale) end
+
 function MiniFCU:SetBaroHpa(val) return self:SetTolissEfisBaro(val) end
+
 function MiniFCU:FreshBaroHpa() return self:FreshTolissEfisBaro() end
 
 -- ========
