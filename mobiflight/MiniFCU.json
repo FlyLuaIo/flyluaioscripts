@@ -42,13 +42,113 @@
         }
       ]
     },
-    "Display Module": {
-      "LedModule": [
+    "CustomDevice": {
+      "miniFCU LCD": [
         {
-          "Name": "miniFCU LCD"
+          "Name": "TOLISS - FCU - SPD - VALUE",
+          "MessageType": 0
         },
         {
-          "Name": "miniEFIS LED and LCD"
+          "Name": "TOLISS - FCU - MACH - VALUE",
+          "MessageType": 1
+        },
+        {
+          "Name": "TOLISS - FCU - SPD/MACH - MODE",
+          "MessageType": 2
+        },
+        {
+          "Name": "TOLISS - FCU - SPD - DASHES",
+          "MessageType": 3
+        },
+        {
+          "Name": "TOLISS - FCU - SPD - DOT",
+          "MessageType": 4
+        },
+        {
+          "Name": "TOLISS - FCU - HDG - VALUE",
+          "MessageType": 5
+        },
+        {
+          "Name": "TOLISS - FCU - HDG - DASHES",
+          "MessageType": 6
+        },
+        {
+          "Name": "TOLISS - FCU - HDG - DOT",
+          "MessageType": 7
+        },
+        {
+          "Name": "TOLISS - FCU - ALT - VALUE",
+          "MessageType": 8
+        },
+        {
+          "Name": "TOLISS - FCU - ALT - DOT",
+          "MessageType": 9
+        },
+        {
+          "Name": "TOLISS - FCU - VS - VALUE",
+          "MessageType": 10
+        },
+        {
+          "Name": "TOLISS - FCU - FPA VALUE",
+          "MessageType": 11
+        },
+        {
+          "Name": "TOLISS - FCU - VS - DASHES",
+          "MessageType": 12
+        },
+        {
+          "Name": "TOLISS - FCU - HDG/TRK MODE",
+          "MessageType": 13
+        }
+      ],
+      "miniEFIS LED and LCD": [
+        {
+          "Name": "TOLISS - EFIS - CSTR",
+          "MessageType": 0
+        },
+        {
+          "Name": "TOLISS - EFIS - WPT",
+          "MessageType": 1
+        },
+        {
+          "Name": "TOLISS - EFIS - VORD",
+          "MessageType": 2
+        },
+        {
+          "Name": "TOLISS - EFIS - NDB",
+          "MessageType": 3
+        },
+        {
+          "Name": "TOLISS - EFIS - ARPT",
+          "MessageType": 4
+        },
+        {
+          "Name": "TOLISS - FCU - FD VALUE",
+          "MessageType": 5
+        },
+        {
+          "Name": "TOLISS - FCU - LS VALUE",
+          "MessageType": 6
+        },
+        {
+          "Name": "TOLISS - EFIS - BARO QNNH = 1",
+          "MessageType": 7
+        },
+        {
+          "Name": "TOLISS - EFIS - BARO STD = 1",
+          "MessageType": 8
+        },
+        {
+          "Name": "TOLISS - EFIS - BARO INHG/HPA - UNIT",
+          "MessageType": 9
+        },
+        {
+          "Name": "TOLISS - EFIS - BARO INHG",
+          "MessageType": 10
+        },
+        {
+          "Name": "TOLISS - EFIS - BARO",
+          "MessageType": 11
         }
       ]
     }

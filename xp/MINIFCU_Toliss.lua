@@ -12,6 +12,14 @@ if not minifcu then return end
 
 uluaLog('MobiFlight MiniFCU for Toliss')
 
+--
+-- LCD/LED 接口: 26 条自定义设备通道，走 kSetCustomDevice(32)：
+--   miniFCU LCD           MessageType 0–13  ← cpuwolf/mf/MiniFCU/custom/0/0..13/value
+--   miniEFIS LED and LCD  MessageType 0–11  ← cpuwolf/mf/MiniFCU/custom/1/0..11/value
+-- 通道值是十进制整数字符串，所以数值通道在写 dataref 前按 .mfproj 里 Connector 的 Modifiers
+-- 对齐（ALT=ft/100、MACH=airspeed*100、BARO=inHg*33.864 四舍五入）；dataref 是 int，
+-- 没有小数位，浮点写入会被截断。
+-- 线上设备序号 = 板上 type=17 设备的出现次序，与上面的 0/1 分组序号通常一致。
 -- ===================== DataRefs =====================
 
 -- FCU LCD source datarefs (read directly in FrameLoop for conditional logic)
@@ -161,56 +169,56 @@ minifcu:GetAthr('AirbusFBW/ATHRmode')
 minifcu:GetLoc('AirbusFBW/LOCilluminated')
 minifcu:GetAppr('AirbusFBW/APPRilluminated')
 
--- ===================== OUTPUT: FCU LCD segments =====================
+-- ============ OUTPUT: FCU LCD (miniFCU LCD custom device, kSetCustomDevice 32) ============
 
--- segment 0: SPD/MACH mode (1=mach, 0=ias)
+-- MT 2 (miniFCU LCD): SPD/MACH mode (1=mach, 0=ias)
 minifcu:GetSpdMode('sim/cockpit/autopilot/airspeed_is_mach')
--- segment 1: MACH value (ias * 100, shown when mach mode)
+-- MT 1 (miniFCU LCD): MACH value (ias * 100, shown when mach mode)
 minifcu:GetMachVal('sim/cockpit/autopilot/airspeed')
--- segment 2: SPD dashes
+-- MT 3 (miniFCU LCD): SPD dashes
 minifcu:GetSpdDashes('AirbusFBW/SPDdashed')
--- segment 3: SPD value (kts, shown when not mach & not dashed)
+-- MT 0 (miniFCU LCD): SPD value (kts, shown when not mach & not dashed)
 minifcu:GetSpdVal('sim/cockpit/autopilot/airspeed')
--- segment 4: SPD dot (managed)
+-- MT 4 (miniFCU LCD): SPD dot (managed)
 minifcu:GetSpdDot('AirbusFBW/SPDmanaged')
--- segment 5: HDG dashes
+-- MT 6 (miniFCU LCD): HDG dashes
 minifcu:GetHdgDashes('AirbusFBW/HDGdashed')
--- segment 6: HDG value (360→0)
+-- MT 5 (miniFCU LCD): HDG value (360→0)
 minifcu:GetHdgVal('sim/cockpit/autopilot/heading_mag')
--- segment 7: HDG dot (managed)
+-- MT 7 (miniFCU LCD): HDG dot (managed)
 minifcu:GetHdgDot('AirbusFBW/HDGmanaged')
--- segment 8: ALT value (ft / 100)
+-- MT 8 (miniFCU LCD): ALT value (ft / 100)
 minifcu:GetAltVal('sim/cockpit/autopilot/altitude')
--- segment 9: ALT dot (managed)
+-- MT 9 (miniFCU LCD): ALT dot (managed)
 minifcu:GetAltDot('AirbusFBW/ALTmanaged')
--- segment 10: VS dashes
+-- MT 12 (miniFCU LCD): VS dashes
 minifcu:GetVsDashes('AirbusFBW/VSdashed')
--- segment 11: VS value (shown when VS mode)
+-- MT 10 (miniFCU LCD): VS value (shown when VS mode)
 minifcu:GetVsVal('sim/cockpit/autopilot/vertical_velocity')
--- segment 12: FPA value (shown when FPA mode)
+-- MT 11 (miniFCU LCD): FPA value (shown when FPA mode)
 minifcu:GetFpaVal('sim/cockpit/autopilot/vertical_velocity')
--- segment 13: HDG/TRK mode label
+-- MT 13 (miniFCU LCD): HDG/TRK mode label
 minifcu:GetHdgtrkMode('AirbusFBW/HDGTRKmode')
 
--- ===================== OUTPUT: EFIS LCD segments =====================
+-- ======= OUTPUT: EFIS LED and LCD (miniEFIS LED and LCD custom device, 32) =======
 
--- segment 14: baro unit (inverted: BaroUnitCapt 1=hPa → show 0)
+-- MT 9 (miniEFIS LED and LCD): baro unit (inverted: BaroUnitCapt 1=hPa → show 0)
 minifcu:GetBaroUnit('AirbusFBW/BaroUnitCapt')
--- segment 15: baro STD flag
+-- MT 8 (miniEFIS LED and LCD): baro STD flag
 minifcu:GetBaroStd('AirbusFBW/BaroStdCapt')
--- segment 16: QNH label (constant 1 when baro not STD)
+-- MT 7 (miniEFIS LED and LCD): QNH label (constant 1 when baro not STD)
 minifcu:GetQnh('AirbusFBW/BaroStdCapt')
--- segment 17: baro hPa value (inHg * 33.864, rounded)
+-- MT 11 (miniEFIS LED and LCD): baro hPa value (inHg * 33.864, rounded)
 minifcu:GetBaroHpa('sim/cockpit/misc/barometer_setting')
--- segment 18: baro inHg value (inHg * 100, rounded)
+-- MT 10 (miniEFIS LED and LCD): baro inHg value (inHg * 100, rounded)
 minifcu:GetBaroInhg('sim/cockpit/misc/barometer_setting')
--- segment 19–23: EFIS display flags
+-- MT 0,1,2,3,4 (miniEFIS LED and LCD): EFIS display flags
 minifcu:GetCstr('AirbusFBW/NDShowCSTRCapt')
 minifcu:GetWpt('AirbusFBW/NDShowWPTCapt')
 minifcu:GetVord('AirbusFBW/NDShowVORDCapt')
 minifcu:GetNdb('AirbusFBW/NDShowNDBCapt')
 minifcu:GetArpt('AirbusFBW/NDShowARPTCapt')
--- segment 24–25: FD / LS
+-- MT 5,6 (miniEFIS LED and LCD): FD / LS
 minifcu:GetFd('AirbusFBW/FD1Engage')
 minifcu:GetLs('AirbusFBW/ILSonCapt')
 
@@ -228,32 +236,32 @@ GlobalFrameLoopManager:add(function()
 	local exped_on = (dr_vmode:Get() == 113) and 1 or 0
 	minifcu:SetExped(exped_on)
 
-	-- FCU LCD segments
+	-- FCU LCD (miniFCU LCD custom device)
 	local is_mach = dr_is_mach:Get()
 	local spd_dash = dr_spd_dashed:Get()
 	local ias = dr_ias:Get()
 
-	-- segment 0: SPD/MACH mode
+	-- MT 2 (miniFCU LCD): SPD/MACH mode
 	minifcu:SetSpdMode(is_mach)
 
-	-- segment 1: MACH value (ias * 100, only in mach mode)
+	-- MT 1 (miniFCU LCD): MACH value (ias * 100, only in mach mode)
 	if is_mach >= 1 and spd_dash < 1 then
 		minifcu:SetMachVal(ias * 100)
 	else
 		minifcu:SetMachVal(0)
 	end
 
-	-- segment 2: SPD dashes
+	-- MT 3 (miniFCU LCD): SPD dashes
 	minifcu:SetSpdDashes()
 
-	-- segment 3: SPD value (only when not mach & not dashed)
+	-- MT 0 (miniFCU LCD): SPD value (only when not mach & not dashed)
 	if is_mach < 1 and spd_dash < 1 then
 		minifcu:SetSpdVal()
 	else
 		minifcu:SetSpdVal(0)
 	end
 
-	-- segment 4: SPD dot (managed)
+	-- MT 4 (miniFCU LCD): SPD dot (managed)
 	minifcu:SetSpdDot()
 
 	-- HDG
@@ -261,83 +269,83 @@ GlobalFrameLoopManager:add(function()
 	local hdg_val = dr_hdg:Get()
 	if hdg_val == 360 then hdg_val = 0 end
 
-	-- segment 5: HDG dashes
+	-- MT 6 (miniFCU LCD): HDG dashes
 	minifcu:SetHdgDashes()
 
-	-- segment 6: HDG value (only when not dashed)
+	-- MT 5 (miniFCU LCD): HDG value (only when not dashed)
 	if hdg_dash < 1 then
 		minifcu:SetHdgVal(hdg_val)
 	else
 		minifcu:SetHdgVal(0)
 	end
 
-	-- segment 7: HDG dot
+	-- MT 7 (miniFCU LCD): HDG dot
 	minifcu:SetHdgDot()
 
-	-- segment 8: ALT value (ft / 100)
+	-- MT 8 (miniFCU LCD): ALT value (ft / 100)
 	minifcu:SetAltVal(dr_alt:Get() / 100)
 
-	-- segment 9: ALT dot
+	-- MT 9 (miniFCU LCD): ALT dot
 	minifcu:SetAltDot()
 
 	-- VS / FPA mode
 	local is_fpa = (dr_hdgtrk:Get() >= 1)
 	local vs = dr_vs:Get()
 
-	-- segment 10: VS dashes
+	-- MT 12 (miniFCU LCD): VS dashes
 	minifcu:SetVsDashes()
 
 	if is_fpa then
-		-- segment 11: VS value hidden
+		-- MT 10 (miniFCU LCD): VS value hidden
 		minifcu:SetVsVal(0)
-		-- segment 12: FPA value shown
+		-- MT 11 (miniFCU LCD): FPA value shown
 		minifcu:SetFpaVal(vs)
 	else
-		-- segment 11: VS value shown
+		-- MT 10 (miniFCU LCD): VS value shown
 		minifcu:SetVsVal(vs)
-		-- segment 12: FPA value hidden
+		-- MT 11 (miniFCU LCD): FPA value hidden
 		minifcu:SetFpaVal(0)
 	end
 
-	-- segment 13: HDG/TRK mode
+	-- MT 13 (miniFCU LCD): HDG/TRK mode
 	minifcu:SetHdgtrkMode()
 
-	-- EFIS LCD segments
+	-- EFIS LED and LCD (miniEFIS LED and LCD custom device)
 	local baro_unit = dr_baro_unit:Get()
 	local baro = dr_baro:Get()
 
-	-- segment 14: baro unit (inverted: hPa=1 → display 0)
+	-- MT 9 (miniEFIS LED and LCD): baro unit (inverted: hPa=1 → display 0)
 	minifcu:SetBaroUnit(baro_unit == 1 and 0 or 1)
 
-	-- segment 15: baro STD
+	-- MT 8 (miniEFIS LED and LCD): baro STD
 	minifcu:SetBaroStd()
 
-	-- segment 16: QNH label (1 when not STD)
+	-- MT 7 (miniEFIS LED and LCD): QNH label (1 when not STD)
 	local baro_std = dr_baro_std:Get()
 	minifcu:SetQnh(baro_std == 0 and 1 or 0)
 
-	-- segment 17: baro hPa (only in hPa mode)
+	-- MT 11 (miniEFIS LED and LCD): baro hPa (only in hPa mode)
 	if baro_unit == 0 then
 		minifcu:SetBaroHpa(math.floor(baro * 33.864 + 0.5))
 	else
 		minifcu:SetBaroHpa(0)
 	end
 
-	-- segment 18: baro inHg (only in inHg mode)
+	-- MT 10 (miniEFIS LED and LCD): baro inHg (only in inHg mode)
 	if baro_unit == 1 then
 		minifcu:SetBaroInhg(math.floor(baro * 100 + 0.5))
 	else
 		minifcu:SetBaroInhg(0)
 	end
 
-	-- segment 19–23: EFIS flags
+	-- MT 0,1,2,3,4 (miniEFIS LED and LCD): EFIS flags
 	minifcu:SetCstr()
 	minifcu:SetWpt()
 	minifcu:SetVord()
 	minifcu:SetNdb()
 	minifcu:SetArpt()
 
-	-- segment 24–25: FD / LS
+	-- MT 5,6 (miniEFIS LED and LCD): FD / LS
 	minifcu:SetFd()
 	minifcu:SetLs()
 end)

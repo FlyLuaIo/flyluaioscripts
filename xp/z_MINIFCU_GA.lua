@@ -1,5 +1,5 @@
 -- *****************************************************************
--- created by Wei Shuai <cpuwolf@gmail.com> 2026-08-30
+-- created by Wei Shuai <cpuwolf@gmail.com> 2026-10-15
 -- MobiFlight MiniFCU / miniCOCKPIT miniFCU for GA
 -- *****************************************************************
 
@@ -9,6 +9,13 @@ if not minifcu then return end
 -- Do not remove above lines: hardware detection
 
 uluaLog('MobiFlight MiniFCU for GA')
+
+-- 雏形（skeleton）：输出侧只搭骨架。
+--   * 输入位全是 "sim/operation/test_none" 占位，请按机模改。
+--   * 26 条自定义设备通道（miniFCU LCD MessageType 0–13 / miniEFIS LED and LCD 0–11）
+--     的 Get 也用占位 dpath；它们是 kSetCustomDevice(32)，dataref 在
+--     cpuwolf/mf/MiniFCU/custom/<设备>/<MT>/value，值是十进制整数字符串（无小数位）。
+--   * 把 dpath 换成真实数据源后，再打开下面 FrameLoop 里的 Set 调用。
 
 -- INPUT key bindings (keysmap bits from mobiflight/MiniFCU.json)
 
@@ -195,29 +202,135 @@ minifcu:CfgCmd(46, "sim/operation/test_none")
 
 -- OUTPUT data
 
--- output AP1 → output/0/state (0/1)
+-- output AP1 → output/0/state, pin AP1 (0/1)
 minifcu:GetAp1('sim/flightmodel/engine/ENGN_N1_', 1)
 
--- output AP2 → output/1/state (0/1)
+-- output AP2 → output/1/state, pin AP2 (0/1)
 minifcu:GetAp2('sim/flightmodel/engine/ENGN_N1_', 1)
 
--- output APPR → output/2/state (0/1)
+-- output APPR → output/2/state, pin APPR (0/1)
 minifcu:GetAppr('sim/flightmodel/engine/ENGN_N1_', 1)
 
--- output ATHR → output/3/state (0/1)
+-- output ATHR → output/3/state, pin ATHR (0/1)
 minifcu:GetAthr('sim/flightmodel/engine/ENGN_N1_', 1)
 
--- output EXPED → output/4/state (0/1)
+-- output EXPED → output/4/state, pin EXPED (0/1)
 minifcu:GetExped('sim/flightmodel/engine/ENGN_N1_', 1)
 
--- output LOC → output/5/state (0/1)
+-- output LOC → output/5/state, pin LOC (0/1)
 minifcu:GetLoc('sim/flightmodel/engine/ENGN_N1_', 1)
 
+-- MT 0 (miniFCU LCD): SpdVal — SPD value（kts 整数）
+minifcu:GetSpdVal('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 1 (miniFCU LCD): MachVal — MACH value（airspeed*100）
+minifcu:GetMachVal('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 2 (miniFCU LCD): SpdMode — SPD/MACH 模式（1=mach, 0=ias）
+minifcu:GetSpdMode('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 3 (miniFCU LCD): SpdDashes — SPD dashes（1）
+minifcu:GetSpdDashes('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 4 (miniFCU LCD): SpdDot — SPD dot（managed）
+minifcu:GetSpdDot('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 5 (miniFCU LCD): HdgVal — HDG value（360→0）
+minifcu:GetHdgVal('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 6 (miniFCU LCD): HdgDashes — HDG dashes（1）
+minifcu:GetHdgDashes('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 7 (miniFCU LCD): HdgDot — HDG dot（managed）
+minifcu:GetHdgDot('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 8 (miniFCU LCD): AltVal — ALT value（ft/100）
+minifcu:GetAltVal('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 9 (miniFCU LCD): AltDot — ALT dot（managed）
+minifcu:GetAltDot('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 10 (miniFCU LCD): VsVal — VS value
+minifcu:GetVsVal('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 11 (miniFCU LCD): FpaVal — FPA value
+minifcu:GetFpaVal('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 12 (miniFCU LCD): VsDashes — VS dashes（1）
+minifcu:GetVsDashes('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 13 (miniFCU LCD): HdgtrkMode — HDG/TRK 模式（1=TRK）
+minifcu:GetHdgtrkMode('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 0 (miniEFIS LED and LCD): Cstr — CSTR 灯（1=on）
+minifcu:GetCstr('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 1 (miniEFIS LED and LCD): Wpt — WPT 灯（1=on）
+minifcu:GetWpt('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 2 (miniEFIS LED and LCD): Vord — VOR/D 灯（1=on）
+minifcu:GetVord('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 3 (miniEFIS LED and LCD): Ndb — NDB 灯（1=on）
+minifcu:GetNdb('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 4 (miniEFIS LED and LCD): Arpt — ARPT 灯（1=on）
+minifcu:GetArpt('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 5 (miniEFIS LED and LCD): Fd — FD 灯（1=on）
+minifcu:GetFd('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 6 (miniEFIS LED and LCD): Ls — LS 灯（1=on）
+minifcu:GetLs('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 7 (miniEFIS LED and LCD): Qnh — QNH 标签（1）
+minifcu:GetQnh('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 8 (miniEFIS LED and LCD): BaroStd — STD 标志（1=on）
+minifcu:GetBaroStd('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 9 (miniEFIS LED and LCD): BaroUnit — inHg/hPa（1=inHg, 0=hPa）
+minifcu:GetBaroUnit('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 10 (miniEFIS LED and LCD): BaroInhg — BARO inHg（inHg*100 四舍五入）
+minifcu:GetBaroInhg('sim/flightmodel/engine/ENGN_N1_', 1)
+
+-- MT 11 (miniEFIS LED and LCD): BaroHpa — BARO hPa（inHg*33.864 四舍五入）
+minifcu:GetBaroHpa('sim/flightmodel/engine/ENGN_N1_', 1)
+
 GlobalFrameLoopManager:add(function()
+	-- 6 个 LED（源接好后再打开）
 	-- minifcu:SetAp1()
 	-- minifcu:SetAp2()
 	-- minifcu:SetAppr()
 	-- minifcu:SetAthr()
 	-- minifcu:SetExped()
 	-- minifcu:SetLoc()
+	-- minifcu:SetSpdVal()
+	-- minifcu:SetMachVal()
+	-- minifcu:SetSpdMode()
+	-- minifcu:SetSpdDashes()
+	-- minifcu:SetSpdDot()
+	-- minifcu:SetHdgVal()
+	-- minifcu:SetHdgDashes()
+	-- minifcu:SetHdgDot()
+	-- minifcu:SetAltVal()
+	-- minifcu:SetAltDot()
+	-- minifcu:SetVsVal()
+	-- minifcu:SetFpaVal()
+	-- minifcu:SetVsDashes()
+	-- minifcu:SetHdgtrkMode()
+	-- minifcu:SetCstr()
+	-- minifcu:SetWpt()
+	-- minifcu:SetVord()
+	-- minifcu:SetNdb()
+	-- minifcu:SetArpt()
+	-- minifcu:SetFd()
+	-- minifcu:SetLs()
+	-- minifcu:SetQnh()
+	-- minifcu:SetBaroStd()
+	-- minifcu:SetBaroUnit()
+	-- minifcu:SetBaroInhg()
+	-- minifcu:SetBaroHpa()
+	-- 26 条自定义设备通道（同上）
 end)
