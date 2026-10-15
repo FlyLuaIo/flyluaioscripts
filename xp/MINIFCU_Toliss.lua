@@ -1,6 +1,5 @@
 -- *****************************************************************
 -- MobiFlight MiniFCU for Toliss A319/A32X
--- source: mfproj/XP_miniFCU_miniEFIS_Toliss_A319_A32X_pilote_v1.mfproj
 -- *****************************************************************
 
 if ilua_require_toliss() then return end
@@ -33,19 +32,20 @@ local dr_vs         = iDataRef:New("sim/cockpit/autopilot/vertical_velocity")
 local dr_hdgtrk     = iDataRef:New("AirbusFBW/HDGTRKmode")
 
 -- EXPED LED needs raw APVerticalMode for == 113 comparison
-local dr_vmode   = iDataRef:New("AirbusFBW/APVerticalMode")
+local dr_vmode      = iDataRef:New("AirbusFBW/APVerticalMode")
 
 -- EFIS source datarefs (read directly for baro math)
-local dr_baro      = iDataRef:New("sim/cockpit/misc/barometer_setting")
-local dr_baro_unit = iDataRef:New("AirbusFBW/BaroUnitCapt")
-local dr_baro_std  = iDataRef:New("AirbusFBW/BaroStdCapt")
+local dr_baro       = iDataRef:New("sim/cockpit/misc/barometer_setting")
+local dr_baro_unit  = iDataRef:New("AirbusFBW/BaroUnitCapt")
+local dr_baro_std   = iDataRef:New("AirbusFBW/BaroStdCapt")
 
 -- ===================== Baro encoder helper =====================
-
+local baro_cmd_down = uluaFind("sim/instruments/barometer_down")
+local baro_cmd_up   = uluaFind("sim/instruments/barometer_up")
 local function minifcu_baro_enc_left()
 	if dr_baro_unit:Get() == 1 then
 		-- inHg mode
-		uluaCmdOnce(uluaFind("sim/instruments/barometer_down"))
+		uluaCmdOnce(baro_cmd_down)
 	else
 		-- hPa mode
 		local hpa = dr_baro:Get()
@@ -55,7 +55,7 @@ end
 
 local function minifcu_baro_enc_right()
 	if dr_baro_unit:Get() == 1 then
-		uluaCmdOnce(uluaFind("sim/instruments/barometer_up"))
+		uluaCmdOnce(baro_cmd_up)
 	else
 		local hpa = dr_baro:Get()
 		dr_baro:Set(hpa + 1)
@@ -137,8 +137,8 @@ minifcu:CfgVal(41, "ckpt/fcu/adf2Left/anim", 1)
 minifcu:CfgVal(42, "ckpt/fcu/adf2Left/anim", 2)
 
 -- Baro unit select
-minifcu:CfgVal(43, "AirbusFBW/BaroUnitCapt", 1)  -- hPa
-minifcu:CfgVal(44, "AirbusFBW/BaroUnitCapt", 0)  -- inHg
+minifcu:CfgVal(43, "AirbusFBW/BaroUnitCapt", 1) -- hPa
+minifcu:CfgVal(44, "AirbusFBW/BaroUnitCapt", 0) -- inHg
 -- Baro knob
 minifcu:CfgCmd(45, "toliss_airbus/capt_baro_pull")
 minifcu:CfgCmd(46, "toliss_airbus/capt_baro_push")

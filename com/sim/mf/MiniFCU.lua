@@ -8,7 +8,7 @@
 local MiniFCU = oop.class(com.sim.mf.MobiFlight)
 function MiniFCU:init()
 	-- MF bridge assigns qmdev_id at connect (see log). Fallback: ProductName + ModuleSerial from JSON.
-	self.QmdevId = 0x3D141F89
+	self.QmdevId = 0x397A6614
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_minifcu == nil then
 		_G.ilua_hw_assigned_minifcu = 0

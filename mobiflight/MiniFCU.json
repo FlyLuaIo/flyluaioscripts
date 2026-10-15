@@ -2,7 +2,7 @@
   "$schema": "./mobiflight-config.schema.json",
   "ProductName": "MiniFCU",
   "ModuleName": "miniCOCKPIT miniFCU",
-  "ModuleSerial": "SN-1G1-B56",
+  "ModuleSerial": "SN-3GC-D38",
   "outputs": {
     "Output": {
       "AP1": [
