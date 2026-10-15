@@ -108,7 +108,7 @@ wwecam:GetEClrL('AirbusFBW/OHPLightsATA31[42]')
 wwecam:GetEClrR('AirbusFBW/OHPLightsATA31[43]')
 wwecam:GetESts('AirbusFBW/OHPLightsATA31[41]')
 
-wwecam:GetBkl("AirbusFBW/PanelBrightnessLevel", 240)
+wwecam:GetBkl("AirbusFBW/PanelBrightnessLevel", 250)
 
 -- =====Annunciator test
 local dr_test = iDataRef:New("AirbusFBW/AnnunMode") -- 0: DIM 1: BRT 2: test mode
@@ -145,12 +145,11 @@ GlobalFrameLoopManager:add(function()
 		else
 		end
 	end
-
+	-- brightness
+	wwecam:SetBkl()
 	if not isINIA330 and not isINIA340 then
 		wwecam:SetEcam()
 	else
 		wwecam:SetEcamAcDc()
 	end
-	-- brightness
-	wwecam:SetBkl()
 end)
