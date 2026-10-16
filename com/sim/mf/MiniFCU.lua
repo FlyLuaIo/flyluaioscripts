@@ -290,14 +290,13 @@ end
 -- ========
 -- custom device FCU - SPD - DASHES (custom/0/3/value, MessageType 3)
 
-function MiniFCU:GetFcuSpdDashes(dpath, scale)
-	self.d_fcu_spd_dashes_scale = scale == nil and 1 or scale
-	self.d_fcu_spd_dashes = iDataRef:New(dpath)
+function MiniFCU:GetFcuSpdDashes(dpath, revert, base)
+	self.d_fcu_spd_dashes = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetFcuSpdDashes(val)
 	if val == nil then
-		val = self.d_fcu_spd_dashes:Get() * self.d_fcu_spd_dashes_scale
+		val = self.d_fcu_spd_dashes:GetBit()
 		if self.d_fcu_spd_dashes:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_fcu_spd_dashes, val)
 		end
@@ -313,14 +312,13 @@ end
 -- ========
 -- custom device FCU - SPD - DOT (custom/0/4/value, MessageType 4)
 
-function MiniFCU:GetFcuSpdDot(dpath, scale)
-	self.d_fcu_spd_dot_scale = scale == nil and 1 or scale
-	self.d_fcu_spd_dot = iDataRef:New(dpath)
+function MiniFCU:GetFcuSpdDot(dpath, revert, base)
+	self.d_fcu_spd_dot = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetFcuSpdDot(val)
 	if val == nil then
-		val = self.d_fcu_spd_dot:Get() * self.d_fcu_spd_dot_scale
+		val = self.d_fcu_spd_dot:GetBit()
 		if self.d_fcu_spd_dot:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_fcu_spd_dot, val)
 		end
@@ -359,14 +357,13 @@ end
 -- ========
 -- custom device FCU - HDG - DASHES (custom/0/6/value, MessageType 6)
 
-function MiniFCU:GetFcuHdgDashes(dpath, scale)
-	self.d_fcu_hdg_dashes_scale = scale == nil and 1 or scale
-	self.d_fcu_hdg_dashes = iDataRef:New(dpath)
+function MiniFCU:GetFcuHdgDashes(dpath, revert, base)
+	self.d_fcu_hdg_dashes = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetFcuHdgDashes(val)
 	if val == nil then
-		val = self.d_fcu_hdg_dashes:Get() * self.d_fcu_hdg_dashes_scale
+		val = self.d_fcu_hdg_dashes:GetBit()
 		if self.d_fcu_hdg_dashes:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_fcu_hdg_dashes, val)
 		end
@@ -382,14 +379,13 @@ end
 -- ========
 -- custom device FCU - HDG - DOT (custom/0/7/value, MessageType 7)
 
-function MiniFCU:GetFcuHdgDot(dpath, scale)
-	self.d_fcu_hdg_dot_scale = scale == nil and 1 or scale
-	self.d_fcu_hdg_dot = iDataRef:New(dpath)
+function MiniFCU:GetFcuHdgDot(dpath, revert, base)
+	self.d_fcu_hdg_dot = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetFcuHdgDot(val)
 	if val == nil then
-		val = self.d_fcu_hdg_dot:Get() * self.d_fcu_hdg_dot_scale
+		val = self.d_fcu_hdg_dot:GetBit()
 		if self.d_fcu_hdg_dot:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_fcu_hdg_dot, val)
 		end
@@ -428,14 +424,13 @@ end
 -- ========
 -- custom device FCU - ALT - DOT (custom/0/9/value, MessageType 9)
 
-function MiniFCU:GetFcuAltDot(dpath, scale)
-	self.d_fcu_alt_dot_scale = scale == nil and 1 or scale
-	self.d_fcu_alt_dot = iDataRef:New(dpath)
+function MiniFCU:GetFcuAltDot(dpath, revert, base)
+	self.d_fcu_alt_dot = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetFcuAltDot(val)
 	if val == nil then
-		val = self.d_fcu_alt_dot:Get() * self.d_fcu_alt_dot_scale
+		val = self.d_fcu_alt_dot:GetBit()
 		if self.d_fcu_alt_dot:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_fcu_alt_dot, val)
 		end
@@ -519,14 +514,13 @@ end
 -- ========
 -- custom device FCU - HDG/TRK MODE (custom/0/13/value, MessageType 13)
 
-function MiniFCU:GetFcuHdgTrkMode(dpath, scale)
-	self.d_fcu_hdg_trk_mode_scale = scale == nil and 1 or scale
-	self.d_fcu_hdg_trk_mode = iDataRef:New(dpath)
+function MiniFCU:GetFcuHdgTrkMode(dpath, revert, base)
+	self.d_fcu_hdg_trk_mode = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetFcuHdgTrkMode(val)
 	if val == nil then
-		val = self.d_fcu_hdg_trk_mode:Get() * self.d_fcu_hdg_trk_mode_scale
+		val = self.d_fcu_hdg_trk_mode:GetBit()
 		if self.d_fcu_hdg_trk_mode:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_fcu_hdg_trk_mode, val)
 		end
@@ -586,14 +580,13 @@ end
 -- ========
 -- custom device EFIS - VORD (custom/1/2/value, MessageType 2)
 
-function MiniFCU:GetEfisVord(dpath, scale)
-	self.d_efis_vord_scale = scale == nil and 1 or scale
-	self.d_efis_vord = iDataRef:New(dpath)
+function MiniFCU:GetEfisVord(dpath, revert, base)
+	self.d_efis_vord = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetEfisVord(val)
 	if val == nil then
-		val = self.d_efis_vord:Get() * self.d_efis_vord_scale
+		val = self.d_efis_vord:GetBit()
 		if self.d_efis_vord:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_efis_vord, val)
 		end
@@ -609,14 +602,13 @@ end
 -- ========
 -- custom device EFIS - NDB (custom/1/3/value, MessageType 3)
 
-function MiniFCU:GetEfisNdb(dpath, scale)
-	self.d_efis_ndb_scale = scale == nil and 1 or scale
-	self.d_efis_ndb = iDataRef:New(dpath)
+function MiniFCU:GetEfisNdb(dpath, revert, base)
+	self.d_efis_ndb = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetEfisNdb(val)
 	if val == nil then
-		val = self.d_efis_ndb:Get() * self.d_efis_ndb_scale
+		val = self.d_efis_ndb:GetBit()
 		if self.d_efis_ndb:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_efis_ndb, val)
 		end
@@ -632,14 +624,13 @@ end
 -- ========
 -- custom device EFIS - ARPT (custom/1/4/value, MessageType 4)
 
-function MiniFCU:GetEfisArpt(dpath, scale)
-	self.d_efis_arpt_scale = scale == nil and 1 or scale
-	self.d_efis_arpt = iDataRef:New(dpath)
+function MiniFCU:GetEfisArpt(dpath, revert, base)
+	self.d_efis_arpt = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetEfisArpt(val)
 	if val == nil then
-		val = self.d_efis_arpt:Get() * self.d_efis_arpt_scale
+		val = self.d_efis_arpt:GetBit()
 		if self.d_efis_arpt:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_efis_arpt, val)
 		end

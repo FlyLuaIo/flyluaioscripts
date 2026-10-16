@@ -162,7 +162,7 @@ else
 end
 -- ALT 100/1000 [Q15]：miniFCU 是瞬时按键 —— 按住 = 1000 ft 步长，松开回 100 ft。
 --   参考档行 89 本来就是 press=1 / release=0（不是拨杆语义），故逐字保留同样的变量名。
-minifcu:CfgRpn(17, '1 (>L:ASAB_AB_AP_ALTSTEP)', '0 (>L:ASAB_AB_AP_ALTSTEP)')
+minifcu:CfgRpn(17, '0 (>L:ASAB_AB_AP_ALTSTEP)', '1 (>L:ASAB_AB_AP_ALTSTEP)')
 
 -- ===========================================================
 -- INPUT：EFIS 半区机长侧（bit 18–46）
@@ -465,7 +465,7 @@ GlobalFrameLoopManager:add(function()
 
 	-- MT 3 / MT 4：dashed 与 managed 点（虚线时不留点，与参考档行 364–380 一致）
 	minifcu:SetFcuSpdDashes(spd_dash)
-	minifcu:SetFcuSpdDot((spd_mgd == 1 and spd_dash == 0) and 1 or 0)
+	minifcu:SetFcuSpdDot()
 
 	-- MT 5 / MT 6 / MT 7：HDG（判据照抄参考档 digi_disp_set_HDG()，行 398–427）
 	--   参考档在 TRK/FPA 模式下把 heading 换成 track，但两者读的是同一变量
@@ -486,7 +486,7 @@ GlobalFrameLoopManager:add(function()
 		minifcu:SetFcuHdgValue(math.floor(hdg_win))
 	end
 	minifcu:SetFcuHdgDashes(hdg_dash)
-	minifcu:SetFcuHdgDot((hdg_mgd == 1 and hdg_dash == 0) and 1 or 0)
+	minifcu:SetFcuHdgDot()
 	-- MT 13：HDG/TRK 模式（参考档行 408：== 1 → TRK）
 	minifcu:SetFcuHdgTrkMode(trkfpa == 1 and 1 or 0)
 
