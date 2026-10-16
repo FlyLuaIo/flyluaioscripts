@@ -203,22 +203,22 @@ minifcu:CfgCmd(46, "sim/operation/test_none")
 -- OUTPUT data
 
 -- output AP1 → output/0/state, pin AP1 (0/1)
-minifcu:GetAp1('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetAp1('sim/flightmodel/engine/ENGN_N1_')
 
 -- output AP2 → output/1/state, pin AP2 (0/1)
-minifcu:GetAp2('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetAp2('sim/flightmodel/engine/ENGN_N1_')
 
 -- output APPR → output/2/state, pin APPR (0/1)
-minifcu:GetAppr('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetAppr('sim/flightmodel/engine/ENGN_N1_')
 
 -- output ATHR → output/3/state, pin ATHR (0/1)
-minifcu:GetAthr('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetAthr('sim/flightmodel/engine/ENGN_N1_')
 
 -- output EXPED → output/4/state, pin EXPED (0/1)
-minifcu:GetExped('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetExped('sim/flightmodel/engine/ENGN_N1_')
 
 -- output LOC → output/5/state, pin LOC (0/1)
-minifcu:GetLoc('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetLoc('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 0 (miniFCU LCD): FcuSpdValue — SPD value（kts 整数）
 minifcu:GetFcuSpdValue('sim/flightmodel/engine/ENGN_N1_', 1)

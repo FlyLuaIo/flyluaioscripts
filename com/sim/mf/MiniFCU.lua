@@ -79,14 +79,13 @@ end
 
 -- Channel state 0–255 ↔ kSetPin (0=LOW, 255=HIGH, 1–254=PWM)
 
-function MiniFCU:GetAp1(dpath, scale)
-	self.d_ap1_scale = scale == nil and 255 or scale
-	self.d_ap1 = iDataRef:New(dpath)
+function MiniFCU:GetAp1(dpath, revert, base)
+	self.d_ap1 = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetAp1(val)
 	if val == nil then
-		val = self.d_ap1:Get() * self.d_ap1_scale
+		val = self.d_ap1:GetBit() * 255
 		if self.d_ap1:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_output_ap1, val)
 		end
@@ -104,14 +103,13 @@ end
 
 -- Channel state 0–255 ↔ kSetPin (0=LOW, 255=HIGH, 1–254=PWM)
 
-function MiniFCU:GetAp2(dpath, scale)
-	self.d_ap2_scale = scale == nil and 255 or scale
-	self.d_ap2 = iDataRef:New(dpath)
+function MiniFCU:GetAp2(dpath, revert, base)
+	self.d_ap2 = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetAp2(val)
 	if val == nil then
-		val = self.d_ap2:Get() * self.d_ap2_scale
+		val = self.d_ap2:GetBit() * 255
 		if self.d_ap2:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_output_ap2, val)
 		end
@@ -129,14 +127,13 @@ end
 
 -- Channel state 0–255 ↔ kSetPin (0=LOW, 255=HIGH, 1–254=PWM)
 
-function MiniFCU:GetAppr(dpath, scale)
-	self.d_appr_scale = scale == nil and 255 or scale
-	self.d_appr = iDataRef:New(dpath)
+function MiniFCU:GetAppr(dpath, revert, base)
+	self.d_appr = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetAppr(val)
 	if val == nil then
-		val = self.d_appr:Get() * self.d_appr_scale
+		val = self.d_appr:GetBit() * 255
 		if self.d_appr:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_output_appr, val)
 		end
@@ -202,14 +199,13 @@ end
 
 -- Channel state 0–255 ↔ kSetPin (0=LOW, 255=HIGH, 1–254=PWM)
 
-function MiniFCU:GetLoc(dpath, scale)
-	self.d_loc_scale = scale == nil and 255 or scale
-	self.d_loc = iDataRef:New(dpath)
+function MiniFCU:GetLoc(dpath, revert, base)
+	self.d_loc = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetLoc(val)
 	if val == nil then
-		val = self.d_loc:Get() * self.d_loc_scale
+		val = self.d_loc:GetBit() * 255
 		if self.d_loc:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_output_loc, val)
 		end
