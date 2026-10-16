@@ -11,14 +11,6 @@ if not minifcu then return end
 
 uluaLog('MobiFlight MiniFCU for Toliss')
 
---
--- LCD/LED 接口: 26 条自定义设备通道，走 kSetCustomDevice(32)：
---   miniFCU LCD           MessageType 0–13  ← cpuwolf/mf/MiniFCU/custom/0/0..13/value
---   miniEFIS LED and LCD  MessageType 0–11  ← cpuwolf/mf/MiniFCU/custom/1/0..11/value
--- 通道值是十进制整数字符串，所以数值通道在写 dataref 前按 .mfproj 里 Connector 的 Modifiers
--- 对齐（ALT=ft/100、MACH=airspeed*100、BARO=inHg*33.864 四舍五入）；dataref 是 int，
--- 没有小数位，浮点写入会被截断。
--- 线上设备序号 = 板上 type=17 设备的出现次序，与上面的 0/1 分组序号通常一致。
 -- ===================== DataRefs =====================
 
 -- FCU LCD source datarefs (read directly in FrameLoop for conditional logic)
@@ -176,7 +168,7 @@ minifcu:GetAppr('AirbusFBW/APPRilluminated')
 -- MT 2 (miniFCU LCD): SPD/MACH mode (1=mach, 0=ias)
 minifcu:GetFcuSpdMachMode('sim/cockpit/autopilot/airspeed_is_mach')
 -- MT 1 (miniFCU LCD): MACH value (ias * 100, shown when mach mode)
-minifcu:GetFcuMachValue('sim/cockpit/autopilot/airspeed')
+minifcu:GetFcuMachValue('sim/cockpit/autopilot/airspeed', 100)
 -- MT 3 (miniFCU LCD): SPD dashes
 minifcu:GetFcuSpdDashes('AirbusFBW/SPDdashed')
 -- MT 0 (miniFCU LCD): SPD value (kts, shown when not mach & not dashed)
@@ -234,7 +226,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetLoc()
 	minifcu:SetAppr()
 
-	-- EXPED LED: APVerticalMode == 113
+	-- EXPED LED
 	minifcu:SetExped()
 
 	-- FCU LCD (miniFCU LCD custom device)
@@ -243,11 +235,11 @@ GlobalFrameLoopManager:add(function()
 	local ias = dr_ias:Get()
 
 	-- MT 2 (miniFCU LCD): SPD/MACH mode
-	minifcu:SetFcuSpdMachMode(is_mach)
+	minifcu:SetFcuSpdMachMode()
 
 	-- MT 1 (miniFCU LCD): MACH value (ias * 100, only in mach mode)
 	if is_mach >= 1 and spd_dash < 1 then
-		minifcu:SetFcuMachValue(ias * 100)
+		minifcu:SetFcuMachValue(ias * 100 + 0.5)
 	else
 		minifcu:SetFcuMachValue(0)
 	end
@@ -266,19 +258,11 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuSpdDot()
 
 	-- HDG
-	local hdg_dash = dr_hdg_dashed:Get()
-	local hdg_val = dr_hdg:Get()
-	if hdg_val == 360 then hdg_val = 0 end
-
-	-- MT 6 (miniFCU LCD): HDG dashes
 	minifcu:SetFcuHdgDashes()
 
 	-- MT 5 (miniFCU LCD): HDG value (only when not dashed)
-	if hdg_dash < 1 then
-		minifcu:SetFcuHdgValue(hdg_val)
-	else
-		minifcu:SetFcuHdgValue(0)
-	end
+	minifcu:SetFcuHdgValue()
+
 
 	-- MT 7 (miniFCU LCD): HDG dot
 	minifcu:SetFcuHdgDot()
