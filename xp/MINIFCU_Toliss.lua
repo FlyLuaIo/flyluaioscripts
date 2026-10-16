@@ -198,7 +198,7 @@ minifcu:GetFcuVsDashes('AirbusFBW/VSdashed')
 -- MT 10 (miniFCU LCD): VS value (shown when VS mode)
 minifcu:GetFcuVsValue('sim/cockpit/autopilot/vertical_velocity')
 -- MT 11 (miniFCU LCD): FPA value (shown when FPA mode)
-minifcu:GetFcuFpaValue('sim/cockpit/autopilot/vertical_velocity')
+minifcu:GetFcuFpaValue('sim/cockpit/autopilot/vertical_velocity', 1)
 -- MT 13 (miniFCU LCD): HDG/TRK mode label
 minifcu:GetFcuHdgTrkMode('AirbusFBW/HDGTRKmode')
 
@@ -292,7 +292,7 @@ GlobalFrameLoopManager:add(function()
 		-- MT 10 (miniFCU LCD): VS value hidden
 		minifcu:SetFcuVsValue(0)
 		-- MT 11 (miniFCU LCD): FPA value shown
-		minifcu:SetFcuFpaValue(vs)
+		minifcu:SetFcuFpaValue()
 	else
 		-- MT 10 (miniFCU LCD): VS value shown
 		minifcu:SetFcuVsValue(vs)

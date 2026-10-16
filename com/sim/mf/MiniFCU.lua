@@ -470,7 +470,7 @@ end
 -- custom device FCU - FPA VALUE (custom/0/11/value, MessageType 11)
 
 function MiniFCU:GetFcuFpaValue(dpath, scale)
-	self.d_fcu_fpa_value_scale = scale == nil and 1 or scale
+	self.d_fcu_fpa_value_scale = scale == nil and 1000 or scale
 	self.d_fcu_fpa_value = iDataRef:New(dpath)
 end
 

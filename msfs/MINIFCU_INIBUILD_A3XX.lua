@@ -412,7 +412,7 @@ GlobalFrameLoopManager:add(function()
 		minifcu:SetFcuFpaValue(0)
 	elseif is_fpa then
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(dr_fpa:Get())
+		minifcu:SetFcuFpaValue()
 	else
 		minifcu:SetFcuVsValue(dr_vs:Get())
 		minifcu:SetFcuFpaValue(0)

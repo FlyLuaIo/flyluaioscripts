@@ -269,7 +269,7 @@ minifcu:GetFcuAltDot('(L:I_FCU_ALTITUDE_MANAGED)')
 -- MT 10 VS 值（fpm，TRK/FPA 模式下隐藏）
 minifcu:GetFcuVsValue('(L:N_FCU_VS)')
 -- MT 11 FPA 值（度，TRK/FPA 模式下显示）
-minifcu:GetFcuFpaValue('(L:N_FCU_VS)')
+minifcu:GetFcuFpaValue('(L:N_FCU_VS)', 1)
 -- MT 12 VS dashed
 minifcu:GetFcuVsDashes('(L:B_FCU_VERTICALSPEED_DASHED)')
 -- MT 13 HDG/TRK 模式（1 = TRK）
@@ -350,7 +350,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuVsDashes()
 	if is_fpa then
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(vs_fpa / 1000)
+		minifcu:SetFcuFpaValue()
 	else
 		minifcu:SetFcuVsValue(vs_fpa)
 		minifcu:SetFcuFpaValue(0)

@@ -238,7 +238,7 @@ minifcu:GetFcuAltDot('(L:FSL_FCU_ALT_MANAGED)')
 -- MT 10 VS 值（fpm，TRK/FPA 模式下隐藏）
 minifcu:GetFcuVsValue('(L:FSL_FCU_VS)')
 -- MT 11 FPA 值（度，TRK/FPA 模式下显示；帧循环里把 FPA × 10 还原成度）
-minifcu:GetFcuFpaValue('(L:FSL_FCU_VS)')
+minifcu:GetFcuFpaValue('(L:FSL_FCU_VS)', 100)
 -- MT 12 VS dashed
 minifcu:GetFcuVsDashes('(L:FSL_FCU_VS_DASHED)')
 -- MT 13 HDG/TRK 模式（1 = TRK）
@@ -315,7 +315,7 @@ GlobalFrameLoopManager:add(function()
 	if is_fpa then
 		-- TRK/FPA 模式：L:FSL_FCU_VS 存 FPA × 10（见文件头说明），MT11 要的是度
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(dr_vs:Get() / 10)
+		minifcu:SetFcuFpaValue()
 	else
 		-- VS 模式：带符号 fpm
 		minifcu:SetFcuVsValue(dr_vs:Get())

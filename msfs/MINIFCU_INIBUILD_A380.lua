@@ -366,7 +366,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuVsDashes(dr_vs_dashed:Get() >= 1 and 1 or 0)
 	if is_fpa then
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(dr_fpa:Get())
+		minifcu:SetFcuFpaValue()
 	else
 		minifcu:SetFcuVsValue(dr_vs:Get())
 		minifcu:SetFcuFpaValue(0)
