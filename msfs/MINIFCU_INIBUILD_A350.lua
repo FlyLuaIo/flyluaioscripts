@@ -58,33 +58,33 @@ uluaLog('MobiFlight MiniFCU for iniBuilds A350')
 -- INPUT：FCU 半区（bit 0–17）
 
 -- SPD/MACH 显示切换 [Q55]
-minifcu:CfgRpn(0, '1 (>L:INI_SPD_MACH_BUTTON)') -- [Q55]
+minifcu:CfgRpn(0, '1 (>L:INI_SPD_MACH_BUTTON)')                           -- [Q55]
 -- HDG/TRK ↔ VS/FPA 切换 [Q54]
-minifcu:CfgRpn(1, '1 (>L:INI_FCU_HDG_VS_COMMAND)') -- [Q54]
+minifcu:CfgRpn(1, '1 (>L:INI_FCU_HDG_VS_COMMAND)')                        -- [Q54]
 -- AP1 / AP2
-minifcu:CfgRpn(2, '1 (>L:INI_AP1_BUTTON)') -- [Q10]
-minifcu:CfgRpn(3, '1 (>L:INI_AP2_BUTTON)') -- [Q9]
+minifcu:CfgRpn(2, '1 (>L:INI_AP1_BUTTON)')                                -- [Q10]
+minifcu:CfgRpn(3, '1 (>L:INI_AP2_BUTTON)')                                -- [Q9]
 -- METRIC ALT [Q14]
 minifcu:CfgRpn(4, '(L:INI_FCU_METRIC_STATE) ! (>L:INI_FCU_METRIC_STATE)') -- [Q14]
 -- A/THR [Q11]
-minifcu:CfgRpn(5, '1 (>L:AP8_BUTTON)') -- [Q11]
+minifcu:CfgRpn(5, '1 (>L:AP8_BUTTON)')                                    -- [Q11]
 -- EXPED [Q12]（参考档是 CfgVal：按下发 1、松开发 0；事件名逐字继承）
-minifcu:CfgVal(6, 'B:AIRLINER_FCU_ALT', 1, 0) -- [Q12]
+minifcu:CfgVal(6, 'B:AIRLINER_FCU_ALT', 1, 0)                             -- [Q12]
 -- LOC / APPR
-minifcu:CfgRpn(7, '1 (>L:AP6_BUTTON)') -- [Q8]
-minifcu:CfgRpn(8, '1 (>L:AP7_BUTTON)') -- [Q13]
+minifcu:CfgRpn(7, '1 (>L:AP6_BUTTON)')                                    -- [Q8]
+minifcu:CfgRpn(8, '1 (>L:AP7_BUTTON)')                                    -- [Q13]
 -- SPD PUSH / PULL
-minifcu:CfgVal(9, 'B:AIRLINER_FCU_SPD_KNOB_Push', 1, 0) -- [Q2]
-minifcu:CfgVal(10, 'B:AIRLINER_FCU_SPD_KNOB_Pull', 1, 0) -- [Q3]
+minifcu:CfgVal(9, 'B:AIRLINER_FCU_SPD_KNOB_Push', 1, 0)                   -- [Q2]
+minifcu:CfgVal(10, 'B:AIRLINER_FCU_SPD_KNOB_Pull', 1, 0)                  -- [Q3]
 -- HDG PUSH / PULL
-minifcu:CfgVal(11, 'B:AIRLINER_FCU_HDG_KNOB_Push', 1, 0) -- [Q6]
-minifcu:CfgVal(12, 'B:AIRLINER_FCU_HDG_KNOB_Pull', 1, 0) -- [Q7]
+minifcu:CfgVal(11, 'B:AIRLINER_FCU_HDG_KNOB_Push', 1, 0)                  -- [Q6]
+minifcu:CfgVal(12, 'B:AIRLINER_FCU_HDG_KNOB_Pull', 1, 0)                  -- [Q7]
 -- ALT PUSH / PULL
-minifcu:CfgVal(13, 'B:AIRLINER_FCU_ALT_KNOB_Push', 1, 0) -- [Q18]
-minifcu:CfgVal(14, 'B:AIRLINER_FCU_ALT_KNOB_Pull', 1, 0) -- [Q19]
+minifcu:CfgVal(13, 'B:AIRLINER_FCU_ALT_KNOB_Push', 1, 0)                  -- [Q18]
+minifcu:CfgVal(14, 'B:AIRLINER_FCU_ALT_KNOB_Pull', 1, 0)                  -- [Q19]
 -- VS PUSH / PULL
-minifcu:CfgVal(15, 'B:AIRLINER_FCU_VS_KNOB_Push', 1, 0) -- [Q22]
-minifcu:CfgVal(16, 'B:AIRLINER_FCU_VS_KNOB_Pull', 1, 0) -- [Q23]
+minifcu:CfgVal(15, 'B:AIRLINER_FCU_VS_KNOB_Push', 1, 0)                   -- [Q22]
+minifcu:CfgVal(16, 'B:AIRLINER_FCU_VS_KNOB_Pull', 1, 0)                   -- [Q23]
 -- ALT 100/1000 [Q15]：miniFCU 是瞬时按键 —— 按住 = 1000 ft 步长，松开回 100 ft
 --   （参考档 CfgPSw(15, psw, 0, 1)：按下期望 0 / 松开期望 1，这里按规格反过来写 1 / 0；
 --     变量名与 B 事件逐字沿用参考档，MSFS_VERSION 分支同参考档）
@@ -102,13 +102,13 @@ end
 -- INPUT：EFIS 半区机长侧（bit 18–46）
 
 -- 导航点过滤键
-minifcu:CfgRpn(18, '1 (>L:INI_EFIS_CPT_CSTR_BUTTON)')  -- [Q35] CSTR
-minifcu:CfgRpn(19, '1 (>L:INI_EFIS_CPT_FIXES_BUTTON)') -- [Q36] WPT
-minifcu:CfgRpn(20, '1 (>L:INI_EFIS_CPT_VOR_BUTTON)')   -- [Q37] VOR D
-minifcu:CfgRpn(21, '1 (>L:INI_EFIS_CPT_NDB_BUTTON)')   -- [Q38] NDB
-minifcu:CfgRpn(22, '1 (>L:INI_EFIS_CPT_ARPT_BUTTON)')  -- [Q39] ARPT
+minifcu:CfgRpn(18, '1 (>L:INI_EFIS_CPT_CSTR_BUTTON)')                -- [Q35] CSTR
+minifcu:CfgRpn(19, '1 (>L:INI_EFIS_CPT_FIXES_BUTTON)')               -- [Q36] WPT
+minifcu:CfgRpn(20, '1 (>L:INI_EFIS_CPT_VOR_BUTTON)')                 -- [Q37] VOR D
+minifcu:CfgRpn(21, '1 (>L:INI_EFIS_CPT_NDB_BUTTON)')                 -- [Q38] NDB
+minifcu:CfgRpn(22, '1 (>L:INI_EFIS_CPT_ARPT_BUTTON)')                -- [Q39] ARPT
 -- FD（参考档这个键是 VV：CfgVal 含 release = nil）
-minifcu:CfgVal(23, 'B:AIRLINER_EFIS_VV_LEFT', 1, nil) -- [Q40] FD
+minifcu:CfgVal(23, 'B:AIRLINER_EFIS_VV_LEFT', 1, nil)                -- [Q40] FD
 -- LS
 minifcu:CfgRpn(24, '(L:INI_LS_CAPTAIN, Bool) ! (>L:INI_LS_CAPTAIN)') -- [Q41] LS
 -- bit 25 CHRONO：QFCU 面板无此键、参考档里也没有对应事件/L 变量
@@ -132,10 +132,10 @@ minifcu:CfgRpn(36, '10 (>L:INI_MAP_RANGE_CAPT_SWITCH)') -- [Q34] 320
 -- VOR/ADF 选择 1 与 2 [Q42–Q45]：QFCU 是两档拨杆，miniFCU 是 ADF / OFF / VOR 三个独立按键
 if MSFS_VERSION == 1 then
 	-- 37（ADF 1）= Q42 press；38（OFF 1）= Q42 的 release；39（VOR 1）= Q43 press；40/41/42 = Q44/Q45
-	minifcu:CfgRpn(37, '0 (>L:INI_VOR_ADF1_CAPT_STATE)') -- [Q42] ADF 1
+	minifcu:CfgRpn(37, '0 (>L:INI_VOR_ADF1_CAPT_STATE)')                                         -- [Q42] ADF 1
 	minifcu:CfgRpn(38, '(L:INI_CPT_VOR1_ACTIVE) 0 != if{ 1 (>B:AIRLINER_EFIS_BSK_1_LEFT_Toggle) }') -- [Q42] OFF 1
 	minifcu:CfgRpn(39, '(L:INI_CPT_VOR1_ACTIVE) 1 != if{ 1 (>B:AIRLINER_EFIS_BSK_1_LEFT_Toggle) }') -- [Q43] VOR 1
-	minifcu:CfgRpn(40, '0 (>L:INI_VOR_ADF2_CAPT_STATE)') -- [Q44] ADF 2
+	minifcu:CfgRpn(40, '0 (>L:INI_VOR_ADF2_CAPT_STATE)')                                         -- [Q44] ADF 2
 	minifcu:CfgRpn(41, '(L:INI_CPT_VOR2_ACTIVE) 0 != if{ 1 (>B:AIRLINER_EFIS_BSK_5_LEFT_Toggle) }') -- [Q44] OFF 2
 	minifcu:CfgRpn(42, '(L:INI_CPT_VOR2_ACTIVE) 1 != if{ 1 (>B:AIRLINER_EFIS_BSK_5_LEFT_Toggle) }') -- [Q45] VOR 2
 else
@@ -157,8 +157,8 @@ if MSFS_VERSION == 1 then
 	minifcu:CfgVal(45, 'B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_PULL', 1, 0) -- [Q49] PULL
 	minifcu:CfgVal(46, 'B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_PUSH', 1, 0) -- [Q48] PUSH
 else
-	minifcu:CfgRpn(45, '1 (>L:INI_1_ALTIMETER_PULL_COMMAND)') -- [Q49] PULL
-	minifcu:CfgRpn(46, '1 (>L:INI_1_ALTIMETER_PUSH_COMMAND)') -- [Q48] PUSH
+	minifcu:CfgRpn(45, '1 (>L:INI_1_ALTIMETER_PULL_COMMAND)')                -- [Q49] PULL
+	minifcu:CfgRpn(46, '1 (>L:INI_1_ALTIMETER_PUSH_COMMAND)')                -- [Q48] PUSH
 end
 
 -- ===========================================================
@@ -172,24 +172,35 @@ end
 -- 单击效果等价，只是丢掉快转累加。
 
 -- ALT 编码器 [Q16 / Q17]
-minifcu:CfgEnc(47, 49, 'B:AIRLINER_FCU_ALT_KNOB')
-minifcu:CfgEnc(48, 50, 'B:AIRLINER_FCU_ALT_KNOB')
+minifcu:CfgRpn(47, '1 (>B:AIRLINER_FCU_ALT_KNOB_Dec)')
+minifcu:CfgRpn(48, '1 (>B:AIRLINER_FCU_ALT_KNOB_Dec)')
+minifcu:CfgRpn(49, '1 (>B:AIRLINER_FCU_ALT_KNOB_Inc)')
+minifcu:CfgRpn(50, '1 (>B:AIRLINER_FCU_ALT_KNOB_Inc)')
 
 -- SPD 编码器 [Q0 / Q1]
-minifcu:CfgEnc(51, 53, 'B:AIRLINER_FCU_SPD_KNOB')
-minifcu:CfgEnc(52, 54, 'B:AIRLINER_FCU_SPD_KNOB')
+minifcu:CfgRpn(51, '1 (>B:AIRLINER_FCU_SPD_KNOB_Dec)')
+minifcu:CfgRpn(53, '1 (>B:AIRLINER_FCU_SPD_KNOB_Inc)')
+
+minifcu:CfgRpn(52, '1 (>B:AIRLINER_FCU_SPD_KNOB_Dec)')
+minifcu:CfgRpn(54, '1 (>B:AIRLINER_FCU_SPD_KNOB_Inc)')
 
 -- HDG 编码器 [Q4 / Q5]
-minifcu:CfgEnc(55, 57, 'B:AIRLINER_FCU_HDG_KNOB')
-minifcu:CfgEnc(56, 58, 'B:AIRLINER_FCU_HDG_KNOB')
+minifcu:CfgRpn(55, '1 (>B:AIRLINER_FCU_HDG_KNOB_Dec)')
+minifcu:CfgRpn(56, '1 (>B:AIRLINER_FCU_HDG_KNOB_Dec)')
+minifcu:CfgRpn(57, '1 (>B:AIRLINER_FCU_HDG_KNOB_Inc)')
+minifcu:CfgRpn(58, '1 (>B:AIRLINER_FCU_HDG_KNOB_Inc)')
 
 -- VS 编码器 [Q20 / Q21]
-minifcu:CfgEnc(59, 61, 'B:AIRLINER_FCU_VS_KNOB')
-minifcu:CfgEnc(60, 62, 'B:AIRLINER_FCU_VS_KNOB')
+minifcu:CfgRpn(59, '1 (>B:AIRLINER_FCU_VS_KNOB_Dec)')
+minifcu:CfgRpn(60, '1 (>B:AIRLINER_FCU_VS_KNOB_Dec)')
+minifcu:CfgRpn(61, '1 (>B:AIRLINER_FCU_VS_KNOB_Inc)')
+minifcu:CfgRpn(62, '1 (>B:AIRLINER_FCU_VS_KNOB_Inc)')
 
 -- BARO 编码器（机长侧）[Q46 / Q47]
-minifcu:CfgEnc(63, 65, 'B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT')
-minifcu:CfgEnc(64, 66, 'B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT')
+minifcu:CfgRpn(63, '1 (>B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_Dec)')
+minifcu:CfgRpn(64, '1 (>B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_Dec)')
+minifcu:CfgRpn(65, '1 (>B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_Inc)')
+minifcu:CfgRpn(66, '1 (>B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_Inc)')
 
 
 -- ===========================================================
@@ -224,10 +235,10 @@ local dr_vs_dashed  = iDataRef:New('(L:INI_FCU_VS_DASHED)')
 -- EFIS 机长侧气压：1 = hPa、0 = inHg；XMLVAR_Baro1_Mode 2 或 3 为 STD（参考档判据）
 -- 值通道直接用参考档的表达式：mode > 2 时给 99（由 STD 标志接管显示），
 -- 否则按单位给 inHg×100（0.005 偏置后 near）或 mbar（near）
-local dr_baro = iDataRef:New(
+local dr_baro       = iDataRef:New(
 	'(L:XMLVAR_Baro1_Mode) 2 > if{ 99 } els{ (L:XMLVAR_Baro_Selector_HPA_1,bool) ! if{ (A:KOHLSMAN SETTING HG, inHg) 0.005 - 100 * near } els{ (A:KOHLSMAN SETTING HG, mbar) near } }')
-local dr_baro_unit = iDataRef:New('(L:XMLVAR_Baro_Selector_HPA_1)') -- 1 = hPa
-local dr_baro_std  = iDataRef:New('(L:XMLVAR_Baro1_Mode)')
+local dr_baro_unit  = iDataRef:New('(L:XMLVAR_Baro_Selector_HPA_1)') -- 1 = hPa
+local dr_baro_std   = iDataRef:New('(L:XMLVAR_Baro1_Mode)')
 
 -- ===========================================================
 -- OUTPUT：6 个 LED pin（源取自参考档）
@@ -340,9 +351,9 @@ GlobalFrameLoopManager:add(function()
 	end
 
 	-- MT 5 / MT 6 / MT 7：HDG（TRK/FPA 模式下取 INI_TRK_DIAL，与参考档 digi_disp_set_HDG 一致）
-	local hdgtrk   = safe_get(dr_hdgtrk)
-	local is_fpa   = (hdgtrk == 1)
-	local hdg_val  = safe_get(dr_hdg)
+	local hdgtrk  = safe_get(dr_hdgtrk)
+	local is_fpa  = (hdgtrk == 1)
+	local hdg_val = safe_get(dr_hdg)
 	if is_fpa then
 		hdg_val = safe_get(dr_trk)
 	end
@@ -377,8 +388,8 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuLsValue()
 
 	-- 气压：STD / QNH 标签 / 单位 / 两个值通道（两个值都算，切单位时不会读到陈旧值）
-	local baro_mode = safe_get(dr_baro_std)  -- (L:XMLVAR_Baro1_Mode)
-	local baro_hpa  = safe_get(dr_baro_unit) -- (L:XMLVAR_Baro_Selector_HPA_1) 1 = hPa
+	local baro_mode = safe_get(dr_baro_std)           -- (L:XMLVAR_Baro1_Mode)
+	local baro_hpa  = safe_get(dr_baro_unit)          -- (L:XMLVAR_Baro_Selector_HPA_1) 1 = hPa
 	local baro_raw  = safe_get(dr_baro)
 	local is_std    = (baro_mode == 2 or baro_mode == 3) -- 参考档判据
 
