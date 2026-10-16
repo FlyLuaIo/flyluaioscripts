@@ -140,15 +140,23 @@ minifcu:CfgCmd(46, "toliss_airbus/capt_baro_push")
 -- ALT encoder
 minifcu:CfgCmd(47, "sim/autopilot/altitude_down")
 minifcu:CfgCmd(49, "sim/autopilot/altitude_up")
+minifcu:CfgCmd(48, "sim/autopilot/altitude_down")
+minifcu:CfgCmd(50, "sim/autopilot/altitude_up")
 -- SPD encoder
 minifcu:CfgCmd(51, "sim/autopilot/airspeed_down")
 minifcu:CfgCmd(53, "sim/autopilot/airspeed_up")
+minifcu:CfgCmd(52, "sim/autopilot/airspeed_down")
+minifcu:CfgCmd(54, "sim/autopilot/airspeed_up")
 -- HDG encoder
 minifcu:CfgCmd(55, "sim/autopilot/heading_down")
 minifcu:CfgCmd(57, "sim/autopilot/heading_up")
+minifcu:CfgCmd(56, "sim/autopilot/heading_down")
+minifcu:CfgCmd(58, "sim/autopilot/heading_up")
 -- VS encoder
 minifcu:CfgCmd(59, "sim/autopilot/vertical_speed_down")
 minifcu:CfgCmd(61, "sim/autopilot/vertical_speed_up")
+minifcu:CfgCmd(60, "sim/autopilot/vertical_speed_down")
+minifcu:CfgCmd(62, "sim/autopilot/vertical_speed_up")
 -- BARO encoder (hPa/inHg aware)
 -- minifcu:CfgFc(63, "minifcu_baro_enc_left()")
 -- minifcu:CfgFc(65, "minifcu_baro_enc_right()")
