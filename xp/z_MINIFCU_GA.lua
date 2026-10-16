@@ -293,10 +293,10 @@ minifcu:GetEfisBaroStd1('sim/flightmodel/engine/ENGN_N1_', 1)
 minifcu:GetEfisBaroInhgHpaUnit('sim/flightmodel/engine/ENGN_N1_', 1)
 
 -- MT 10 (miniEFIS LED and LCD): EfisBaroInhg — BARO inHg（inHg*100 四舍五入）
-minifcu:GetEfisBaroInhg('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetEfisBaroInhg('sim/cockpit/misc/barometer_setting', 1)
 
 -- MT 11 (miniEFIS LED and LCD): EfisBaro — BARO hPa（inHg*33.864 四舍五入）
-minifcu:GetEfisBaro('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetEfisBaro('sim/cockpit/misc/barometer_setting', 1)
 
 GlobalFrameLoopManager:add(function()
 	-- 6 个 LED（源接好后再打开）
@@ -331,6 +331,6 @@ GlobalFrameLoopManager:add(function()
 	-- minifcu:SetEfisBaroStd1()
 	-- minifcu:SetEfisBaroInhgHpaUnit()
 	-- minifcu:SetEfisBaroInhg()
-	-- minifcu:SetEfisBaro()
+	minifcu:SetEfisBaro()
 	-- 26 条自定义设备通道（同上）
 end)
