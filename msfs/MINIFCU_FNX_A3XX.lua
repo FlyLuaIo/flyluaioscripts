@@ -38,8 +38,9 @@
 --      （QFCU 档 42/43 = NAV1、44/45 = NAV2，松开值都是 1 = OFF）；
 --      BARO 单位按 miniFCU 键名分配：bit 43（HPA 键）= 1，bit 44（INHG 键）= 0
 --      （与 xp/MINIFCU_Toliss.lua 的 43 = hPa / 44 = inHg 是同一约定）。
---   6. 编码器按 MSFS 版本分支（参考档同款）：MSFS2020 走 CfgEnc 的 "Knob" 增量事件，
---      MSFS2024 走 _Knob_Dec / _Knob_Inc 的 4 bit CfgRpn。细节与调试方法见编码器那一节。
+--   6. 编码器按 MSFS 版本分支（参考档同款）：MSFS2024 用机模的 _Knob_Dec / _Knob_Inc 分向事件；
+--      MSFS2020 该版本只有带增量的 "Knob" 事件，则把 ±增量直接当参数发。⚠ CfgEnc 在 MF 设备上
+--      不可用（真机验证），两个分支都用逐 bit 的 CfgRpn。细节见编码器那一节。
 -- *****************************************************************
 
 if ilua_require_msfs() then
@@ -143,31 +144,42 @@ minifcu:CfgVal(46, 'B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Push', 1, 0)
 
 -- ===========================================================
 -- INPUT：编码器（bit 47–66）
--- ⚠ 本机型参考档对编码器做了 MSFS 版本分支（参考档 6 处 `if MSFS_VERSION == 0`）：
---   * MSFS2020（MSFS_VERSION == 0）→ Fenix 只接带增量的 "Knob" 事件，参考档用 CfgEnc 表达；
+-- 本机型参考档对编码器做了 MSFS 版本分支（参考档 6 处 `if MSFS_VERSION == 0`）：
+--   * MSFS2024（MSFS_VERSION ~= 0）→ 机模提供 _Knob_Dec / _Knob_Inc 分向事件，
+--     4 bit 各绑一条 CfgRpn，发参数 1（事件名逐字取自参考档）。
+--   * MSFS2020（MSFS_VERSION == 0）→ 该版本只有带增量的 "Knob" 事件，方向靠参数表示，
+--     故把 ±增量直接当事件参数发：-1 = 减、1 = 加（事件名逐字取自参考档）。
 --     MSFS_VERSION 是插件 C++ 注入的 Lua 全局（core/luacore.cpp:1045 lua_setglobal，仅 MSFS 构建定义）。
---     miniFCU 每轴 4 bit = 内圈减 / 外圈减 / 内圈加 / 外圈加（见文件头位序说明），
---     而 CfgEnc 只吃「一个减 bit + 一个加 bit」，所以每轴写两条规则覆盖内外圈。
---   * MSFS2024（MSFS_VERSION ~= 0）→ 参考档改用 _Knob_Dec / _Knob_Inc 事件，4 bit 各绑一条 CfgRpn。
---   ⚠ 2020 分支的 ROTATE（CfgEnc）在 MF 设备上未经真机验证：若旋转速度是两倍，
---     注释掉每条轴的第二行 CfgEnc（外圈那行）；若丢格，则保留外圈这行、删内圈那行。
+-- ⚠ CfgEnc 在 MF 设备（miniFCU）上不可用 —— 真机验证的结论，两个分支都不再用 CfgEnc。
+--   每轴 4 bit：47/48 = 减、49/50 = 加（见文件头位序说明）。
+-- 回退：若 2020 下某轴不动或反向，可与 2024 分支对调（即改用 _Knob_Dec / _Knob_Inc）。
 
 if MSFS_VERSION == 0 then
 	-- ALT [Q16 / Q17]
-	minifcu:CfgEnc(47, 49, 'B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob')
-	minifcu:CfgEnc(48, 50, 'B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob')
+	minifcu:CfgRpn(47, '-1 (>B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob)')
+	minifcu:CfgRpn(48, '-1 (>B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob)')
+	minifcu:CfgRpn(49, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob)')
+	minifcu:CfgRpn(50, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob)')
 	-- SPD [Q0 / Q1]
-	minifcu:CfgEnc(51, 53, 'B:FNX320_Input_Knob_PushPull_E_FCU_SPEED_Knob')
-	minifcu:CfgEnc(52, 54, 'B:FNX320_Input_Knob_PushPull_E_FCU_SPEED_Knob')
+	minifcu:CfgRpn(51, '-1 (>B:FNX320_Input_Knob_PushPull_E_FCU_SPEED_Knob)')
+	minifcu:CfgRpn(52, '-1 (>B:FNX320_Input_Knob_PushPull_E_FCU_SPEED_Knob)')
+	minifcu:CfgRpn(53, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_SPEED_Knob)')
+	minifcu:CfgRpn(54, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_SPEED_Knob)')
 	-- HDG [Q4 / Q5]
-	minifcu:CfgEnc(55, 57, 'B:FNX320_Input_Knob_PushPull_E_FCU_HEADING_Knob')
-	minifcu:CfgEnc(56, 58, 'B:FNX320_Input_Knob_PushPull_E_FCU_HEADING_Knob')
+	minifcu:CfgRpn(55, '-1 (>B:FNX320_Input_Knob_PushPull_E_FCU_HEADING_Knob)')
+	minifcu:CfgRpn(56, '-1 (>B:FNX320_Input_Knob_PushPull_E_FCU_HEADING_Knob)')
+	minifcu:CfgRpn(57, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_HEADING_Knob)')
+	minifcu:CfgRpn(58, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_HEADING_Knob)')
 	-- VS [Q20 / Q21]
-	minifcu:CfgEnc(59, 61, 'B:FNX320_Input_Knob_PushPull_E_FCU_VS_Knob')
-	minifcu:CfgEnc(60, 62, 'B:FNX320_Input_Knob_PushPull_E_FCU_VS_Knob')
+	minifcu:CfgRpn(59, '-1 (>B:FNX320_Input_Knob_PushPull_E_FCU_VS_Knob)')
+	minifcu:CfgRpn(60, '-1 (>B:FNX320_Input_Knob_PushPull_E_FCU_VS_Knob)')
+	minifcu:CfgRpn(61, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_VS_Knob)')
+	minifcu:CfgRpn(62, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_VS_Knob)')
 	-- BARO 机长侧 [Q46 / Q47]
-	minifcu:CfgEnc(63, 65, 'B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Knob')
-	minifcu:CfgEnc(64, 66, 'B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Knob')
+	minifcu:CfgRpn(63, '-1 (>B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Knob)')
+	minifcu:CfgRpn(64, '-1 (>B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Knob)')
+	minifcu:CfgRpn(65, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Knob)')
+	minifcu:CfgRpn(66, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Knob)')
 else
 	-- ALT 编码器 [Q16 / Q17]：步长（100 / 1000）由机模侧的 L:S_FCU_ALTITUDE_SCALE 决定，B 事件自己处理
 	minifcu:CfgRpn(47, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob_Dec)')

@@ -22,14 +22,9 @@
 --      （XP 档也没做），这里保持一致。
 --   2. QFCU 面板有两个 EFIS 半区（机长/副驾），miniFCU 只有机长半区，故 QFCU 的
 --      51/52/53（副驾气压）与 56–79（副驾 EFIS）不移植。
---   3. 五个旋钮（ALT / SPD / HDG / VS / 机长气压）：参考档用 qfcu:CfgEnc(dec_bit, inc_bit, "B:..._Knob")，
---      即 QFCU 固件的 ROTATE 配置 —— 把本次旋转的带符号累加增量当作输入事件的参数发出去。
---      miniFCU 每轴 4 bit（47/48 = 减的两个相位、49/50 = 加的两个相位，与 XP 档的逐位绑法一致），
---      而 CfgEnc 只吃「一个减 bit + 一个加 bit」，所以每轴写两条规则覆盖两个相位；
---      方向由固件按 dec/inc bit 决定，不需要在 RPN 里写 ±1（因此也保住了快转增量累加）。
---      事件名逐字取自参考档（含 A330 / A320 分支），本档没有新造的符号。
---      回退方案：若真机上某轴不动，可改成每 bit 一条 CfgRpn（'-1 (>B:...)' / '1 (>B:...)'），
---      单击效果等价，只是丢掉快转累加。
+--   3. 五个旋钮（ALT / SPD / HDG / VS / 机长气压）：参考档用 qfcu:CfgEnc(dec_bit, inc_bit, "B:..._Knob")。
+--      ⚠ CfgEnc 在 MF 设备上不可用（真机验证）→ 本档每 bit 一条 CfgRpn，发机模的分向事件
+--      <参考档事件名>_Dec / _Inc（参数 1），A330 与 A320/A321 两条分支各自沿用参考档的事件名。
 --   4. SPD/HDG/ALT/VS 的 PUSH/PULL、EXPED 在参考档里是 CfgVal(..., 1, 0)（按下发 1、松开发 0），
 --      本档照抄成对 CfgVal（同一 B 事件、同一对值），运行时即 DFKEY 的 press/release 边沿。
 --   5. ALT 100/1000（QFCU 15 → miniFCU 17）：参考档是拨杆 —— 按下时若 (L:INI_ALTITUDE_STATE) != 0
@@ -193,58 +188,77 @@ minifcu:CfgRpn(46, '1 (>L:INI_1_ALTIMETER_PUSH_COMMAND)') -- [Q48] PUSH
 
 -- ===========================================================
 -- INPUT：编码器（bit 47–66）
--- 参考档这 5 个轴用 CfgEnc(dec_bit, inc_bit, "B:<事件>") 表达：MSFS 侧整条链路是
---   B: 事件 → MsfsInputEvent（double 类型）→ ROTATE 的 type-2 分支 → SimConnect_SetInputEvent(hash, 累加增量)，
---   也就是把本次旋转的带符号增量当参数发给输入事件（事件名逐字取自参考档）。
--- miniFCU 每轴 4 bit（47/48 = 减的两个相位、49/50 = 加的两个相位；见 XP 档的逐位绑法），
---   而 CfgEnc 只吃「一个减 bit + 一个加 bit」，所以每轴写两条规则覆盖两个相位；
---   方向由固件按 dec / inc bit 决定，不需要在 RPN 里写 ±1（因此也保住了快转增量累加）。
--- 回退方案：若真机上某轴不动，可改成每 bit 一条 CfgRpn（'-1 (>B:...)' / '1 (>B:...)'），
---   单击效果等价，只是丢掉快转累加。
+-- 参考档这 5 个轴用 qfcu:CfgEnc(dec_bit, inc_bit, "B:<事件>") 表达（QFCU 固件的 ROTATE 配置：
+-- 把本次旋转的带符号累加增量当作输入事件的参数发出去）。
+-- ⚠ CfgEnc 在 MF 设备（miniFCU）上不可用 —— 真机验证的结论，不要再用 CfgEnc 镜像这类写法。
+-- 本档改为每 bit 一条 CfgRpn，发机模自己的分向事件 <事件>_Dec / <事件>_Inc（参数 1）：
+--   47/48 = 减、49/50 = 加（每轴 4 bit，位序见文件头）。
+-- ⚠ 若真机上某轴不动，说明该机型没有 _Dec/_Inc 分向事件 → 回退成向基事件发增量值：
+--   '-1 (>B:<事件>)' / '1 (>B:<事件>)'（MSFS 侧 MSFSSetDatad 会把 RPN 值当事件参数发出）。
 
 -- ALT 编码器 [Q16 / Q17]
 if isINIA330 then
-	minifcu:CfgEnc(47, 49, 'B:AIRLINER_MCU_ALT') -- [Q16 / Q17] A330
-	minifcu:CfgEnc(48, 50, 'B:AIRLINER_MCU_ALT') -- [Q16 / Q17] A330
+	minifcu:CfgRpn(47, '1 (>B:AIRLINER_MCU_ALT_Dec)')
+	minifcu:CfgRpn(48, '1 (>B:AIRLINER_MCU_ALT_Dec)')
+	minifcu:CfgRpn(49, '1 (>B:AIRLINER_MCU_ALT_Inc)')
+	minifcu:CfgRpn(50, '1 (>B:AIRLINER_MCU_ALT_Inc)')
 else
-	minifcu:CfgEnc(47, 49, 'B:INSTRUMENT_FCU_ALT_Knob') -- [Q16 / Q17] A320/A321
-	minifcu:CfgEnc(48, 50, 'B:INSTRUMENT_FCU_ALT_Knob') -- [Q16 / Q17] A320/A321
+	minifcu:CfgRpn(47, '1 (>B:INSTRUMENT_FCU_ALT_Knob_Dec)')
+	minifcu:CfgRpn(48, '1 (>B:INSTRUMENT_FCU_ALT_Knob_Dec)')
+	minifcu:CfgRpn(49, '1 (>B:INSTRUMENT_FCU_ALT_Knob_Inc)')
+	minifcu:CfgRpn(50, '1 (>B:INSTRUMENT_FCU_ALT_Knob_Inc)')
 end
 
 -- SPD 编码器 [Q0 / Q1]
 if isINIA330 then
-	minifcu:CfgEnc(51, 53, 'B:AIRLINER_MCU_SPEED') -- [Q0 / Q1] A330
-	minifcu:CfgEnc(52, 54, 'B:AIRLINER_MCU_SPEED') -- [Q0 / Q1] A330
+	minifcu:CfgRpn(51, '1 (>B:AIRLINER_MCU_SPEED_Dec)')
+	minifcu:CfgRpn(52, '1 (>B:AIRLINER_MCU_SPEED_Dec)')
+	minifcu:CfgRpn(53, '1 (>B:AIRLINER_MCU_SPEED_Inc)')
+	minifcu:CfgRpn(54, '1 (>B:AIRLINER_MCU_SPEED_Inc)')
 else
-	minifcu:CfgEnc(51, 53, 'B:INSTRUMENT_FCU_SPD_Knob') -- [Q0 / Q1] A320/A321
-	minifcu:CfgEnc(52, 54, 'B:INSTRUMENT_FCU_SPD_Knob') -- [Q0 / Q1] A320/A321
+	minifcu:CfgRpn(51, '1 (>B:INSTRUMENT_FCU_SPD_Knob_Dec)')
+	minifcu:CfgRpn(52, '1 (>B:INSTRUMENT_FCU_SPD_Knob_Dec)')
+	minifcu:CfgRpn(53, '1 (>B:INSTRUMENT_FCU_SPD_Knob_Inc)')
+	minifcu:CfgRpn(54, '1 (>B:INSTRUMENT_FCU_SPD_Knob_Inc)')
 end
 
 -- HDG 编码器 [Q4 / Q5]
 if isINIA330 then
-	minifcu:CfgEnc(55, 57, 'B:AIRLINER_MCU_HDG') -- [Q4 / Q5] A330
-	minifcu:CfgEnc(56, 58, 'B:AIRLINER_MCU_HDG') -- [Q4 / Q5] A330
+	minifcu:CfgRpn(55, '1 (>B:AIRLINER_MCU_HDG_Dec)')
+	minifcu:CfgRpn(56, '1 (>B:AIRLINER_MCU_HDG_Dec)')
+	minifcu:CfgRpn(57, '1 (>B:AIRLINER_MCU_HDG_Inc)')
+	minifcu:CfgRpn(58, '1 (>B:AIRLINER_MCU_HDG_Inc)')
 else
-	minifcu:CfgEnc(55, 57, 'B:INSTRUMENT_FCU_HDG_Knob') -- [Q4 / Q5] A320/A321
-	minifcu:CfgEnc(56, 58, 'B:INSTRUMENT_FCU_HDG_Knob') -- [Q4 / Q5] A320/A321
+	minifcu:CfgRpn(55, '1 (>B:INSTRUMENT_FCU_HDG_Knob_Dec)')
+	minifcu:CfgRpn(56, '1 (>B:INSTRUMENT_FCU_HDG_Knob_Dec)')
+	minifcu:CfgRpn(57, '1 (>B:INSTRUMENT_FCU_HDG_Knob_Inc)')
+	minifcu:CfgRpn(58, '1 (>B:INSTRUMENT_FCU_HDG_Knob_Inc)')
 end
 
 -- VS 编码器 [Q20 / Q21]
 if isINIA330 then
-	minifcu:CfgEnc(59, 61, 'B:AIRLINER_MCU_VS') -- [Q20 / Q21] A330
-	minifcu:CfgEnc(60, 62, 'B:AIRLINER_MCU_VS') -- [Q20 / Q21] A330
+	minifcu:CfgRpn(59, '1 (>B:AIRLINER_MCU_VS_Dec)')
+	minifcu:CfgRpn(60, '1 (>B:AIRLINER_MCU_VS_Dec)')
+	minifcu:CfgRpn(61, '1 (>B:AIRLINER_MCU_VS_Inc)')
+	minifcu:CfgRpn(62, '1 (>B:AIRLINER_MCU_VS_Inc)')
 else
-	minifcu:CfgEnc(59, 61, 'B:INSTRUMENT_FCU_VS_Knob') -- [Q20 / Q21] A320/A321
-	minifcu:CfgEnc(60, 62, 'B:INSTRUMENT_FCU_VS_Knob') -- [Q20 / Q21] A320/A321
+	minifcu:CfgRpn(59, '1 (>B:INSTRUMENT_FCU_VS_Knob_Dec)')
+	minifcu:CfgRpn(60, '1 (>B:INSTRUMENT_FCU_VS_Knob_Dec)')
+	minifcu:CfgRpn(61, '1 (>B:INSTRUMENT_FCU_VS_Knob_Inc)')
+	minifcu:CfgRpn(62, '1 (>B:INSTRUMENT_FCU_VS_Knob_Inc)')
 end
 
 -- BARO 编码器（机长侧）[Q46 / Q47]
 if isINIA330 then
-	minifcu:CfgEnc(63, 65, 'B:AIRLINER_CPT_BARO_SET') -- [Q46 / Q47] A330
-	minifcu:CfgEnc(64, 66, 'B:AIRLINER_CPT_BARO_SET') -- [Q46 / Q47] A330
+	minifcu:CfgRpn(63, '1 (>B:AIRLINER_CPT_BARO_SET_Dec)')
+	minifcu:CfgRpn(64, '1 (>B:AIRLINER_CPT_BARO_SET_Dec)')
+	minifcu:CfgRpn(65, '1 (>B:AIRLINER_CPT_BARO_SET_Inc)')
+	minifcu:CfgRpn(66, '1 (>B:AIRLINER_CPT_BARO_SET_Inc)')
 else
-	minifcu:CfgEnc(63, 65, 'B:INSTRUMENT_QNH_CPT_Knob') -- [Q46 / Q47] A320/A321
-	minifcu:CfgEnc(64, 66, 'B:INSTRUMENT_QNH_CPT_Knob') -- [Q46 / Q47] A320/A321
+	minifcu:CfgRpn(63, '1 (>B:INSTRUMENT_QNH_CPT_Knob_Dec)')
+	minifcu:CfgRpn(64, '1 (>B:INSTRUMENT_QNH_CPT_Knob_Dec)')
+	minifcu:CfgRpn(65, '1 (>B:INSTRUMENT_QNH_CPT_Knob_Inc)')
+	minifcu:CfgRpn(66, '1 (>B:INSTRUMENT_QNH_CPT_Knob_Inc)')
 end
 
 -- ===========================================================

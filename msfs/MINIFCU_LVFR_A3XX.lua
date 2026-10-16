@@ -16,12 +16,9 @@
 -- 与参考档的三类按键机制差异（只改机制，不改语义、不改事件名）：
 --   1. CfgVal(B 事件, 按下值, 松开值)：miniFCU 与 QFCU 走同一套设备级 DFKEY 机制
 --      （设备基类 Qmdev 的 CfgVal），逐字照抄，只改 bit 号。
---   2. CfgEnc(减bit, 加bit, "B:...")：miniFCU 的编码器是 4 个独立 bit（CfgRpn），
---      CfgEnc 在 miniFCU 档不适用。参考档每根轴只有一个 B 事件（没有 _Dec/_Inc 分向事件），
---      而设备线程处理 ROTATE 时在 MSFS 下 stepbase = 0（core/qmdevlist.cpp
---      _lightworker_bottomhalf 的非 XPLM200 分支），送给 B 事件的就是累计增量
---      ±SlowStep/FastStep；参考档 CfgEnc 用默认 SlowStep = FastStep = 1，
---      即每格 B 事件收到 ±1 → 本档减写 -1 (>B:...)、加写 1 (>B:...)。
+--   2. CfgEnc(减bit, 加bit, "B:...")：miniFCU 的编码器是 4 个独立 bit（CfgRpn）。
+--      ⚠ CfgEnc 在 MF 设备上不可用（真机验证）→ 本档每 bit 一条 CfgRpn，发分向事件
+--      B:AUTOPILOT_<轴>_Dec / _Inc（参数 1）；若该机型没有分向事件，回退为向基事件发增量 ±1。
 --   3. CfgFc(bit, Lua 片段)：参考档用 LvfrRoseModeSet / LvfrRangeSet 等 Lua 辅助函数
 --      uluaSet(uluaFind("B:..."), n) 写 B 事件。本档不搬这些函数（miniFCU 成品档
 --      统一用 CfgRpn），改成等价 RPN `n (>B:...)` —— 设备侧两者都是把同一个值送进
@@ -160,33 +157,43 @@ minifcu:CfgVal(46, 'B:AUTOPILOT_Baro_1_QNH', 0, 1) -- PUSH
 
 -- ===========================================================
 -- INPUT：编码器（bit 47–66）
--- 参考档这些轴用 CfgEnc(dec_bit, inc_bit, "B:<事件>") 表达（ROTATE 路径：把本次累加的带符号增量
--- 当作 B 事件的参数发出去。MSFS 侧全链已核实：B: 事件在 qxpapi.cpp 里按 MsfsInputEvent 解析成
--- double 类型 → ROTATE 的 type-2 分支 XPLMSetDatad → SimConnect_SetInputEvent(hash, delta)。
--- miniFCU 每轴 4 bit（内圈减 / 外圈减 / 内圈加 / 外圈加），而 CfgEnc 只吃一对 bit，
--- 所以每轴写两条规则覆盖内外圈；方向由固件按 dec/inc bit 决定，不需要在 RPN 里写 ±1。
--- 回退方案：若真机上某轴不动，可改成每 bit 一条 CfgRpn（'-1 (>B:...)' / '1 (>B:...)'），
--- 单击效果等价，只是丢掉快转累加。
+-- 参考档这些轴用 qfcu:CfgEnc(dec_bit, inc_bit, "B:<事件>") 表达（QFCU 固件的 ROTATE 配置：
+-- 把本次旋转的带符号累加增量当作输入事件的参数发出去）。
+-- ⚠ CfgEnc 在 MF 设备（miniFCU）上不可用 —— 真机验证的结论，不要再用 CfgEnc 镜像这类写法。
+-- 本档改为每 bit 一条 CfgRpn，发机模自己的分向事件 <事件>_Dec / <事件>_Inc（参数 1）：
+--   47/48 = 减、49/50 = 加（每轴 4 bit，位序见文件头）。
+-- ⚠ 若真机上某轴不动，说明该机型没有 _Dec/_Inc 分向事件 → 回退成向基事件发增量值：
+--   '-1 (>B:<事件>)' / '1 (>B:<事件>)'（MSFS 侧 MSFSSetDatad 会把 RPN 值当事件参数发出）。
 
 -- ALT 编码器 [Q16 减 / Q17 加]
-minifcu:CfgEnc(47, 49, 'B:AUTOPILOT_Altitude')
-minifcu:CfgEnc(48, 50, 'B:AUTOPILOT_Altitude')
+minifcu:CfgRpn(47, '1 (>B:AUTOPILOT_Altitude_Dec)')
+minifcu:CfgRpn(48, '1 (>B:AUTOPILOT_Altitude_Dec)')
+minifcu:CfgRpn(49, '1 (>B:AUTOPILOT_Altitude_Inc)')
+minifcu:CfgRpn(50, '1 (>B:AUTOPILOT_Altitude_Inc)')
 
 -- SPD 编码器 [Q0 减 / Q1 加]
-minifcu:CfgEnc(51, 53, 'B:AUTOPILOT_Speed')
-minifcu:CfgEnc(52, 54, 'B:AUTOPILOT_Speed')
+minifcu:CfgRpn(51, '1 (>B:AUTOPILOT_Speed_Dec)')
+minifcu:CfgRpn(52, '1 (>B:AUTOPILOT_Speed_Dec)')
+minifcu:CfgRpn(53, '1 (>B:AUTOPILOT_Speed_Inc)')
+minifcu:CfgRpn(54, '1 (>B:AUTOPILOT_Speed_Inc)')
 
 -- HDG 编码器 [Q4 减 / Q5 加]
-minifcu:CfgEnc(55, 57, 'B:AUTOPILOT_Heading')
-minifcu:CfgEnc(56, 58, 'B:AUTOPILOT_Heading')
+minifcu:CfgRpn(55, '1 (>B:AUTOPILOT_Heading_Dec)')
+minifcu:CfgRpn(56, '1 (>B:AUTOPILOT_Heading_Dec)')
+minifcu:CfgRpn(57, '1 (>B:AUTOPILOT_Heading_Inc)')
+minifcu:CfgRpn(58, '1 (>B:AUTOPILOT_Heading_Inc)')
 
 -- VS 编码器 [Q20 减 / Q21 加]
-minifcu:CfgEnc(59, 61, 'B:AUTOPILOT_VerticalSpeed')
-minifcu:CfgEnc(60, 62, 'B:AUTOPILOT_VerticalSpeed')
+minifcu:CfgRpn(59, '1 (>B:AUTOPILOT_VerticalSpeed_Dec)')
+minifcu:CfgRpn(60, '1 (>B:AUTOPILOT_VerticalSpeed_Dec)')
+minifcu:CfgRpn(61, '1 (>B:AUTOPILOT_VerticalSpeed_Inc)')
+minifcu:CfgRpn(62, '1 (>B:AUTOPILOT_VerticalSpeed_Inc)')
 
 -- BARO 编码器（机长侧）[Q47 减 / Q46 加]
-minifcu:CfgEnc(63, 65, 'B:AUTOPILOT_Baro_1')
-minifcu:CfgEnc(64, 66, 'B:AUTOPILOT_Baro_1')
+minifcu:CfgRpn(63, '1 (>B:AUTOPILOT_Baro_1_Dec)')
+minifcu:CfgRpn(64, '1 (>B:AUTOPILOT_Baro_1_Dec)')
+minifcu:CfgRpn(65, '1 (>B:AUTOPILOT_Baro_1_Inc)')
+minifcu:CfgRpn(66, '1 (>B:AUTOPILOT_Baro_1_Inc)')
 
 
 -- ===========================================================
