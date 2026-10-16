@@ -53,11 +53,11 @@ minifcu:CfgCmd(62, "sim/operation/test_none")
 
 ---- TOLISS - EFIS - BAR ENCODER HPA
 -- inner
-minifcu:CfgCmd(63, "sim/operation/test_none")
-minifcu:CfgCmd(64, "sim/operation/test_none")
+minifcu:CfgCmd(63, "sim/instruments/barometer_down")
+minifcu:CfgCmd(64, "sim/instruments/barometer_down")
 -- outer
-minifcu:CfgCmd(65, "sim/operation/test_none")
-minifcu:CfgCmd(66, "sim/operation/test_none")
+minifcu:CfgCmd(65, "sim/instruments/barometer_up")
+minifcu:CfgCmd(66, "sim/instruments/barometer_up")
 
 -- TOLISS - FCU - SPD/MACH (Button, bit 0)
 minifcu:CfgCmd(0, "sim/operation/test_none")
@@ -188,11 +188,11 @@ minifcu:CfgCmd(41, "sim/operation/test_none")
 -- TOLISS - EFIS - VOR 2 (Button, bit 42)
 minifcu:CfgCmd(42, "sim/operation/test_none")
 
--- TOLISS - EFIS - BARO UNIT HPA (Button, bit 43)
-minifcu:CfgCmd(43, "sim/operation/test_none")
+-- TOLISS - EFIS - BARO UNIT HPA (Button, bit 43) → sim/physics/metric_press = 1（公制 = hPa）
+minifcu:CfgVal(43, "sim/physics/metric_press", 1)
 
--- TOLISS - EFIS - BARO UNIT INHG (Button, bit 44)
-minifcu:CfgCmd(44, "sim/operation/test_none")
+-- TOLISS - EFIS - BARO UNIT INHG (Button, bit 44) → sim/physics/metric_press = 0（inHg）
+minifcu:CfgVal(44, "sim/physics/metric_press", 0)
 
 -- TOLISS - EFIS - BARO PULL (Button, bit 45)
 minifcu:CfgCmd(45, "sim/operation/test_none")
@@ -283,20 +283,32 @@ minifcu:GetFcuFdValue('sim/flightmodel/engine/ENGN_N1_', 1)
 -- MT 6 (miniEFIS LED and LCD): FcuLsValue — LS 灯（1=on）
 minifcu:GetFcuLsValue('sim/flightmodel/engine/ENGN_N1_', 1)
 
--- MT 7 (miniEFIS LED and LCD): EfisBaroQnnh1 — QNH 标签（1）
-minifcu:GetEfisBaroQnnh1('sim/flightmodel/engine/ENGN_N1_', 1)
+-- ===================== miniEFIS BARO（GA，已接通） =====================
+-- 源：机长气压设定（英寸汞柱）+ XP 的 STD 状态 + XP 的「公制压力显示」偏好。
+-- MT 10/11 的 scale 用默认 1：数值在 FrameLoop 里算好再写 dataref。
+-- dataref 是 int、没有小数位，所以 ×100（inHg）/ ×33.864（hPa）必须自己四舍五入。
+
+-- 机长气压设定，单位英寸汞柱（sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot 的旧版）
+local dr_baro_inhg    = iDataRef:New("sim/cockpit/misc/barometer_setting")
+-- 0 = 正常（QNH），1 = STD
+local dr_baro_std     = iDataRef:New("sim/cockpit2/gauges/actuators/barometer_setting_is_std_pilot")
+-- 0 = inHg，1 = hPa（公制）
+local dr_metric_press = iDataRef:New("sim/physics/metric_press")
+
+-- MT 7 (miniEFIS LED and LCD): EfisBaroQnnh1 — QNH 标签（非 STD 时为 1）
+minifcu:GetEfisBaroQnnh1("sim/cockpit2/gauges/actuators/barometer_setting_is_std_pilot")
 
 -- MT 8 (miniEFIS LED and LCD): EfisBaroStd1 — STD 标志（1=on）
-minifcu:GetEfisBaroStd1('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetEfisBaroStd1("sim/cockpit2/gauges/actuators/barometer_setting_is_std_pilot")
 
 -- MT 9 (miniEFIS LED and LCD): EfisBaroInhgHpaUnit — inHg/hPa（1=inHg, 0=hPa）
-minifcu:GetEfisBaroInhgHpaUnit('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetEfisBaroInhgHpaUnit("sim/physics/metric_press")
 
 -- MT 10 (miniEFIS LED and LCD): EfisBaroInhg — BARO inHg（inHg*100 四舍五入）
-minifcu:GetEfisBaroInhg('sim/cockpit/misc/barometer_setting', 1)
+minifcu:GetEfisBaroInhg("sim/cockpit/misc/barometer_setting")
 
 -- MT 11 (miniEFIS LED and LCD): EfisBaro — BARO hPa（inHg*33.864 四舍五入）
-minifcu:GetEfisBaro('sim/cockpit/misc/barometer_setting', 1)
+minifcu:GetEfisBaro("sim/cockpit/misc/barometer_setting")
 
 GlobalFrameLoopManager:add(function()
 	-- 6 个 LED（源接好后再打开）
@@ -327,10 +339,19 @@ GlobalFrameLoopManager:add(function()
 	-- minifcu:SetEfisArpt()
 	-- minifcu:SetFcuFdValue()
 	-- minifcu:SetFcuLsValue()
-	-- minifcu:SetEfisBaroQnnh1()
-	-- minifcu:SetEfisBaroStd1()
-	-- minifcu:SetEfisBaroInhgHpaUnit()
-	-- minifcu:SetEfisBaroInhg()
-	minifcu:SetEfisBaro()
+	-- miniEFIS BARO：单位 / STD / QNH 标签 + 两个值通道
+	local baro_inhg = dr_baro_inhg:Get()
+	local baro_std  = dr_baro_std:Get()
+	local metric    = dr_metric_press:Get()
+
+	-- MT 9: 1 = inHg, 0 = hPa（metric_press: 1 = 公制/hPa）
+	minifcu:SetEfisBaroInhgHpaUnit(metric == 1 and 0 or 1)
+	-- MT 8: STD 标志（直接读 dataref，0/1）
+	minifcu:SetEfisBaroStd1()
+	-- MT 7: STD 时 QNH 标签灭
+	minifcu:SetEfisBaroQnnh1(baro_std == 0 and 1 or 0)
+	-- MT 10/11: 两个值都算，面板按单位标志取一个显示（切单位时不会读到上一次的陈旧值）
+	minifcu:SetEfisBaroInhg(math.floor(baro_inhg * 100 + 0.5))
+	minifcu:SetEfisBaro(math.floor(baro_inhg * 33.864 + 0.5))
 	-- 26 条自定义设备通道（同上）
 end)
