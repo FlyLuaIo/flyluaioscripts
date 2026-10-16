@@ -63,13 +63,13 @@ uluaLog('MobiFlight MiniFCU for Laminar A330-300')
 
 -- ===================== DataRefs（帧循环里需要读原值的几个） =====================
 
-local dr_is_mach    = iDataRef:New("sim/cockpit2/autopilot/airspeed_is_mach")      -- 1 = MACH 显示
-local dr_spd_dashed = iDataRef:New("sim/cockpit2/autopilot/vnav_speed_window_open") -- 0 = 虚线（managed）
-local dr_vs         = iDataRef:New("sim/cockpit/autopilot/vertical_velocity")       -- fpm
-local dr_trkfpa     = iDataRef:New("sim/cockpit2/autopilot/trk_fpa")                -- 1 = TRK/FPA
-local dr_alt_mode   = iDataRef:New("sim/cockpit2/autopilot/altitude_mode")          -- 5 = level change
-local dr_baro       = iDataRef:New("sim/cockpit/misc/barometer_setting")            -- 英寸汞柱
-local dr_baro_unit  = iDataRef:New("laminar/A333/barometer/capt_inHg_hPa_pos")      -- 0 = inHg, 1 = hPa
+local dr_is_mach    = iDataRef:New("sim/cockpit2/autopilot/airspeed_is_mach")                      -- 1 = MACH 显示
+local dr_spd_dashed = iDataRef:New("sim/cockpit2/autopilot/vnav_speed_window_open")                -- 0 = 虚线（managed）
+local dr_vs         = iDataRef:New("sim/cockpit/autopilot/vertical_velocity")                      -- fpm
+local dr_trkfpa     = iDataRef:New("sim/cockpit2/autopilot/trk_fpa")                               -- 1 = TRK/FPA
+local dr_alt_mode   = iDataRef:New("sim/cockpit2/autopilot/altitude_mode")                         -- 5 = level change
+local dr_baro       = iDataRef:New("sim/cockpit/misc/barometer_setting")                           -- 英寸汞柱
+local dr_baro_unit  = iDataRef:New("laminar/A333/barometer/capt_inHg_hPa_pos")                     -- 0 = inHg, 1 = hPa
 local dr_baro_std   = iDataRef:New("sim/cockpit2/gauges/actuators/barometer_setting_is_std_pilot") -- 1 = STD
 
 -- ===================== INPUT：FCU 半区（bit 0–17） =====================
@@ -87,7 +87,7 @@ minifcu:CfgCmd(4, "laminar/A333/autopilot/metric_alt_push")
 -- A/THR [Q11]
 minifcu:CfgCmd(5, "laminar/A333/autopilot/a_thr_toggle")
 -- EXPED [Q12]：A330 无 EXPED，映射到 LVL/CH
-minifcu:CfgCmd(6, "sim/autopilot/level_change")
+minifcu:CfgCmd(6, "sim/autopilot/altitude_hold")
 -- LOC [Q8]
 minifcu:CfgCmd(7, "sim/autopilot/NAV")
 -- APPR [Q13]
@@ -123,11 +123,14 @@ minifcu:CfgCmd(24, "laminar/A333/buttons/capt_ils_bars_push")
 minifcu:CfgCmd(25, "sim/instruments/chrono1_start_stop")
 
 -- ROSE 模式键 [Q24–Q28]：0=LS 1=VOR 2=NAV 3=ARC 4=PLAN（A333 第 6 档 ENG 在 miniFCU 上无对应键）
-minifcu:CfgVal(26, "laminar/A333/knobs/EFIS_mode_pos_capt", 0)
-minifcu:CfgVal(27, "laminar/A333/knobs/EFIS_mode_pos_capt", 1)
-minifcu:CfgVal(28, "laminar/A333/knobs/EFIS_mode_pos_capt", 2)
-minifcu:CfgVal(29, "laminar/A333/knobs/EFIS_mode_pos_capt", 3)
-minifcu:CfgVal(30, "laminar/A333/knobs/EFIS_mode_pos_capt", 4)
+local pswh24 = QmdevPosSwitchInit("laminar/A333/knobs/EFIS_mode_pos_capt", 1, "laminar/A333/knobs/capt_EFIS_knob_right",
+	"laminar/A333/knobs/capt_EFIS_knob_left", 1300)
+minifcu:CfgPSw(26, pswh24, 0)
+minifcu:CfgPSw(27, pswh24, 1)
+minifcu:CfgPSw(28, pswh24, 2)
+minifcu:CfgPSw(29, pswh24, 3)
+minifcu:CfgPSw(30, pswh24, 4)
+minifcu:CfgPSw(67, pswh24, 5)
 
 -- 距离 [Q29–Q34]：10/20/40/80/160/320 NM → sim/cockpit2/EFIS/map_range 0–5
 --   （A333 自己面板的距离旋钮也是 0..5，见 obj 的 ATTR_manip_axis_knob rotate_large 0.000 5.000 1.000）
@@ -189,13 +192,13 @@ minifcu:CfgCmd(66, "sim/instruments/barometer_up")
 
 -- ===================== OUTPUT：6 个 LED pin =====================
 
-minifcu:GetAp1("laminar/A333/annun/autopilot/ap1_mode")
-minifcu:GetAp2("laminar/A333/annun/autopilot/ap2_mode")
+minifcu:GetAp1("laminar/A333/annun/autopilot/ap1_mode", false, 0.1)
+minifcu:GetAp2("laminar/A333/annun/autopilot/ap2_mode", false, 0.1)
 minifcu:GetAthr("laminar/A333/annun/autopilot/a_thr_mode")
 minifcu:GetLoc("laminar/A333/annun/autopilot/loc_mode")
 minifcu:GetAppr("laminar/A333/annun/autopilot/appr_mode")
 -- EXPED LED：跟着 LVL/CH（altitude_mode == 5）亮，判据在帧循环里给
-minifcu:GetExped("sim/cockpit2/autopilot/altitude_mode")
+minifcu:GetExped("sim/cockpit2/autopilot/altitude_mode", false, 5)
 
 -- ============ OUTPUT：miniFCU LCD（CustomDevice，14 条） ============
 
@@ -231,11 +234,11 @@ minifcu:GetFcuHdgTrkMode("sim/cockpit2/autopilot/trk_fpa")
 -- ============ OUTPUT：miniEFIS LED 与 LCD（CustomDevice，12 条） ============
 
 -- MT 0–4：CSTR / WPT / VORD / NDB / ARPT
-minifcu:GetEfisCstr("laminar/A333/annun/EFIS_capt_cstr")
-minifcu:GetEfisWpt("laminar/A333/annun/EFIS_capt_fix")
-minifcu:GetEfisVord("laminar/A333/annun/EFIS_capt_vor")
-minifcu:GetEfisNdb("laminar/A333/annun/EFIS_capt_ndb")
-minifcu:GetEfisArpt("laminar/A333/annun/EFIS_capt_arpt")
+minifcu:GetEfisCstr("sim/cockpit2/EFIS/EFIS_data_on")
+minifcu:GetEfisWpt("sim/cockpit2/EFIS/EFIS_fix_on")
+minifcu:GetEfisVord("sim/cockpit2/EFIS/EFIS_vor_on")
+minifcu:GetEfisNdb("sim/cockpit2/EFIS/EFIS_ndb_on")
+minifcu:GetEfisArpt("sim/cockpit2/EFIS/EFIS_airport_on")
 -- MT 5 / MT 6：FD / LS
 minifcu:GetFcuFdValue("laminar/A333/annun/capt_flight_director_on")
 minifcu:GetFcuLsValue("laminar/A333/annun/captain_ls_bars_on")
@@ -259,7 +262,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetLoc()
 	minifcu:SetAppr()
 	-- EXPED LED：LVL/CH（altitude_mode == 5）亮
-	minifcu:SetExped(dr_alt_mode:Get() == 5 and 255 or 0)
+	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
 	local is_mach = dr_is_mach:Get()
@@ -319,8 +322,8 @@ GlobalFrameLoopManager:add(function()
 
 	-- 气压：单位 / STD / QNH 标签 + 两个值通道（两个值都算，切单位不读陈旧值）
 	local baro_unit = dr_baro_unit:Get() -- 0 = inHg, 1 = hPa
-	local baro_std  = dr_baro_std:Get()  -- 1 = STD
-	local baro      = dr_baro:Get()      -- 英寸汞柱
+	local baro_std  = dr_baro_std:Get() -- 1 = STD
+	local baro      = dr_baro:Get()   -- 英寸汞柱
 
 	minifcu:SetEfisBaroInhgHpaUnit(baro_unit == 0 and 1 or 0)
 	minifcu:SetEfisBaroStd1()

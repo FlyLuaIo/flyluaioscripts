@@ -483,6 +483,13 @@
           "Pin": 0,
           "MapToBit": 46
         }
+      ],
+      "EFIS-ROSE_HIDDEN": [
+        {
+          "Name": "EFIS - ROSE HIDDEN",
+          "Pin": 0,
+          "MapToBit": 67
+        }
       ]
     },
     "Encoder": {
