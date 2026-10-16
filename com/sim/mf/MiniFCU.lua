@@ -154,14 +154,13 @@ end
 
 -- Channel state 0–255 ↔ kSetPin (0=LOW, 255=HIGH, 1–254=PWM)
 
-function MiniFCU:GetAthr(dpath, scale)
-	self.d_athr_scale = scale == nil and 255 or scale
-	self.d_athr = iDataRef:New(dpath)
+function MiniFCU:GetAthr(dpath, revert, base)
+	self.d_athr = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetAthr(val)
 	if val == nil then
-		val = self.d_athr:Get() * self.d_athr_scale
+		val = self.d_athr:GetBit() * 255
 		if self.d_athr:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_output_athr, val)
 		end
@@ -179,14 +178,13 @@ end
 
 -- Channel state 0–255 ↔ kSetPin (0=LOW, 255=HIGH, 1–254=PWM)
 
-function MiniFCU:GetExped(dpath, scale)
-	self.d_exped_scale = scale == nil and 255 or scale
-	self.d_exped = iDataRef:New(dpath)
+function MiniFCU:GetExped(dpath, revert, base)
+	self.d_exped = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetExped(val)
 	if val == nil then
-		val = self.d_exped:Get() * self.d_exped_scale
+		val = self.d_exped:GetBit() * 255
 		if self.d_exped:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_output_exped, val)
 		end

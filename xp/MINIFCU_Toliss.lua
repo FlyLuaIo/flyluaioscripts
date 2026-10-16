@@ -203,7 +203,7 @@ minifcu:GetFcuFpaValue('sim/cockpit/autopilot/vertical_velocity')
 minifcu:GetFcuHdgTrkMode('AirbusFBW/HDGTRKmode')
 
 -- ======= OUTPUT: EFIS LED and LCD (miniEFIS LED and LCD custom device, 32) =======
-
+minifcu:GetExped("AirbusFBW/APVerticalMode", false, 110)
 -- MT 9 (miniEFIS LED and LCD): baro unit (inverted: BaroUnitCapt 1=hPa → show 0)
 minifcu:GetEfisBaroInhgHpaUnit('AirbusFBW/BaroUnitCapt')
 -- MT 8 (miniEFIS LED and LCD): baro STD flag
@@ -235,8 +235,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetAppr()
 
 	-- EXPED LED: APVerticalMode == 113
-	local exped_on = (dr_vmode:Get() == 113) and 1 or 0
-	minifcu:SetExped(exped_on)
+	minifcu:SetExped()
 
 	-- FCU LCD (miniFCU LCD custom device)
 	local is_mach = dr_is_mach:Get()
@@ -327,7 +326,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetEfisBaroQnnh1(baro_std == 0 and 1 or 0)
 
 	-- MT 11 (miniEFIS LED and LCD): baro hPa (only in hPa mode)
-	if baro_unit == 0 then
+	if baro_unit ~= 0 then
 		minifcu:SetEfisBaro(math.floor(baro * 33.864 + 0.5))
 	else
 		minifcu:SetEfisBaroInhg(math.floor(baro * 100 + 0.5))
