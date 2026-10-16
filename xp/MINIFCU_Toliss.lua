@@ -111,6 +111,7 @@ minifcu:CfgVal(27, "AirbusFBW/NDmodeCapt", 1)
 minifcu:CfgVal(28, "AirbusFBW/NDmodeCapt", 2)
 minifcu:CfgVal(29, "AirbusFBW/NDmodeCapt", 3)
 minifcu:CfgVal(30, "AirbusFBW/NDmodeCapt", 4)
+minifcu:CfgVal(67, "AirbusFBW/NDmodeCapt", 5)
 
 -- ND range selector
 minifcu:CfgVal(31, "AirbusFBW/NDrangeCapt", 0)
