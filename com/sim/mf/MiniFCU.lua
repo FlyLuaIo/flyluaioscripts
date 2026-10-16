@@ -542,14 +542,13 @@ end
 -- ========
 -- custom device EFIS - CSTR (custom/1/0/value, MessageType 0)
 
-function MiniFCU:GetEfisCstr(dpath, scale)
-	self.d_efis_cstr_scale = scale == nil and 1 or scale
-	self.d_efis_cstr = iDataRef:New(dpath)
+function MiniFCU:GetEfisCstr(dpath, revert, base)
+	self.d_efis_cstr = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetEfisCstr(val)
 	if val == nil then
-		val = self.d_efis_cstr:Get() * self.d_efis_cstr_scale
+		val = self.d_efis_cstr:GetBit()
 		if self.d_efis_cstr:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_efis_cstr, val)
 		end
@@ -565,14 +564,13 @@ end
 -- ========
 -- custom device EFIS - WPT (custom/1/1/value, MessageType 1)
 
-function MiniFCU:GetEfisWpt(dpath, scale)
-	self.d_efis_wpt_scale = scale == nil and 1 or scale
-	self.d_efis_wpt = iDataRef:New(dpath)
+function MiniFCU:GetEfisWpt(dpath, revert, base)
+	self.d_efis_wpt = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetEfisWpt(val)
 	if val == nil then
-		val = self.d_efis_wpt:Get() * self.d_efis_wpt_scale
+		val = self.d_efis_wpt:GetBit()
 		if self.d_efis_wpt:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_efis_wpt, val)
 		end
@@ -657,14 +655,13 @@ end
 -- ========
 -- custom device FCU - FD VALUE (custom/1/5/value, MessageType 5)
 
-function MiniFCU:GetFcuFdValue(dpath, scale)
-	self.d_fcu_fd_value_scale = scale == nil and 1 or scale
-	self.d_fcu_fd_value = iDataRef:New(dpath)
+function MiniFCU:GetFcuFdValue(dpath, revert, base)
+	self.d_fcu_fd_value = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetFcuFdValue(val)
 	if val == nil then
-		val = self.d_fcu_fd_value:Get() * self.d_fcu_fd_value_scale
+		val = self.d_fcu_fd_value:GetBit()
 		if self.d_fcu_fd_value:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_fcu_fd_value, val)
 		end
@@ -680,14 +677,13 @@ end
 -- ========
 -- custom device FCU - LS VALUE (custom/1/6/value, MessageType 6)
 
-function MiniFCU:GetFcuLsValue(dpath, scale)
-	self.d_fcu_ls_value_scale = scale == nil and 1 or scale
-	self.d_fcu_ls_value = iDataRef:New(dpath)
+function MiniFCU:GetFcuLsValue(dpath, revert, base)
+	self.d_fcu_ls_value = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetFcuLsValue(val)
 	if val == nil then
-		val = self.d_fcu_ls_value:Get() * self.d_fcu_ls_value_scale
+		val = self.d_fcu_ls_value:GetBit()
 		if self.d_fcu_ls_value:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_fcu_ls_value, val)
 		end

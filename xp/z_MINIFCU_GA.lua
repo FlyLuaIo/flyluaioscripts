@@ -93,10 +93,10 @@ minifcu:CfgCmd(9, "sim/operation/test_none")
 minifcu:CfgCmd(10, "sim/operation/test_none")
 
 -- FCU - HDG - PUSH (Button, bit 11)
-minifcu:CfgCmd(11, "sim/autopilot/heading_sync")
+minifcu:CfgCmd(11, "sim/autopilot/NAV")
 
 -- FCU - HDG - PULL (Button, bit 12)
-minifcu:CfgCmd(12, "sim/autopilot/heading_hold")
+minifcu:CfgCmd(12, "sim/autopilot/heading")
 
 -- FCU - ALT - PUSH (Button, bit 13)
 minifcu:CfgCmd(13, "sim/autopilot/vnav")
@@ -203,37 +203,37 @@ minifcu:CfgCmd(46, "sim/operation/test_none")
 -- OUTPUT data
 
 -- output AP1 → output/0/state, pin AP1 (0/1)
-minifcu:GetAp1('sim/flightmodel/engine/ENGN_N1_')
+minifcu:GetAp1('sim/cockpit2/autopilot/servos_on')
 
 -- output AP2 → output/1/state, pin AP2 (0/1)
-minifcu:GetAp2('sim/flightmodel/engine/ENGN_N1_')
+minifcu:GetAp2('sim/cockpit2/autopilot/servos_on')
 
 -- output APPR → output/2/state, pin APPR (0/1)
-minifcu:GetAppr('sim/flightmodel/engine/ENGN_N1_')
+minifcu:GetAppr('sim/cockpit2/autopilot/approach_status')
 
 -- output ATHR → output/3/state, pin ATHR (0/1)
-minifcu:GetAthr('sim/flightmodel/engine/ENGN_N1_')
+minifcu:GetAthr('sim/cockpit2/autopilot/autothrottle_on')
 
 -- output EXPED → output/4/state, pin EXPED (0/1)
-minifcu:GetExped('sim/flightmodel/engine/ENGN_N1_')
+minifcu:GetExped('sim/cockpit2/autopilot/vnav_status')
 
 -- output LOC → output/5/state, pin LOC (0/1)
-minifcu:GetLoc('sim/flightmodel/engine/ENGN_N1_')
+minifcu:GetLoc('sim/cockpit2/autopilot/nav_status')
 
 -- MT 0 (miniFCU LCD): FcuSpdValue — SPD value（kts 整数）
 minifcu:GetFcuSpdValue('sim/cockpit2/autopilot/airspeed_dial_kts_mach')
 
 -- MT 1 (miniFCU LCD): FcuMachValue — MACH value（airspeed*100）
-minifcu:GetFcuMachValue('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuMachValue('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 2 (miniFCU LCD): FcuSpdMachMode — SPD/MACH 模式（1=mach, 0=ias）
-minifcu:GetFcuSpdMachMode('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuSpdMachMode('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 3 (miniFCU LCD): FcuSpdDashes — SPD dashes（1）
-minifcu:GetFcuSpdDashes('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuSpdDashes('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 4 (miniFCU LCD): FcuSpdDot — SPD dot（managed）
-minifcu:GetFcuSpdDot('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuSpdDot('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 5 (miniFCU LCD): FcuHdgValue — HDG value（360→0）
 minifcu:GetFcuHdgValue('sim/cockpit/autopilot/heading_mag')
@@ -242,46 +242,46 @@ minifcu:GetFcuHdgValue('sim/cockpit/autopilot/heading_mag')
 minifcu:GetFcuHdgDashes('sim/cockpit2/switches/avionics_power_on')
 
 -- MT 7 (miniFCU LCD): FcuHdgDot — HDG dot（managed）
-minifcu:GetFcuHdgDot('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuHdgDot('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 8 (miniFCU LCD): FcuAltValue — ALT value（ft/100）
 minifcu:GetFcuAltValue('sim/cockpit2/autopilot/altitude_dial_ft', 0.01)
 
 -- MT 9 (miniFCU LCD): FcuAltDot — ALT dot（managed）
-minifcu:GetFcuAltDot('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuAltDot('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 10 (miniFCU LCD): FcuVsValue — VS value
 minifcu:GetFcuVsValue('sim/cockpit2/autopilot/vvi_dial_fpm')
 
 -- MT 11 (miniFCU LCD): FcuFpaValue — FPA value
-minifcu:GetFcuFpaValue('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuFpaValue('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 12 (miniFCU LCD): FcuVsDashes — VS dashes（1）
 minifcu:GetFcuVsDashes('sim/cockpit2/autopilot/vvi_status', true)
 
 -- MT 13 (miniFCU LCD): FcuHdgTrkMode — HDG/TRK 模式（1=TRK）
-minifcu:GetFcuHdgTrkMode('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuHdgTrkMode('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 0 (miniEFIS LED and LCD): EfisCstr — CSTR 灯（1=on）
-minifcu:GetEfisCstr('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetEfisCstr('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 1 (miniEFIS LED and LCD): EfisWpt — WPT 灯（1=on）
-minifcu:GetEfisWpt('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetEfisWpt('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 2 (miniEFIS LED and LCD): EfisVord — VOR/D 灯（1=on）
-minifcu:GetEfisVord('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetEfisVord('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 3 (miniEFIS LED and LCD): EfisNdb — NDB 灯（1=on）
-minifcu:GetEfisNdb('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetEfisNdb('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 4 (miniEFIS LED and LCD): EfisArpt — ARPT 灯（1=on）
-minifcu:GetEfisArpt('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetEfisArpt('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 5 (miniEFIS LED and LCD): FcuFdValue — FD 灯（1=on）
-minifcu:GetFcuFdValue('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuFdValue('sim/cockpit/warnings/annunciators/flight_director')
 
 -- MT 6 (miniEFIS LED and LCD): FcuLsValue — LS 灯（1=on）
-minifcu:GetFcuLsValue('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuLsValue('sim/flightmodel/engine/ENGN_N1_')
 
 -- ===================== miniEFIS BARO（GA，已接通） =====================
 -- 源：机长气压设定（英寸汞柱）+ XP 的 STD 状态 + XP 的「公制压力显示」偏好。
@@ -312,11 +312,11 @@ minifcu:GetEfisBaro("sim/cockpit/misc/barometer_setting")
 
 GlobalFrameLoopManager:add(function()
 	-- 6 个 LED（源接好后再打开）
-	-- minifcu:SetAp1()
-	-- minifcu:SetAp2()
-	-- minifcu:SetAppr()
-	-- minifcu:SetAthr()
-	-- minifcu:SetExped()
+	minifcu:SetAp1()
+	minifcu:SetAp2()
+	minifcu:SetAppr()
+	minifcu:SetAthr()
+	minifcu:SetExped()
 	-- minifcu:SetLoc()
 	minifcu:SetFcuSpdValue()
 	-- minifcu:SetFcuMachValue()
@@ -339,7 +339,7 @@ GlobalFrameLoopManager:add(function()
 	-- minifcu:SetEfisVord()
 	-- minifcu:SetEfisNdb()
 	-- minifcu:SetEfisArpt()
-	-- minifcu:SetFcuFdValue()
+	minifcu:SetFcuFdValue()
 	-- minifcu:SetFcuLsValue()
 	-- miniEFIS BARO：单位 / STD / QNH 标签 + 两个值通道
 	local baro_inhg = dr_baro_inhg:Get()
