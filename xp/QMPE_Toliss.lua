@@ -377,12 +377,12 @@ qmpe:GetEClr("AirbusFBW/OHPLightsATA31[42]")
 qmpe:GetESts("AirbusFBW/OHPLightsATA31[41]")
 
 -- =====MISC
-qmpe:GetWarn("AirbusFBW/OHPLightsATA31[3]", false, 0.1)
-qmpe:GetCaut("AirbusFBW/OHPLightsATA31[4]", false, 0.1)
+qmpe:GetWarn("AirbusFBW/OHPLightsATA31[3]", false, 0.3)
+qmpe:GetCaut("AirbusFBW/OHPLightsATA31[4]", false, 0.2)
 
 qmpe:GetMsg("AirbusFBW/ACP2Lights[15]")
 qmpe:GetFail("AirbusFBW/OHPLightsATA31[1]", false, 0.1)
-qmpe:GetLand("AirbusFBW/OHPLightsATA31[1]", false, 0.1)
+qmpe:GetLand("AirbusFBW/OHPLightsATA31[8]")
 
 qmpe:GetTerr("AirbusFBW/OHPLightsATA34[24]", false, 0.1)
 
