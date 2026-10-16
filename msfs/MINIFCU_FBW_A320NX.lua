@@ -217,7 +217,8 @@ minifcu:GetFcuAltValue('(A:AUTOPILOT ALTITUDE LOCK VAR:3, Feet)', 0.01)
 minifcu:GetFcuAltDot('(L:A32NX_FCU_ALT_MANAGED)')
 -- MT 10 VS 值（fpm，TRK/FPA 模式下隐藏）
 minifcu:GetFcuVsValue('(L:A32NX_AUTOPILOT_VS_SELECTED)')
--- MT 11 FPA 值（度，TRK/FPA 模式下显示）
+-- MT 11 FPA 值：通道量纲 = FPA × 1000；源是度 → 用 GetFcuFpaValue 的默认 scale 1000，
+--   帧循环里 SetFcuFpaValue() 不传值（框架按 scale 乘注册的 dataref）
 minifcu:GetFcuFpaValue('(L:A32NX_AUTOPILOT_FPA_SELECTED)')
 -- MT 12 VS dashed
 minifcu:GetFcuVsDashes('(L:A32NX_FCU_VS_MANAGED)')

@@ -35,7 +35,8 @@
 --      * VS / FPA：参考档 VS 模式直接取 L:FSL_FCU_VS 当 fpm；TRK/FPA 模式取 `math.abs(c_vs * 100)`，
 --        而参考档里那句注释（“idr_qfcu_hid_vs_trkval_i need 0.8*1000=800”，与 FBW/iniBuilds 档同源）
 --        说明 QFCU 硬件要的是 FPA × 1000 —— 由此反推 L:FSL_FCU_VS 在 TRK/FPA 模式里存的是 FPA × 10
---        （0.8° → 8）。miniFCU MT11 要的是“度”，故帧循环里取原值 / 10。
+--        （0.8° → 8）。miniFCU MT11 的通道量纲同样是 FPA × 1000 → 注册时传 100（10 × 100 = 1000），
+--        帧循环里 SetFcuFpaValue() 不传值。
 --      * BARO：参考档注释 “3042, not 30.42” 说明 L:FSL_EFIS_CPT_BARO 存的是“当前单位下的显示数字”
 --        （inHg 模式 2992 / hPa 模式 1013，参考档把它原样喂给 QFCU 的两位 BCD 窗）。两个值都在帧循环里换算，
 --        切单位时不会读到上一次的陈旧值，并自己 math.floor(x + 0.5)（int 通道会截断）。
@@ -237,7 +238,7 @@ minifcu:GetFcuAltValue('(L:FSL_FCU_ALT)', 0.01)
 minifcu:GetFcuAltDot('(L:FSL_FCU_ALT_MANAGED)')
 -- MT 10 VS 值（fpm，TRK/FPA 模式下隐藏）
 minifcu:GetFcuVsValue('(L:FSL_FCU_VS)')
--- MT 11 FPA 值（度，TRK/FPA 模式下显示；帧循环里把 FPA × 10 还原成度）
+-- MT 11 FPA 值：通道量纲 = FPA × 1000，而 L:FSL_FCU_VS 在 TRK/FPA 模式是 FPA × 10 → scale 100
 minifcu:GetFcuFpaValue('(L:FSL_FCU_VS)', 100)
 -- MT 12 VS dashed
 minifcu:GetFcuVsDashes('(L:FSL_FCU_VS_DASHED)')
@@ -313,7 +314,7 @@ GlobalFrameLoopManager:add(function()
 	local is_fpa = (dr_trk_fpa:Get() >= 1)
 	minifcu:SetFcuVsDashes()
 	if is_fpa then
-		-- TRK/FPA 模式：L:FSL_FCU_VS 存 FPA × 10（见文件头说明），MT11 要的是度
+		-- TRK/FPA 模式：L:FSL_FCU_VS 存 FPA × 10（见文件头说明），MT11 量纲 FPA×1000 → scale 100
 		minifcu:SetFcuVsValue(0)
 		minifcu:SetFcuFpaValue()
 	else

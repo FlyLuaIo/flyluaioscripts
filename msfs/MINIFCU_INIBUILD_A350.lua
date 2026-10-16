@@ -266,7 +266,7 @@ minifcu:GetFcuAltDot(
 	'(L:FMGS_vertical_mode) 20 >= (L:FMGS_vertical_mode) 23 <= && (L:FMGS_vertical_mode) 40 >= || (L:FMGS_vertical_mode) 0 == (L:INI_PITCH_MODE_ARM) 3 == && || (L:FMGS_vertical_mode) 10 == (L:INI_REST_WPT_ALT) (A:INDICATED ALTITUDE,Feet) - abs 100 < && || (>L:MfAltDot) (L:MfAltDot)')
 -- MT 10 VS 值（fpm，带符号；TRK/FPA 模式下由 MT 11 接管）
 minifcu:GetFcuVsValue('(L:INI_VVI_DIAL)')
--- MT 11 FPA 值（度；TRK/FPA 模式下显示）
+-- MT 11 FPA 值（FPA × 1000；源 INI_FPA_DIAL 是度 → 默认 scale 1000）
 minifcu:GetFcuFpaValue('(L:INI_FPA_DIAL)')
 -- MT 12 VS dashed
 minifcu:GetFcuVsDashes('(L:INI_FCU_VS_DASHED)')

@@ -197,7 +197,8 @@ minifcu:GetFcuAltDot('AirbusFBW/ALTmanaged')
 minifcu:GetFcuVsDashes('AirbusFBW/VSdashed')
 -- MT 10 (miniFCU LCD): VS value (shown when VS mode)
 minifcu:GetFcuVsValue('sim/cockpit/autopilot/vertical_velocity')
--- MT 11 (miniFCU LCD): FPA value (shown when FPA mode)
+-- MT 11 (miniFCU LCD): FPA value (shown when FPA mode) - channel unit is FPA * 1000,
+--   the registered source is already in the unit the channel wants -> scale 1
 minifcu:GetFcuFpaValue('sim/cockpit/autopilot/vertical_velocity', 1)
 -- MT 13 (miniFCU LCD): HDG/TRK mode label
 minifcu:GetFcuHdgTrkMode('AirbusFBW/HDGTRKmode')

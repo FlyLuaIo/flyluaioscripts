@@ -43,8 +43,9 @@
 --      再 pull。若真机表现怪，把 6 号键改成只发 press（1）即可。
 --  10. MT 8（ALT 值）：参考档把 (L:INI_ALTITUDE_DIAL) 原样送 QFCU 的高度通道，本档按 ft 处理，
 --      GetFcuAltValue(path, 0.01) 得 ft/100。若真机高度差 100 倍，把 0.01 改成 1。
---  11. MT 11（FPA 值）：参考档的 QFCU FPA 通道是 abs(floor(fpa*1000)) 并另发符号通道，
---      而 miniFCU 的 FPA 通道是「度」，故这里直接送 (L:INI_FPA_DIAL) 原值。
+--  11. MT 11（FPA 值）：参考档的 QFCU FPA 通道是 abs(floor(fpa*1000)) 并另发符号通道；
+--      miniFCU 的 MT11 通道量纲同样是 FPA × 1000 → GetFcuFpaValue 用默认 scale 1000，
+--      帧循环里 SetFcuFpaValue() 不传值（源 L:INI_FPA_DIAL 是度）。
 -- *****************************************************************
 
 if ilua_require_msfs() then
@@ -273,7 +274,7 @@ minifcu:GetFcuAltDot(
 	'(L:FMGS_vertical_mode) 20 >= (L:FMGS_vertical_mode) 23 <= && (L:FMGS_vertical_mode) 40 >= || (L:FMGS_vertical_mode) 0 == (L:INI_PITCH_MODE_ARM) 3 == && || (L:FMGS_vertical_mode) 10 == (L:INI_REST_WPT_ALT) (A:INDICATED ALTITUDE,Feet) - abs 100 < && || (>L:MfAltDot) (L:MfAltDot)')
 -- MT 10 VS 值（fpm，带符号；TRK/FPA 模式下由 MT 11 接管）
 minifcu:GetFcuVsValue('(L:INI_VVI_DIAL)')
--- MT 11 FPA 值（度；TRK/FPA 模式下显示）
+-- MT 11 FPA 值（FPA × 1000；源 INI_FPA_DIAL 是度 → 默认 scale 1000）
 minifcu:GetFcuFpaValue('(L:INI_FPA_DIAL)')
 -- MT 12 VS dashed
 minifcu:GetFcuVsDashes('(L:INI_FCU_VS_DASHED)')

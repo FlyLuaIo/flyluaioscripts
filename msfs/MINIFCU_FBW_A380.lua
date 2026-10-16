@@ -208,7 +208,7 @@ minifcu:GetFcuHdgDot('(L:A32NX_FCU_HDG_MANAGED_DOT)')
 -- MT 8 / 9 ALT
 minifcu:GetFcuAltValue('(A:AUTOPILOT ALTITUDE LOCK VAR:3, Feet)', 0.01)
 minifcu:GetFcuAltDot('(L:A32NX_FCU_ALT_MANAGED)')
--- MT 10 / 11 / 12 VS 与 FPA
+-- MT 10 / 11 / 12 VS 与 FPA（MT11 通道量纲 = FPA × 1000；源是度 → 默认 scale 1000）
 minifcu:GetFcuVsValue('(L:A32NX_AUTOPILOT_VS_SELECTED)')
 minifcu:GetFcuFpaValue('(L:A32NX_AUTOPILOT_FPA_SELECTED)')
 minifcu:GetFcuVsDashes('(L:A32NX_FCU_VS_MANAGED)')

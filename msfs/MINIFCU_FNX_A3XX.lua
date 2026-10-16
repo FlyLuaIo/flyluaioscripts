@@ -24,7 +24,8 @@
 --     inHg 分支由它 × 100 得到 4 位数，故 MT10 / MT11 两个值都由它现算。
 --   * L:N_FCU_SPEED：SPD 模式 = kts，MACH 模式 = 马赫（QFCU 档按 L:I_FCU_SPEED_MODE 分流）；
 --     L:N_FCU_VS：VS 模式 = fpm，FPA 模式 = FPA×1000（QFCU 档同一条数据同时喂 VS / TRK 两个通道，
---     且注释写明 TRK 通道 "need 0.8*1000=800"；msfs/WWFCU_FNX.lua 也是 vs / 100 后按 2 位显示）。
+--     且注释写明 TRK 通道 "need 0.8*1000=800"；msfs/WWFCU_FNX.lua 也是 vs / 100 后按 2 位显示）
+--     → MT10 直用原值（fpm），MT11 用 GetFcuFpaValue(path, 1)（通道量纲就是 FPA×1000）。
 -- 已知取舍（待真机验证）：
 --   1. 未做断电门控：QFCU 档在 FCU 掉电/亮度归零时会清屏（digi_disp_powoff_*），
 --      miniFCU 硬件没有背光/熄灭通道，XP 档也没做，这里保持一致。
@@ -268,7 +269,7 @@ minifcu:GetFcuAltValue('(L:N_FCU_ALTITUDE)', 0.01)
 minifcu:GetFcuAltDot('(L:I_FCU_ALTITUDE_MANAGED)')
 -- MT 10 VS 值（fpm，TRK/FPA 模式下隐藏）
 minifcu:GetFcuVsValue('(L:N_FCU_VS)')
--- MT 11 FPA 值（度，TRK/FPA 模式下显示）
+-- MT 11 FPA 值：通道量纲 = FPA × 1000，而 N_FCU_VS 本身已是 FPA×1000 → GetFcuFpaValue(path, 1)
 minifcu:GetFcuFpaValue('(L:N_FCU_VS)', 1)
 -- MT 12 VS dashed
 minifcu:GetFcuVsDashes('(L:B_FCU_VERTICALSPEED_DASHED)')
@@ -344,7 +345,8 @@ GlobalFrameLoopManager:add(function()
 	-- MT 10 / MT 11 / MT 12：VS 与 FPA 互斥
 	--   N_FCU_VS 在 TRK/FPA 模式下装的是 FPA×1000（QFCU 档把同一条数据同时喂 VS / TRK 两个通道，
 	--   并注明 TRK 通道 "need 0.8*1000=800"；msfs/WWFCU_FNX.lua 也是 vs / 100 再按 2 位显示），
-	--   所以 FPA 通道要 /1000 还原成度数；若某天机模改成 ×100，只改这一个常量即可
+	--   而 MT11 通道量纲同为 FPA×1000 → 注册时传 1（不再自己 ÷1000），帧循环 SetFcuFpaValue() 不传值；
+	--   若某天机模改成 FPA×100，把注册里那个 1 改成 10 即可
 	local is_fpa = (dr_trkfpa:Get() >= 1)
 	local vs_fpa = dr_vs:Get()
 	minifcu:SetFcuVsDashes()

@@ -240,7 +240,7 @@ minifcu:GetFcuAltValue('(L:A310_Altitude_Dial)', 0.01)
 minifcu:GetFcuAltDot('(L:A32NX_FCU_ALT_MANAGED)')
 -- MT 10 VS 值（fpm，带符号；参考档把 |VS| 写进 vsval_i、符号写进 vsmode，miniFCU 通道本身带符号）
 minifcu:GetFcuVsValue('(L:A310_vvi_dial)')
--- MT 11 FPA 值（度；参考档 ×1000 才进 QFCU 的 TRK 窗，这里按度直接用）
+-- MT 11 FPA 值（FPA × 1000；源 A310_FPA_SET 是度 → GetFcuFpaValue 用默认 scale 1000）
 minifcu:GetFcuFpaValue('(L:A310_FPA_SET)')
 -- MT 12 VS dashed
 minifcu:GetFcuVsDashes('(L:A32NX_FCU_VS_MANAGED)')

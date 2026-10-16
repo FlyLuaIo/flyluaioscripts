@@ -256,6 +256,7 @@ minifcu:GetFcuAltDot('(L:A32NX_FCU_ALT_MANAGED)')
 -- MT 10 VS 值（fpm，带符号；TRK/FPA 模式下帧循环里置 0）
 minifcu:GetFcuVsValue('(A:AUTOPILOT VERTICAL HOLD VAR,Feet/minute)')
 -- MT 11 FPA 值 —— TODO：参考档没有 FPA 值源（fpa_vs 接的是 TRK/FPA 标志位），帧循环里固定写 0
+--   通道量纲本应是 FPA × 1000（见 MINIFCU_FBW_A320NX.lua），没有真源时写 0 不受影响
 minifcu:GetFcuFpaValue('(L:XMLVAR_TRK_FPA_MODE_ACTIVE)')
 -- MT 12 VS dashed
 minifcu:GetFcuVsDashes('(L:A32NX_FCU_VS_MANAGED)')

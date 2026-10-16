@@ -37,7 +37,7 @@
 --   4. MT 9（ALT managed 点）：参考档 digi_disp_set_ALT() 读的源是 (L:TLS_FCU_VS_MANAGED)
 --      （行 274），变量名与 ALT 不符，疑似参考档复制粘贴遗留；本档按参考档逐字保留。
 --   5. MT 10 / MT 11（VS / FPA）：参考档把符号编码进 QFCU 的 vsmode / vs_trkmode（行 445–473），
---      且 FPA 走 ×1000 定点；miniFCU 的 MT10 / MT11 自带符号、FPA 以“度”为单位
+--      且 FPA 走 ×1000 定点；miniFCU 的 MT10 自带符号、MT11 通道量纲同样是 FPA × 1000
 --      （见 MINIFCU_FBW_A320NX.lua），故这里直接送带符号的 (L:TLS_FCU_VS_WINDOW_VALUE)。
 --   6. 气压两值都算（切单位不会读到上一次的陈旧值）：参考档只按当前单位取 SetLBaro 的那一个值
 --      （行 485–493），本档按 miniFCU 的通道契约同时算 inHg 与 hPa（同 MINIFCU_FBW_A320NX.lua）。
@@ -374,7 +374,9 @@ minifcu:GetFcuHdgDot('(L:TLS_FCU_HDG_MANAGED)')
 minifcu:GetFcuAltValue('(L:TLS_FCU_ALT_WINDOW_VALUE)', 0.01)
 -- MT 9 ALT managed 点
 minifcu:GetFcuAltDot('(L:TLS_FCU_VS_MANAGED)')
--- MT 10 VS 值（fpm，带符号）/ MT 11 FPA 值（度）
+-- MT 10 VS 值（fpm，带符号）/ MT 11 FPA 值（FPA × 1000）
+--   MT11 通道量纲 = FPA × 1000（与参考档 idr_qfcu_hid_vs_trkval_i 的 math.floor(fpa * 1000) 一致），
+--   GetFcuFpaValue 默认 scale 就是 1000 → 帧循环里 SetFcuFpaValue() 不传值，由框架乘 scale。
 minifcu:GetFcuVsValue('(L:TLS_FCU_VS_WINDOW_VALUE)')
 minifcu:GetFcuFpaValue('(L:TLS_FCU_VS_WINDOW_VALUE)')
 -- MT 12 VS dashed
@@ -496,7 +498,7 @@ GlobalFrameLoopManager:add(function()
 		minifcu:SetFcuFpaValue(0)
 	elseif trkfpa == 1 then
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(vs_win)
+		minifcu:SetFcuFpaValue() -- FPA × 1000（scale 由 GetFcuFpaValue 的默认值 1000 提供）
 	else
 		minifcu:SetFcuVsValue(vs_win)
 		minifcu:SetFcuFpaValue(0)
