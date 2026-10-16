@@ -211,8 +211,8 @@ local function safe_get(dr)
 end
 
 -- FCU
-local dr_spd        = iDataRef:New('(L:N_FCU_SPEED)')            -- SPD 模式 = kts；MACH 模式 = 马赫（0.xx）
-local dr_spd_mode   = iDataRef:New('(L:I_FCU_SPEED_MODE)')       -- 1 = 显示 MACH
+local dr_spd        = iDataRef:New('(L:N_FCU_SPEED)')      -- SPD 模式 = kts；MACH 模式 = 马赫（0.xx）
+local dr_spd_mode   = iDataRef:New('(L:I_FCU_SPEED_MODE)') -- 1 = 显示 MACH
 local dr_spd_dashed = iDataRef:New('(L:B_FCU_SPEED_DASHED)')
 local dr_spd_mgd    = iDataRef:New('(L:I_FCU_SPEED_MANAGED)')
 local dr_hdg        = iDataRef:New('(L:N_FCU_HEADING)')
@@ -220,9 +220,9 @@ local dr_hdg_dashed = iDataRef:New('(L:B_FCU_HEADING_DASHED)')
 local dr_hdg_mgd    = iDataRef:New('(L:I_FCU_HEADING_MANAGED)')
 local dr_alt        = iDataRef:New('(L:N_FCU_ALTITUDE)')
 local dr_alt_mgd    = iDataRef:New('(L:I_FCU_ALTITUDE_MANAGED)')
-local dr_vs         = iDataRef:New('(L:N_FCU_VS)')               -- VS 模式 = fpm；FPA 模式 = FPA×1000
+local dr_vs         = iDataRef:New('(L:N_FCU_VS)')             -- VS 模式 = fpm；FPA 模式 = FPA×1000
 local dr_vs_dashed  = iDataRef:New('(L:B_FCU_VERTICALSPEED_DASHED)')
-local dr_trkfpa     = iDataRef:New('(L:I_FCU_TRACK_FPA_MODE)')   -- 1 = TRK/FPA
+local dr_trkfpa     = iDataRef:New('(L:I_FCU_TRACK_FPA_MODE)') -- 1 = TRK/FPA
 
 -- EFIS 机长侧气压：BARO_MODE 0 = inHg，1 = hPa；BARO_INCH 恒为 inHg；QNH 1 = QNH，0 = STD
 local dr_baro_mode  = iDataRef:New('(L:S_FCU_EFIS1_BARO_MODE)')
@@ -302,23 +302,23 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local is_mach  = safe_get(dr_spd_mode) -- 1 = MACH
+	local is_mach  = safe_get(dr_spd_mode) -- 0 = MACH
 	local spd_dash = safe_get(dr_spd_dashed)
-	local spd_val  = safe_get(dr_spd)      -- SPD 模式 = kts；MACH 模式 = 马赫
+	local spd_val  = safe_get(dr_spd)   -- SPD 模式 = kts；MACH 模式 = 马赫
 
 	-- MT 2：SPD/MACH 模式
-	minifcu:SetFcuSpdMachMode(is_mach >= 1 and 1 or 0)
+	minifcu:SetFcuSpdMachMode(is_mach == 0 and 1 or 0)
 
 	-- MT 1：MACH 值（马赫 × 100；SPD 模式或 dashed 时置 0，与 XP 档一致）
-	if is_mach >= 1 and spd_dash < 1 then
-		minifcu:SetFcuMachValue(math.floor(spd_val * 100 + 0.5))
+	if is_mach == 0 and spd_dash < 1 then
+		minifcu:SetFcuMachValue(math.floor(spd_val))
 	else
 		minifcu:SetFcuMachValue(0)
 	end
 
 	-- MT 0：SPD 值（kts；mach 或 dashed 时置 0）
-	if is_mach < 1 and spd_dash < 1 then
-		minifcu:SetFcuSpdValue(math.floor(spd_val + 0.5))
+	if is_mach > 0 and spd_dash < 1 then
+		minifcu:SetFcuSpdValue(math.floor(spd_val))
 	else
 		minifcu:SetFcuSpdValue(0)
 	end
@@ -365,7 +365,7 @@ GlobalFrameLoopManager:add(function()
 
 	-- 气压：单位 / STD / QNH 标签 + 两个值通道（两个值都由恒为 inHg 的源现算，切单位不会读到陈旧值）
 	local baro_mode = safe_get(dr_baro_mode) -- 0 = inHg，1 = hPa
-	local baro_qnh  = safe_get(dr_baro_qnh)  -- 1 = QNH，0 = STD
+	local baro_qnh  = safe_get(dr_baro_qnh) -- 1 = QNH，0 = STD
 	local baro_inch = safe_get(dr_baro_inch) -- inHg
 
 	-- MT 9：1 = inHg
