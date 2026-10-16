@@ -66,10 +66,10 @@ minifcu:CfgCmd(0, "sim/operation/test_none")
 minifcu:CfgCmd(1, "sim/operation/test_none")
 
 -- FCU - AP1 - BUTTON (Button, bit 2)
-minifcu:CfgCmd(2, "sim/operation/test_none")
+minifcu:CfgCmd(2, "sim/autopilot/servos_toggle")
 
 -- FCU - AP 2 - BUTTON (Button, bit 3)
-minifcu:CfgCmd(3, "sim/operation/test_none")
+minifcu:CfgCmd(3, "sim/autopilot/servos_toggle")
 
 -- FCU - METRIC ALT Button (Button, bit 4)
 minifcu:CfgCmd(4, "sim/operation/test_none")
@@ -78,13 +78,13 @@ minifcu:CfgCmd(4, "sim/operation/test_none")
 minifcu:CfgCmd(5, "sim/operation/test_none")
 
 -- FCU - EXPED - BUTTON (Button, bit 6)
-minifcu:CfgCmd(6, "sim/operation/test_none")
+minifcu:CfgCmd(6, "sim/autopilot/level_change")
 
 -- FCU - LOC - BUTTON (Button, bit 7)
-minifcu:CfgCmd(7, "sim/operation/test_none")
+minifcu:CfgCmd(7, "sim/autopilot/NAV")
 
 -- FCU - APPR - BUTTON (Button, bit 8)
-minifcu:CfgCmd(8, "sim/operation/test_none")
+minifcu:CfgCmd(8, "sim/autopilot/approach")
 
 -- FCU - SPD - PUSH (Button, bit 9)
 minifcu:CfgCmd(9, "sim/operation/test_none")
@@ -93,22 +93,22 @@ minifcu:CfgCmd(9, "sim/operation/test_none")
 minifcu:CfgCmd(10, "sim/operation/test_none")
 
 -- FCU - HDG - PUSH (Button, bit 11)
-minifcu:CfgCmd(11, "sim/operation/test_none")
+minifcu:CfgCmd(11, "sim/autopilot/heading_sync")
 
 -- FCU - HDG - PULL (Button, bit 12)
-minifcu:CfgCmd(12, "sim/operation/test_none")
+minifcu:CfgCmd(12, "sim/autopilot/heading_hold")
 
 -- FCU - ALT - PUSH (Button, bit 13)
-minifcu:CfgCmd(13, "sim/operation/test_none")
+minifcu:CfgCmd(13, "sim/autopilot/vnav")
 
 -- FCU - ALT - PULL (Button, bit 14)
-minifcu:CfgCmd(14, "sim/operation/test_none")
+minifcu:CfgCmd(14, "sim/autopilot/altitude_hold")
 
 -- FCU - VS - PUSH (Button, bit 15)
-minifcu:CfgCmd(15, "sim/operation/test_none")
+minifcu:CfgCmd(15, "sim/autopilot/return_to_level")
 
 -- FCU - VS - PULL (Button, bit 16)
-minifcu:CfgCmd(16, "sim/operation/test_none")
+minifcu:CfgCmd(16, "sim/autopilot/alt_vs")
 
 -- FCU - ALT 100/1000 (Button, bit 17)
 minifcu:CfgCmd(17, "sim/operation/test_none")
@@ -129,7 +129,7 @@ minifcu:CfgCmd(21, "sim/operation/test_none")
 minifcu:CfgCmd(22, "sim/operation/test_none")
 
 -- EFIS - FD (Button, bit 23)
-minifcu:CfgCmd(23, "sim/operation/test_none")
+minifcu:CfgCmd(23, "sim/autopilot/fdir_toggle")
 
 -- EFIS - LS (Button, bit 24)
 minifcu:CfgCmd(24, "sim/operation/test_none")
