@@ -178,10 +178,10 @@ minifcu:CfgRpn(61, '1 (>B:INSTRUMENT_VS_KNOB_Knob_Inc)')
 minifcu:CfgRpn(62, '1 (>B:INSTRUMENT_VS_KNOB_Knob_Inc)')
 
 -- BARO 编码器（机长侧）[Q46 / Q47]：参考档本身就是 RPN（不是 CfgEnc），逐字复制
-minifcu:CfgRpn(63, '(L:E_FCU_EFIS1_BARO) -- (>L:E_FCU_EFIS1_BARO)')
-minifcu:CfgRpn(64, '(L:E_FCU_EFIS1_BARO) -- (>L:E_FCU_EFIS1_BARO)')
-minifcu:CfgRpn(65, '(L:E_FCU_EFIS1_BARO) ++ (>L:E_FCU_EFIS1_BARO)')
-minifcu:CfgRpn(66, '(L:E_FCU_EFIS1_BARO) ++ (>L:E_FCU_EFIS1_BARO)')
+minifcu:CfgRpn(63, '1 (>B:INSTRUMENT_CPT_ALTIMETER_KNOB_Knob_Dec)')
+minifcu:CfgRpn(64, '1 (>B:INSTRUMENT_CPT_ALTIMETER_KNOB_Knob_Dec)')
+minifcu:CfgRpn(65, '1 (>B:INSTRUMENT_CPT_ALTIMETER_KNOB_Knob_Inc)')
+minifcu:CfgRpn(66, '1 (>B:INSTRUMENT_CPT_ALTIMETER_KNOB_Knob_Inc)')
 
 -- ===========================================================
 -- 显示源（帧循环里直接读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
@@ -194,19 +194,18 @@ local function safe_get(dr)
 end
 
 -- FCU 窗
-local dr_spd_dial    = iDataRef:New('(L:A310_Airspeed_Dial)')      -- SPD 模式 = kts（参考档 iasval_i）
-local dr_spd_preset  = iDataRef:New('(L:A310_PRESET_SPEED)')       -- 非 0 时优先显示（参考档同逻辑）
-local dr_mach_x100   = iDataRef:New('(A:AUTOPILOT MACH HOLD VAR, Number) 100 * near') -- 马赫 × 100
+local dr_spd_dial    = iDataRef:New('(L:A310_Airspeed_Dial)')                         -- SPD 模式 = kts（参考档 iasval_i）
+local dr_spd_preset  = iDataRef:New('(L:A310_PRESET_SPEED)')                          -- 非 0 时优先显示（参考档同逻辑）
 local dr_spd_mach    = iDataRef:New('(L:A310_Airspeed_is_mach,Bool)')                 -- 1 = MACH 模式
-local dr_spd_dashed  = iDataRef:New('(L:A310_managed_speed)')      -- 1 = 虚线（managed）
+local dr_spd_dashed  = iDataRef:New('(L:A310_managed_speed)')                         -- 1 = 虚线（managed）
 local dr_hdg         = iDataRef:New('(L:A310_HEADING_DIAL)')
 local dr_hdg_dashed  = iDataRef:New('(L:A32NX_FCU_HDG_MANAGED_DASHES)')
-local dr_alt         = iDataRef:New('(L:A310_Altitude_Dial)')      -- 英尺
+local dr_alt         = iDataRef:New('(L:A310_Altitude_Dial)') -- 英尺
 local dr_alt_managed = iDataRef:New('(L:A32NX_FCU_ALT_MANAGED)')
-local dr_vs          = iDataRef:New('(L:A310_vvi_dial)')           -- fpm，带符号
-local dr_fpa         = iDataRef:New('(L:A310_FPA_SET)')            -- 度（参考档 ×1000 喂 QFCU 的 TRK 窗）
+local dr_vs          = iDataRef:New('(L:A310_vvi_dial)')      -- fpm，带符号
+local dr_fpa         = iDataRef:New('(L:A310_FPA_SET)')       -- 度（参考档 ×1000 喂 QFCU 的 TRK 窗）
 local dr_vs_dashed   = iDataRef:New('(L:A32NX_FCU_VS_MANAGED)')
-local dr_trkfpa      = iDataRef:New('(L:A310_FPA_SELECTED)')       -- 1 = TRK/FPA
+local dr_trkfpa      = iDataRef:New('(L:A310_FPA_SELECTED)')  -- 1 = TRK/FPA
 
 -- EFIS 机长侧气压：单位 0 = inHg / 1 = hPa；BARO1_MODE 参考档注释 QFE:0 QNH:1 STD:3（2 或 3 = STD）
 local dr_baro_unit   = iDataRef:New('(L:XMLVAR_Baro_Selector_HPA_1)')
@@ -216,12 +215,12 @@ local dr_baro_mbar   = iDataRef:New('(A:KOHLSMAN SETTING HG, mbar)')
 
 -- ===========================================================
 -- OUTPUT：6 个 LED pin
-minifcu:GetAp1('(L:A310_ap1_on)')                       -- [Q10]
-minifcu:GetAp2('(L:A310_ap2_on)')                       -- [Q9]
-minifcu:GetAthr('(L:__ATHR_ButtonIsPressed, Bool)')     -- [Q11]
-minifcu:GetLoc('(L:A310_MCU_NAV_LIGHT, Bool)')          -- [Q8]
-minifcu:GetAppr('(L:A310_MCU_LAND_LIGHT, Bool)')        -- [Q13]（参考档该行写成 "(>L:..."，是笔误，这里用 (L:）
-minifcu:GetExped('(L:A310_MCU_PROFILE_LIGHT)')          -- [Q12]
+minifcu:GetAp1('(L:A310_ap1_on)')                   -- [Q10]
+minifcu:GetAp2('(L:A310_ap2_on)')                   -- [Q9]
+minifcu:GetAthr('(L:__ATHR_ButtonIsPressed, Bool)') -- [Q11]
+minifcu:GetLoc('(L:A310_MCU_NAV_LIGHT, Bool)')      -- [Q8]
+minifcu:GetAppr('(L:A310_MCU_LAND_LIGHT, Bool)')    -- [Q13]（参考档该行写成 "(>L:..."，是笔误，这里用 (L:）
+minifcu:GetExped('(L:A310_MCU_PROFILE_LIGHT)')      -- [Q12]
 
 -- ===========================================================
 -- OUTPUT：miniFCU LCD（CustomDevice 26 通道 = 14 FCU + 12 EFIS，全部注册）
@@ -229,7 +228,7 @@ minifcu:GetExped('(L:A310_MCU_PROFILE_LIGHT)')          -- [Q12]
 -- MT 0 SPD 值（kts，仅 SPD 模式且非空屏）
 minifcu:GetFcuSpdValue('(L:A310_Airspeed_Dial)')
 -- MT 1 MACH 值（马赫 × 100；参考档源表达式已含 100 *，故 scale 用默认 1）
-minifcu:GetFcuMachValue('(A:AUTOPILOT MACH HOLD VAR, Number) 100 * near')
+minifcu:GetFcuMachValue('(L:A310_Airspeed_Dial)')
 -- MT 2 SPD/MACH 模式（1 = mach）
 minifcu:GetFcuSpdMachMode('(L:A310_Airspeed_is_mach,Bool)')
 -- MT 3 SPD dashed
@@ -286,7 +285,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local is_mach    = safe_get(dr_spd_mach)   -- 1 = MACH
+	local is_mach    = safe_get(dr_spd_mach) -- 1 = MACH
 	local spd_dash   = safe_get(dr_spd_dashed) -- 1 = 虚线
 	local spd_dial   = safe_get(dr_spd_dial)
 	local spd_preset = safe_get(dr_spd_preset)
@@ -296,7 +295,7 @@ GlobalFrameLoopManager:add(function()
 
 	-- MT 1：MACH 值（参考档源已是 马赫×100；SPD 模式或虚线时置 0）
 	if is_mach >= 1 and spd_dash < 1 then
-		minifcu:SetFcuMachValue(math.floor(safe_get(dr_mach_x100) + 0.5))
+		minifcu:SetFcuMachValue(math.floor((safe_get(dr_spd_dial) + 0.004) * 100))
 	else
 		minifcu:SetFcuMachValue(0)
 	end
