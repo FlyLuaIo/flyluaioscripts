@@ -19,39 +19,39 @@ uluaLog('MobiFlight MiniFCU for GA')
 
 -- INPUT key bindings (keysmap bits from mobiflight/MiniFCU.json)
 
----- TOLISS - FCU - ALT - ENCODER
+---- FCU - ALT - ENCODER
 -- inner
-minifcu:CfgCmd(47, "sim/operation/test_none")
-minifcu:CfgCmd(48, "sim/operation/test_none")
+minifcu:CfgCmd(47, "sim/autopilot/altitude_down")
+minifcu:CfgCmd(48, "sim/autopilot/altitude_down")
 -- outer
-minifcu:CfgCmd(49, "sim/operation/test_none")
-minifcu:CfgCmd(50, "sim/operation/test_none")
+minifcu:CfgCmd(49, "sim/autopilot/altitude_up")
+minifcu:CfgCmd(50, "sim/autopilot/altitude_up")
 
----- TOLISS - FCU - SPD - ENCODER
+---- FCU - SPD - ENCODER
 -- inner
-minifcu:CfgCmd(51, "sim/operation/test_none")
-minifcu:CfgCmd(52, "sim/operation/test_none")
+minifcu:CfgCmd(51, "sim/autopilot/airspeed_down")
+minifcu:CfgCmd(52, "sim/autopilot/airspeed_down")
 -- outer
-minifcu:CfgCmd(53, "sim/operation/test_none")
-minifcu:CfgCmd(54, "sim/operation/test_none")
+minifcu:CfgCmd(53, "sim/autopilot/airspeed_up")
+minifcu:CfgCmd(54, "sim/autopilot/airspeed_up")
 
----- TOLISS - FCU - HDG - ENCODER
+---- FCU - HDG - ENCODER
 -- inner
-minifcu:CfgCmd(55, "sim/operation/test_none")
-minifcu:CfgCmd(56, "sim/operation/test_none")
+minifcu:CfgCmd(55, "sim/autopilot/heading_down")
+minifcu:CfgCmd(56, "sim/autopilot/heading_down")
 -- outer
-minifcu:CfgCmd(57, "sim/operation/test_none")
-minifcu:CfgCmd(58, "sim/operation/test_none")
+minifcu:CfgCmd(57, "sim/autopilot/heading_up")
+minifcu:CfgCmd(58, "sim/autopilot/heading_up")
 
----- TOLISS - FCU - VS - ENCODER
+---- FCU - VS - ENCODER
 -- inner
-minifcu:CfgCmd(59, "sim/operation/test_none")
-minifcu:CfgCmd(60, "sim/operation/test_none")
+minifcu:CfgCmd(59, "sim/autopilot/vertical_speed_down")
+minifcu:CfgCmd(60, "sim/autopilot/vertical_speed_down")
 -- outer
-minifcu:CfgCmd(61, "sim/operation/test_none")
-minifcu:CfgCmd(62, "sim/operation/test_none")
+minifcu:CfgCmd(61, "sim/autopilot/vertical_speed_up")
+minifcu:CfgCmd(62, "sim/autopilot/vertical_speed_up")
 
----- TOLISS - EFIS - BAR ENCODER HPA
+---- EFIS - BAR ENCODER HPA
 -- inner
 minifcu:CfgCmd(63, "sim/instruments/barometer_down")
 minifcu:CfgCmd(64, "sim/instruments/barometer_down")
@@ -59,145 +59,145 @@ minifcu:CfgCmd(64, "sim/instruments/barometer_down")
 minifcu:CfgCmd(65, "sim/instruments/barometer_up")
 minifcu:CfgCmd(66, "sim/instruments/barometer_up")
 
--- TOLISS - FCU - SPD/MACH (Button, bit 0)
+-- FCU - SPD/MACH (Button, bit 0)
 minifcu:CfgCmd(0, "sim/operation/test_none")
 
--- TOLISS - FCU - HDG/TRK (Button, bit 1)
+-- FCU - HDG/TRK (Button, bit 1)
 minifcu:CfgCmd(1, "sim/operation/test_none")
 
--- TOLISS - FCU - AP1 - BUTTON (Button, bit 2)
+-- FCU - AP1 - BUTTON (Button, bit 2)
 minifcu:CfgCmd(2, "sim/operation/test_none")
 
--- TOLISS - FCU - AP 2 - BUTTON (Button, bit 3)
+-- FCU - AP 2 - BUTTON (Button, bit 3)
 minifcu:CfgCmd(3, "sim/operation/test_none")
 
--- TOLISS - FCU - METRIC ALT Button (Button, bit 4)
+-- FCU - METRIC ALT Button (Button, bit 4)
 minifcu:CfgCmd(4, "sim/operation/test_none")
 
--- TOLISS - FCU - ATHR - BUTTON (Button, bit 5)
+-- FCU - ATHR - BUTTON (Button, bit 5)
 minifcu:CfgCmd(5, "sim/operation/test_none")
 
--- TOLISS - FCU - EXPED - BUTTON (Button, bit 6)
+-- FCU - EXPED - BUTTON (Button, bit 6)
 minifcu:CfgCmd(6, "sim/operation/test_none")
 
--- TOLISS - FCU - LOC - BUTTON (Button, bit 7)
+-- FCU - LOC - BUTTON (Button, bit 7)
 minifcu:CfgCmd(7, "sim/operation/test_none")
 
--- TOLISS - FCU - APPR - BUTTON (Button, bit 8)
+-- FCU - APPR - BUTTON (Button, bit 8)
 minifcu:CfgCmd(8, "sim/operation/test_none")
 
--- TOLISS - FCU - SPD - PUSH (Button, bit 9)
+-- FCU - SPD - PUSH (Button, bit 9)
 minifcu:CfgCmd(9, "sim/operation/test_none")
 
--- TOLISS - FCU - SPD - PULL (Button, bit 10)
+-- FCU - SPD - PULL (Button, bit 10)
 minifcu:CfgCmd(10, "sim/operation/test_none")
 
--- TOLISS - FCU - HDG - PUSH (Button, bit 11)
+-- FCU - HDG - PUSH (Button, bit 11)
 minifcu:CfgCmd(11, "sim/operation/test_none")
 
--- TOLISS - FCU - HDG - PULL (Button, bit 12)
+-- FCU - HDG - PULL (Button, bit 12)
 minifcu:CfgCmd(12, "sim/operation/test_none")
 
--- TOLISS - FCU - ALT - PUSH (Button, bit 13)
+-- FCU - ALT - PUSH (Button, bit 13)
 minifcu:CfgCmd(13, "sim/operation/test_none")
 
--- TOLISS - FCU - ALT - PULL (Button, bit 14)
+-- FCU - ALT - PULL (Button, bit 14)
 minifcu:CfgCmd(14, "sim/operation/test_none")
 
--- TOLISS - FCU - VS - PUSH (Button, bit 15)
+-- FCU - VS - PUSH (Button, bit 15)
 minifcu:CfgCmd(15, "sim/operation/test_none")
 
--- TOLISS - FCU - VS - PULL (Button, bit 16)
+-- FCU - VS - PULL (Button, bit 16)
 minifcu:CfgCmd(16, "sim/operation/test_none")
 
--- TOLISS - FCU - ALT 100/1000 (Button, bit 17)
+-- FCU - ALT 100/1000 (Button, bit 17)
 minifcu:CfgCmd(17, "sim/operation/test_none")
 
--- TOLISS - EFIS - CSTR (Button, bit 18)
+-- EFIS - CSTR (Button, bit 18)
 minifcu:CfgCmd(18, "sim/operation/test_none")
 
--- TOLISS - EFIS - WPT (Button, bit 19)
+-- EFIS - WPT (Button, bit 19)
 minifcu:CfgCmd(19, "sim/operation/test_none")
 
--- TOLISS - EFIS - VORD (Button, bit 20)
+-- EFIS - VORD (Button, bit 20)
 minifcu:CfgCmd(20, "sim/operation/test_none")
 
--- TOLISS - EFIS - NDB (Button, bit 21)
+-- EFIS - NDB (Button, bit 21)
 minifcu:CfgCmd(21, "sim/operation/test_none")
 
--- TOLISS - EFIS - ARPT (Button, bit 22)
+-- EFIS - ARPT (Button, bit 22)
 minifcu:CfgCmd(22, "sim/operation/test_none")
 
--- TOLISS - EFIS - FD (Button, bit 23)
+-- EFIS - FD (Button, bit 23)
 minifcu:CfgCmd(23, "sim/operation/test_none")
 
--- TOLISS - EFIS - LS (Button, bit 24)
+-- EFIS - LS (Button, bit 24)
 minifcu:CfgCmd(24, "sim/operation/test_none")
 
--- TOLISS - EFIS - CHRONO (Button, bit 25)
+-- EFIS - CHRONO (Button, bit 25)
 minifcu:CfgCmd(25, "sim/operation/test_none")
 
--- TOLISS - EFIS - ROSE LS (Button, bit 26)
+-- EFIS - ROSE LS (Button, bit 26)
 minifcu:CfgCmd(26, "sim/operation/test_none")
 
--- TOLISS - EFIS - ROSE VOR (Button, bit 27)
+-- EFIS - ROSE VOR (Button, bit 27)
 minifcu:CfgCmd(27, "sim/operation/test_none")
 
--- TOLISS - EFIS - ROSE NAV (Button, bit 28)
+-- EFIS - ROSE NAV (Button, bit 28)
 minifcu:CfgCmd(28, "sim/operation/test_none")
 
--- TOLISS - EFIS - ROSE ARC (Button, bit 29)
+-- EFIS - ROSE ARC (Button, bit 29)
 minifcu:CfgCmd(29, "sim/operation/test_none")
 
--- TOLISS - EFIS - ROSE HIDDEN  (Button, bit 30)
+-- EFIS - ROSE HIDDEN  (Button, bit 30)
 minifcu:CfgCmd(30, "sim/operation/test_none")
 
--- TOLISS - EFIS - RANGE 10 (Button, bit 31)
+-- EFIS - RANGE 10 (Button, bit 31)
 minifcu:CfgCmd(31, "sim/operation/test_none")
 
--- TOLISS - EFIS - RANGE 20 (Button, bit 32)
+-- EFIS - RANGE 20 (Button, bit 32)
 minifcu:CfgCmd(32, "sim/operation/test_none")
 
--- TOLISS - EFIS - RANGE 40 (Button, bit 33)
+-- EFIS - RANGE 40 (Button, bit 33)
 minifcu:CfgCmd(33, "sim/operation/test_none")
 
--- TOLISS - EFIS - RANGE 80 (Button, bit 34)
+-- EFIS - RANGE 80 (Button, bit 34)
 minifcu:CfgCmd(34, "sim/operation/test_none")
 
--- TOLISS - EFIS - RANGE 160 (Button, bit 35)
+-- EFIS - RANGE 160 (Button, bit 35)
 minifcu:CfgCmd(35, "sim/operation/test_none")
 
--- TOLISS - EFIS - RANGE 320 (Button, bit 36)
+-- EFIS - RANGE 320 (Button, bit 36)
 minifcu:CfgCmd(36, "sim/operation/test_none")
 
--- TOLISS - EFIS - ADF 1 (Button, bit 37)
+-- EFIS - ADF 1 (Button, bit 37)
 minifcu:CfgCmd(37, "sim/operation/test_none")
 
--- TOLISS - EFIS - OFF 1 (Button, bit 38)
+-- EFIS - OFF 1 (Button, bit 38)
 minifcu:CfgCmd(38, "sim/operation/test_none")
 
--- TOLISS - EFIS - VOR 1 (Button, bit 39)
+-- EFIS - VOR 1 (Button, bit 39)
 minifcu:CfgCmd(39, "sim/operation/test_none")
 
--- TOLISS - EFIS - ADF 2 (Button, bit 40)
+-- EFIS - ADF 2 (Button, bit 40)
 minifcu:CfgCmd(40, "sim/operation/test_none")
 
--- TOLISS - EFIS - OFF 2 (Button, bit 41)
+-- EFIS - OFF 2 (Button, bit 41)
 minifcu:CfgCmd(41, "sim/operation/test_none")
 
--- TOLISS - EFIS - VOR 2 (Button, bit 42)
+-- EFIS - VOR 2 (Button, bit 42)
 minifcu:CfgCmd(42, "sim/operation/test_none")
 
--- TOLISS - EFIS - BARO UNIT HPA (Button, bit 43) → sim/physics/metric_press = 1（公制 = hPa）
+-- EFIS - BARO UNIT HPA (Button, bit 43) → sim/physics/metric_press = 1（公制 = hPa）
 minifcu:CfgVal(43, "sim/physics/metric_press", 1)
 
--- TOLISS - EFIS - BARO UNIT INHG (Button, bit 44) → sim/physics/metric_press = 0（inHg）
+-- EFIS - BARO UNIT INHG (Button, bit 44) → sim/physics/metric_press = 0（inHg）
 minifcu:CfgVal(44, "sim/physics/metric_press", 0)
 
--- TOLISS - EFIS - BARO PULL (Button, bit 45)
+-- EFIS - BARO PULL (Button, bit 45)
 minifcu:CfgCmd(45, "sim/operation/test_none")
 
--- TOLISS - EFIS - BARO PUSH (Button, bit 46)
+-- EFIS - BARO PUSH (Button, bit 46)
 minifcu:CfgCmd(46, "sim/operation/test_none")
 
 -- OUTPUT data
@@ -221,7 +221,7 @@ minifcu:GetExped('sim/flightmodel/engine/ENGN_N1_')
 minifcu:GetLoc('sim/flightmodel/engine/ENGN_N1_')
 
 -- MT 0 (miniFCU LCD): FcuSpdValue — SPD value（kts 整数）
-minifcu:GetFcuSpdValue('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuSpdValue('sim/cockpit2/autopilot/airspeed_dial_kts_mach')
 
 -- MT 1 (miniFCU LCD): FcuMachValue — MACH value（airspeed*100）
 minifcu:GetFcuMachValue('sim/flightmodel/engine/ENGN_N1_', 1)
@@ -236,28 +236,28 @@ minifcu:GetFcuSpdDashes('sim/flightmodel/engine/ENGN_N1_', 1)
 minifcu:GetFcuSpdDot('sim/flightmodel/engine/ENGN_N1_', 1)
 
 -- MT 5 (miniFCU LCD): FcuHdgValue — HDG value（360→0）
-minifcu:GetFcuHdgValue('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuHdgValue('sim/cockpit/autopilot/heading_mag')
 
 -- MT 6 (miniFCU LCD): FcuHdgDashes — HDG dashes（1）
-minifcu:GetFcuHdgDashes('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuHdgDashes('sim/cockpit2/switches/avionics_power_on')
 
 -- MT 7 (miniFCU LCD): FcuHdgDot — HDG dot（managed）
 minifcu:GetFcuHdgDot('sim/flightmodel/engine/ENGN_N1_', 1)
 
 -- MT 8 (miniFCU LCD): FcuAltValue — ALT value（ft/100）
-minifcu:GetFcuAltValue('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuAltValue('sim/cockpit2/autopilot/altitude_dial_ft', 0.01)
 
 -- MT 9 (miniFCU LCD): FcuAltDot — ALT dot（managed）
 minifcu:GetFcuAltDot('sim/flightmodel/engine/ENGN_N1_', 1)
 
 -- MT 10 (miniFCU LCD): FcuVsValue — VS value
-minifcu:GetFcuVsValue('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuVsValue('sim/cockpit2/autopilot/vvi_dial_fpm')
 
 -- MT 11 (miniFCU LCD): FcuFpaValue — FPA value
 minifcu:GetFcuFpaValue('sim/flightmodel/engine/ENGN_N1_', 1)
 
 -- MT 12 (miniFCU LCD): FcuVsDashes — VS dashes（1）
-minifcu:GetFcuVsDashes('sim/flightmodel/engine/ENGN_N1_', 1)
+minifcu:GetFcuVsDashes('sim/cockpit2/autopilot/vvi_status', true)
 
 -- MT 13 (miniFCU LCD): FcuHdgTrkMode — HDG/TRK 模式（1=TRK）
 minifcu:GetFcuHdgTrkMode('sim/flightmodel/engine/ENGN_N1_', 1)
@@ -318,19 +318,21 @@ GlobalFrameLoopManager:add(function()
 	-- minifcu:SetAthr()
 	-- minifcu:SetExped()
 	-- minifcu:SetLoc()
-	-- minifcu:SetFcuSpdValue()
+	minifcu:SetFcuSpdValue()
 	-- minifcu:SetFcuMachValue()
 	-- minifcu:SetFcuSpdMachMode()
 	-- minifcu:SetFcuSpdDashes()
-	-- minifcu:SetFcuSpdDot()
-	-- minifcu:SetFcuHdgValue()
-	-- minifcu:SetFcuHdgDashes()
-	-- minifcu:SetFcuHdgDot()
-	-- minifcu:SetFcuAltValue()
+	-- minifcu:SetFcuSpdDot(0)
+	minifcu:SetFcuHdgDashes(0)
+	minifcu:SetFcuHdgValue()
+	minifcu:SetFcuHdgDot(0)
+	minifcu:SetFcuAltValue()
 	-- minifcu:SetFcuAltDot()
-	-- minifcu:SetFcuVsValue()
+
+	minifcu:SetFcuVsDashes()
+	minifcu:SetFcuVsValue()
 	-- minifcu:SetFcuFpaValue()
-	-- minifcu:SetFcuVsDashes()
+
 	-- minifcu:SetFcuHdgTrkMode()
 	-- minifcu:SetEfisCstr()
 	-- minifcu:SetEfisWpt()

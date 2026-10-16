@@ -497,14 +497,13 @@ end
 -- ========
 -- custom device FCU - VS - DASHES (custom/0/12/value, MessageType 12)
 
-function MiniFCU:GetFcuVsDashes(dpath, scale)
-	self.d_fcu_vs_dashes_scale = scale == nil and 1 or scale
-	self.d_fcu_vs_dashes = iDataRef:New(dpath)
+function MiniFCU:GetFcuVsDashes(dpath, revert, base)
+	self.d_fcu_vs_dashes = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetFcuVsDashes(val)
 	if val == nil then
-		val = self.d_fcu_vs_dashes:Get() * self.d_fcu_vs_dashes_scale
+		val = self.d_fcu_vs_dashes:GetBit()
 		if self.d_fcu_vs_dashes:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_fcu_vs_dashes, val)
 		end
