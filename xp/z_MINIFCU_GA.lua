@@ -10,13 +10,6 @@ if not minifcu then return end
 
 uluaLog('MobiFlight MiniFCU for GA')
 
--- 雏形（skeleton）：输出侧只搭骨架。
---   * 输入位全是 "sim/operation/test_none" 占位，请按机模改。
---   * 26 条自定义设备通道（miniFCU LCD MessageType 0–13 / miniEFIS LED and LCD 0–11）
---     的 Get 也用占位 dpath；它们是 kSetCustomDevice(32)，dataref 在
---     cpuwolf/mf/MiniFCU/custom/<设备>/<MT>/value，值是十进制整数字符串（无小数位）。
---   * 把 dpath 换成真实数据源后，再打开下面 FrameLoop 里的 Set 调用。
-
 -- INPUT key bindings (keysmap bits from mobiflight/MiniFCU.json)
 
 ---- FCU - ALT - ENCODER
