@@ -182,14 +182,7 @@ minifcu:CfgRpn(65, '(>K:FSL.EVENT.EFIS.CPT.BARO.INC)')
 minifcu:CfgRpn(66, '(>K:FSL.EVENT.EFIS.CPT.BARO.INC)')
 
 -- ===========================================================
--- 显示源（帧循环里直接读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
-
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
+-- 显示源（帧循环里直接读）
 
 -- FCU
 local dr_spd          = iDataRef:New('(L:FSL_FCU_SPD)') -- SPD 模式 = kts；MACH 模式 = 马赫 × 100
@@ -282,9 +275,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local is_mach  = safe_get(dr_is_mach)
-	local spd_dash = safe_get(dr_spd_dashes)
-	local spd_val  = safe_get(dr_spd)
+	local is_mach  = dr_is_mach:Get()
+	local spd_dash = dr_spd_dashes:Get()
+	local spd_val  = dr_spd:Get()
 
 	-- MT 2：SPD/MACH 模式
 	minifcu:SetFcuSpdMachMode(is_mach >= 1 and 1 or 0)
@@ -317,15 +310,15 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuAltDot()
 
 	-- MT 10 / MT 11 / MT 12：VS 与 FPA 互斥
-	local is_fpa = (safe_get(dr_trk_fpa) >= 1)
+	local is_fpa = (dr_trk_fpa:Get() >= 1)
 	minifcu:SetFcuVsDashes()
 	if is_fpa then
 		-- TRK/FPA 模式：L:FSL_FCU_VS 存 FPA × 10（见文件头说明），MT11 要的是度
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(safe_get(dr_vs) / 10)
+		minifcu:SetFcuFpaValue(dr_vs:Get() / 10)
 	else
 		-- VS 模式：带符号 fpm
-		minifcu:SetFcuVsValue(safe_get(dr_vs))
+		minifcu:SetFcuVsValue(dr_vs:Get())
 		minifcu:SetFcuFpaValue(0)
 	end
 
@@ -342,9 +335,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuLsValue()
 
 	-- 气压：STD / QNH 标签 / 单位 / 两个值通道（两个值都算，切单位时不会读到上一次的陈旧值）
-	local baro_std  = safe_get(dr_baro_std) -- 1 = STD
-	local baro_unit = safe_get(dr_baro_unit) -- 1 = inHg（见文件头说明）
-	local baro_val  = safe_get(dr_baro) -- 当前单位下的显示数字：inHg 2992 / hPa 1013
+	local baro_std  = dr_baro_std:Get() -- 1 = STD
+	local baro_unit = dr_baro_unit:Get() -- 1 = inHg（见文件头说明）
+	local baro_val  = dr_baro:Get() -- 当前单位下的显示数字：inHg 2992 / hPa 1013
 
 	minifcu:SetEfisBaroInhgHpaUnit(baro_unit >= 1 and 1 or 0)
 	minifcu:SetEfisBaroStd1(baro_std >= 1 and 1 or 0)

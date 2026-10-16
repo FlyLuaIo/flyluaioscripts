@@ -213,14 +213,7 @@ else
 end
 
 -- ===========================================================
--- 显示源（帧循环里直接读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
-
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
+-- 显示源（帧循环里直接读）
 
 -- FCU
 local dr_spd        = iDataRef:New('(L:N_FCU_SPEED)')      -- SPD 模式 = kts；MACH 模式 = 马赫（0.xx）
@@ -314,9 +307,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local is_mach  = safe_get(dr_spd_mode) -- 0 = MACH
-	local spd_dash = safe_get(dr_spd_dashed)
-	local spd_val  = safe_get(dr_spd)   -- SPD 模式 = kts；MACH 模式 = 马赫
+	local is_mach  = dr_spd_mode:Get() -- 0 = MACH
+	local spd_dash = dr_spd_dashed:Get()
+	local spd_val  = dr_spd:Get()   -- SPD 模式 = kts；MACH 模式 = 马赫
 
 	-- MT 2：SPD/MACH 模式
 	minifcu:SetFcuSpdMachMode(is_mach == 0 and 1 or 0)
@@ -352,8 +345,8 @@ GlobalFrameLoopManager:add(function()
 	--   N_FCU_VS 在 TRK/FPA 模式下装的是 FPA×1000（QFCU 档把同一条数据同时喂 VS / TRK 两个通道，
 	--   并注明 TRK 通道 "need 0.8*1000=800"；msfs/WWFCU_FNX.lua 也是 vs / 100 再按 2 位显示），
 	--   所以 FPA 通道要 /1000 还原成度数；若某天机模改成 ×100，只改这一个常量即可
-	local is_fpa = (safe_get(dr_trkfpa) >= 1)
-	local vs_fpa = safe_get(dr_vs)
+	local is_fpa = (dr_trkfpa:Get() >= 1)
+	local vs_fpa = dr_vs:Get()
 	minifcu:SetFcuVsDashes()
 	if is_fpa then
 		minifcu:SetFcuVsValue(0)
@@ -376,9 +369,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuLsValue()
 
 	-- 气压：单位 / STD / QNH 标签 + 两个值通道（两个值都由恒为 inHg 的源现算，切单位不会读到陈旧值）
-	local baro_mode = safe_get(dr_baro_mode) -- 0 = inHg，1 = hPa
-	local baro_qnh  = safe_get(dr_baro_qnh) -- 1 = QNH，0 = STD
-	local baro_inch = safe_get(dr_baro_inch) -- inHg
+	local baro_mode = dr_baro_mode:Get() -- 0 = inHg，1 = hPa
+	local baro_qnh  = dr_baro_qnh:Get() -- 1 = QNH，0 = STD
+	local baro_inch = dr_baro_inch:Get() -- inHg
 
 	-- MT 9：1 = inHg
 	minifcu:SetEfisBaroInhgHpaUnit(baro_mode >= 1 and 0 or 1)

@@ -197,14 +197,7 @@ minifcu:CfgRpn(66, '1 (>B:AUTOPILOT_Baro_1_Inc)')
 
 
 -- ===========================================================
--- 显示源（帧循环里直接读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
-
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
+-- 显示源（帧循环里直接读）
 
 -- FCU（源与参考档逐条对应）
 local dr_spd_kts    = iDataRef:New('(A:AUTOPILOT AIRSPEED HOLD VAR:1,Knots)')
@@ -299,22 +292,22 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local is_mach  = safe_get(dr_is_mach)
-	local spd_dash = safe_get(dr_spd_dashed)
+	local is_mach  = dr_is_mach:Get()
+	local spd_dash = dr_spd_dashed:Get()
 
 	-- MT 2：SPD/MACH 模式
 	minifcu:SetFcuSpdMachMode(is_mach >= 1 and 1 or 0)
 
 	-- MT 1：MACH 值（mach × 100；非 MACH 模式或 dashed 时置 0）
 	if is_mach >= 1 and spd_dash < 1 then
-		minifcu:SetFcuMachValue(math.floor(safe_get(dr_spd_mach) * 100 + 0.5))
+		minifcu:SetFcuMachValue(math.floor(dr_spd_mach:Get() * 100 + 0.5))
 	else
 		minifcu:SetFcuMachValue(0)
 	end
 
 	-- MT 0：SPD 值（MACH 模式或 dashed 时置 0）
 	if is_mach < 1 and spd_dash < 1 then
-		minifcu:SetFcuSpdValue(math.floor(safe_get(dr_spd_kts) + 0.5))
+		minifcu:SetFcuSpdValue(math.floor(dr_spd_kts:Get() + 0.5))
 	else
 		minifcu:SetFcuSpdValue(0)
 	end
@@ -333,12 +326,12 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuAltDot()
 
 	-- MT 10 / MT 11 / MT 12：VS 与 FPA 互斥（本机型无 FPA 值源）
-	local is_trkfpa = (safe_get(dr_trkfpa) >= 1)
+	local is_trkfpa = (dr_trkfpa:Get() >= 1)
 	minifcu:SetFcuVsDashes()
 	if is_trkfpa then
 		minifcu:SetFcuVsValue(0)
 	else
-		minifcu:SetFcuVsValue(safe_get(dr_vs))
+		minifcu:SetFcuVsValue(dr_vs:Get())
 	end
 	minifcu:SetFcuFpaValue(0) -- TODO：参考档无 FPA 值源
 
@@ -355,8 +348,8 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuLsValue()
 
 	-- 气压：STD 判定（XMLVAR_Baro1_Mode 2/3 = STD）/ 单位 / 两个值通道都算
-	local baro_mode = safe_get(dr_baro_mode)
-	local baro_hpa  = safe_get(dr_baro_hpa)
+	local baro_mode = dr_baro_mode:Get()
+	local baro_hpa  = dr_baro_hpa:Get()
 	local is_std    = (baro_mode == 2 or baro_mode == 3)
 
 	minifcu:SetEfisBaroStd1(is_std and 1 or 0)
@@ -364,6 +357,6 @@ GlobalFrameLoopManager:add(function()
 	-- MT 9：1 = inHg（HPA_1 为 1 表示 hPa）
 	minifcu:SetEfisBaroInhgHpaUnit(baro_hpa >= 1 and 0 or 1)
 	-- MT 10 / MT 11：每帧都写，切单位不会读到上一次的陈旧值
-	minifcu:SetEfisBaroInhg(math.floor(safe_get(dr_baro_inhg) * 100 + 0.5))
-	minifcu:SetEfisBaro(math.floor(safe_get(dr_baro_mbar) + 0.5))
+	minifcu:SetEfisBaroInhg(math.floor(dr_baro_inhg:Get() * 100 + 0.5))
+	minifcu:SetEfisBaro(math.floor(dr_baro_mbar:Get() + 0.5))
 end)

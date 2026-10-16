@@ -165,14 +165,7 @@ minifcu:CfgRpn(65, '(>K:A32NX.FCU_EFIS_L_BARO_INC)')
 minifcu:CfgRpn(66, '(>K:A32NX.FCU_EFIS_L_BARO_INC)')
 
 -- ===========================================================
--- 显示源（帧循环里直接读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
-
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
+-- 显示源（帧循环里直接读）
 
 -- FCU
 local dr_is_mach     = iDataRef:New('(L:A32NX_FCU_AFS_DISPLAY_MACH_MODE,Bool)') -- 1 = 显示 MACH
@@ -263,9 +256,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local is_mach  = safe_get(dr_is_mach)
-	local spd_dash = safe_get(dr_spd_dashed)
-	local spd_val  = safe_get(dr_spd_display)
+	local is_mach  = dr_is_mach:Get()
+	local spd_dash = dr_spd_dashed:Get()
+	local spd_val  = dr_spd_display:Get()
 
 	-- MT 2：SPD/MACH 模式
 	minifcu:SetFcuSpdMachMode(is_mach >= 1 and 1 or 0)
@@ -298,13 +291,13 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuAltDot()
 
 	-- MT 10 / MT 11 / MT 12：VS 与 FPA 互斥
-	local is_fpa = (safe_get(dr_trkfpa) >= 1)
+	local is_fpa = (dr_trkfpa:Get() >= 1)
 	minifcu:SetFcuVsDashes()
 	if is_fpa then
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(safe_get(dr_fpa))
+		minifcu:SetFcuFpaValue(dr_fpa:Get())
 	else
-		minifcu:SetFcuVsValue(safe_get(dr_vs))
+		minifcu:SetFcuVsValue(dr_vs:Get())
 		minifcu:SetFcuFpaValue(0)
 	end
 
@@ -321,9 +314,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuLsValue()
 
 	-- 气压：STD / QNH 标签 / 单位 / 两个值通道（两个值都算，切单位时不会读到上一次的陈旧值）
-	local baro_mode = safe_get(dr_baro_mode) -- 0 = STD
-	local baro_inhg = safe_get(dr_baro_inhg) -- 1 = inHg
-	local baro_val  = safe_get(dr_baro_value)
+	local baro_mode = dr_baro_mode:Get() -- 0 = STD
+	local baro_inhg = dr_baro_inhg:Get() -- 1 = inHg
+	local baro_val  = dr_baro_value:Get()
 
 	minifcu:SetEfisBaroInhgHpaUnit(baro_inhg >= 1 and 1 or 0)
 	minifcu:SetEfisBaroStd1(baro_mode == 0 and 1 or 0)

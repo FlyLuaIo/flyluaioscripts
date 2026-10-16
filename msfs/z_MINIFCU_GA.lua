@@ -151,13 +151,6 @@ minifcu:CfgRpn(66, '(>H:AS1000_PFD_BARO_INC)')
 -- ===========================================================
 -- 显示源（帧循环里直接读）
 
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
-
 -- FCU 数字显示
 local d_spd     = iDataRef:New('(A:AUTOPILOT AIRSPEED HOLD VAR, knot)')
 local d_hdg     = iDataRef:New('(A:AUTOPILOT HEADING LOCK DIR, Degrees)')
@@ -242,9 +235,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local spd = safe_get(d_spd)
-	local vs  = safe_get(d_vs)
-	local vs_hold = safe_get(d_vs_hold)
+	local spd = d_spd:Get()
+	local vs  = d_vs:Get()
+	local vs_hold = d_vs_hold:Get()
 
 	-- 未选择速度 → 虚线（判据与 msfs/z_QFCU_GA.lua 一致：AP 速度变量为 0 即未选择）
 	local spd_selected = (spd > 0)
@@ -293,7 +286,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuLsValue()
 
 	-- 气压：单位 / STD / QNH 标签 + 两个值通道（都算，切单位时不会读到上一次的陈旧值）
-	local baro_inhg = safe_get(d_baro_inhg)
+	local baro_inhg = d_baro_inhg:Get()
 	local hpa_unit = 0
 	if d_baro_hpa_unit ~= nil then
 		hpa_unit = d_baro_hpa_unit:Get() -- 1 = 显示 hPa

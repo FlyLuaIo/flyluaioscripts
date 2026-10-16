@@ -184,14 +184,7 @@ minifcu:CfgRpn(65, '1 (>B:INSTRUMENT_CPT_ALTIMETER_KNOB_Knob_Inc)')
 minifcu:CfgRpn(66, '1 (>B:INSTRUMENT_CPT_ALTIMETER_KNOB_Knob_Inc)')
 
 -- ===========================================================
--- 显示源（帧循环里直接读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
-
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
+-- 显示源（帧循环里直接读）
 
 -- FCU 窗
 local dr_spd_dial    = iDataRef:New('(L:A310_Airspeed_Dial)')                         -- SPD 模式 = kts（参考档 iasval_i）
@@ -285,17 +278,17 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local is_mach    = safe_get(dr_spd_mach) -- 1 = MACH
-	local spd_dash   = safe_get(dr_spd_dashed) -- 1 = 虚线
-	local spd_dial   = safe_get(dr_spd_dial)
-	local spd_preset = safe_get(dr_spd_preset)
+	local is_mach    = dr_spd_mach:Get() -- 1 = MACH
+	local spd_dash   = dr_spd_dashed:Get() -- 1 = 虚线
+	local spd_dial   = dr_spd_dial:Get()
+	local spd_preset = dr_spd_preset:Get()
 
 	-- MT 2：SPD/MACH 模式
 	minifcu:SetFcuSpdMachMode(is_mach >= 1 and 1 or 0)
 
 	-- MT 1：MACH 值（参考档源已是 马赫×100；SPD 模式或虚线时置 0）
 	if is_mach >= 1 and spd_dash < 1 then
-		minifcu:SetFcuMachValue(math.floor((safe_get(dr_spd_dial) + 0.004) * 100))
+		minifcu:SetFcuMachValue(math.floor((dr_spd_dial:Get() + 0.004) * 100))
 	else
 		minifcu:SetFcuMachValue(0)
 	end
@@ -325,13 +318,13 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuAltDot()
 
 	-- MT 10 / MT 11 / MT 12：VS 与 FPA 互斥（参考档 digi_disp_set_VS 同一分支判据）
-	local is_fpa = (safe_get(dr_trkfpa) >= 1)
+	local is_fpa = (dr_trkfpa:Get() >= 1)
 	minifcu:SetFcuVsDashes()
 	if is_fpa then
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(safe_get(dr_fpa))
+		minifcu:SetFcuFpaValue(dr_fpa:Get())
 	else
-		minifcu:SetFcuVsValue(safe_get(dr_vs))
+		minifcu:SetFcuVsValue(dr_vs:Get())
 		minifcu:SetFcuFpaValue(0)
 	end
 
@@ -348,10 +341,10 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuLsValue()
 
 	-- 气压：单位 / STD / QNH 标签 + 两个值通道
-	local baro_unit = safe_get(dr_baro_unit) -- 0 = inHg，1 = hPa
-	local baro_mode = safe_get(dr_baro_mode) -- 参考档注释 QFE:0 QNH:1 STD:3
-	local baro_inhg = safe_get(dr_baro_inhg) -- 机长侧气压（inHg）
-	local baro_mbar = safe_get(dr_baro_mbar) -- 机长侧气压（hPa）
+	local baro_unit = dr_baro_unit:Get() -- 0 = inHg，1 = hPa
+	local baro_mode = dr_baro_mode:Get() -- 参考档注释 QFE:0 QNH:1 STD:3
+	local baro_inhg = dr_baro_inhg:Get() -- 机长侧气压（inHg）
+	local baro_mbar = dr_baro_mbar:Get() -- 机长侧气压（hPa）
 
 	-- MT 9：1 = inHg
 	minifcu:SetEfisBaroInhgHpaUnit(baro_unit < 1 and 1 or 0)

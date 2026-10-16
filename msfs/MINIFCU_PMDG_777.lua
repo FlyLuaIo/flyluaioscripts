@@ -157,15 +157,8 @@ minifcu:CfgRpn(65, '(L:myBaroTimer) d 0 > if{(E:SIMULATION TIME, second) (L:myBa
 minifcu:CfgRpn(66, '(L:myBaroTimer) d 0 > if{(E:SIMULATION TIME, second) (L:myBaroTimer) > if{ 0 (>L:CABaroKnob, number) 0 (>L:FOBaroKnob, number) 0 (>L:myBaroTimer) } } (L:CABaroKnob, number) 5 +  50 min (>L:CABaroKnob, number) (E:SIMULATION TIME, second) 0.04 + (>L:myBaroTimer)') -- BARO 加
 
 -- ===========================================================
--- 显示源（帧循环里读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
+-- 显示源（帧循环里直接读）
 -- 参考档帧循环真正读到的 FCU 窗口值只有下面 4 个，其余 miniFCU 通道在 777 上无源（见各条 TODO）。
-
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
 
 -- FCU 窗口值（参考档 digi_disp_set_SPD / HDG / ALT / VS 的源）
 local dr_spd = iDataRef:New('(L:ngx_SPDwindow)')  -- SPD 模式 = kts，MACH 模式 = 0.xx；-1 = 空屏
@@ -251,7 +244,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped(0)  -- TODO: 777 档无 EXPED 灯源
 
 	-- ---- FCU LCD ----
-	local spd_val  = safe_get(dr_spd)
+	local spd_val  = dr_spd:Get()
 	local is_blank = (spd_val < 0)                              -- 参考档：-1 = 空屏（负值一律当空屏）
 	local is_mach  = (not is_blank) and (spd_val < 1)           -- 参考档：iasmode 3 = 马赫
 
@@ -277,7 +270,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuSpdDot(0)
 
 	-- MT 5 / MT 6 / MT 7：HDG（参考档始终 hdgmode 1，无虚线、无 managed 点）
-	minifcu:SetFcuHdgValue(math.floor(safe_get(dr_hdg) + 0.5))
+	minifcu:SetFcuHdgValue(math.floor(dr_hdg:Get() + 0.5))
 	minifcu:SetFcuHdgDashes(0)
 	minifcu:SetFcuHdgDot(0)
 
@@ -286,7 +279,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuAltDot(0)
 
 	-- MT 10 / MT 11 / MT 12：VS 与 FPA（参考档 -20000 = 空屏；777 无 FPA）
-	local vs_val   = safe_get(dr_vs)
+	local vs_val   = dr_vs:Get()
 	local vs_blank = (vs_val <= -20000)
 	if vs_blank then
 		minifcu:SetFcuVsValue(0)

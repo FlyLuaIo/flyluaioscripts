@@ -321,14 +321,7 @@ else
 end
 
 -- ===========================================================
--- 显示源（帧循环里直接读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
-
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
+-- 显示源（帧循环里直接读）
 
 -- FCU：SPD / MACH [Q0–Q3]（参考档行 260–277）
 local dr_spd_win  = iDataRef:New('(L:TLS_FCU_SPD_WINDOW_VALUE)') -- 窗口值：kts 或 马赫（0.xx）；<0 表示 managed 无预设
@@ -420,14 +413,14 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local spd_win  = safe_get(dr_spd_win)
-	local spd_mgd  = safe_get(dr_spd_mgd)
-	local is_mach  = safe_get(dr_is_mach)
-	local hdg_win  = safe_get(dr_hdg_win)
-	local hdg_mgd  = safe_get(dr_hdg_mgd)
-	local trkfpa   = safe_get(dr_trkfpa)
-	local alt_dot  = safe_get(dr_alt_dot)
-	local vs_win   = safe_get(dr_vs_win)
+	local spd_win  = dr_spd_win:Get()
+	local spd_mgd  = dr_spd_mgd:Get()
+	local is_mach  = dr_is_mach:Get()
+	local hdg_win  = dr_hdg_win:Get()
+	local hdg_mgd  = dr_hdg_mgd:Get()
+	local trkfpa   = dr_trkfpa:Get()
+	local alt_dot  = dr_alt_dot:Get()
+	local vs_win   = dr_vs_win:Get()
 
 	-- MT 3：SPD dashed —— 判据照抄参考档 digi_disp_set_SPD()（行 364–396）：
 	--   managed 时窗口值 < 0 = 无预设（虚线）；非 managed 时窗口值 == 1 = 虚线
@@ -521,8 +514,8 @@ GlobalFrameLoopManager:add(function()
 	-- 气压：STD / QNH 标签 / 单位 / 两个值通道
 	--   STD 判据照抄参考档行 485（源变量 == 0 → STD，此时 SetLBaro(3) 显示 STD）；
 	--   单位判据照抄参考档行 488/491（0 = hPa：原值即 hPa；非 0 = inHg：原值即 inHg × 100）。
-	local baro_val  = safe_get(dr_baro_val)
-	local baro_unit = safe_get(dr_baro_unit)
+	local baro_val  = dr_baro_val:Get()
+	local baro_unit = dr_baro_unit:Get()
 	local is_std    = (baro_val == 0)
 
 	minifcu:SetEfisBaroStd1(is_std and 1 or 0)

@@ -165,14 +165,7 @@ minifcu:CfgRpn(65, baro_inc_rpn)
 minifcu:CfgRpn(66, baro_inc_rpn)
 
 -- ===========================================================
--- 显示源（帧循环里直接读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
-
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
+-- 显示源（帧循环里直接读）
 
 -- FCU（A380 分支的源）
 local dr_is_mach = iDataRef:New('(A:AUTOPILOT MANAGED SPEED IN MACH,Bool)') -- 1 = 显示 MACH
@@ -252,9 +245,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local is_mach  = safe_get(dr_is_mach)
-	local spd_dash = safe_get(dr_spd_dashed)
-	local spd_val  = safe_get(dr_spd)
+	local is_mach  = dr_is_mach:Get()
+	local spd_dash = dr_spd_dashed:Get()
+	local spd_val  = dr_spd:Get()
 
 	-- MT 2：SPD/MACH 模式
 	minifcu:SetFcuSpdMachMode(is_mach >= 1 and 1 or 0)
@@ -280,13 +273,13 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuAltValue()
 	minifcu:SetFcuAltDot()
 	-- MT 10 / 11 / 12
-	local is_fpa = (safe_get(dr_trkfpa) >= 1)
+	local is_fpa = (dr_trkfpa:Get() >= 1)
 	minifcu:SetFcuVsDashes()
 	if is_fpa then
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(safe_get(dr_fpa))
+		minifcu:SetFcuFpaValue(dr_fpa:Get())
 	else
-		minifcu:SetFcuVsValue(safe_get(dr_vs))
+		minifcu:SetFcuVsValue(dr_vs:Get())
 		minifcu:SetFcuFpaValue(0)
 	end
 	-- MT 13
@@ -302,9 +295,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuLsValue()
 
 	-- 气压：A380 用 XMLVAR_Baro1_Mode（>= 2 视为 STD），单位由 XMLVAR_Baro_Selector_HPA_1 决定
-	local baro_mode = safe_get(dr_baro_mode)
-	local baro_hpa  = safe_get(dr_baro_hpa)
-	local baro_inhg = safe_get(dr_baro_inhg)
+	local baro_mode = dr_baro_mode:Get()
+	local baro_hpa  = dr_baro_hpa:Get()
+	local baro_inhg = dr_baro_inhg:Get()
 	local is_std = (baro_mode == 2 or baro_mode == 3)
 
 	minifcu:SetEfisBaroStd1(is_std and 1 or 0)

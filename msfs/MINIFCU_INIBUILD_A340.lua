@@ -173,14 +173,7 @@ minifcu:CfgRpn(65, '1 (>B:AIRLINER_CPT_BARO_SET_Inc)')
 minifcu:CfgRpn(66, '1 (>B:AIRLINER_CPT_BARO_SET_Inc)')
 
 -- ===========================================================
--- 显示源（帧循环里直接读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
-
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
+-- 显示源（帧循环里直接读）
 
 -- FCU
 local dr_is_mach    = iDataRef:New('(L:INI_Airspeed_is_mach)') -- 1 = 显示 MACH
@@ -274,12 +267,12 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local is_mach    = safe_get(dr_is_mach)
-	local spd_dash   = safe_get(dr_spd_dashed)
-	local spd_dot    = safe_get(dr_spd_dot)
-	local spd_dial   = safe_get(dr_spd_dial)
-	local spd_preset = safe_get(dr_spd_preset)
-	local is_fpa     = (safe_get(dr_hdgtrk) >= 1)
+	local is_mach    = dr_is_mach:Get()
+	local spd_dash   = dr_spd_dashed:Get()
+	local spd_dot    = dr_spd_dot:Get()
+	local spd_dial   = dr_spd_dial:Get()
+	local spd_preset = dr_spd_preset:Get()
+	local is_fpa     = (dr_hdgtrk:Get() >= 1)
 
 	-- MT 2：SPD/MACH 模式
 	minifcu:SetFcuSpdMachMode(is_mach >= 1 and 1 or 0)
@@ -309,9 +302,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuSpdDot()
 
 	-- MT 5：HDG 值（TRK/FPA 模式下显示 TRK 值 —— 与参考档 digi_disp_set_HDG 一致）
-	local hdg_val = safe_get(dr_heading)
+	local hdg_val = dr_heading:Get()
 	if is_fpa then
-		hdg_val = safe_get(dr_track)
+		hdg_val = dr_track:Get()
 	end
 	minifcu:SetFcuHdgValue(math.floor(hdg_val))
 	-- MT 6 / MT 7：HDG dashed 与 managed 点
@@ -326,9 +319,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuVsDashes()
 	if is_fpa then
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(safe_get(dr_fpa))
+		minifcu:SetFcuFpaValue(dr_fpa:Get())
 	else
-		minifcu:SetFcuVsValue(safe_get(dr_vs))
+		minifcu:SetFcuVsValue(dr_vs:Get())
 		minifcu:SetFcuFpaValue(0)
 	end
 
@@ -346,9 +339,9 @@ GlobalFrameLoopManager:add(function()
 
 	-- 气压：STD 判据与参考档一致（(L:XMLVAR_Baro1_Mode) == 2 或 3 视为 STD）；
 	--   单位：(L:XMLVAR_Baro_Selector_HPA_1) 1 = hPa / 0 = inHg → MT 9 的 1 = inHg
-	local baro_mode = safe_get(dr_baro_mode)
-	local baro_hpa  = safe_get(dr_baro_unit)
-	local baro_inhg = safe_get(dr_baro_inhg)
+	local baro_mode = dr_baro_mode:Get()
+	local baro_hpa  = dr_baro_unit:Get()
+	local baro_inhg = dr_baro_inhg:Get()
 	local is_std    = (baro_mode == 2 or baro_mode == 3)
 
 	minifcu:SetEfisBaroInhgHpaUnit(baro_hpa >= 1 and 0 or 1)
@@ -357,5 +350,5 @@ GlobalFrameLoopManager:add(function()
 
 	-- MT 10 / MT 11：两个值都算（int 通道会截断，自己 floor(x + 0.5)）
 	minifcu:SetEfisBaroInhg(math.floor(baro_inhg * 100 + 0.5))
-	minifcu:SetEfisBaro(math.floor(safe_get(dr_baro_mbar) + 0.5))
+	minifcu:SetEfisBaro(math.floor(dr_baro_mbar:Get() + 0.5))
 end)

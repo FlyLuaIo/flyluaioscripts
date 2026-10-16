@@ -201,14 +201,7 @@ minifcu:CfgRpn(66, '1 (>B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_Inc)')
 
 
 -- ===========================================================
--- 显示源（帧循环里直接读；iDataRef:New 找不到路径会返回 nil，统一用 safe_get 兜底）
-
-local function safe_get(dr)
-	if dr == nil then
-		return 0
-	end
-	return dr:Get()
-end
+-- 显示源（帧循环里直接读）
 
 -- FCU（源与判据逐条取自参考档的 digi_disp_set_SPD/HDG/ALT/VS）
 local dr_spd        = iDataRef:New('(L:INI_AIRSPEED_DIAL)') -- SPD 模式 = kts；MACH 模式 = 马赫
@@ -313,11 +306,11 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetExped()
 
 	-- ---- FCU LCD ----
-	local is_mach  = safe_get(dr_is_mach)
-	local spd_dash = safe_get(dr_spd_dashed)
-	local is_mgd   = safe_get(dr_is_spdmgd)
-	local spd_val  = safe_get(dr_spd)
-	local spd_pre  = safe_get(dr_spd_preset)
+	local is_mach  = dr_is_mach:Get()
+	local spd_dash = dr_spd_dashed:Get()
+	local is_mgd   = dr_is_spdmgd:Get()
+	local spd_val  = dr_spd:Get()
+	local spd_pre  = dr_spd_preset:Get()
 
 	-- MT 2：SPD/MACH 模式；MT 3：dashed；MT 4：managed 点
 	minifcu:SetFcuSpdMachMode(is_mach >= 1 and 1 or 0)
@@ -348,27 +341,27 @@ GlobalFrameLoopManager:add(function()
 	end
 
 	-- MT 5 / MT 6 / MT 7：HDG（TRK/FPA 模式下取 INI_TRK_DIAL，与参考档 digi_disp_set_HDG 一致）
-	local hdgtrk  = safe_get(dr_hdgtrk)
+	local hdgtrk  = dr_hdgtrk:Get()
 	local is_fpa  = (hdgtrk == 1)
-	local hdg_val = safe_get(dr_hdg)
+	local hdg_val = dr_hdg:Get()
 	if is_fpa then
-		hdg_val = safe_get(dr_trk)
+		hdg_val = dr_trk:Get()
 	end
 	minifcu:SetFcuHdgValue(math.floor(hdg_val))
-	minifcu:SetFcuHdgDashes(safe_get(dr_hdg_dashed) >= 1 and 1 or 0)
-	minifcu:SetFcuHdgDot(safe_get(dr_is_hdgmgd) >= 1 and 1 or 0)
+	minifcu:SetFcuHdgDashes(dr_hdg_dashed:Get() >= 1 and 1 or 0)
+	minifcu:SetFcuHdgDot(dr_is_hdgmgd:Get() >= 1 and 1 or 0)
 
 	-- MT 8 / MT 9：ALT（值用注册时 0.01 的比例折算成 ft/100）
 	minifcu:SetFcuAltValue()
-	minifcu:SetFcuAltDot(safe_get(dr_alt_dot) > 0 and 1 or 0)
+	minifcu:SetFcuAltDot(dr_alt_dot:Get() > 0 and 1 or 0)
 
 	-- MT 10 / MT 11 / MT 12：VS 与 FPA 互斥（TRK/FPA 模式下显示 FPA）
-	minifcu:SetFcuVsDashes(safe_get(dr_vs_dashed) >= 1 and 1 or 0)
+	minifcu:SetFcuVsDashes(dr_vs_dashed:Get() >= 1 and 1 or 0)
 	if is_fpa then
 		minifcu:SetFcuVsValue(0)
-		minifcu:SetFcuFpaValue(safe_get(dr_fpa))
+		minifcu:SetFcuFpaValue(dr_fpa:Get())
 	else
-		minifcu:SetFcuVsValue(safe_get(dr_vs))
+		minifcu:SetFcuVsValue(dr_vs:Get())
 		minifcu:SetFcuFpaValue(0)
 	end
 
@@ -385,9 +378,9 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuLsValue()
 
 	-- 气压：STD / QNH 标签 / 单位 / 两个值通道（两个值都算，切单位时不会读到陈旧值）
-	local baro_mode = safe_get(dr_baro_std)           -- (L:XMLVAR_Baro1_Mode)
-	local baro_hpa  = safe_get(dr_baro_unit)          -- (L:XMLVAR_Baro_Selector_HPA_1) 1 = hPa
-	local baro_raw  = safe_get(dr_baro)
+	local baro_mode = dr_baro_std:Get()           -- (L:XMLVAR_Baro1_Mode)
+	local baro_hpa  = dr_baro_unit:Get()          -- (L:XMLVAR_Baro_Selector_HPA_1) 1 = hPa
+	local baro_raw  = dr_baro:Get()
 	local is_std    = (baro_mode == 2 or baro_mode == 3) -- 参考档判据
 
 	minifcu:SetEfisBaroStd1(is_std and 1 or 0)
