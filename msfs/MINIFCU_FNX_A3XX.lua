@@ -220,14 +220,7 @@ end
 local dr_spd        = iDataRef:New('(L:N_FCU_SPEED)')      -- SPD 模式 = kts；MACH 模式 = 马赫（0.xx）
 local dr_spd_mode   = iDataRef:New('(L:I_FCU_SPEED_MODE)') -- 1 = 显示 MACH
 local dr_spd_dashed = iDataRef:New('(L:B_FCU_SPEED_DASHED)')
-local dr_spd_mgd    = iDataRef:New('(L:I_FCU_SPEED_MANAGED)')
-local dr_hdg        = iDataRef:New('(L:N_FCU_HEADING)')
-local dr_hdg_dashed = iDataRef:New('(L:B_FCU_HEADING_DASHED)')
-local dr_hdg_mgd    = iDataRef:New('(L:I_FCU_HEADING_MANAGED)')
-local dr_alt        = iDataRef:New('(L:N_FCU_ALTITUDE)')
-local dr_alt_mgd    = iDataRef:New('(L:I_FCU_ALTITUDE_MANAGED)')
 local dr_vs         = iDataRef:New('(L:N_FCU_VS)')             -- VS 模式 = fpm；FPA 模式 = FPA×1000
-local dr_vs_dashed  = iDataRef:New('(L:B_FCU_VERTICALSPEED_DASHED)')
 local dr_trkfpa     = iDataRef:New('(L:I_FCU_TRACK_FPA_MODE)') -- 1 = TRK/FPA
 
 -- EFIS 机长侧气压：BARO_MODE 0 = inHg，1 = hPa；BARO_INCH 恒为 inHg；QNH 1 = QNH，0 = STD

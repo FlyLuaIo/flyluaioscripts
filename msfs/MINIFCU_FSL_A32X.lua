@@ -189,14 +189,7 @@ minifcu:CfgRpn(66, '(>K:FSL.EVENT.EFIS.CPT.BARO.INC)')
 local dr_spd          = iDataRef:New('(L:FSL_FCU_SPD)') -- SPD 模式 = kts；MACH 模式 = 马赫 × 100
 local dr_is_mach      = iDataRef:New('(L:FSL_FCU_MACH_MODE)') -- 1 = 显示 MACH
 local dr_spd_dashes   = iDataRef:New('(L:FSL_FCU_SPD_DASHED)')
-local dr_spd_managed  = iDataRef:New('(L:FSL_FCU_SPD_MANAGED)')
-local dr_hdg          = iDataRef:New('(L:FSL_FCU_HDG)')
-local dr_hdg_dashes   = iDataRef:New('(L:FSL_FCU_HDG_DASHED)')
-local dr_hdg_managed  = iDataRef:New('(L:FSL_FCU_HDG_MANAGED)')
-local dr_alt          = iDataRef:New('(L:FSL_FCU_ALT)') -- ft
-local dr_alt_managed  = iDataRef:New('(L:FSL_FCU_ALT_MANAGED)')
 local dr_vs           = iDataRef:New('(L:FSL_FCU_VS)') -- VS 模式 = fpm；TRK/FPA 模式 = FPA × 10
-local dr_vs_dashes    = iDataRef:New('(L:FSL_FCU_VS_DASHED)')
 local dr_trk_fpa      = iDataRef:New('(L:FSL_FCU_TRKFPA)') -- 1 = TRK/FPA
 
 -- EFIS 机长侧气压：UNIT 1 = inHg / 0 = hPa；STD 1 = STD；BARO = 当前单位下的显示数字

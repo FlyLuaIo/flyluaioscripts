@@ -169,11 +169,7 @@ minifcu:CfgRpn(66, '(>K:A32NX.FCU_EFIS_L_BARO_INC)')
 local dr_is_mach    = iDataRef:New('(L:A32NX_FCU_AFS_DISPLAY_MACH_MODE)') -- 1 = 显示 MACH
 local dr_spd_val    = iDataRef:New('(L:A32NX_AUTOPILOT_SPEED_SELECTED)') -- SPD 模式 = 节；MACH 模式 = 马赫
 local dr_spd_dashed = iDataRef:New('(L:A32NX_FCU_SPD_MANAGED_DASHES)')
-local dr_hdg_val    = iDataRef:New('(L:A32NX_AUTOPILOT_HEADING_SELECTED)')
-local dr_hdg_dashed = iDataRef:New('(L:A32NX_FCU_HDG_MANAGED_DASHES)')
-local dr_alt_val    = iDataRef:New('(A:AUTOPILOT ALTITUDE LOCK VAR:3, Feet)')
 local dr_vs_val     = iDataRef:New('(L:A32NX_AUTOPILOT_VS_SELECTED)')
-local dr_fpa_val    = iDataRef:New('(L:A32NX_AUTOPILOT_FPA_SELECTED)')
 local dr_trkfpa     = iDataRef:New('(L:A32NX_TRK_FPA_MODE_ACTIVE)') -- 1 = TRK/FPA
 
 -- EFIS 机长侧气压：DISPLAY_BARO_MODE STD:0 QNH:1 QFE:2；IS_INHG 1 = inHg

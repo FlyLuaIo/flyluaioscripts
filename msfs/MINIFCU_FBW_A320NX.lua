@@ -165,17 +165,14 @@ minifcu:CfgRpn(65, '(>K:A32NX.FCU_EFIS_L_BARO_INC)')
 minifcu:CfgRpn(66, '(>K:A32NX.FCU_EFIS_L_BARO_INC)')
 
 -- ===========================================================
--- 显示源（帧循环里直接读）
+-- 显示源（帧循环里直接读；只在 Lua 里需要算的才登记 iDataRef）
+-- ⚠ 不要把运算塞进注册表达式：那些表达式是 sim 侧求值的，每帧每通道都算会拖帧数。
 
 -- FCU
 local dr_is_mach     = iDataRef:New('(L:A32NX_FCU_AFS_DISPLAY_MACH_MODE,Bool)') -- 1 = 显示 MACH
 local dr_spd_display = iDataRef:New('(L:A32NX_FCU_AFS_DISPLAY_SPD_MACH_VALUE)') -- SPD 模式 = kts；MACH 模式 = 马赫（0.xx）
 local dr_spd_dashed  = iDataRef:New('(L:A32NX_FCU_SPD_MANAGED_DASHES)')
-local dr_hdg         = iDataRef:New('(L:A32NX_AUTOPILOT_HEADING_SELECTED)')
-local dr_hdg_dashed  = iDataRef:New('(L:A32NX_FCU_HDG_MANAGED_DASHES)')
-local dr_alt         = iDataRef:New('(A:AUTOPILOT ALTITUDE LOCK VAR:3, Feet)')
 local dr_vs          = iDataRef:New('(L:A32NX_AUTOPILOT_VS_SELECTED)')
-local dr_fpa         = iDataRef:New('(L:A32NX_AUTOPILOT_FPA_SELECTED)')
 local dr_trkfpa      = iDataRef:New('(L:A32NX_TRK_FPA_MODE_ACTIVE)') -- 1 = TRK/FPA
 
 -- EFIS 机长侧气压：DISPLAY_BARO_MODE STD:0 QNH:1 QFE:2；IS_INHG 1 = inHg
@@ -195,10 +192,10 @@ minifcu:GetExped('(L:A32NX_FMA_EXPEDITE_MODE)')
 -- ===========================================================
 -- OUTPUT：miniFCU LCD（CustomDevice 24 通道 = 14 FCU + 12 EFIS，全部保留）
 
--- MT 0 SPD 值（kts，仅 SPD 模式且非 dashed）
+-- MT 0 SPD 值（kts；MACH 模式或虚线时 0）
 minifcu:GetFcuSpdValue('(L:A32NX_FCU_AFS_DISPLAY_SPD_MACH_VALUE)')
--- MT 1 MACH 值（马赫 × 100）
-minifcu:GetFcuMachValue('(L:A32NX_FCU_AFS_DISPLAY_SPD_MACH_VALUE)', 100)
+-- MT 1 MACH 值（马赫 × 100；SPD 模式或虚线时 0）
+minifcu:GetFcuMachValue('(L:A32NX_FCU_AFS_DISPLAY_SPD_MACH_VALUE)')
 -- MT 2 SPD/MACH 模式（1 = mach）
 minifcu:GetFcuSpdMachMode('(L:A32NX_FCU_AFS_DISPLAY_MACH_MODE,Bool)')
 -- MT 3 SPD dashed
@@ -215,17 +212,16 @@ minifcu:GetFcuHdgDot('(L:A32NX_FCU_HDG_MANAGED_DOT)')
 minifcu:GetFcuAltValue('(A:AUTOPILOT ALTITUDE LOCK VAR:3, Feet)', 0.01)
 -- MT 9 ALT managed 点
 minifcu:GetFcuAltDot('(L:A32NX_FCU_ALT_MANAGED)')
--- MT 10 VS 值（fpm，TRK/FPA 模式下隐藏）
+-- MT 10 VS 值（fpm；TRK/FPA 模式下由帧循环置 0）
 minifcu:GetFcuVsValue('(L:A32NX_AUTOPILOT_VS_SELECTED)')
--- MT 11 FPA 值：通道量纲 = FPA × 1000；源是度 → 用 GetFcuFpaValue 的默认 scale 1000，
---   帧循环里 SetFcuFpaValue() 不传值（框架按 scale 乘注册的 dataref）
+-- MT 11 FPA 值（量纲 FPA × 1000，由默认 scale 提供；非 TRK/FPA 模式由帧循环置 0）
 minifcu:GetFcuFpaValue('(L:A32NX_AUTOPILOT_FPA_SELECTED)')
 -- MT 12 VS dashed
 minifcu:GetFcuVsDashes('(L:A32NX_FCU_VS_MANAGED)')
 -- MT 13 HDG/TRK 模式（1 = TRK）
 minifcu:GetFcuHdgTrkMode('(L:A32NX_TRK_FPA_MODE_ACTIVE)')
 
--- MT 0 CSTR / MT 1 WPT / MT 2 VORD / MT 3 NDB / MT 4 ARPT（EFIS_L_OPTION 位测试，与 QFCU 档同源）
+-- MT 0 CSTR / MT 1 WPT / MT 2 VORD / MT 3 NDB / MT 4 ARPT（EFIS_L_OPTION 等值比较，与 QFCU 档同源）
 minifcu:GetEfisCstr('(L:A32NX_EFIS_L_OPTION, enum) 1 ==')
 minifcu:GetEfisWpt('(L:A32NX_EFIS_L_OPTION, enum) 4 ==')
 minifcu:GetEfisVord('(L:A32NX_EFIS_L_OPTION, enum) 2 ==')
@@ -234,13 +230,13 @@ minifcu:GetEfisArpt('(L:A32NX_EFIS_L_OPTION, enum) 16 ==')
 -- MT 5 FD / MT 6 LS
 minifcu:GetFcuFdValue('(A:AUTOPILOT FLIGHT DIRECTOR ACTIVE:1, Bool)')
 minifcu:GetFcuLsValue('(L:BTN_LS_1_FILTER_ACTIVE)')
--- MT 7 QNH 标签（非 STD 时为 1）
-minifcu:GetEfisBaroQnnh1('(L:A32NX_FCU_EFIS_L_DISPLAY_BARO_MODE) 0 ==')
--- MT 8 STD 标志
-minifcu:GetEfisBaroStd1('(L:A32NX_FCU_EFIS_L_DISPLAY_BARO_MODE) 0 ==')
+-- MT 7 QNH 标签 / MT 8 STD 标志（判据在帧循环里做：非 STD 即亮，与 xp/MINIFCU_Toliss.lua 一致）
+minifcu:GetEfisBaroQnnh1('(L:A32NX_FCU_EFIS_L_DISPLAY_BARO_MODE)')
+minifcu:GetEfisBaroStd1('(L:A32NX_FCU_EFIS_L_DISPLAY_BARO_MODE)')
 -- MT 9 inHg/hPa（1 = inHg）
 minifcu:GetEfisBaroInhgHpaUnit('(L:A32NX_FCU_EFIS_L_BARO_IS_INHG)')
--- MT 10 BARO inHg（×100）/ MT 11 BARO hPa（值在帧循环里换算后写入）
+-- MT 10 BARO inHg（×100）/ MT 11 BARO hPa：DISPLAY_BARO_VALUE 是“当前单位下的值”，
+--   帧循环里按当前单位换算（切单位不读陈旧值），不额外清 STD（STD 由 MT8 标签接管）
 minifcu:GetEfisBaroInhg('(L:A32NX_FCU_EFIS_L_DISPLAY_BARO_VALUE)')
 minifcu:GetEfisBaro('(L:A32NX_FCU_EFIS_L_DISPLAY_BARO_VALUE)')
 
@@ -262,18 +258,18 @@ GlobalFrameLoopManager:add(function()
 	local spd_val  = dr_spd_display:Get()
 
 	-- MT 2：SPD/MACH 模式
-	minifcu:SetFcuSpdMachMode(is_mach >= 1 and 1 or 0)
+	minifcu:SetFcuSpdMachMode()
 
-	-- MT 1：MACH 值（mach × 100；SPD 模式或 dashed 时置 0，与 XP 档一致）
+	-- MT 1：MACH 值（马赫 × 100；仅 MACH 模式且非虚线）
 	if is_mach >= 1 and spd_dash < 1 then
-		minifcu:SetFcuMachValue(math.floor(spd_val * 100 + 0.5))
+		minifcu:SetFcuMachValue(spd_val * 100 + 0.5)
 	else
 		minifcu:SetFcuMachValue(0)
 	end
 
-	-- MT 0：SPD 值（mach 或 dashed 时置 0）
+	-- MT 0：SPD 值（仅 SPD 模式且非虚线；源就是 kts，直接走注册值）
 	if is_mach < 1 and spd_dash < 1 then
-		minifcu:SetFcuSpdValue(math.floor(spd_val + 0.5))
+		minifcu:SetFcuSpdValue()
 	else
 		minifcu:SetFcuSpdValue(0)
 	end
@@ -287,11 +283,11 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuHdgDashes()
 	minifcu:SetFcuHdgDot()
 
-	-- MT 8 / MT 9：ALT
+	-- MT 8 / MT 9：ALT（ft/100 由注册时的 scale 0.01 提供）
 	minifcu:SetFcuAltValue()
 	minifcu:SetFcuAltDot()
 
-	-- MT 10 / MT 11 / MT 12：VS 与 FPA 互斥
+	-- MT 10 / MT 11 / MT 12：VS 与 FPA 互斥（TRK/FPA 模式下 VS 灭、FPA 亮）
 	local is_fpa = (dr_trkfpa:Get() >= 1)
 	minifcu:SetFcuVsDashes()
 	if is_fpa then
@@ -314,12 +310,12 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuFdValue()
 	minifcu:SetFcuLsValue()
 
-	-- 气压：STD / QNH 标签 / 单位 / 两个值通道（两个值都算，切单位时不会读到上一次的陈旧值）
+	-- 气压：单位 / STD / QNH 标签 + 两个值通道（两个值都算，切单位时不会读到陈旧值）
 	local baro_mode = dr_baro_mode:Get() -- 0 = STD
 	local baro_inhg = dr_baro_inhg:Get() -- 1 = inHg
 	local baro_val  = dr_baro_value:Get()
 
-	minifcu:SetEfisBaroInhgHpaUnit(baro_inhg >= 1 and 1 or 0)
+	minifcu:SetEfisBaroInhgHpaUnit()
 	minifcu:SetEfisBaroStd1(baro_mode == 0 and 1 or 0)
 	minifcu:SetEfisBaroQnnh1(baro_mode ~= 0 and 1 or 0)
 

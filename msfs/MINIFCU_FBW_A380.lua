@@ -171,10 +171,7 @@ minifcu:CfgRpn(66, baro_inc_rpn)
 local dr_is_mach = iDataRef:New('(A:AUTOPILOT MANAGED SPEED IN MACH,Bool)') -- 1 = 显示 MACH
 local dr_spd      = iDataRef:New('(L:A32NX_AUTOPILOT_SPEED_SELECTED)')      -- 速度 / 马赫共用
 local dr_spd_dashed = iDataRef:New('(L:A32NX_FCU_SPD_MANAGED_DASHES)')
-local dr_hdg        = iDataRef:New('(L:A32NX_AUTOPILOT_HEADING_SELECTED)')
-local dr_hdg_dashed = iDataRef:New('(L:A32NX_FCU_HDG_MANAGED_DASHES)')
 local dr_vs         = iDataRef:New('(L:A32NX_AUTOPILOT_VS_SELECTED)')
-local dr_fpa        = iDataRef:New('(L:A32NX_AUTOPILOT_FPA_SELECTED)')
 local dr_trkfpa     = iDataRef:New('(L:A32NX_TRK_FPA_MODE_ACTIVE)')
 
 -- EFIS 机长侧气压（A380：XMLVAR_Baro1_Mode >= 2 为 STD；XMLVAR_Baro_Selector_HPA_1 = 1 → hPa）

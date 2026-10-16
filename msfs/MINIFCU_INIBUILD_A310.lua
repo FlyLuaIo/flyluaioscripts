@@ -191,13 +191,7 @@ local dr_spd_dial    = iDataRef:New('(L:A310_Airspeed_Dial)')                   
 local dr_spd_preset  = iDataRef:New('(L:A310_PRESET_SPEED)')                          -- 非 0 时优先显示（参考档同逻辑）
 local dr_spd_mach    = iDataRef:New('(L:A310_Airspeed_is_mach,Bool)')                 -- 1 = MACH 模式
 local dr_spd_dashed  = iDataRef:New('(L:A310_managed_speed)')                         -- 1 = 虚线（managed）
-local dr_hdg         = iDataRef:New('(L:A310_HEADING_DIAL)')
-local dr_hdg_dashed  = iDataRef:New('(L:A32NX_FCU_HDG_MANAGED_DASHES)')
-local dr_alt         = iDataRef:New('(L:A310_Altitude_Dial)') -- 英尺
-local dr_alt_managed = iDataRef:New('(L:A32NX_FCU_ALT_MANAGED)')
 local dr_vs          = iDataRef:New('(L:A310_vvi_dial)')      -- fpm，带符号
-local dr_fpa         = iDataRef:New('(L:A310_FPA_SET)')       -- 度（参考档 ×1000 喂 QFCU 的 TRK 窗）
-local dr_vs_dashed   = iDataRef:New('(L:A32NX_FCU_VS_MANAGED)')
 local dr_trkfpa      = iDataRef:New('(L:A310_FPA_SELECTED)')  -- 1 = TRK/FPA
 
 -- EFIS 机长侧气压：单位 0 = inHg / 1 = hPa；BARO1_MODE 参考档注释 QFE:0 QNH:1 STD:3（2 或 3 = STD）

@@ -185,7 +185,6 @@ local dr_heading    = iDataRef:New('(L:INI_HEADING_DIAL)')
 local dr_track      = iDataRef:New('(L:INI_TRK_DIAL)')
 local dr_hdgtrk     = iDataRef:New('(L:INI_TRACK_FPA_STATE)') -- 1 = TRK/FPA 模式
 local dr_vs         = iDataRef:New('(L:INI_VVI_DIAL)')
-local dr_fpa        = iDataRef:New('(L:INI_FPA_DIAL)')
 
 -- EFIS 机长侧气压：(L:XMLVAR_Baro_Selector_HPA_1) 1 = hPa / 0 = inHg；
 --   (L:XMLVAR_Baro1_Mode) 2 或 3 视为 STD（与参考档 SetLBaro(3) 的判据一致）

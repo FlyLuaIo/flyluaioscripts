@@ -163,7 +163,6 @@ minifcu:CfgRpn(66, '(L:myBaroTimer) d 0 > if{(E:SIMULATION TIME, second) (L:myBa
 -- FCU 窗口值（参考档 digi_disp_set_SPD / HDG / ALT / VS 的源）
 local dr_spd = iDataRef:New('(L:ngx_SPDwindow)')  -- SPD 模式 = kts，MACH 模式 = 0.xx；-1 = 空屏
 local dr_hdg = iDataRef:New('(L:ngx_HDGwindow)')
-local dr_alt = iDataRef:New('(L:ngx_ALTwindow)')  -- ft
 local dr_vs  = iDataRef:New('(L:ngx_VSwindow)')   -- fpm（带符号）；-20000 = 空屏
 
 -- ===========================================================

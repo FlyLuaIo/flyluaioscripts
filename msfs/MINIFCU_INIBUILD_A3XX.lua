@@ -274,10 +274,8 @@ local dr_track       = iDataRef:New('(L:INI_TRK_DIAL)') -- TRK/FPA 模式下的�
 local dr_hdgtrk      = iDataRef:New('(L:INI_TRACK_FPA_STATE)') -- 1 = TRK/FPA
 local dr_hdg_dashed  = iDataRef:New('(L:INI_FCU_HDG_DASHED)')
 local dr_hdg_dot     = iDataRef:New('(L:INI_FCU_HDG_DOT)')
-local dr_alt         = iDataRef:New('(L:INI_ALTITUDE_DIAL)') -- ft（参考档 GetAlt 直送显示，即整数英尺）
 local dr_alt_dot     = iDataRef:New('(L:INI_FCU_ALT_DOT)')
 local dr_vs          = iDataRef:New('(L:INI_VVI_DIAL)') -- fpm（下降为负）
-local dr_fpa         = iDataRef:New('(L:INI_FPA_DIAL)') -- 度（下降为负）
 local dr_vs_dashed   = iDataRef:New('(L:INI_FCU_VS_DASHED)')
 
 -- EFIS 机长侧气压：值表达式逐字取自参考档（选择器 0 = inHg×100、1 = mbar；mode > 2 时给 99，

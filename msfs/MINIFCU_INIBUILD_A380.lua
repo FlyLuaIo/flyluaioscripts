@@ -223,11 +223,9 @@ local dr_hdgtrk     = iDataRef:New('(L:INI_TRACK_FPA_STATE)') -- 1 = TRK/FPA
 local dr_hdg_dashed = iDataRef:New('(L:INI_FCU_HDG_DASHED)')
 local dr_is_hdgmgd  = iDataRef:New(
 	'(L:FMGS_lateral_law) 3 >= (L:FMGS_lateral_law) 0 == (L:INI_DEP_RUNWAY_LENGTH) 1 > && || (L:FCU_HDG_TIMER) 0 == &&')
-local dr_alt        = iDataRef:New('(L:INI_ALTITUDE_DIAL)')
 local dr_alt_dot    = iDataRef:New(
 	'(L:FMGS_vertical_mode) 20 >= (L:FMGS_vertical_mode) 23 <= && (L:FMGS_vertical_mode) 40 >= || (L:FMGS_vertical_mode) 0 == (L:INI_PITCH_MODE_ARM) 3 == && || (L:FMGS_vertical_mode) 10 == (L:INI_REST_WPT_ALT) (A:INDICATED ALTITUDE,Feet) - abs 100 < && || (>L:MfAltDot) (L:MfAltDot)')
 local dr_vs         = iDataRef:New('(L:INI_VVI_DIAL)')
-local dr_fpa        = iDataRef:New('(L:INI_FPA_DIAL)')
 local dr_vs_dashed  = iDataRef:New('(L:INI_FCU_VS_DASHED)')
 
 -- EFIS 机长侧气压：1 = hPa、0 = inHg；XMLVAR_Baro1_Mode 2 或 3 为 STD（参考档判据）
