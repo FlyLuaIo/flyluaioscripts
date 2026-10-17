@@ -481,7 +481,8 @@
         {
           "Name": "EFIS - BARO PUSH",
           "Pin": 0,
-          "MapToBit": 46
+          "MapToBit": 46,
+          "RevertPressRelease": true
         }
       ],
       "EFIS-ROSE_HIDDEN": [
