@@ -105,29 +105,28 @@ minifcu:CfgRpn(17, '(>K:FSL.EVENT.FCU.ALT.1000)', '(>K:FSL.EVENT.FCU.ALT.100)')
 
 -- 导航点过滤键 [Q35–Q39]
 minifcu:CfgRpn(18, '(>K:FSL.EVENT.EFIS.CPT.CSTR.PB)') -- CSTR [Q35]
-minifcu:CfgRpn(19, '(>K:FSL.EVENT.EFIS.CPT.WPT.PB)') -- WPT [Q36]
+minifcu:CfgRpn(19, '(>K:FSL.EVENT.EFIS.CPT.WPT.PB)')  -- WPT [Q36]
 minifcu:CfgRpn(20, '(>K:FSL.EVENT.EFIS.CPT.VORD.PB)') -- VORD [Q37]
-minifcu:CfgRpn(21, '(>K:FSL.EVENT.EFIS.CPT.NDB.PB)') -- NDB [Q38]
+minifcu:CfgRpn(21, '(>K:FSL.EVENT.EFIS.CPT.NDB.PB)')  -- NDB [Q38]
 minifcu:CfgRpn(22, '(>K:FSL.EVENT.EFIS.CPT.ARPT.PB)') -- ARPT [Q39]
 -- FD / LS [Q40 / Q41]
-minifcu:CfgRpn(23, '(>K:FSL.EVENT.EFIS.CPT.FD.PB)') -- FD [Q40]
-minifcu:CfgRpn(24, '(>K:FSL.EVENT.EFIS.CPT.LS.PB)') -- LS [Q41]
--- bit 25（EFIS-CHRONO）：参考档 QFCU 面板无此键，也没有 CHRONO 事件 → 有意不绑定
--- TODO：参考档无对应源（FSLabs 的计时器在 MIP 上，本档唯一的权威参考档里没有它的 L/K 变量），
---   需要时先把同类参考档（如 msfs/data/QMPE_FSL_A32X.lua）加进 provenance 参考再绑定，现在不瞎猜。
+minifcu:CfgRpn(23, '(>K:FSL.EVENT.EFIS.CPT.FD.PB)')   -- FD [Q40]
+minifcu:CfgRpn(24, '(>K:FSL.EVENT.EFIS.CPT.LS.PB)')   -- LS [Q41]
+-- bit 25（EFIS-CHRONO)
+minifcu:CfgRpn(25, "71158 (>K:ROTOR_BRAKE)", "71158 2 + (>K:ROTOR_BRAKE)")
 
 -- ROSE 模式键 [Q24–Q28]：LS/VOR/NAV/ARC/PLN 各一个独立事件
-minifcu:CfgRpn(26, '(>K:FSL.EVENT.EFIS.CPT.MODE.LS)') -- LS [Q24]
-minifcu:CfgRpn(27, '(>K:FSL.EVENT.EFIS.CPT.MODE.VOR)') -- VOR [Q25]
-minifcu:CfgRpn(28, '(>K:FSL.EVENT.EFIS.CPT.MODE.NAV)') -- NAV [Q26]
-minifcu:CfgRpn(29, '(>K:FSL.EVENT.EFIS.CPT.MODE.ARC)') -- ARC [Q27]
+minifcu:CfgRpn(26, '(>K:FSL.EVENT.EFIS.CPT.MODE.LS)')   -- LS [Q24]
+minifcu:CfgRpn(27, '(>K:FSL.EVENT.EFIS.CPT.MODE.VOR)')  -- VOR [Q25]
+minifcu:CfgRpn(28, '(>K:FSL.EVENT.EFIS.CPT.MODE.NAV)')  -- NAV [Q26]
+minifcu:CfgRpn(29, '(>K:FSL.EVENT.EFIS.CPT.MODE.ARC)')  -- ARC [Q27]
 minifcu:CfgRpn(30, '(>K:FSL.EVENT.EFIS.CPT.MODE.PLAN)') -- PLN [Q28]
 
 -- 距离 [Q29–Q34]：参考档是“先读 K 再写回”的自复位开关，RPN 逐字照抄
-minifcu:CfgRpn(31, '(K:FSL.EVENT.EFIS.CPT.RANGE.10) 0 (>K:FSL.EVENT.EFIS.CPT.RANGE.10)') -- 10 [Q29]
-minifcu:CfgRpn(32, '(K:FSL.EVENT.EFIS.CPT.RANGE.20) 1 (>K:FSL.EVENT.EFIS.CPT.RANGE.20)') -- 20 [Q30]
-minifcu:CfgRpn(33, '(K:FSL.EVENT.EFIS.CPT.RANGE.40) 2 (>K:FSL.EVENT.EFIS.CPT.RANGE.40)') -- 40 [Q31]
-minifcu:CfgRpn(34, '(K:FSL.EVENT.EFIS.CPT.RANGE.80) 3 (>K:FSL.EVENT.EFIS.CPT.RANGE.80)') -- 80 [Q32]
+minifcu:CfgRpn(31, '(K:FSL.EVENT.EFIS.CPT.RANGE.10) 0 (>K:FSL.EVENT.EFIS.CPT.RANGE.10)')   -- 10 [Q29]
+minifcu:CfgRpn(32, '(K:FSL.EVENT.EFIS.CPT.RANGE.20) 1 (>K:FSL.EVENT.EFIS.CPT.RANGE.20)')   -- 20 [Q30]
+minifcu:CfgRpn(33, '(K:FSL.EVENT.EFIS.CPT.RANGE.40) 2 (>K:FSL.EVENT.EFIS.CPT.RANGE.40)')   -- 40 [Q31]
+minifcu:CfgRpn(34, '(K:FSL.EVENT.EFIS.CPT.RANGE.80) 3 (>K:FSL.EVENT.EFIS.CPT.RANGE.80)')   -- 80 [Q32]
 minifcu:CfgRpn(35, '(K:FSL.EVENT.EFIS.CPT.RANGE.160) 4 (>K:FSL.EVENT.EFIS.CPT.RANGE.160)') -- 160 [Q33]
 minifcu:CfgRpn(36, '(K:FSL.EVENT.EFIS.CPT.RANGE.320) 5 (>K:FSL.EVENT.EFIS.CPT.RANGE.320)') -- 320 [Q34]
 
@@ -143,7 +142,7 @@ minifcu:CfgRpn(42, '(>K:FSL.EVENT.EFIS.CPT.BCN2.VOR)') -- VOR 2 [Q45 按下值]
 -- 气压单位 [Q50]：参考档是单键拨杆（按下 = INHG，松开 = HPA），miniFCU 是两个独立按键，
 --   故只发按下边沿；bit 43 是 JSON 里的 “BARO UNIT HPA” 键、bit 44 是 “INHG” 键，
 --   与 msfs/MINIFCU_FBW_A320NX.lua 的 43 = HPA / 44 = INHG 保持一致。
-minifcu:CfgRpn(43, '(>K:FSL.EVENT.EFIS.CPT.BARO.HPA)') -- HPA [Q50 松开值]
+minifcu:CfgRpn(43, '(>K:FSL.EVENT.EFIS.CPT.BARO.HPA)')  -- HPA [Q50 松开值]
 minifcu:CfgRpn(44, '(>K:FSL.EVENT.EFIS.CPT.BARO.INHG)') -- INHG [Q50 按下值]
 -- 气压旋钮拉 / 按 [Q49 / Q48]
 minifcu:CfgRpn(45, '(>K:FSL.EVENT.EFIS.CPT.BARO.PULL)')
@@ -186,16 +185,16 @@ minifcu:CfgRpn(66, '(>K:FSL.EVENT.EFIS.CPT.BARO.INC)')
 -- 显示源（帧循环里直接读）
 
 -- FCU
-local dr_spd          = iDataRef:New('(L:FSL_FCU_SPD)') -- SPD 模式 = kts；MACH 模式 = 马赫 × 100
-local dr_is_mach      = iDataRef:New('(L:FSL_FCU_MACH_MODE)') -- 1 = 显示 MACH
-local dr_spd_dashes   = iDataRef:New('(L:FSL_FCU_SPD_DASHED)')
-local dr_vs           = iDataRef:New('(L:FSL_FCU_VS)') -- VS 模式 = fpm；TRK/FPA 模式 = FPA × 10
-local dr_trk_fpa      = iDataRef:New('(L:FSL_FCU_TRKFPA)') -- 1 = TRK/FPA
+local dr_spd        = iDataRef:New('(L:FSL_FCU_SPD)')         -- SPD 模式 = kts；MACH 模式 = 马赫 × 100
+local dr_is_mach    = iDataRef:New('(L:FSL_FCU_MACH_MODE)')   -- 1 = 显示 MACH
+local dr_spd_dashes = iDataRef:New('(L:FSL_FCU_SPD_DASHED)')
+local dr_vs         = iDataRef:New('(L:FSL_FCU_VS)')          -- VS 模式 = fpm；TRK/FPA 模式 = FPA × 10
+local dr_trk_fpa    = iDataRef:New('(L:FSL_FCU_TRKFPA)')      -- 1 = TRK/FPA
 
 -- EFIS 机长侧气压：UNIT 1 = inHg / 0 = hPa；STD 1 = STD；BARO = 当前单位下的显示数字
-local dr_baro_unit    = iDataRef:New('(L:FSL_EFIS_CPT_BARO_UNIT)')
-local dr_baro_std     = iDataRef:New('(L:FSL_EFIS_CPT_BARO_STD)')
-local dr_baro         = iDataRef:New('(L:FSL_EFIS_CPT_BARO)') -- inHg 模式 2992 / hPa 模式 1013
+local dr_baro_unit  = iDataRef:New('(L:FSL_EFIS_CPT_BARO_UNIT)')
+local dr_baro_std   = iDataRef:New('(L:FSL_EFIS_CPT_BARO_STD)')
+local dr_baro       = iDataRef:New('(L:FSL_EFIS_CPT_BARO)')   -- inHg 模式 2992 / hPa 模式 1013
 
 -- ===========================================================
 -- OUTPUT：6 个 LED pin
@@ -331,7 +330,7 @@ GlobalFrameLoopManager:add(function()
 	-- 气压：STD / QNH 标签 / 单位 / 两个值通道（两个值都算，切单位时不会读到上一次的陈旧值）
 	local baro_std  = dr_baro_std:Get() -- 1 = STD
 	local baro_unit = dr_baro_unit:Get() -- 1 = inHg（见文件头说明）
-	local baro_val  = dr_baro:Get() -- 当前单位下的显示数字：inHg 2992 / hPa 1013
+	local baro_val  = dr_baro:Get()   -- 当前单位下的显示数字：inHg 2992 / hPa 1013
 
 	minifcu:SetEfisBaroInhgHpaUnit(baro_unit >= 1 and 1 or 0)
 	minifcu:SetEfisBaroStd1(baro_std >= 1 and 1 or 0)
