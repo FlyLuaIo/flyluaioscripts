@@ -124,7 +124,8 @@ minifcu:CfgCmd(22, "a320/Panel/EFIS_NavType5L_button") -- ARPT
 minifcu:CfgCmd(23, "a320/Panel/EFIS_FlightDirL_button")
 -- LS [Q41]
 minifcu:CfgCmd(24, "a320/Panel/EFIS_LandSysL_button")
--- CHRONO（bit 25）：FF320 的 chrono 命令名未查实 → 暂不绑（见文件头第 10 条）
+-- Chrone
+minifcu:CfgCmd(25, "a320/Panel/ShieldChronoL_button")
 
 -- ROSE 模式键 [Q24–Q28]：0=LS 1=VOR 2=NAV 3=ARC 4=PLAN（FF320 无第 6 档 → bit67 不绑）
 minifcu:CfgVal(26, "a320/Panel/EFIS_NavModeL", 0) -- ROSE LS
@@ -324,18 +325,20 @@ GlobalFrameLoopManager:add(function()
 	-- ---- miniEFIS：气压 ----
 	local baro_unit = dr_baro_unit:Get() -- 0 = inHg, 1 = hPa
 	local baro_mode = dr_baro_mode:Get() -- <=0 = STD, 1 = QFE, 2 = QNH
-	local baro = dr_baro:Get()           -- 当前显示单位的数值
 
+	local bmode = 0
+	if baro_mode == 2 then
+		bmode = 1
+	end
 	minifcu:SetEfisBaroInhgHpaUnit(baro_unit == 0 and 1 or 0)
-	minifcu:SetEfisBaroStd1()                             -- 源 <=0 → 1（revert）
-	minifcu:SetEfisBaroQnnh1(baro_mode > 0 and 1 or 0)    -- 非 STD 即亮
+	minifcu:SetEfisBaroStd1()    -- 源 <=0 → 1（revert）
+	minifcu:SetEfisBaroQnnh1(bmode) -- 非 STD 即亮
+
 
 	-- 两个值都算（切单位不读陈旧值）；取整后写 int 通道
 	if baro_unit == 1 then -- 当前是 hPa
-		minifcu:SetEfisBaro(math.floor(baro + 0.5))
-		minifcu:SetEfisBaroInhg(math.floor(baro / 33.8638895 * 100 + 0.5))
-	else -- 当前是 inHg
-		minifcu:SetEfisBaroInhg(math.floor(baro * 100 + 0.5))
-		minifcu:SetEfisBaro(math.floor(baro * 33.8638895 + 0.5))
+		minifcu:SetEfisBaro()
+	else                -- 当前是 inHg
+		minifcu:SetEfisBaroInhg()
 	end
 end)

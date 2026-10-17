@@ -692,14 +692,13 @@ end
 -- ========
 -- custom device EFIS - BARO QNNH = 1 (custom/1/7/value, MessageType 7)
 
-function MiniFCU:GetEfisBaroQnnh1(dpath, scale)
-	self.d_efis_baro_qnnh_1_scale = scale == nil and 1 or scale
-	self.d_efis_baro_qnnh_1 = iDataRef:New(dpath)
+function MiniFCU:GetEfisBaroQnnh1(dpath, revert, base)
+	self.d_efis_baro_qnnh_1 = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetEfisBaroQnnh1(val)
 	if val == nil then
-		val = self.d_efis_baro_qnnh_1:Get() * self.d_efis_baro_qnnh_1_scale
+		val = self.d_efis_baro_qnnh_1:GetBit()
 		if self.d_efis_baro_qnnh_1:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_efis_baro_qnnh_1, val)
 		end
@@ -715,14 +714,13 @@ end
 -- ========
 -- custom device EFIS - BARO STD = 1 (custom/1/8/value, MessageType 8)
 
-function MiniFCU:GetEfisBaroStd1(dpath, scale)
-	self.d_efis_baro_std_1_scale = scale == nil and 1 or scale
-	self.d_efis_baro_std_1 = iDataRef:New(dpath)
+function MiniFCU:GetEfisBaroStd1(dpath, revert, base)
+	self.d_efis_baro_std_1 = iDataRef:New(dpath, nil, revert, base)
 end
 
 function MiniFCU:SetEfisBaroStd1(val)
 	if val == nil then
-		val = self.d_efis_baro_std_1:Get() * self.d_efis_baro_std_1_scale
+		val = self.d_efis_baro_std_1:GetBit()
 		if self.d_efis_baro_std_1:ChangedUpdate() then
 			uluaSet(_G.idr_minifcu_mf_custom_efis_baro_std_1, val)
 		end
