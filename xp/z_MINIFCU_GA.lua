@@ -209,7 +209,7 @@ minifcu:GetAppr('sim/cockpit2/autopilot/approach_status')
 minifcu:GetAthr('sim/cockpit2/autopilot/autothrottle_on')
 
 -- output EXPED → output/4/state, pin EXPED (0/1)
-minifcu:GetExped('sim/cockpit2/autopilot/vnav_status')
+minifcu:GetExped('sim/cockpit2/autopilot/altitude_mode', false, 4.9)
 
 -- output LOC → output/5/state, pin LOC (0/1)
 minifcu:GetLoc('sim/cockpit2/autopilot/nav_status')
@@ -304,13 +304,15 @@ minifcu:GetEfisBaroInhg("sim/cockpit/misc/barometer_setting")
 -- MT 11 (miniEFIS LED and LCD): EfisBaro — BARO hPa（inHg*33.864 四舍五入）
 minifcu:GetEfisBaro("sim/cockpit/misc/barometer_setting")
 
+local dr_flc_mode = iDataRef:New("sim/cockpit2/autopilot/altitude_mode")
+
 GlobalFrameLoopManager:add(function()
 	-- 6 个 LED（源接好后再打开）
 	minifcu:SetAp1()
 	minifcu:SetAp2()
 	minifcu:SetAppr()
 	minifcu:SetAthr()
-	minifcu:SetExped()
+	minifcu:SetExped(dr_flc_mode:Get() == 5 and 1 or 0)
 	-- minifcu:SetLoc()
 	minifcu:SetFcuSpdValue()
 	-- minifcu:SetFcuMachValue()
