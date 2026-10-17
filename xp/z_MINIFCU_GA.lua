@@ -31,10 +31,11 @@ minifcu:CfgCmd(54, "sim/autopilot/airspeed_up")
 ---- FCU - HDG - ENCODER
 -- inner
 minifcu:CfgCmd(55, "sim/autopilot/heading_down")
-minifcu:CfgCmd(56, "sim/autopilot/heading_down")
+-- minifcu:CfgCmd(56, "sim/autopilot/heading_down")
 -- outer
 minifcu:CfgCmd(57, "sim/autopilot/heading_up")
-minifcu:CfgCmd(58, "sim/autopilot/heading_up")
+-- minifcu:CfgCmd(58, "sim/autopilot/heading_up")
+minifcu:CfgEncFull(56, 58, 'sim/cockpit/autopilot/heading_mag', 10, 10, 0, 0, 360)
 
 ---- FCU - VS - ENCODER
 -- inner
