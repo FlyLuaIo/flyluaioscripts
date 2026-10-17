@@ -161,9 +161,10 @@ minifcu:CfgCmd(62, "sim/autopilot/vertical_speed_up")
 -- BARO encoder (hPa/inHg aware)
 -- minifcu:CfgFc(63, "minifcu_baro_enc_left()")
 -- minifcu:CfgFc(65, "minifcu_baro_enc_right()")
-minifcu:CfgCmd(63, "sim/instruments/barometer_down")
-minifcu:CfgCmd(65, "sim/instruments/barometer_up")
-
+-- minifcu:CfgCmd(63, "sim/instruments/barometer_down")
+-- minifcu:CfgCmd(65, "sim/instruments/barometer_up")
+minifcu:CfgEncFull(63, 65, "cpuwolf/flyluaio/MiniFCU/condbtn[0]", 1, 1, 0, -39500, 39500)
+minifcu:CfgEncFull(64, 66, "cpuwolf/flyluaio/MiniFCU/condbtn[0]", 1, 1, 0, -39500, 39500)
 -- ===================== OUTPUT: LEDs =====================
 
 minifcu:GetAp1('AirbusFBW/AP1Engage')
@@ -229,6 +230,23 @@ minifcu:GetFcuLsValue('AirbusFBW/ILSonCapt')
 -- ===================== Frame Loop =====================
 
 GlobalFrameLoopManager:add(function()
+	local baro_unit = dr_baro_unit:Get()
+	local baro = dr_baro:Get()
+	-- Fix Captain Baro
+	if idr_minifcu_hid_condbtn_0:ChangedUpdate() then
+		local smallstep = idr_minifcu_hid_condbtn_0:Delta()
+		-- uluaLog(string.format("toliss baro step=%d", smallstep))
+		if baro_unit == 1 then
+			local inHg = baro * 33.8638895 + smallstep
+			-- update hPa
+			dr_baro:Set(inHg / 33.8638895)
+		else
+			local inHg = baro + smallstep * 0.01
+			-- update inHg
+			dr_baro:Set(inHg)
+		end
+	end
+
 	-- Output LEDs
 	minifcu:SetAp1()
 	minifcu:SetAp2()
@@ -306,8 +324,7 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetFcuHdgTrkMode()
 
 	-- EFIS LED and LCD (miniEFIS LED and LCD custom device)
-	local baro_unit = dr_baro_unit:Get()
-	local baro = dr_baro:Get()
+
 
 	-- MT 9 (miniEFIS LED and LCD): baro unit (inverted: hPa=1 → display 0)
 	minifcu:SetEfisBaroInhgHpaUnit(baro_unit == 1 and 0 or 1)

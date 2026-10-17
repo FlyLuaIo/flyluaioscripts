@@ -21,6 +21,7 @@ function MiniFCU:absent(FastTurnsPerSecond)
 	end
 	_G.idr_minifcu_hid_invalid = uluaFind('cpuwolf/flyluaio/MiniFCU/invalid')
 	_G.idr_minifcu_hid_fastkeypersec = uluaFind('cpuwolf/flyluaio/MiniFCU/fastkeypersec')
+	_G.idr_minifcu_hid_condbtn_0 = iDataRef:New('cpuwolf/flyluaio/MiniFCU/condbtn[0]', 0)
 	_G.idr_minifcu_mf_output_ap1 = uluaFind('cpuwolf/mf/MiniFCU/output/0/state')
 	_G.idr_minifcu_mf_output_ap2 = uluaFind('cpuwolf/mf/MiniFCU/output/1/state')
 	_G.idr_minifcu_mf_output_appr = uluaFind('cpuwolf/mf/MiniFCU/output/2/state')
@@ -53,6 +54,7 @@ function MiniFCU:absent(FastTurnsPerSecond)
 	_G.idr_minifcu_mf_custom_efis_baro_inhg_hpa_unit = uluaFind('cpuwolf/mf/MiniFCU/custom/1/9/value')
 	_G.idr_minifcu_mf_custom_efis_baro_inhg = uluaFind('cpuwolf/mf/MiniFCU/custom/1/10/value')
 	_G.idr_minifcu_mf_custom_efis_baro = uluaFind('cpuwolf/mf/MiniFCU/custom/1/11/value')
+
 	uluaSet(_G.idr_minifcu_hid_fastkeypersec, FastTurnsPerSecond)
 
 	return false
