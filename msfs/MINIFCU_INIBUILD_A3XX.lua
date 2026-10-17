@@ -44,7 +44,8 @@
 --   8. 气压 STD 判据：(L:XMLVAR_Baro1_Mode) == 2 或 == 3 为 STD（参考档 digi_disp_set_L_EFIS
 --      的判据写的就是 2 或 3），其余为 QNH；参考档的气压值表达式在 mode > 2 时返回 99，
 --      由 STD 标志接管显示。
---   9. bit 25（CHRONO）：QFCU 面板无此键，参考档里也没有对应的计时事件 / L 变量 → 不绑定。
+--   9. bit 25（CHRONO）：参考档里没有对应的计时事件 / L 变量 → 来源改用同机型 QMPE 档
+--      （msfs/data/QMPE_INIBUILD_A3xx.lua:180 的 L:INI_CPT_CHRONO_BUTTON）。
 -- *****************************************************************
 
 if ilua_require_msfs() then
@@ -151,8 +152,8 @@ minifcu:CfgRpn(22, '1 (>L:INI_EFIS_CPT_ARPT_BUTTON)')  -- [Q39] ARPT
 -- FD / LS [Q40 / Q41]：参考档是取反写入
 minifcu:CfgRpn(23, '(L:INI_FD1_ON, Bool) ! (>L:INI_FD1_ON)')       -- [Q40] FD
 minifcu:CfgRpn(24, '(L:INI_LS_CAPTAIN, Bool) ! (>L:INI_LS_CAPTAIN)') -- [Q41] LS
--- bit 25 CHRONO：QFCU 面板无此键，参考档里也没有对应的计时事件 / L 变量
--- TODO: 未绑定 —— 确认 iniBuilds A3xx 的 EFIS 计时/CHRONO 事件后再补（不瞎猜事件名）
+-- bit 25 CHRONO：参考档里没有对应的计时事件 / L 变量 → 来源 msfs/data/QMPE_INIBUILD_A3xx.lua:180
+minifcu:CfgRpn(25, '1 (>L:INI_CPT_CHRONO_BUTTON)')
 
 -- ROSE 模式键 [Q24–Q28]：LS/VOR/NAV/ARC/PLN → INI_MAP_MODE_CAPT_SWITCH 0–4
 minifcu:CfgRpn(26, '0 (>L:INI_MAP_MODE_CAPT_SWITCH)') -- [Q24] LS

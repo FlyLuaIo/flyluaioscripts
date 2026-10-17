@@ -29,7 +29,8 @@
 -- 已知取舍（待真机验证）：
 --   1. 未做断电门控：QFCU 档在 FCU 掉电/亮度归零时会清屏（digi_disp_powoff_*），
 --      miniFCU 硬件没有背光/熄灭通道，XP 档也没做，这里保持一致。
---   2. bit 25（CHRONO）：QFCU 面板无此键，参考档里也没有可用的计时器事件 → 不绑定（TODO）。
+--   2. bit 25（CHRONO）：QFCU 面板无此键、参考档里也没有计时器事件 → 来源改用同机型 QMPE 档
+--      （flyluaioscripts/msfs/QMPE_Fnx.lua:129 的 L:S_MIP_CHRONO_CAPT，按下 1 / 松开 0）。
 --   3. QFCU 面板有两个 EFIS 半区（机长 / 副驾），miniFCU 只有机长半区，故 QFCU 的
 --      51/52/53（副驾气压）与 56–79（副驾 EFIS）不移植；I_FCU_EFIS2_* / S_FCU_EFIS2_* 一概不引用。
 --   4. ALT 100/1000：QFCU 是拨杆（按下 = 0 → 100 ft，松开 = 1 → 1000 ft），miniFCU 是瞬时按键 ——
@@ -106,9 +107,8 @@ minifcu:CfgRpn(22, '1 (>L:S_FCU_EFIS1_ARPT)', '0 (>L:S_FCU_EFIS1_ARPT)')
 -- FD / LS [Q40 / Q41]
 minifcu:CfgRpn(23, '1 (>L:S_FCU_EFIS1_FD)', '0 (>L:S_FCU_EFIS1_FD)')
 minifcu:CfgRpn(24, '1 (>L:S_FCU_EFIS1_LS)', '0 (>L:S_FCU_EFIS1_LS)')
--- bit 25（CHRONO）：QFCU 面板无此键，参考档里没有计时器事件，故不绑定
--- TODO：本机模机长计时器按钮有现成的公开来源（msfs/QMPE_Fnx.lua:129 的 S_MIP_CHRONO_CAPT 开关），
---   需要时把那个档一并加进 provenance 参考再绑定；现在保持空绑定，不瞎猜事件名
+-- bit 25（CHRONO）：QFCU 面板无此键 → 来源 msfs/QMPE_Fnx.lua:129（同机型 QMPE 档，机长计时器按钮）
+minifcu:CfgRpn(25, '1 (>L:S_MIP_CHRONO_CAPT)', '0 (>L:S_MIP_CHRONO_CAPT)')
 
 -- ROSE 模式键 [Q24–Q28]：LS/VOR/NAV/ARC/PLN 对应 ND_MODE 0–4
 minifcu:CfgRpn(26, '0 (>L:S_FCU_EFIS1_ND_MODE)') -- LS

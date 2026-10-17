@@ -14,8 +14,8 @@
 -- 已知取舍（待真机验证）：
 --   1. 未做断电门控：QFCU 档会在 AC BUS 掉电时关 LCD，miniFCU 硬件无背光/熄灭通道
 --      （XP 档也没做），这里保持一致。
---   2. bit 25（CHRONO）：QFCU 面板无此键，参考档里也没有可用的计时事件/L 变量 → 不绑定，
---      见下方 TODO（不瞎猜事件名）。
+--   2. bit 25（CHRONO）：参考档里没有可用的计时事件/L 变量 → 来源改用同机型 QMPE 档
+--      （flyluaioscripts/msfs/QMPE_INIBUILD_A350.lua:165 的 L:INI_CPT_CHRONO_BUTTON）。
 --   3. QFCU 面板有两个 EFIS 半区（机长/副驾），miniFCU 只有机长半区，故 QFCU 的
 --      51/52/53（副驾气压）与 56–79（副驾 EFIS）不移植。
 --   4. 五个旋钮（ALT / SPD / HDG / VS / 机长气压）：参考档用 qfcu:CfgEnc(DecKey, IncKey, "B:AIRLINER_*_KNOB")。
@@ -108,8 +108,8 @@ minifcu:CfgRpn(22, '1 (>L:INI_EFIS_CPT_ARPT_BUTTON)')                -- [Q39] AR
 minifcu:CfgVal(23, 'B:AIRLINER_EFIS_VV_LEFT', 1, nil)                -- [Q40] FD
 -- LS
 minifcu:CfgRpn(24, '(L:INI_LS_CAPTAIN, Bool) ! (>L:INI_LS_CAPTAIN)') -- [Q41] LS
--- bit 25 CHRONO：QFCU 面板无此键、参考档里也没有对应事件/L 变量
--- TODO: 未绑定 —— 需要确认 iniBuilds A350 的 EFIS 计时/CHRONO 事件后再补（不瞎猜事件名）
+-- bit 25 CHRONO：参考档里没有对应事件/L 变量 → 来源 msfs/QMPE_INIBUILD_A350.lua:165
+minifcu:CfgRpn(25, '1 (>L:INI_CPT_CHRONO_BUTTON)')
 
 -- ROSE 模式键：LS/VOR/NAV/ARC/PLN → INI_MAP_MODE_CAPT_SWITCH 0–4
 minifcu:CfgRpn(26, '0 (>L:INI_MAP_MODE_CAPT_SWITCH)') -- [Q24] LS

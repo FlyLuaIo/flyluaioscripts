@@ -128,8 +128,8 @@ minifcu:CfgCmd(23, "sim/autopilot/fdir_toggle")
 -- EFIS - LS (Button, bit 24)
 minifcu:CfgCmd(24, "sim/operation/test_none")
 
--- EFIS - CHRONO (Button, bit 25)
-minifcu:CfgCmd(25, "sim/operation/test_none")
+-- EFIS - CHRONO (Button, bit 25)：X-Plane 自带 1 号计时器（Commands.txt: sim/instruments/chrono1_start_stop）
+minifcu:CfgCmd(25, "sim/instruments/chrono1_start_stop")
 
 -- EFIS - ROSE LS (Button, bit 26)
 minifcu:CfgCmd(26, "sim/operation/test_none")

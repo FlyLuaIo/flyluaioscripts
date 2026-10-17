@@ -21,8 +21,9 @@
 --   ALT 47/48 · 49/50；SPD 51/52 · 53/54；HDG 55/56 · 57/58；VS 59/60 · 61/62；BARO 63/64 · 65/66
 -- 已知取舍（待真机验证）：
 --   1. 未做断电 / 背光 / 亮度 / ANNLT 门控：miniFCU 硬件没有这些通道（XP 档也没做）。
---   2. bit 25（CHRONO）：QFCU 面板无此键，参考档里也没有对应的计时事件或变量 → 不绑定。
---      TODO：真机确认 Headwind A330 是否提供计时器按键事件后再补，不从别的机型档借事件名。
+--   2. bit 25（CHRONO）：QFCU 面板无此键，参考档里也没有对应的计时事件 → 本档接 FBW 代码基座的
+--      A32NX EFIS 计时器 H 事件（Headwind A330-900 = FBW A32NX 派生，与 MINIFCU_FBW_A320NX.lua 同源）。
+--      TODO: 待真机确认该机模确实注册了 A32NX_EFIS_L_CHRONO_PUSHED。
 --   3. QFCU 面板有两个 EFIS 半区（机长 / 副驾），miniFCU 只有机长半区，故 QFCU 的
 --      51/52/53（副驾气压）与 56–79（副驾 EFIS）不移植。
 --   4. SPD/MACH：参考档把速度与马赫都从同一个变量读（马赫模式下该变量是马赫小数），
@@ -92,7 +93,8 @@ minifcu:CfgRpn(22, '(>K:A32NX.FCU_EFIS_L_ARPT_PUSH)')
 -- FD / LS [Q40 / Q41]
 minifcu:CfgRpn(23, '(>K:A32NX.FCU_EFIS_L_FD_PUSH)')
 minifcu:CfgRpn(24, '(>K:A32NX.FCU_EFIS_L_LS_PUSH)')
--- bit 25（CHRONO）：QFCU 面板无此键，参考档里也没有对应事件或变量 → 不绑定（见文件头 TODO）
+-- bit 25（CHRONO）：接 FBW 代码基座的 EFIS 计时器 H 事件（同 MINIFCU_FBW_A320NX.lua，待真机确认）
+minifcu:CfgRpn(25, '(>H:A32NX_EFIS_L_CHRONO_PUSHED)')
 
 -- ROSE 模式键 [Q24–Q28]：LS/VOR/NAV/ARC/PLN → EFIS_MODE 0–4
 minifcu:CfgRpn(26, '0 (>L:A32NX_FCU_EFIS_L_EFIS_MODE)')

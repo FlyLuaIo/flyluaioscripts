@@ -32,8 +32,8 @@
 --      miniFCU 硬件无背光 / 熄灭通道，xp/MINIFCU_Toliss.lua 也没做，这里保持一致。
 --   2. QFCU 面板有副驾半区，miniFCU 只有一个 EFIS：QFCU 的 51/52/53（副驾气压）与
 --      56–79（副驾 EFIS）不移植（参考档行 183–254）。
---   3. bit 25（CHRONO）：参考档（QFCU）没有这个键 —— TODO: 参考档无对应源，先不绑定；
---      将来需要时从同机型 QMPE 档取 H 事件（做法见 MINIFCU_FBW_A320NX.lua 的 CHRONO）。
+--   3. bit 25（CHRONO）：参考档（QFCU）没有这个键 → 来源改用同机型 QMPE 档
+--      （msfs/data/QMPE_AERO_A346.lua:140 的 L:AB_MPL_CHRONO，按下 1 / 松开 0）。
 --   4. MT 9（ALT managed 点）：参考档 digi_disp_set_ALT() 读的源是 (L:TLS_FCU_VS_MANAGED)
 --      （行 274），变量名与 ALT 不符，疑似参考档复制粘贴遗留；本档按参考档逐字保留。
 --   5. MT 10 / MT 11（VS / FPA）：参考档把符号编码进 QFCU 的 vsmode / vs_trkmode（行 445–473），
@@ -204,7 +204,8 @@ if MSFS_VERSION == 0 then
 else
 	minifcu:CfgRpn(24, '1 (>B:INSTRUMENT_AB_MPL_CPT_ILS_KEY_Push)', '1 (>B:INSTRUMENT_AB_MPL_CPT_ILS_KEY_Release)') -- LS
 end
--- bit 25 CHRONO：参考档（QFCU A346）无此键 —— TODO: 无对应源，先不绑定（见文件头取舍 3）
+-- bit 25 CHRONO：参考档（QFCU A346）无此键 → 来源 msfs/data/QMPE_AERO_A346.lua:140
+minifcu:CfgRpn(25, '1 (>L:AB_MPL_CHRONO)', '0 (>L:AB_MPL_CHRONO)')
 
 -- ROSE 模式键 [Q24–Q28]：LS/VOR/NAV/ARC/PLN → (L:AB_MPL_ND_Mode) 0–4（参考档行 124–128）
 minifcu:CfgRpn(26, '0 (>L:AB_MPL_ND_Mode)') -- LS

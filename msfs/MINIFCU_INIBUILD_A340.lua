@@ -27,7 +27,8 @@
 --      （即假定 (L:INI_ALTITUDE_STATE) = 1 才是 1000 —— 待真机确认；若实际相反，
 --        把 CfgPSw 的期望值改成 (0, 1) 即可，或改用 CfgPSwTog(17, pswh17, 1, 0)
 --        做成“每按一次翻转 100/1000”。）
---   4. bit 25（CHRONO）：QFCU 面板无此键，参考档里也没有可用的计时事件 → 不绑定（TODO）。
+--   4. bit 25（CHRONO）：参考档（QFCU）里没有可用的计时事件 → 来源改用同机型 QMPE 档
+--      （flyluaioscripts/msfs/QMPE_INIBUILD_A340.lua:163 的 L:INI_CPT_CHRONO_BUTTON）。
 --   5. QFCU 12 在参考档里注释为 EXPED，但实际发出的是 B:AIRLINER_ALT_PUSH_Set
 --      （参考档原文如此），本档按“只改 bit 号”的原则逐字继承。
 --   6. ADF/VOR 两组 [Q42–Q45] 是两档拨杆（按下 = ADF/VOR，松开 = 中位），miniFCU 的
@@ -102,8 +103,8 @@ minifcu:CfgRpn(22, '1 (>L:INI_EFIS_CPT_ARPT_BUTTON)')
 -- FD / LS [Q40 / Q41]
 minifcu:CfgRpn(23, '0 (>B:AIRLINER_CPT_FD_Set)')
 minifcu:CfgRpn(24, '0 (>B:AIRLINER_CPT_LS_Set)')
--- bit 25 CHRONO：QFCU 面板无此键，参考档里也没有可用的计时事件
--- TODO: 未绑定 —— 需要确认 iniBuilds A340 的 EFIS 计时/CHRONO 事件后再补
+-- bit 25 CHRONO：参考档里没有可用的计时事件 → 来源 msfs/QMPE_INIBUILD_A340.lua:163
+minifcu:CfgRpn(25, '1 (>L:INI_CPT_CHRONO_BUTTON)')
 
 -- ROSE 模式键 [Q24–Q28]：LS/VOR/NAV/ARC/PLN 对应 ND 模式 0–4
 minifcu:CfgRpn(26, '0 (>L:INI_MAP_MODE_CAPT_SWITCH)') -- LS

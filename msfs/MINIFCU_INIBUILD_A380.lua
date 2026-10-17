@@ -15,8 +15,8 @@
 -- 已知取舍（待真机验证）：
 --   1. 未做断电门控：QFCU 档会在断电时关 LCD，miniFCU 硬件无背光/熄灭通道（XP 档也没做），
 --      这里保持一致。
---   2. bit 25（CHRONO）：QFCU 面板无此键，参考档也没有对应事件 → 不绑定，
---      见下方 TODO（不瞎猜事件名）。
+--   2. bit 25（CHRONO）：参考档里没有对应事件 → 来源改用同机型 QMPE 档
+--      （flyluaioscripts/msfs/QMPE_INIBUILD_A380.lua:150 的 L:INI_CPT_CHRONO_BUTTON）。
 --   3. QFCU 面板有两个 EFIS 半区（机长/副驾），miniFCU 只有机长半区，故 QFCU 的
 --      51/52/53（副驾气压）与 56–79（副驾 EFIS）不移植。
 --   4. 五个旋钮（ALT / SPD / HDG / VS / 机长气压）：参考档用 qfcu:CfgEnc(DecKey, IncKey, "B:AIRLINER_*_KNOB")。
@@ -117,8 +117,8 @@ minifcu:CfgRpn(22, '1 (>L:INI_EFIS_CPT_ARPT_BUTTON)')  -- ARPT
 minifcu:CfgVal(23, 'B:AIRLINER_EFIS_VV_LEFT', 1, nil)
 -- LS [Q41]
 minifcu:CfgRpn(24, '(L:INI_LS_CAPTAIN, Bool) ! (>L:INI_LS_CAPTAIN)')
--- bit 25 CHRONO：QFCU 面板无此键、参考档也没有对应事件
--- TODO: 参考档（iniBuilds A380）里找不到 CHRONO 事件/L 变量，置空不绑；真机确认后再补。
+-- bit 25 CHRONO：参考档里没有对应事件 → 来源 msfs/QMPE_INIBUILD_A380.lua:150
+minifcu:CfgRpn(25, '1 (>L:INI_CPT_CHRONO_BUTTON)')
 
 -- ROSE 模式键 [Q24–Q28]：LS/VOR/NAV/ARC/PLN → INI_MAP_MODE_CAPT_SWITCH 0–4
 minifcu:CfgRpn(26, '0 (>L:INI_MAP_MODE_CAPT_SWITCH)') -- Q24 LS
