@@ -161,6 +161,7 @@ minifcu:CfgRpn(27, '1 (>L:INI_MAP_MODE_CAPT_SWITCH)') -- [Q25] VOR
 minifcu:CfgRpn(28, '2 (>L:INI_MAP_MODE_CAPT_SWITCH)') -- [Q26] NAV
 minifcu:CfgRpn(29, '3 (>L:INI_MAP_MODE_CAPT_SWITCH)') -- [Q27] ARC
 minifcu:CfgRpn(30, '4 (>L:INI_MAP_MODE_CAPT_SWITCH)') -- [Q28] PLN
+minifcu:CfgRpn(67, '5 (>L:INI_MAP_MODE_CAPT_SWITCH)') -- [Q28] PLN
 
 -- 距离 [Q29–Q34]：10/20/40/80/160/320 → INI_MAP_RANGE_CAPT_SWITCH 0–5
 minifcu:CfgRpn(31, '0 (>L:INI_MAP_RANGE_CAPT_SWITCH)') -- [Q29] 10
