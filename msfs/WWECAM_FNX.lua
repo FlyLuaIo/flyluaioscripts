@@ -81,10 +81,8 @@ wwecam:GetEClrL("(L:I_ECAM_CLR_LEFT)")
 wwecam:GetEClrR("(L:I_ECAM_CLR_LEFT)")
 wwecam:GetESts("(L:I_ECAM_STATUS)")
 
--- Fenix 这个旋钮的量程没文档（同族的 A_PED_LIGHTING_PEDESTAL 是 0~1），
--- 用自适应 + 夹紧：0~1 当作比例 ×255，>1 当作百分比 ×2.55，最后夹到 0~255
--- （Wwecam 亮度是单字节，超了会把值串进 LED id，实测会乱灯）
-local dr_bkl = iDataRef:New("(L:N_PED_LIGHTING_PEDESTAL)")
+
+wwecam:GetBkl("(L:N_PED_LIGHTING_PEDESTAL)", 125) -- 0~2
 
 -- =====Annunciator test
 -- PowerOff()/SetTest() 只改硬件，Lua 侧的灯值没变就不会重写；
@@ -107,7 +105,7 @@ local function fresh_ecam()
 end
 
 local dr_power = iDataRef:New("(L:B_ELEC_BUS_POWER_DC_BAT, Bool)") -- 0: OFF 1: ON
-local dr_test = iDataRef:New("(L:S_OH_IN_LT_ANN_LT)") -- 0: DIM 1: BRT 2: TEST
+local dr_test = iDataRef:New("(L:S_OH_IN_LT_ANN_LT)")              -- 0: DIM 1: BRT 2: TEST
 local TEST_MODE = 2
 
 GlobalFrameLoopManager:add(function()
@@ -117,7 +115,6 @@ GlobalFrameLoopManager:add(function()
             wwecam:PowerOff()
             return
         else
-            dr_bkl:Invalid(-1)
             fresh_ecam()
         end
     end
@@ -132,15 +129,6 @@ GlobalFrameLoopManager:add(function()
     end
 
     -- brightness
-    if dr_bkl:ChangedUpdate() then
-        local v = dr_bkl:Get()
-        if v <= 1 then
-            v = v * 255
-        else
-            v = v * 2.55
-        end
-        if v < 0 then v = 0 elseif v > 255 then v = 255 end
-        wwecam:SetBrt(math.floor(v))
-    end
+    wwecam:SetBkl()
     wwecam:SetEcam()
 end)
