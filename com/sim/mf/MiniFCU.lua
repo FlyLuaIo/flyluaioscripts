@@ -54,6 +54,8 @@ function MiniFCU:absent(FastTurnsPerSecond)
 	_G.idr_minifcu_mf_custom_efis_baro_inhg_hpa_unit = uluaFind('cpuwolf/mf/MiniFCU/custom/1/9/value')
 	_G.idr_minifcu_mf_custom_efis_baro_inhg = uluaFind('cpuwolf/mf/MiniFCU/custom/1/10/value')
 	_G.idr_minifcu_mf_custom_efis_baro = uluaFind('cpuwolf/mf/MiniFCU/custom/1/11/value')
+	_G.idr_minifcu_mf_custom_fcu_power = uluaFind('cpuwolf/mf/MiniFCU/custom/0/power')
+	_G.idr_minifcu_mf_custom_efis_power = uluaFind('cpuwolf/mf/MiniFCU/custom/1/power')
 
 	uluaSet(_G.idr_minifcu_hid_fastkeypersec, FastTurnsPerSecond)
 
@@ -800,6 +802,42 @@ end
 
 function MiniFCU:FreshEfisBaro()
 	self.d_efis_baro:Invalid(-1)
+end
+
+-- ========
+-- power hooks (hand written, not generated): one blanking channel per custom device.
+-- 1 → kSetCustomDevice 32,<device index>,-1,0; (Connector MESSAGE_STOP: blank the
+-- display), 0 → every display field of that device is sent again.
+-- Get*(dpath, revert=true) for a "0 = usable" source (e.g. AirbusFBW/FCUAvail).
+
+function MiniFCU:GetFcuPower(dpath, revert, base)
+	self.d_fcu_power = iDataRef:New(dpath, nil, revert, base)
+end
+
+function MiniFCU:SetFcuPower(val)
+	if val == nil then
+		val = self.d_fcu_power:GetBit()
+		if self.d_fcu_power:ChangedUpdate() then
+			uluaSet(_G.idr_minifcu_mf_custom_fcu_power, val)
+		end
+	else
+		uluaSet(_G.idr_minifcu_mf_custom_fcu_power, val)
+	end
+end
+
+function MiniFCU:GetEfisPower(dpath, revert, base)
+	self.d_efis_power = iDataRef:New(dpath, nil, revert, base)
+end
+
+function MiniFCU:SetEfisPower(val)
+	if val == nil then
+		val = self.d_efis_power:GetBit()
+		if self.d_efis_power:ChangedUpdate() then
+			uluaSet(_G.idr_minifcu_mf_custom_efis_power, val)
+		end
+	else
+		uluaSet(_G.idr_minifcu_mf_custom_efis_power, val)
+	end
 end
 
 return MiniFCU

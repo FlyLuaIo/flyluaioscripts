@@ -31,6 +31,9 @@ local dr_baro       = iDataRef:New("sim/cockpit/misc/barometer_setting")
 local dr_baro_unit  = iDataRef:New("AirbusFBW/BaroUnitCapt")
 local dr_baro_std   = iDataRef:New("AirbusFBW/BaroStdCapt")
 
+-- Cold and dark : FCU power (same source as xp/QFCU_Toliss.lua) — 0 = FCU unpowered
+local dr_fcu_avail  = iDataRef:New("AirbusFBW/FCUAvail")
+
 -- ===================== Baro encoder helper =====================
 local baro_cmd_down = uluaFind("sim/instruments/barometer_down")
 local baro_cmd_up   = uluaFind("sim/instruments/barometer_up")
@@ -229,7 +232,56 @@ minifcu:GetFcuLsValue('AirbusFBW/ILSonCapt')
 
 -- ===================== Frame Loop =====================
 
+-- Cold and dark: FCUAvail == 0 → blank both custom devices
+--   (kSetCustomDevice 32,<device index>,-1,0; = Connector MESSAGE_STOP).
+-- Source 0 means "off", so revert = true; Set*() without a value only writes on change.
+minifcu:GetFcuPower('AirbusFBW/FCUAvail', true)
+minifcu:GetEfisPower('AirbusFBW/FCUAvail', true)
+
+-- Every output channel: Fresh*() drops the Lua-side change cache, so the first frame
+-- after power-up writes all of them again even when the value never changed (the
+-- plugin also re-sends the whole custom device after MESSAGE_STOP).
+local minifcu_fresh_all = {
+	'FreshAp1', 'FreshAp2', 'FreshAthr', 'FreshLoc', 'FreshAppr', 'FreshExped',
+	'FreshFcuSpdValue', 'FreshFcuMachValue', 'FreshFcuSpdMachMode', 'FreshFcuSpdDashes',
+	'FreshFcuSpdDot', 'FreshFcuHdgValue', 'FreshFcuHdgDashes', 'FreshFcuHdgDot',
+	'FreshFcuAltValue', 'FreshFcuAltDot', 'FreshFcuVsValue', 'FreshFcuFpaValue',
+	'FreshFcuVsDashes', 'FreshFcuHdgTrkMode',
+	'FreshEfisCstr', 'FreshEfisWpt', 'FreshEfisVord', 'FreshEfisNdb', 'FreshEfisArpt',
+	'FreshFcuFdValue', 'FreshFcuLsValue', 'FreshEfisBaroQnnh1', 'FreshEfisBaroStd1',
+	'FreshEfisBaroInhgHpaUnit', 'FreshEfisBaroInhg', 'FreshEfisBaro',
+}
+
+local ch_fcu_powered = iChange:New(nil)
+
 GlobalFrameLoopManager:add(function()
+	-- expert code: cold and dark
+	minifcu:SetFcuPower()
+	minifcu:SetEfisPower()
+
+	local powered = dr_fcu_avail:Get() >= 1
+	if ch_fcu_powered:ChangedUpdate(powered) then
+		if not powered then
+			-- The six LEDs are GPIO pins, not part of a custom device: kSetCustomDevice
+			-- only blanks the LCDs, so switch them off here.
+			minifcu:SetAp1(0)
+			minifcu:SetAp2(0)
+			minifcu:SetAthr(0)
+			minifcu:SetLoc(0)
+			minifcu:SetAppr(0)
+			minifcu:SetExped(0)
+		end
+		for _, fresh in ipairs(minifcu_fresh_all) do
+			minifcu[fresh](minifcu)
+		end
+	end
+
+	if not powered then
+		-- Display is blanked; forwarding values now would light it back up.
+		-- On power-up the plugin re-sends every field of both devices by itself.
+		return
+	end
+
 	local baro_unit = dr_baro_unit:Get()
 	local baro = dr_baro:Get()
 	-- Fix Captain Baro

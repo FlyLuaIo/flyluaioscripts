@@ -99,6 +99,10 @@
         {
           "Name": "FCU - HDG/TRK MODE",
           "MessageType": 13
+        },
+        {
+          "Name": "FCU - POWER",
+          "MessageType": -1
         }
       ],
       "miniEFIS LED and LCD": [
@@ -149,6 +153,10 @@
         {
           "Name": "EFIS - BARO",
           "MessageType": 11
+        },
+        {
+          "Name": "EFIS - POWER",
+          "MessageType": -1
         }
       ]
     }
