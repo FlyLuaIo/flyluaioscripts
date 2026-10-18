@@ -17,7 +17,7 @@
 --   1. CfgVal(B 事件, 按下值, 松开值)：miniFCU 与 QFCU 走同一套设备级 DFKEY 机制
 --      （设备基类 Qmdev 的 CfgVal），逐字照抄，只改 bit 号。
 --   2. CfgEnc(减bit, 加bit, "B:...")：CfgEnc 现在在 MF 设备上可用（C++ MF 边沿累加，
---      commit afb3e9e2，真机验证）→ 本档逐轴照抄 CfgEnc，每轴两条相邻对（原因见编码器一节）。
+--      commit afb3e9e2，真机验证）→ 本档逐轴照抄 CfgEnc，每轴两条规则 (start,start+2) + (start+1,start+3)（原因见编码器一节）。
 --   3. CfgFc(bit, Lua 片段)：参考档用 LvfrRoseModeSet / LvfrRangeSet 等 Lua 辅助函数
 --      uluaSet(uluaFind("B:..."), n) 写 B 事件。本档不搬这些函数（miniFCU 成品档
 --      统一用 CfgRpn），改成等价 RPN `n (>B:...)` —— 设备侧两者都是把同一个值送进
@@ -160,30 +160,33 @@ minifcu:CfgVal(46, 'B:AUTOPILOT_Baro_1_QNH', 0, 1) -- PUSH
 -- 把本次旋转的带符号累加增量当作输入事件的参数发出去）。
 -- ✅ CfgEnc 现在在 MF 设备上可用（C++ MF 边沿累加 Mfcfgqmdev::accumulateEncoderRotate，
 --    commit afb3e9e2，真机验证）→ 本节与参考档同构：逐轴照抄 qfcu:CfgEnc(dec, inc, "B:<事件>")。
--- ⚠ 每轴必须写两条相邻对：MF hub 把固件的 direction 当 MapToBits 下标用
---    （mfhub/mfcfg.cpp encoder_direction_to_index：0/-1 → 第 1 位、1 → 第 2 位、2/3 → 第 3/4 位），
---    accumulateEncoderRotate 再按 sign = bit==keydec ? -1 : +1 定方向 → (start,start+1) = 减/加、
---    (start+2,start+3) = fast 孪生位；(47,49) 这种跨位写法会让右转落到 48 → 不动/反向。
+-- ⚠ 每轴两条规则，按 JSON 的 MapToBits 语义成对：MapToBits = [dec, dec-fast, inc, inc-fast]，
+--    MF hub 把固件上报的 direction 直接当该数组下标（mfhub/mfcfg.cpp encoder_direction_to_index：
+--    0 = 减、1 = 快减、2 = 加、3 = 快加），accumulateEncoderRotate 再按
+--    sign = bit==keydec ? -1 : +1 定方向。所以 dec/inc 位之间隔着 fast 位：
+--      CfgEnc(start,   start+2, 'B:<事件>')   -- dec / inc
+--      CfgEnc(start+1, start+3, 'B:<事件>')   -- fast 孪生对
+--    写成相邻对 (start,start+1) 会把快减位当 inc → 方向错。
 
 -- ALT 编码器 [Q16 减 / Q17 加]
-minifcu:CfgEnc(47, 48, 'B:AUTOPILOT_Altitude')
-minifcu:CfgEnc(49, 50, 'B:AUTOPILOT_Altitude')
+minifcu:CfgEnc(47, 49, 'B:AUTOPILOT_Altitude')
+minifcu:CfgEnc(48, 50, 'B:AUTOPILOT_Altitude')
 
 -- SPD 编码器 [Q0 减 / Q1 加]
-minifcu:CfgEnc(51, 52, 'B:AUTOPILOT_Speed')
-minifcu:CfgEnc(53, 54, 'B:AUTOPILOT_Speed')
+minifcu:CfgEnc(51, 53, 'B:AUTOPILOT_Speed')
+minifcu:CfgEnc(52, 54, 'B:AUTOPILOT_Speed')
 
 -- HDG 编码器 [Q4 减 / Q5 加]
-minifcu:CfgEnc(55, 56, 'B:AUTOPILOT_Heading')
-minifcu:CfgEnc(57, 58, 'B:AUTOPILOT_Heading')
+minifcu:CfgEnc(55, 57, 'B:AUTOPILOT_Heading')
+minifcu:CfgEnc(56, 58, 'B:AUTOPILOT_Heading')
 
 -- VS 编码器 [Q20 减 / Q21 加]
-minifcu:CfgEnc(59, 60, 'B:AUTOPILOT_VerticalSpeed')
-minifcu:CfgEnc(61, 62, 'B:AUTOPILOT_VerticalSpeed')
+minifcu:CfgEnc(59, 61, 'B:AUTOPILOT_VerticalSpeed')
+minifcu:CfgEnc(60, 62, 'B:AUTOPILOT_VerticalSpeed')
 
 -- BARO 编码器（机长侧）[Q47 减 / Q46 加]
-minifcu:CfgEnc(63, 64, 'B:AUTOPILOT_Baro_1')
-minifcu:CfgEnc(65, 66, 'B:AUTOPILOT_Baro_1')
+minifcu:CfgEnc(63, 65, 'B:AUTOPILOT_Baro_1')
+minifcu:CfgEnc(64, 66, 'B:AUTOPILOT_Baro_1')
 
 
 -- ===========================================================

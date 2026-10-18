@@ -21,7 +21,7 @@
 --      51/52/53（副驾气压）与 56–79（副驾 EFIS）不移植。
 --   4. 五个旋钮（ALT / SPD / HDG / VS / 机长气压）：参考档用 qfcu:CfgEnc(DecKey, IncKey, "B:AIRLINER_*_KNOB")。
 --      CfgEnc 现在在 MF 设备上可用（C++ MF 边沿累加，commit afb3e9e2，真机验证）→ 本档逐轴照抄
---      CfgEnc，每轴两条相邻对 (start,start+1) + (start+2,start+3)（原因见编码器一节）。
+--      CfgEnc，每轴两条规则 (start,start+2) + (start+1,start+3)（原因见编码器一节）。
 --   5. ALT 100/1000（QFCU 15 → miniFCU 17）：参考档是拨杆 —— QmdevPosSwitchInit 把
 --      (L:INI_ALTITUDE_STATE) 拉到物理档位，CfgPSw(15, psw, 0, 1) = 按下期望 0、松开期望 1。
 --      miniFCU 是瞬时按键，按 §规格 反写成期望 1 / 0（按下 = 1000 ft 步长，松开 = 100 ft），
@@ -173,30 +173,33 @@ end
 -- 把本次旋转的带符号累加增量当作输入事件的参数发出去）。
 -- ✅ CfgEnc 现在在 MF 设备上可用（C++ MF 边沿累加 Mfcfgqmdev::accumulateEncoderRotate，
 --    commit afb3e9e2，真机验证）→ 本节与参考档同构：逐轴照抄 qfcu:CfgEnc(dec, inc, "B:<事件>")。
--- ⚠ 每轴必须写两条相邻对：MF hub 把固件的 direction 当 MapToBits 下标用
---    （mfhub/mfcfg.cpp encoder_direction_to_index：0/-1 → 第 1 位、1 → 第 2 位、2/3 → 第 3/4 位），
---    accumulateEncoderRotate 再按 sign = bit==keydec ? -1 : +1 定方向 → (start,start+1) = 减/加、
---    (start+2,start+3) = fast 孪生位；(47,49) 这种跨位写法会让右转落到 48 → 不动/反向。
+-- ⚠ 每轴两条规则，按 JSON 的 MapToBits 语义成对：MapToBits = [dec, dec-fast, inc, inc-fast]，
+--    MF hub 把固件上报的 direction 直接当该数组下标（mfhub/mfcfg.cpp encoder_direction_to_index：
+--    0 = 减、1 = 快减、2 = 加、3 = 快加），accumulateEncoderRotate 再按
+--    sign = bit==keydec ? -1 : +1 定方向。所以 dec/inc 位之间隔着 fast 位：
+--      CfgEnc(start,   start+2, 'B:<事件>')   -- dec / inc
+--      CfgEnc(start+1, start+3, 'B:<事件>')   -- fast 孪生对
+--    写成相邻对 (start,start+1) 会把快减位当 inc → 方向错。
 
 -- ALT 编码器 [Q16 / Q17]
-minifcu:CfgEnc(47, 48, 'B:AIRLINER_FCU_ALT_KNOB')
-minifcu:CfgEnc(49, 50, 'B:AIRLINER_FCU_ALT_KNOB')
+minifcu:CfgEnc(47, 49, 'B:AIRLINER_FCU_ALT_KNOB')
+minifcu:CfgEnc(48, 50, 'B:AIRLINER_FCU_ALT_KNOB')
 
 -- SPD 编码器 [Q0 / Q1]
-minifcu:CfgEnc(51, 52, 'B:AIRLINER_FCU_SPD_KNOB')
-minifcu:CfgEnc(53, 54, 'B:AIRLINER_FCU_SPD_KNOB')
+minifcu:CfgEnc(51, 53, 'B:AIRLINER_FCU_SPD_KNOB')
+minifcu:CfgEnc(52, 54, 'B:AIRLINER_FCU_SPD_KNOB')
 
 -- HDG 编码器 [Q4 / Q5]
-minifcu:CfgEnc(55, 56, 'B:AIRLINER_FCU_HDG_KNOB')
-minifcu:CfgEnc(57, 58, 'B:AIRLINER_FCU_HDG_KNOB')
+minifcu:CfgEnc(55, 57, 'B:AIRLINER_FCU_HDG_KNOB')
+minifcu:CfgEnc(56, 58, 'B:AIRLINER_FCU_HDG_KNOB')
 
 -- VS 编码器 [Q20 / Q21]
-minifcu:CfgEnc(59, 60, 'B:AIRLINER_FCU_VS_KNOB')
-minifcu:CfgEnc(61, 62, 'B:AIRLINER_FCU_VS_KNOB')
+minifcu:CfgEnc(59, 61, 'B:AIRLINER_FCU_VS_KNOB')
+minifcu:CfgEnc(60, 62, 'B:AIRLINER_FCU_VS_KNOB')
 
 -- BARO 编码器（机长侧）[Q46 / Q47]
-minifcu:CfgEnc(63, 64, 'B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT')
-minifcu:CfgEnc(65, 66, 'B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT')
+minifcu:CfgEnc(63, 65, 'B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT')
+minifcu:CfgEnc(64, 66, 'B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT')
 
 
 -- ===========================================================

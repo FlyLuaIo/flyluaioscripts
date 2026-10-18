@@ -160,30 +160,31 @@ minifcu:CfgVal(46, 'B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Push', 1, 0)
 --   机模的裸 "Knob" Input Event，与 QFCU 参考档 CfgEnc(dec, inc, "B:..._Knob") 语义完全一致。
 --   ⚠ 2024 分支不能套 CfgEnc：分向事件是两条不同的 B 事件名，而 CfgEnc 只有一个目标串，
 --     所以 2024 仍逐 bit CfgRpn 发 _Knob_Dec / _Knob_Inc（事件名逐字取自参考档）。
--- CfgEnc 的 dec/inc 该填哪两个 bit：MF hub 把固件的 direction 直接当 MapToBits 下标用
---   （mfhub/mfcfg.cpp encoder_direction_to_index：0/-1 → 第 1 位，1 → 第 2 位，2/3 → 第 3/4 位），
---   direction 只有左/右两态 ⇒ 每轴第 1/2 位 = 减/加必须成对，才算得出正确 sign
---   （accumulateEncoderRotate 里 sign = bit==keydec ? -1 : +1）。
---   第 3/4 位是 JSON 的 fast 孪生位，固件按 direction=2/3 才会走到 → 同样各绑一条 CfgEnc
---   指向同一事件（快转多出的那次事件就是加速，FastStep 在 MF 上不参与运算）。
+-- CfgEnc 的 dec/inc 该填哪两个 bit：JSON 的编码器 MapToBits = [dec, dec-fast, inc, inc-fast]，
+--   MF hub 把固件上报的 direction 直接当该数组下标用（mfhub/mfcfg.cpp
+--   encoder_direction_to_index）：0 = 减、1 = 快减、2 = 加、3 = 快加；
+--   accumulateEncoderRotate 再按 sign = bit==keydec ? -1 : +1 定方向。所以 dec/inc 之间隔着 fast 位：
+--     CfgEnc(start,   start+2, ...)  -- dec / inc（慢速）
+--     CfgEnc(start+1, start+3, ...)  -- fast 孪生对（快减 / 快加）
+--   写成相邻对 (start,start+1) 会把快减位当成 inc → 方向错。
 -- MSFS_VERSION 是插件 C++ 注入的 Lua 全局（core/luacore.cpp:1045 lua_setglobal，仅 MSFS 构建定义）。
 
 if MSFS_VERSION == 0 then
 	-- ALT [Q16 / Q17]
-	minifcu:CfgEnc(47, 48, 'B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob')
-	minifcu:CfgEnc(49, 50, 'B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob')
+	minifcu:CfgEnc(47, 49, 'B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob')
+	minifcu:CfgEnc(48, 50, 'B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob')
 	-- SPD [Q0 / Q1]
-	minifcu:CfgEnc(51, 52, 'B:FNX320_Input_Knob_PushPull_E_FCU_SPEED_Knob')
-	minifcu:CfgEnc(53, 54, 'B:FNX320_Input_Knob_PushPull_E_FCU_SPEED_Knob')
+	minifcu:CfgEnc(51, 53, 'B:FNX320_Input_Knob_PushPull_E_FCU_SPEED_Knob')
+	minifcu:CfgEnc(52, 54, 'B:FNX320_Input_Knob_PushPull_E_FCU_SPEED_Knob')
 	-- HDG [Q4 / Q5]
-	minifcu:CfgEnc(55, 56, 'B:FNX320_Input_Knob_PushPull_E_FCU_HEADING_Knob')
-	minifcu:CfgEnc(57, 58, 'B:FNX320_Input_Knob_PushPull_E_FCU_HEADING_Knob')
+	minifcu:CfgEnc(55, 57, 'B:FNX320_Input_Knob_PushPull_E_FCU_HEADING_Knob')
+	minifcu:CfgEnc(56, 58, 'B:FNX320_Input_Knob_PushPull_E_FCU_HEADING_Knob')
 	-- VS [Q20 / Q21]
-	minifcu:CfgEnc(59, 60, 'B:FNX320_Input_Knob_PushPull_E_FCU_VS_Knob')
-	minifcu:CfgEnc(61, 62, 'B:FNX320_Input_Knob_PushPull_E_FCU_VS_Knob')
+	minifcu:CfgEnc(59, 61, 'B:FNX320_Input_Knob_PushPull_E_FCU_VS_Knob')
+	minifcu:CfgEnc(60, 62, 'B:FNX320_Input_Knob_PushPull_E_FCU_VS_Knob')
 	-- BARO 机长侧 [Q46 / Q47]
-	minifcu:CfgEnc(63, 64, 'B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Knob')
-	minifcu:CfgEnc(65, 66, 'B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Knob')
+	minifcu:CfgEnc(63, 65, 'B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Knob')
+	minifcu:CfgEnc(64, 66, 'B:FNX320_Input_Knob_PushPull_E_FCU_EFIS1_BARO_Knob')
 else
 	-- ALT 编码器 [Q16 / Q17]：步长（100 / 1000）由机模侧的 L:S_FCU_ALTITUDE_SCALE 决定，B 事件自己处理
 	minifcu:CfgRpn(47, '1 (>B:FNX320_Input_Knob_PushPull_E_FCU_ALTITUDE_Knob_Dec)')
