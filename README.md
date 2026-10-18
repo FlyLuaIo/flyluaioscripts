@@ -21,7 +21,6 @@ FlyLuaIO bridges USB HID/MobiFlight cockpit panels to **X-Plane 11/12** and **Mi
 - **Any USB HID panel** — add a JSON file, no compile
 - **Any MobiFlight board** — add a JSON file
 - **Full MobiFlight I/O** — buttons, encoders, steppers, servos, shift registers, segment/LCD
-- **Boards matched by serial** — reconnect to the right place, not the right COM port
 
 ### Fidelity
 - **Cold and dark** — hardware loads the aircraft's real state
