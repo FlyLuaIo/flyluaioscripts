@@ -90,8 +90,8 @@ if MSFS_VERSION == 1 then
 		'(>B:AIRLINER_FCU_ALT_SELECTOR_Toggle)', 2000)
 	minifcu:CfgPSw(17, pswh17, 1, 0) -- [Q15]
 else
-	local pswh17 = QmdevPosSwitchInit('(L:INI_ALTITUDE_STATE)', 1, '(>B:AIRLINER_FCU_ALT_SELECTOR)',
-		'(>B:AIRLINER_FCU_ALT_SELECTOR)', 2000)
+	local pswh17 = QmdevPosSwitchInit('(L:INI_ALTITUDE_STATE)', 1, '1 (>L:INI_FCU_ALTITUDE_MODE_COMMAND)',
+		'1 (>L:INI_FCU_ALTITUDE_MODE_COMMAND)', 2000)
 	minifcu:CfgPSw(17, pswh17, 1, 0) -- [Q15]
 end
 
