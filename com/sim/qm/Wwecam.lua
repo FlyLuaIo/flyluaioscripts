@@ -113,268 +113,282 @@ end
 -- =========================ECAM
 -- ========
 -- ECAM ENG
-function Wwecam:GetEEng(dpath)
-	self.d_ec_eng = iDataRef:New(dpath)
+function Wwecam:GetEEng(dpath, revert, base)
+	self.d_ec_eng = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEEng(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_eng
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_eng:ChangedUpdate() then
-			val = self.d_ec_eng:GetOld()
-			self:SendLedCmd(self.LED_ENG, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_ENG, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_ENG, on)
 end
 
 -- ECAM BLEED
-function Wwecam:GetEBleed(dpath)
-	self.d_ec_bleed = iDataRef:New(dpath)
+function Wwecam:GetEBleed(dpath, revert, base)
+	self.d_ec_bleed = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEBleed(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_bleed
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_bleed:ChangedUpdate() then
-			val = self.d_ec_bleed:GetOld()
-			self:SendLedCmd(self.LED_BLEED, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_BLEED, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_BLEED, on)
 end
 
 -- ECAM PRESS
-function Wwecam:GetEPress(dpath)
-	self.d_ec_press = iDataRef:New(dpath)
+function Wwecam:GetEPress(dpath, revert, base)
+	self.d_ec_press = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEPress(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_press
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_press:ChangedUpdate() then
-			val = self.d_ec_press:GetOld()
-			self:SendLedCmd(self.LED_PRESS, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_PRESS, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_PRESS, on)
 end
 
 -- ECAM ELEC
-function Wwecam:GetEElec(dpath)
-	self.d_ec_elec = iDataRef:New(dpath)
+function Wwecam:GetEElec(dpath, revert, base)
+	self.d_ec_elec = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEElec(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_elec
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_elec:ChangedUpdate() then
-			val = self.d_ec_elec:GetOld()
-			self:SendLedCmd(self.LED_ELEC, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_ELEC, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_ELEC, on)
 end
 
 -- ECAM ELEC AC DC
-function Wwecam:GetEElecAcDc(dpath, d_dc_path)
-	self.d_ec_elec = iDataRef:New(dpath)
-	self.d_ec_elec_dc = iDataRef:New(d_dc_path)
+function Wwecam:GetEElecAcDc(dpath, dpath_dc, revert, base)
+	self.d_ec_elec = iDataRef:New(dpath, nil, revert, base)
+	self.d_ec_elec_dc = iDataRef:New(dpath_dc, nil, revert, base)
 end
 
 function Wwecam:SetEElecAcDc(valbase, val)
-	valbase = valbase == nil and 0 or valbase
-	local val_dc
+	local d = self.d_ec_elec
+	local ddc = self.d_ec_elec_dc
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_elec:ChangedUpdate() or self.d_ec_elec_dc:ChangedUpdate() then
-			val = self.d_ec_elec:GetOld()
-			val_dc = self.d_ec_elec_dc:GetOld()
-			val = (val + val_dc) / 2
-			self:SendLedCmd(self.LED_ELEC, ilua_bool_ternary(val, valbase))
-		end
+		local changed = d:ChangedUpdate()
+		changed = ddc:ChangedUpdate() or changed
+		if not changed then return end
+		on = ilua_bool_ternary((d:GetOld() + ddc:GetOld()) / 2, d.bool_base, d.bool_revert)
 	else
-		val = (val + val_dc) / 2
-		self:SendLedCmd(self.LED_ELEC, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_ELEC, on)
 end
 
 -- ECAM HYD
-function Wwecam:GetEHyd(dpath)
-	self.d_ec_hyd = iDataRef:New(dpath)
+function Wwecam:GetEHyd(dpath, revert, base)
+	self.d_ec_hyd = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEHyd(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_hyd
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_hyd:ChangedUpdate() then
-			val = self.d_ec_hyd:GetOld()
-			self:SendLedCmd(self.LED_HYD, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_HYD, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_HYD, on)
 end
 
 -- ECAM FUEL
-function Wwecam:GetEFuel(dpath)
-	self.d_ec_fuel = iDataRef:New(dpath)
+function Wwecam:GetEFuel(dpath, revert, base)
+	self.d_ec_fuel = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEFuel(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_fuel
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_fuel:ChangedUpdate() then
-			val = self.d_ec_fuel:GetOld()
-			self:SendLedCmd(self.LED_FUEL, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_FUEL, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_FUEL, on)
 end
 
 -- ECAM FCTL
-function Wwecam:GetEFctl(dpath)
-	self.d_ec_fctl = iDataRef:New(dpath)
+function Wwecam:GetEFctl(dpath, revert, base)
+	self.d_ec_fctl = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEFctl(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_fctl
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_fctl:ChangedUpdate() then
-			val = self.d_ec_fctl:GetOld()
-			self:SendLedCmd(self.LED_FCTL, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_FCTL, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_FCTL, on)
 end
 
 -- ECAM APU
-function Wwecam:GetEApu(dpath)
-	self.d_ec_apu = iDataRef:New(dpath)
+function Wwecam:GetEApu(dpath, revert, base)
+	self.d_ec_apu = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEApu(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_apu
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_apu:ChangedUpdate() then
-			val = self.d_ec_apu:GetOld()
-			self:SendLedCmd(self.LED_APU, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_APU, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_APU, on)
 end
 
 -- ECAM COND
-function Wwecam:GetECond(dpath)
-	self.d_ec_cond = iDataRef:New(dpath)
+function Wwecam:GetECond(dpath, revert, base)
+	self.d_ec_cond = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetECond(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_cond
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_cond:ChangedUpdate() then
-			val = self.d_ec_cond:GetOld()
-			self:SendLedCmd(self.LED_COND, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_COND, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_COND, on)
 end
 
 -- ECAM DOOR
-function Wwecam:GetEDoor(dpath)
-	self.d_ec_door = iDataRef:New(dpath)
+function Wwecam:GetEDoor(dpath, revert, base)
+	self.d_ec_door = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEDoor(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_door
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_door:ChangedUpdate() then
-			val = self.d_ec_door:GetOld()
-			self:SendLedCmd(self.LED_DOOR, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_DOOR, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_DOOR, on)
 end
 
 -- ECAM WHEEL
-function Wwecam:GetEWheel(dpath)
-	self.d_ec_wheel = iDataRef:New(dpath)
+function Wwecam:GetEWheel(dpath, revert, base)
+	self.d_ec_wheel = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEWheel(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_wheel
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_wheel:ChangedUpdate() then
-			val = self.d_ec_wheel:GetOld()
-			self:SendLedCmd(self.LED_WHEEL, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_WHEEL, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_WHEEL, on)
 end
 
 -- ECAM CLR Left
-function Wwecam:GetEClrL(dpath)
-	self.d_ec_clr_l = iDataRef:New(dpath)
+function Wwecam:GetEClrL(dpath, revert, base)
+	self.d_ec_clr_l = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEClrL(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_clr_l
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_clr_l:ChangedUpdate() then
-			val = self.d_ec_clr_l:GetOld()
-			self:SendLedCmd(self.LED_CLR_L, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_CLR_L, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_CLR_L, on)
 end
 
 -- ECAM CLR Right
-function Wwecam:GetEClrR(dpath)
-	self.d_ec_clr_r = iDataRef:New(dpath)
+function Wwecam:GetEClrR(dpath, revert, base)
+	self.d_ec_clr_r = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetEClrR(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_clr_r
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_clr_r:ChangedUpdate() then
-			val = self.d_ec_clr_r:GetOld()
-			self:SendLedCmd(self.LED_CLR_R, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_CLR_R, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_CLR_R, on)
 end
 
 -- ECAM STS
-function Wwecam:GetESts(dpath)
-	self.d_ec_sts = iDataRef:New(dpath)
+function Wwecam:GetESts(dpath, revert, base)
+	self.d_ec_sts = iDataRef:New(dpath, nil, revert, base)
 end
 
 function Wwecam:SetESts(valbase, val)
-	valbase = valbase == nil and 0 or valbase
+	local d = self.d_ec_sts
+	if valbase ~= nil then d.bool_base = valbase end
+	local on
 	if val == nil then
-		if self.d_ec_sts:ChangedUpdate() then
-			val = self.d_ec_sts:GetOld()
-			self:SendLedCmd(self.LED_STS, ilua_bool_ternary(val, valbase))
-		end
+		if not d:ChangedUpdate() then return end
+		on = d:GetOldBit()
 	else
-		self:SendLedCmd(self.LED_STS, ilua_bool_ternary(val, valbase))
+		on = ilua_bool_ternary(val, d.bool_base, d.bool_revert)
 	end
+	self:SendLedCmd(self.LED_STS, on)
 end
 
 -- ECAM all
 function Wwecam:SetEcam(valbase)
-	valbase = valbase == nil and 0 or valbase
+	-- valbase 为 nil 时保留各 dataref 自己绑定的阈值（Get* 的 base 参数）
 	self:SetEEng(valbase)
 	self:SetEBleed(valbase)
 	self:SetEPress(valbase)
@@ -392,7 +406,7 @@ function Wwecam:SetEcam(valbase)
 end
 
 function Wwecam:SetEcamAcDc(valbase)
-	valbase = valbase == nil and 0 or valbase
+	-- valbase 为 nil 时保留各 dataref 自己绑定的阈值（Get* 的 base 参数）
 	self:SetEEng(valbase)
 	self:SetEBleed(valbase)
 	self:SetEPress(valbase)
