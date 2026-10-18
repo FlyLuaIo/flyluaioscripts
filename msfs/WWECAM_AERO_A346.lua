@@ -96,7 +96,7 @@ wwecam:GetESts("(L:AB_ECAM_STS_Light)")
 
 -- 亮度必须落在 Wwecam 的单字节 0~255：源 0~100 → 2.55；源 0~1 → 255
 -- （QMPE 的 0.3/30/100 是它自己通道的刻度，照搬会溢出：50*30=1500 → 串到 LED id，实测会乱灯）
-wwecam:GetBkl("(L:TLS_INT_LT_MCDU1_INTEG_LT_LEVEL)", 2.55) -- 0~100
+wwecam:GetBkl("(L:TLS_INT_LT_MCDU1_INTEG_LT_LEVEL)", 255) -- 0~100
 
 -- =====Annunciator test
 -- PowerOff()/SetTest() 只改硬件，Lua 侧的灯值没变就不会重写；
