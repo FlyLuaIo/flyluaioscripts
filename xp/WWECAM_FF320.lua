@@ -32,7 +32,8 @@ wwecam:CfgCmd(1, 'a320/Pedestal/ECAM_Button1_button')
 -- EMER CANCEL
 -- TODO: QMPE_FF320 没有绑定 EMER CANCEL（FF320 侧也没验证过），先留空
 -- 按钮编号顺序推测为 ECAM_Button2_button，实机确认后再打开下面一行
--- wwecam:CfgCmd(3, 'a320/Pedestal/ECAM_Button2_button')
+-- wwecam:CfgCmd(3, 'a320/Pedestal/ECAM_CancProt_switch+')
+wwecam:CfgCmd(3, 'a320/Pedestal/ECAM_Button2_button')
 
 -- ENG
 wwecam:CfgCmd(4, 'a320/Pedestal/ECAM_Button3_button')
@@ -92,7 +93,7 @@ wwecam:GetEClrL('a320/Aircraft/Cockpit/Pedestal/ECAM_ButtonLight12/Intensity')
 wwecam:GetEClrR('a320/Aircraft/Cockpit/Pedestal/ECAM_ButtonLight12/Intensity')
 wwecam:GetESts('a320/Aircraft/Cockpit/Pedestal/ECAM_ButtonLight13/Intensity')
 
-wwecam:GetBkl("model/material/pedestal", 60)
+wwecam:GetBkl("model/material/pedestal", 255)
 
 -- =====Annunciator test
 -- TODO: FF320 的 annunciator test 数据（Toliss 用 AirbusFBW/AnnunMode==2）尚未查证，
