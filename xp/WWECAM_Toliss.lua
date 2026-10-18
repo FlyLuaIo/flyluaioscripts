@@ -45,7 +45,7 @@ uluaLog('Wwecam for Toliss')
 -- TO CONFIG
 wwecam:CfgCmd(1, 'AirbusFBW/TOConfigPress')
 -- EMER CANCEL
-wwecam:CfgCmd(2, 'AirbusFBW/EmerCancel')
+wwecam:CfgCmd(3, 'AirbusFBW/EmerCancel')
 
 wwecam:CfgValT(4, 'AirbusFBW/SDENG')
 wwecam:CfgValT(5, 'AirbusFBW/SDBLEED')
@@ -82,31 +82,31 @@ wwecam:CfgCmd(15, 'AirbusFBW/ECAMAll')
 wwecam:CfgCmd(16, 'AirbusFBW/ECP/CaptainClear')
 wwecam:CfgValT(18, 'AirbusFBW/SDSTATUS')
 wwecam:CfgCmd(19, 'AirbusFBW/ECAMRecall')
-
+wwecam:CfgCmd(21, 'AirbusFBW/ECP/CopilotClear')
 --------------------Output lights ---------------------
 -- =====ECAM
-wwecam:GetEEng('AirbusFBW/OHPLightsATA31[30]')
-wwecam:GetEBleed('AirbusFBW/OHPLightsATA31[31]')
-wwecam:GetEPress('AirbusFBW/OHPLightsATA31[32]')
+wwecam:GetEEng('AirbusFBW/OHPLightsATA31[30]', false, 0.1)
+wwecam:GetEBleed('AirbusFBW/OHPLightsATA31[31]', false, 0.1)
+wwecam:GetEPress('AirbusFBW/OHPLightsATA31[32]', false, 0.1)
 
 if not isINIA330 and not isINIA340 then
-	wwecam:GetEElec('AirbusFBW/OHPLightsATA31[33]')
+	wwecam:GetEElec('AirbusFBW/OHPLightsATA31[33]', false, 0.1)
 else
-	wwecam:GetEElecAcDc('AirbusFBW/OHPLightsATA31[33]', 'AirbusFBW/OHPLightsATA31[52]')
+	wwecam:GetEElecAcDc('AirbusFBW/OHPLightsATA31[33]', 'AirbusFBW/OHPLightsATA31[52]', false, 0.1)
 end
 
-wwecam:GetEHyd('AirbusFBW/OHPLightsATA31[34]')
-wwecam:GetEFuel('AirbusFBW/OHPLightsATA31[35]')
+wwecam:GetEHyd('AirbusFBW/OHPLightsATA31[34]', false, 0.1)
+wwecam:GetEFuel('AirbusFBW/OHPLightsATA31[35]', false, 0.1)
 
-wwecam:GetEApu('AirbusFBW/OHPLightsATA31[36]')
-wwecam:GetECond('AirbusFBW/OHPLightsATA31[37]')
-wwecam:GetEDoor('AirbusFBW/OHPLightsATA31[38]')
-wwecam:GetEWheel('AirbusFBW/OHPLightsATA31[39]')
-wwecam:GetEFctl('AirbusFBW/OHPLightsATA31[40]')
+wwecam:GetEApu('AirbusFBW/OHPLightsATA31[36]', false, 0.1)
+wwecam:GetECond('AirbusFBW/OHPLightsATA31[37]', false, 0.1)
+wwecam:GetEDoor('AirbusFBW/OHPLightsATA31[38]', false, 0.1)
+wwecam:GetEWheel('AirbusFBW/OHPLightsATA31[39]', false, 0.1)
+wwecam:GetEFctl('AirbusFBW/OHPLightsATA31[40]', false, 0.1)
 
-wwecam:GetEClrL('AirbusFBW/OHPLightsATA31[42]')
-wwecam:GetEClrR('AirbusFBW/OHPLightsATA31[43]')
-wwecam:GetESts('AirbusFBW/OHPLightsATA31[41]')
+wwecam:GetEClrL('AirbusFBW/OHPLightsATA31[42]', false, 0.1)
+wwecam:GetEClrR('AirbusFBW/OHPLightsATA31[43]', false, 0.1)
+wwecam:GetESts('AirbusFBW/OHPLightsATA31[41]', false, 0.1)
 
 wwecam:GetBkl("AirbusFBW/PanelBrightnessLevel", 250)
 
