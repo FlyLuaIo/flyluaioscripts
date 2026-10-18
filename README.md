@@ -8,28 +8,41 @@ FlyLuaIO bridges USB HID/MobiFlight cockpit panels to **X-Plane 11/12** and **Mi
 
 [![FlyLuaIO Demo](https://img.youtube.com/vi/_XclGSgAJ6c/hqdefault.jpg)](https://youtu.be/_XclGSgAJ6c)
 
+
+
+
 # Features
 
-*   **Real-Time Add Device**: Json + Lua is a new Device without compiling code
-*   **ZERO X-Plane FPS impact**: Embedded LuaJIT is *not* the same performance model as typical market LuaJIT plugins (XLua, SASL, FlyWithLua). Those usually run Lua every frame on the sim / flight-loop thread (community reports show material frametime cost on complex aircraft); FlyLuaIo runs script work off that path — **absolutely zero impact on X-Plane FPS**.
-*   **Automatic Flight Device Key Assignment**: Say goodbye to the pain of manually setting hundreds of keys.
-*   **Smooth Aircraft Switching**: Say goodbye to the hassle of searching the entire internet for configuration files.
-*   **Rotary Knob Acceleration**: Optimizes your operational experience.
-*   **Built-in Lua Language Engine**: Simple to use and easy to customize.
-*   **Easy Debugging**：Automatically reload Lua scripts After Editing the Lua file, speeding up the debugging process.
-*   **Aircraft State Synchronization**: Supports cold and dark cockpit state synchronization.
-*   **Simulated Failure Synchronization**: Supports synchronization of simulated aircraft failure states.
-*   **Cross-platform Operation**: Fully supports Windows, Linux, and Mac systems.
-*   **Native Apple ARM Support**: Provides native support for Apple M-series chips.
-*   **JSON defined USB HID**: Add Json, add a USB HID Device
-*   **JSON defined MobiFlight**: Add Json, add a MobiFlight serial device
-*   **MobiFlight Serial Auto-Match**: Boards matched by serial from `mobiflight/*.json`
-*   **MobiFlight IO Bridge**: Buttons, encoders, steppers, servos, shift registers, segment/LCD
-*   **Skunkcrafts Support**: Easy update software small changes
+### Performance
+- **Zero X-Plane FPS impact** — scripts run off the flight-loop thread
+- **Edit, save, done** — takes effect immediately, no restart
 
-## Performance note (plugin runtime)
+### Hardware
+- **Any USB HID panel** — add a JSON file, no compile
+- **Any MobiFlight board** — add a JSON file
+- **Full MobiFlight I/O** — buttons, encoders, steppers, servos, shift registers, segment/LCD
+- **Boards matched by serial** — reconnect to the right place, not the right COM port
 
-FlyLuaIO’s **embedded LuaJIT** is not the same performance model as typical market LuaJIT plugins (**XLua**, **SASL**, **FlyWithLua**), which usually run Lua every frame on the X-Plane sim / flight-loop thread. FlyLuaIO runs script work on a dedicated worker path; the product claim is **ZERO X-Plane FPS impact**. (This repo only ships scripts; the runtime lives in the plugin.)
+### Fidelity
+- **Cold and dark** — hardware loads the aircraft's real state
+- **Failures** — your panel shows what the sim says
+
+### Control
+- **Automatic key assignment** — no more filling in hundreds of rows
+- **Switch aircraft, hardware follows** — no config file hunting
+- **Plain-text mapping** — edit anything
+- **Knob acceleration** — precision when slow, travel when fast
+
+### Platform
+- **Windows, Linux, macOS**
+- **Native Apple Silicon** — no Rosetta
+- **SkunkCrafts updates**
+
+## Compatibility
+
+- X-Plane 11 / 12
+- MSFS via FlyLuaIoSC
+
 
 ## Requirements
 
