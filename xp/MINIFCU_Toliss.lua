@@ -33,6 +33,8 @@ local dr_baro_std   = iDataRef:New("AirbusFBW/BaroStdCapt")
 
 -- Cold and dark : FCU power (same source as xp/QFCU_Toliss.lua) — 0 = FCU unpowered
 local dr_fcu_avail  = iDataRef:New("AirbusFBW/FCUAvail")
+-- ANN LT test mode, same source as xp/QFCU_Toliss.lua: 0 = DIM, 1 = BRT, 2 = TEST
+local dr_annun_mode = iDataRef:New("AirbusFBW/AnnunMode")
 
 -- ===================== Baro encoder helper =====================
 local baro_cmd_down = uluaFind("sim/instruments/barometer_down")
@@ -253,13 +255,16 @@ local minifcu_fresh_all = {
 }
 
 local ch_fcu_powered = iChange:New(nil)
+local ch_annun_test = iChange:New(nil)
 
 GlobalFrameLoopManager:add(function()
-	-- expert code: cold and dark
+	-- expert code: cold and dark + ANN LT test mode
 	minifcu:SetFcuPower()
 	minifcu:SetEfisPower()
 
 	local powered = dr_fcu_avail:Get() >= 1
+	local annun_test = powered and dr_annun_mode:Get() == 2
+
 	if ch_fcu_powered:ChangedUpdate(powered) then
 		if not powered then
 			-- The six LEDs are GPIO pins, not part of a custom device: kSetCustomDevice
@@ -276,9 +281,30 @@ GlobalFrameLoopManager:add(function()
 		end
 	end
 
+	-- Test mode: QFCU 靠面板旋钮让硬件把段码/灯全点亮，Lua 只做亮度与重绘
+	-- (qfcu_fcu_test + 1)。miniFCU 没有亮度通道、也没有段码全亮通道，能移植的只有
+	-- 六个指示范灯全亮；LCD 继续显示真实值。退出 TEST 时作废缓存重绘一遍。
+	if ch_annun_test:ChangedUpdate(annun_test) then
+		if annun_test then
+			minifcu:SetAp1(255)
+			minifcu:SetAp2(255)
+			minifcu:SetAthr(255)
+			minifcu:SetLoc(255)
+			minifcu:SetAppr(255)
+			minifcu:SetExped(255)
+		end
+		for _, fresh in ipairs(minifcu_fresh_all) do
+			minifcu[fresh](minifcu)
+		end
+	end
+
 	if not powered then
 		-- Display is blanked; forwarding values now would light it back up.
 		-- On power-up the plugin re-sends every field of both devices by itself.
+		return
+	end
+	if annun_test then
+		-- LEDs are held lit by the writes above, LCD keeps its last values.
 		return
 	end
 
