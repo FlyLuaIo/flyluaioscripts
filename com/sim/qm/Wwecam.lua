@@ -85,6 +85,7 @@ end
 
 function Wwecam:SetBrt(val)
 	self:SendLedCmd(self.LED_BACKLIGHT, val)
+	self:SendLedCmd(self.LED_ALL_BRIGHTNESS, val)
 	self:SendLedCmd(self.LED_EMER_BRIGHTNESS, val)
 end
 

@@ -108,7 +108,7 @@ wwecam:GetEClrL('AirbusFBW/OHPLightsATA31[42]', false, 0.1)
 wwecam:GetEClrR('AirbusFBW/OHPLightsATA31[43]', false, 0.1)
 wwecam:GetESts('AirbusFBW/OHPLightsATA31[41]', false, 0.1)
 
-wwecam:GetBkl("AirbusFBW/PanelBrightnessLevel", 250)
+wwecam:GetBkl("AirbusFBW/PanelBrightnessLevel", 255)
 
 -- =====Annunciator test
 local dr_test = iDataRef:New("AirbusFBW/AnnunMode") -- 0: DIM 1: BRT 2: test mode
