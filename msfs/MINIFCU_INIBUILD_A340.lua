@@ -10,6 +10,8 @@
 --     6 个 Output pin、26 条 CustomDevice 通道）。
 --   * 通道语义 / 编码器位序：xp/MINIFCU_Toliss.lua（真机 miniFCU 在 X-Plane 上手工调过并实测）。
 -- 编码器位序（沿用 XP 档，勿改）：每轴 4 bit，前 2 bit = 减，后 2 bit = 加。
+-- 编码器绑定：逐轴照抄参考档 qfcu:CfgEnc(dec, inc, "B:...")（CfgEnc 在 MF 设备上可用，
+-- C++ MF 边沿累加 commit afb3e9e2）；每轴两条相邻对 (start,start+1) + (start+2,start+3)。
 --   ALT 47/48 减 · 49/50 加；SPD 51/52 · 53/54；HDG 55/56 · 57/58；VS 59/60 · 61/62；BARO 63/64 · 65/66
 -- 机型边界：
 --   * iniBuilds 各机型共用 AIRLINER_MCU_* 事件，但 ilua_require_inibuild_a340() 只在机模路径
@@ -144,34 +146,24 @@ minifcu:CfgVal(46, 'B:AIRLINER_CPT_BARO_SET_PUSH', 1, 0)
 -- INPUT：编码器（bit 47–66）
 
 -- ALT 编码器 [Q16 / Q17]：步长（100/1000）由 sim 侧的 (L:INI_ALTITUDE_STATE) 决定
-minifcu:CfgRpn(47, '1 (>B:AIRLINER_MCU_ALT_Dec)')
-minifcu:CfgRpn(48, '1 (>B:AIRLINER_MCU_ALT_Dec)')
-minifcu:CfgRpn(49, '1 (>B:AIRLINER_MCU_ALT_Inc)')
-minifcu:CfgRpn(50, '1 (>B:AIRLINER_MCU_ALT_Inc)')
+minifcu:CfgEnc(47, 48, 'B:AIRLINER_MCU_ALT')
+minifcu:CfgEnc(49, 50, 'B:AIRLINER_MCU_ALT')
 
 -- SPD 编码器 [Q0 / Q1]
-minifcu:CfgRpn(51, '1 (>B:AIRLINER_MCU_SPEED_Dec)')
-minifcu:CfgRpn(52, '1 (>B:AIRLINER_MCU_SPEED_Dec)')
-minifcu:CfgRpn(53, '1 (>B:AIRLINER_MCU_SPEED_Inc)')
-minifcu:CfgRpn(54, '1 (>B:AIRLINER_MCU_SPEED_Inc)')
+minifcu:CfgEnc(51, 52, 'B:AIRLINER_MCU_SPEED')
+minifcu:CfgEnc(53, 54, 'B:AIRLINER_MCU_SPEED')
 
 -- HDG 编码器 [Q4 / Q5]
-minifcu:CfgRpn(55, '1 (>B:AIRLINER_MCU_HDG_Dec)')
-minifcu:CfgRpn(56, '1 (>B:AIRLINER_MCU_HDG_Dec)')
-minifcu:CfgRpn(57, '1 (>B:AIRLINER_MCU_HDG_Inc)')
-minifcu:CfgRpn(58, '1 (>B:AIRLINER_MCU_HDG_Inc)')
+minifcu:CfgEnc(55, 56, 'B:AIRLINER_MCU_HDG')
+minifcu:CfgEnc(57, 58, 'B:AIRLINER_MCU_HDG')
 
 -- VS 编码器 [Q20 / Q21]
-minifcu:CfgRpn(59, '1 (>B:AIRLINER_MCU_VS_Dec)')
-minifcu:CfgRpn(60, '1 (>B:AIRLINER_MCU_VS_Dec)')
-minifcu:CfgRpn(61, '1 (>B:AIRLINER_MCU_VS_Inc)')
-minifcu:CfgRpn(62, '1 (>B:AIRLINER_MCU_VS_Inc)')
+minifcu:CfgEnc(59, 60, 'B:AIRLINER_MCU_VS')
+minifcu:CfgEnc(61, 62, 'B:AIRLINER_MCU_VS')
 
 -- BARO 编码器（机长侧）[Q46 / Q47]
-minifcu:CfgRpn(63, '1 (>B:AIRLINER_CPT_BARO_SET_Dec)')
-minifcu:CfgRpn(64, '1 (>B:AIRLINER_CPT_BARO_SET_Dec)')
-minifcu:CfgRpn(65, '1 (>B:AIRLINER_CPT_BARO_SET_Inc)')
-minifcu:CfgRpn(66, '1 (>B:AIRLINER_CPT_BARO_SET_Inc)')
+minifcu:CfgEnc(63, 64, 'B:AIRLINER_CPT_BARO_SET')
+minifcu:CfgEnc(65, 66, 'B:AIRLINER_CPT_BARO_SET')
 
 -- ===========================================================
 -- 显示源（帧循环里直接读）

@@ -19,8 +19,8 @@
 --   3. QFCU 面板有两个 EFIS 半区（机长/副驾），miniFCU 只有机长半区，故 QFCU 的
 --      51/52/53（副驾气压）与 56–79（副驾 EFIS）不移植。
 --   4. 五个旋钮（ALT / SPD / HDG / VS / 机长气压）：参考档用 qfcu:CfgEnc(DecKey, IncKey, "B:AIRLINER_*_KNOB")。
---      ⚠ CfgEnc 在 MF 设备上不可用（真机验证）→ 本档每 bit 一条 CfgRpn，发机模的分向事件
---      B:AIRLINER_*_KNOB_Dec / _Inc（参数 1），事件名 = 参考档事件名 + 方向后缀。
+--      CfgEnc 现在在 MF 设备上可用（C++ MF 边沿累加，commit afb3e9e2，真机验证）→ 本档逐轴照抄
+--      CfgEnc，每轴两条相邻对 (start,start+1) + (start+2,start+3)（原因见编码器一节）。
 --   5. ALT 100/1000（QFCU 15 → miniFCU 17）：参考档是拨杆 —— QmdevPosSwitchInit 把
 --      (L:INI_ALTITUDE_STATE) 拉到物理档位，CfgPSw(15, psw, 0, 1) = 按下期望 0 / 松开期望 1。
 --      miniFCU 是瞬时按键：按住 = 1000 ft 步长、松开回 100 ft → 按规格把期望值反写成 1 / 0，
@@ -162,42 +162,33 @@ end
 -- INPUT：编码器（bit 47–66）
 -- 参考档这些轴用 qfcu:CfgEnc(dec_bit, inc_bit, "B:<事件>") 表达（QFCU 固件的 ROTATE 配置：
 -- 把本次旋转的带符号累加增量当作输入事件的参数发出去）。
--- ⚠ CfgEnc 在 MF 设备（miniFCU）上不可用 —— 真机验证的结论，不要再用 CfgEnc 镜像这类写法。
--- 本档改为每 bit 一条 CfgRpn，发机模自己的分向事件 <事件>_Dec / <事件>_Inc（参数 1）：
---   47/48 = 减、49/50 = 加（每轴 4 bit，位序见文件头）。
--- ⚠ 若真机上某轴不动，说明该机型没有 _Dec/_Inc 分向事件 → 回退成向基事件发增量值：
---   '-1 (>B:<事件>)' / '1 (>B:<事件>)'（MSFS 侧 MSFSSetDatad 会把 RPN 值当事件参数发出）。
+-- ✅ CfgEnc 现在在 MF 设备上可用（C++ MF 边沿累加 Mfcfgqmdev::accumulateEncoderRotate，
+--    commit afb3e9e2，真机验证）→ 本节与参考档同构：逐轴照抄 qfcu:CfgEnc(dec, inc, "B:<事件>")。
+-- ⚠ 每轴必须写两条相邻对：MF hub 把固件的 direction 当 MapToBits 下标用
+--    （mfhub/mfcfg.cpp encoder_direction_to_index：0/-1 → 第 1 位、1 → 第 2 位、2/3 → 第 3/4 位），
+--    accumulateEncoderRotate 再按 sign = bit==keydec ? -1 : +1 定方向 → (start,start+1) = 减/加、
+--    (start+2,start+3) = fast 孪生位；(47,49) 这种跨位写法会让右转落到 48 → 不动/反向。
 
 -- ALT 编码器 [Q16 / Q17]
-minifcu:CfgRpn(47, '1 (>B:AIRLINER_FCU_ALT_KNOB_Dec)')
-minifcu:CfgRpn(48, '1 (>B:AIRLINER_FCU_ALT_KNOB_Dec)')
-minifcu:CfgRpn(49, '1 (>B:AIRLINER_FCU_ALT_KNOB_Inc)')
-minifcu:CfgRpn(50, '1 (>B:AIRLINER_FCU_ALT_KNOB_Inc)')
+minifcu:CfgEnc(47, 48, 'B:AIRLINER_FCU_ALT_KNOB')
+minifcu:CfgEnc(49, 50, 'B:AIRLINER_FCU_ALT_KNOB')
 
 -- SPD 编码器 [Q0 / Q1]
-minifcu:CfgRpn(51, '1 (>B:AIRLINER_FCU_SPD_KNOB_Dec)')
-minifcu:CfgRpn(53, '1 (>B:AIRLINER_FCU_SPD_KNOB_Inc)')
+minifcu:CfgEnc(51, 52, 'B:AIRLINER_FCU_SPD_KNOB')
+minifcu:CfgEnc(53, 54, 'B:AIRLINER_FCU_SPD_KNOB')
 
-minifcu:CfgRpn(52, '1 (>B:AIRLINER_FCU_SPD_KNOB_Dec)')
-minifcu:CfgRpn(54, '1 (>B:AIRLINER_FCU_SPD_KNOB_Inc)')
 
 -- HDG 编码器 [Q4 / Q5]
-minifcu:CfgRpn(55, '1 (>B:AIRLINER_FCU_HDG_KNOB_Dec)')
-minifcu:CfgRpn(56, '1 (>B:AIRLINER_FCU_HDG_KNOB_Dec)')
-minifcu:CfgRpn(57, '1 (>B:AIRLINER_FCU_HDG_KNOB_Inc)')
-minifcu:CfgRpn(58, '1 (>B:AIRLINER_FCU_HDG_KNOB_Inc)')
+minifcu:CfgEnc(55, 56, 'B:AIRLINER_FCU_HDG_KNOB')
+minifcu:CfgEnc(57, 58, 'B:AIRLINER_FCU_HDG_KNOB')
 
 -- VS 编码器 [Q20 / Q21]
-minifcu:CfgRpn(59, '1 (>B:AIRLINER_FCU_VS_KNOB_Dec)')
-minifcu:CfgRpn(60, '1 (>B:AIRLINER_FCU_VS_KNOB_Dec)')
-minifcu:CfgRpn(61, '1 (>B:AIRLINER_FCU_VS_KNOB_Inc)')
-minifcu:CfgRpn(62, '1 (>B:AIRLINER_FCU_VS_KNOB_Inc)')
+minifcu:CfgEnc(59, 60, 'B:AIRLINER_FCU_VS_KNOB')
+minifcu:CfgEnc(61, 62, 'B:AIRLINER_FCU_VS_KNOB')
 
 -- BARO 编码器（机长侧）[Q46 / Q47]
-minifcu:CfgRpn(63, '1 (>B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_Dec)')
-minifcu:CfgRpn(64, '1 (>B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_Dec)')
-minifcu:CfgRpn(65, '1 (>B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_Inc)')
-minifcu:CfgRpn(66, '1 (>B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT_Inc)')
+minifcu:CfgEnc(63, 64, 'B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT')
+minifcu:CfgEnc(65, 66, 'B:AIRLINER_EFIS_QNH_PRESSURE_SELECTOR_LEFT')
 
 
 -- ===========================================================

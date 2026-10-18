@@ -17,8 +17,8 @@
 --     FCU / EFIS 开关量走 S_FCU_ 前缀与 A310_ 前缀的 L 变量。参考档的 CfgVal(bit, "B:...", 1, 0) 语义是
 --     「按下写 1 / 松开写 0」，本档逐字照抄（CfgVal 由 Qmdev 基类提供，miniFCU 继承同一基类）。
 --   * 四个 B 事件旋钮在参考档里是 qfcu:CfgEnc(dec_bit, inc_bit, "B:..._Knob")（一个 InputEvent 收 ±delta）。
---     ⚠ CfgEnc 在 MF 设备上不可用（真机验证）→ 本档每 bit 一条 CfgRpn，发机模的分向事件
---     <事件>_Dec / <事件>_Inc（参数 1）；若真机某轴不动则回退成向基事件发增量（见编码器一节）。
+--     CfgEnc 现在在 MF 设备上可用（C++ MF 边沿累加，commit afb3e9e2，真机验证）→ 本档逐轴照抄
+--     CfgEnc，每轴两条相邻对 (start,start+1) + (start+2,start+3)（原因见编码器一节）。
 --   * 气压三件套：
 --     L:XMLVAR_Baro_Selector_HPA_1 —— 0 = inHg，1 = hPa（判据：参考档显示表达式
 --       "(L:XMLVAR_Baro_Selector_HPA_1,bool) ! if{ inHg*100 } els{ mbar }"，以及 LED 段
@@ -147,35 +147,28 @@ minifcu:CfgRpn(46, '(L:S_FCU_EFIS1_BARO_STD) -- (>L:S_FCU_EFIS1_BARO_STD)')
 -- INPUT：编码器（bit 47–66）
 -- 参考档这些轴用 qfcu:CfgEnc(dec_bit, inc_bit, "B:<事件>") 表达（QFCU 固件的 ROTATE 配置：
 -- 把本次旋转的带符号累加增量当作输入事件的参数发出去）。
--- ⚠ CfgEnc 在 MF 设备（miniFCU）上不可用 —— 真机验证的结论，不要再用 CfgEnc 镜像这类写法。
--- 本档改为每 bit 一条 CfgRpn，发机模自己的分向事件 <事件>_Dec / <事件>_Inc（参数 1）：
---   47/48 = 减、49/50 = 加（每轴 4 bit，位序见文件头）。
--- ⚠ 若真机上某轴不动，说明该机型没有 _Dec/_Inc 分向事件 → 回退成向基事件发增量值：
---   '-1 (>B:<事件>)' / '1 (>B:<事件>)'（MSFS 侧 MSFSSetDatad 会把 RPN 值当事件参数发出）。
+-- ✅ CfgEnc 现在在 MF 设备上可用（C++ MF 边沿累加 Mfcfgqmdev::accumulateEncoderRotate，
+--    commit afb3e9e2，真机验证）→ 本节与参考档同构：逐轴照抄 qfcu:CfgEnc(dec, inc, "B:<事件>")。
+-- ⚠ 每轴必须写两条相邻对：MF hub 把固件的 direction 当 MapToBits 下标用
+--    （mfhub/mfcfg.cpp encoder_direction_to_index：0/-1 → 第 1 位、1 → 第 2 位、2/3 → 第 3/4 位），
+--    accumulateEncoderRotate 再按 sign = bit==keydec ? -1 : +1 定方向 → (start,start+1) = 减/加、
+--    (start+2,start+3) = fast 孪生位；(47,49) 这种跨位写法会让右转落到 48 → 不动/反向。
 
 -- ALT 编码器 [Q16 / Q17]
-minifcu:CfgRpn(47, '1 (>B:INSTRUMENT_ALT_KNOB_Knob_Dec)')
-minifcu:CfgRpn(48, '1 (>B:INSTRUMENT_ALT_KNOB_Knob_Dec)')
-minifcu:CfgRpn(49, '1 (>B:INSTRUMENT_ALT_KNOB_Knob_Inc)')
-minifcu:CfgRpn(50, '1 (>B:INSTRUMENT_ALT_KNOB_Knob_Inc)')
+minifcu:CfgEnc(47, 48, 'B:INSTRUMENT_ALT_KNOB_Knob')
+minifcu:CfgEnc(49, 50, 'B:INSTRUMENT_ALT_KNOB_Knob')
 
 -- SPD 编码器 [Q0 / Q1]
-minifcu:CfgRpn(51, '1 (>B:INSTRUMENT_SPEED_KNOB_Knob_Dec)')
-minifcu:CfgRpn(52, '1 (>B:INSTRUMENT_SPEED_KNOB_Knob_Dec)')
-minifcu:CfgRpn(53, '1 (>B:INSTRUMENT_SPEED_KNOB_Knob_Inc)')
-minifcu:CfgRpn(54, '1 (>B:INSTRUMENT_SPEED_KNOB_Knob_Inc)')
+minifcu:CfgEnc(51, 52, 'B:INSTRUMENT_SPEED_KNOB_Knob')
+minifcu:CfgEnc(53, 54, 'B:INSTRUMENT_SPEED_KNOB_Knob')
 
 -- HDG 编码器 [Q4 / Q5]
-minifcu:CfgRpn(55, '1 (>B:INSTRUMENT_HEADING_KNOB_Knob_Dec)')
-minifcu:CfgRpn(56, '1 (>B:INSTRUMENT_HEADING_KNOB_Knob_Dec)')
-minifcu:CfgRpn(57, '1 (>B:INSTRUMENT_HEADING_KNOB_Knob_Inc)')
-minifcu:CfgRpn(58, '1 (>B:INSTRUMENT_HEADING_KNOB_Knob_Inc)')
+minifcu:CfgEnc(55, 56, 'B:INSTRUMENT_HEADING_KNOB_Knob')
+minifcu:CfgEnc(57, 58, 'B:INSTRUMENT_HEADING_KNOB_Knob')
 
 -- VS 编码器 [Q20 / Q21]
-minifcu:CfgRpn(59, '1 (>B:INSTRUMENT_VS_KNOB_Knob_Dec)')
-minifcu:CfgRpn(60, '1 (>B:INSTRUMENT_VS_KNOB_Knob_Dec)')
-minifcu:CfgRpn(61, '1 (>B:INSTRUMENT_VS_KNOB_Knob_Inc)')
-minifcu:CfgRpn(62, '1 (>B:INSTRUMENT_VS_KNOB_Knob_Inc)')
+minifcu:CfgEnc(59, 60, 'B:INSTRUMENT_VS_KNOB_Knob')
+minifcu:CfgEnc(61, 62, 'B:INSTRUMENT_VS_KNOB_Knob')
 
 -- BARO 编码器（机长侧）[Q46 / Q47]：参考档本身就是 RPN（不是 CfgEnc），逐字复制
 minifcu:CfgRpn(63, '1 (>B:INSTRUMENT_CPT_ALTIMETER_KNOB_Knob_Dec)')
