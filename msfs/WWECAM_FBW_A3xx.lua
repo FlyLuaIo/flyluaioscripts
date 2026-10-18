@@ -41,8 +41,13 @@ else
 end
 
 -- EMER CANCEL
--- TODO: QMPE_FBW 没有 EMER CANCEL 绑定（FBW/Headwind/A380 三套都没验证过），先留空
--- 若后续确认 A32NX_PED_ECP_EMER_CANCEL_PB 之类的 B 事件，在这里补 CfgVal(3, ...)
+-- HubHop: FBW A320/A380 = L:A32NX_BTN_EMERCANC；Headwind A330 = B:EMER_CANCEL_PB（要先开保护盖）
+if isHEADWINDA330 then
+    wwecam:CfgRpn(3, "(>B:A339X_PED_ECP_EMER_CANCEL_COVER_OPEN) (>B:A339X_PED_ECP_EMER_CANCEL_PB_PUSH)",
+        "(>B:A339X_PED_ECP_EMER_CANCEL_PB_RELEASE) (>B:A339X_PED_ECP_EMER_CANCEL_COVER_CLOSE)")
+else
+    wwecam:CfgRpn(3, "1 (>L:A32NX_BTN_EMERCANC)", "0 (>L:A32NX_BTN_EMERCANC)")
+end
 
 -- 0:ELEC AC  1:ELEC DC
 local iniA330_ecam_elec_acdc = 0
@@ -99,7 +104,7 @@ else
     wwecam:CfgVal(15, "B:A32NX_PED_ECP_ALL_PB", 1, 0)
 end
 
--- CLR left / CLR right: QMPE has a single CLR button, key 21 copies key 16
+-- CLR left
 local function bind_clr(key)
     if isFBWA380 then
         wwecam:CfgVal(key, "B:A32NX_BTN_CLR", 1, 0)
@@ -110,7 +115,14 @@ local function bind_clr(key)
     end
 end
 bind_clr(16)
-bind_clr(21)
+
+-- CLR right
+-- HubHop: FBW A320/A380X = L:A32NX_BTN_CLR2；Headwind A330 = B:A339X_PED_ECP_CLR_2_PB
+if isHEADWINDA330 then
+    wwecam:CfgRpn(21, "(>B:A339X_PED_ECP_CLR_2_PB_PUSH)", "(>B:A339X_PED_ECP_CLR_2_PB_RELEASE)")
+else
+    wwecam:CfgRpn(21, "1 (>L:A32NX_BTN_CLR2)", "0 (>L:A32NX_BTN_CLR2)")
+end
 
 -- STS
 if isFBWA380 then
@@ -190,8 +202,9 @@ else
     wwecam:GetESts(page_is(12))
 end
 
--- QMPE 的 scale 原样借用；Wwecam 亮度字节是 0~255，实机偏亮/偏暗就调这个数
-wwecam:GetBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 0.3) -- 0~100
+-- 亮度必须落在 Wwecam 的单字节 0~255：源 0~100 → 2.55；源 0~1 → 255
+-- （QMPE 的 0.3/30/100 是它自己通道的刻度，照搬会溢出：50*30=1500 → 串到 LED id，实测会乱灯）
+wwecam:GetBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 2.55) -- 0~100
 
 -- =====Annunciator test
 -- PowerOff()/SetTest() 只改硬件，Lua 侧的灯值没变就不会重写；

@@ -23,7 +23,7 @@ uluaLog("Wwecam for PMDG777")
 wwecam:CfgRpn(1, "21601 (>K:ROTOR_BRAKE)")
 
 -- EMER CANCEL
--- TODO: QMPE_PMDG777 没有 EMER CANCEL 绑定，先留空
+-- TODO: 777 没有 EMER CANCEL 按钮，QMPE/HubHop 都没有可映射项，先留空
 
 -- 页面键：press 打 ROTOR_BRAKE，release 再写当前页记号线
 wwecam:CfgRpn(4, "23401 (>K:ROTOR_BRAKE)", "0 (>L:A32NX_ECAM_SD_CURRENT_PAGE_INDEX) 23404 (>K:ROTOR_BRAKE)")
@@ -77,8 +77,9 @@ wwecam:GetEClrL(page_is(12))
 wwecam:GetEClrR(page_is(12))
 wwecam:GetESts(page_is(11))
 
--- QMPE 的 scale 原样借用；Wwecam 亮度字节是 0~255，实机偏亮/偏暗就调这个数
-wwecam:GetBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 0.3) -- 0~100
+-- 亮度必须落在 Wwecam 的单字节 0~255：源 0~100 → 2.55；源 0~1 → 255
+-- （QMPE 的 0.3/30/100 是它自己通道的刻度，照搬会溢出：50*30=1500 → 串到 LED id，实测会乱灯）
+wwecam:GetBkl("(A:LIGHT POTENTIOMETER:85, Percent)", 2.55) -- 0~100
 
 -- =====Annunciator test
 -- PowerOff()/SetTest() 只改硬件，Lua 侧的灯值没变就不会重写；

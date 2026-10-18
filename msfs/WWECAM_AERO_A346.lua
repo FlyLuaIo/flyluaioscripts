@@ -23,8 +23,7 @@ uluaLog("Wwecam for Aerosoft A346")
 wwecam:CfgRpn(1, "1 (>L:AB_ECAM_TOconf)", "0 (>L:AB_ECAM_TOconf)")
 
 -- EMER CANCEL
--- TODO: QMPE_AERO_A346 没有 EMER CANCEL 绑定，先留空
--- 若确认了对应的 AB_ECAM_* 事件，在这里补 CfgRpn(3, ...)
+-- TODO: QMPE_AERO_A346 没有 EMER CANCEL 绑定；HubHop 的 Aerosoft/A340-600 没有 ECAM 区，查不到，先留空
 
 -- ENG
 wwecam:CfgRpn(4, "1 (>L:AB_ECAM_ENG)", "0 (>L:AB_ECAM_ENG)")
@@ -95,8 +94,9 @@ wwecam:GetEClrL("(L:AB_ECAM_CLR_LEFT_Light)")
 wwecam:GetEClrR("(L:AB_ECAM_CLR_LEFT_Light)")
 wwecam:GetESts("(L:AB_ECAM_STS_Light)")
 
--- QMPE 的 scale 原样借用；Wwecam 亮度字节是 0~255，实机偏亮/偏暗就调这个数
-wwecam:GetBkl("(L:TLS_INT_LT_MCDU1_INTEG_LT_LEVEL)", 30) -- 0~100
+-- 亮度必须落在 Wwecam 的单字节 0~255：源 0~100 → 2.55；源 0~1 → 255
+-- （QMPE 的 0.3/30/100 是它自己通道的刻度，照搬会溢出：50*30=1500 → 串到 LED id，实测会乱灯）
+wwecam:GetBkl("(L:TLS_INT_LT_MCDU1_INTEG_LT_LEVEL)", 2.55) -- 0~100
 
 -- =====Annunciator test
 -- PowerOff()/SetTest() 只改硬件，Lua 侧的灯值没变就不会重写；

@@ -26,8 +26,9 @@ else
     wwecam:CfgRpn(1, "2 (>B:AIRLINER_ECAM_TO_CONFIG_PUSH)", "1 (>B:AIRLINER_ECAM_TO_CONFIG_RELEASE)")
 end
 
--- EMER CANCEL
--- TODO: QMPE_INIBUILD_A350 没有 EMER CANCEL 绑定，先留空
+-- EMER CANCEL (HubHop: IniBuilds_A350_ECAM_Emer_Cancel_Button)
+-- 真实面板要先开保护盖，HubHop 另有 INI_ECAM_EMER_CANCEL_GUARD 0/1 两个 preset
+wwecam:CfgRpn(3, "1 (>L:PUSH_ECAM_EMER_CANCEL)")
 
 -- ENG / BLEED / PRESS
 wwecam:CfgRpn(4, "1 (>L:PUSH_ECAM_ENG)")
@@ -102,8 +103,9 @@ wwecam:GetEClrL("(L:INI_ECAM_CLR_LIGHT, Bool)")
 wwecam:GetEClrR("(L:INI_ECAM_CLR_LIGHT, Bool)")
 wwecam:GetESts(page_is(14))
 
--- QMPE 的 scale 原样借用；Wwecam 亮度字节是 0~255，实机偏亮/偏暗就调这个数
-wwecam:GetBkl("(L:INI_CKPT_LT_INTEG, Percent)", 0.3)
+-- 亮度必须落在 Wwecam 的单字节 0~255：源 0~100 → 2.55；源 0~1 → 255
+-- （QMPE 的 0.3/30/100 是它自己通道的刻度，照搬会溢出：50*30=1500 → 串到 LED id，实测会乱灯）
+wwecam:GetBkl("(L:INI_CKPT_LT_INTEG, Percent)", 2.55)
 
 -- =====Annunciator test
 -- PowerOff()/SetTest() 只改硬件，Lua 侧的灯值没变就不会重写；

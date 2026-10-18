@@ -29,8 +29,8 @@ end
 bind_ecam(1, 77034)
 
 -- EMER CANCEL
--- TODO: QMPE_FSL 没有 EMER CANCEL 绑定，先留空
--- FSL 的按钮 code 是连号的（TO CONFIG 77034、ENG 77048…），确认后在这里补 bind_ecam(3, <code>)
+-- TODO: QMPE_FSL 没有 EMER CANCEL 绑定；HubHop 没有 FSLabs 区，查不到，先留空
+-- FSL 按钮 code 是连号的（TO CONFIG 77034、ENG 77048…），确认后补 bind_ecam(3, <code>)
 
 bind_ecam(4, 77048)   -- ENG
 bind_ecam(5, 77053)   -- BLEED
@@ -73,8 +73,9 @@ wwecam:GetEClrL("(L:VC_PED_ECP_CLR_L_Brt_Lt)")
 wwecam:GetEClrR("(L:VC_PED_ECP_CLR_L_Brt_Lt)")
 wwecam:GetESts("(L:VC_PED_ECP_STS_Brt_Lt)")
 
--- QMPE 的 scale 原样借用；Wwecam 亮度字节是 0~255，实机偏亮/偏暗就调这个数
-wwecam:GetBkl("(L:VC_PED_Dimmer)", 0.3) -- 0~100
+-- 亮度必须落在 Wwecam 的单字节 0~255：源 0~100 → 2.55；源 0~1 → 255
+-- （QMPE 的 0.3/30/100 是它自己通道的刻度，照搬会溢出：50*30=1500 → 串到 LED id，实测会乱灯）
+wwecam:GetBkl("(L:VC_PED_Dimmer)", 2.55) -- 0~100
 
 -- =====Annunciator test
 -- PowerOff()/SetTest() 只改硬件，Lua 侧的灯值没变就不会重写；

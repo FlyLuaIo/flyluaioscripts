@@ -22,8 +22,8 @@ uluaLog("Wwecam for Fenix A320")
 -- TO CONFIG
 wwecam:CfgRpn(1, "1 (>L:S_ECAM_TO)", "0 (>L:S_ECAM_TO)")
 
--- EMER CANCEL
--- TODO: QMPE_Fnx 没有 EMER CANCEL 绑定（Fenix 的 ECP 也没有单独事件），先留空
+-- EMER CANCEL (HubHop: FNX320_ECAM_EMER_CANC_Button_Press/Release)
+wwecam:CfgRpn(3, "1 (>L:S_ECAM_EMER_CANCEL)", "0 (>L:S_ECAM_EMER_CANCEL)")
 
 -- ENG
 wwecam:CfgRpn(4, "1 (>L:S_ECAM_ENGINE)", "0 (>L:S_ECAM_ENGINE)")
@@ -53,9 +53,9 @@ wwecam:CfgRpn(14, "1 (>L:S_ECAM_FCTL)", "0 (>L:S_ECAM_FCTL)")
 -- ALL
 wwecam:CfgRpn(15, "1 (>L:S_ECAM_ALL)", "0 (>L:S_ECAM_ALL)")
 
--- CLR left / CLR right: QMPE has a single CLR button, key 21 copies key 16
+-- CLR left / CLR right (HubHop: FNX320_ECAM_CLR_Left/Right_Button_Press)
 wwecam:CfgRpn(16, "1 (>L:S_ECAM_CLR_LEFT)", "0 (>L:S_ECAM_CLR_LEFT)")
-wwecam:CfgRpn(21, "1 (>L:S_ECAM_CLR_LEFT)", "0 (>L:S_ECAM_CLR_LEFT)")
+wwecam:CfgRpn(21, "1 (>L:S_ECAM_CLR_RIGHT)", "0 (>L:S_ECAM_CLR_RIGHT)")
 
 -- STS
 wwecam:CfgRpn(18, "1 (>L:S_ECAM_STATUS)", "0 (>L:S_ECAM_STATUS)")
@@ -81,8 +81,10 @@ wwecam:GetEClrL("(L:I_ECAM_CLR_LEFT)")
 wwecam:GetEClrR("(L:I_ECAM_CLR_LEFT)")
 wwecam:GetESts("(L:I_ECAM_STATUS)")
 
--- QMPE 的 scale 原样借用；Wwecam 亮度字节是 0~255，实机偏亮/偏暗就调这个数
-wwecam:GetBkl("(L:N_PED_LIGHTING_PEDESTAL)", 30)
+-- Fenix 这个旋钮的量程没文档（同族的 A_PED_LIGHTING_PEDESTAL 是 0~1），
+-- 用自适应 + 夹紧：0~1 当作比例 ×255，>1 当作百分比 ×2.55，最后夹到 0~255
+-- （Wwecam 亮度是单字节，超了会把值串进 LED id，实测会乱灯）
+local dr_bkl = iDataRef:New("(L:N_PED_LIGHTING_PEDESTAL)")
 
 -- =====Annunciator test
 -- PowerOff()/SetTest() 只改硬件，Lua 侧的灯值没变就不会重写；
@@ -115,7 +117,7 @@ GlobalFrameLoopManager:add(function()
             wwecam:PowerOff()
             return
         else
-            wwecam:FreshBkl()
+            dr_bkl:Invalid(-1)
             fresh_ecam()
         end
     end
@@ -130,6 +132,15 @@ GlobalFrameLoopManager:add(function()
     end
 
     -- brightness
-    wwecam:SetBkl()
+    if dr_bkl:ChangedUpdate() then
+        local v = dr_bkl:Get()
+        if v <= 1 then
+            v = v * 255
+        else
+            v = v * 2.55
+        end
+        if v < 0 then v = 0 elseif v > 255 then v = 255 end
+        wwecam:SetBrt(math.floor(v))
+    end
     wwecam:SetEcam()
 end)

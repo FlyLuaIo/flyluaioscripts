@@ -38,8 +38,8 @@ local iniA330_ecam_elec_acdc = 0
 wwecam:CfgRpn(1, "1 (>L:PUSH_ECAM_TOCONFIG)", "0 (>L:PUSH_ECAM_TOCONFIG)")
 
 -- EMER CANCEL
--- TODO: QMPE_INIBUILD 没有 EMER CANCEL 绑定，先留空
--- 若确认了对应的 PUSH_ECAM_EMER_CANCEL 之类事件，在这里补 CfgRpn(3, ...)
+-- TODO: QMPE_INIBUILD（A320/A330/BelugaX）没有 EMER CANCEL 绑定，先留空
+-- HubHop 查过：IniBuilds/A320 与 /A330 的 ECAM 区都没有 EMER CANCEL preset（A330 只有 B:AIRLINER_ECAM_CLR_ON）
 
 -- ENG
 wwecam:CfgRpn(4, "1 (>L:PUSH_ECAM_ENG)")
@@ -136,8 +136,9 @@ else
     wwecam:GetESts(page_is(13))
 end
 
--- QMPE 的 scale 原样借用；Wwecam 亮度字节是 0~255，实机偏亮/偏暗就调这个数
-wwecam:GetBkl("(A:LIGHT POTENTIOMETER:15, Percent)", 0.3) -- 0~100
+-- 亮度必须落在 Wwecam 的单字节 0~255：源 0~100 → 2.55；源 0~1 → 255
+-- （QMPE 的 0.3/30/100 是它自己通道的刻度，照搬会溢出：50*30=1500 → 串到 LED id，实测会乱灯）
+wwecam:GetBkl("(A:LIGHT POTENTIOMETER:15, Percent)", 2.55) -- 0~100
 
 -- =====Annunciator test
 -- PowerOff()/SetTest() 只改硬件，Lua 侧的灯值没变就不会重写；

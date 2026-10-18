@@ -23,7 +23,7 @@ uluaLog("Wwecam for Inibuild A340")
 wwecam:CfgVal(1, "B:AIRLINER_ECAM_TOCONFIG", 2, 0)
 
 -- EMER CANCEL
--- TODO: QMPE_INIBUILD_A340 没有 EMER CANCEL 绑定，先留空
+-- TODO: QMPE_INIBUILD_A340 没有 EMER CANCEL 绑定；HubHop 的 IniBuilds/A340-300 没有 ECAM 区，查不到，先留空
 
 -- ENG / BLEED / PRESS
 wwecam:CfgVal(4, "B:AIRLINER_ECAM_ENG", 2, 0)
@@ -91,8 +91,9 @@ wwecam:GetEClrL("(L:INI_ATLEASTONEMASTERCAUTION, Bool)")
 wwecam:GetEClrR("(L:INI_ATLEASTONEMASTERCAUTION, Bool)")
 wwecam:GetESts(page_is(14))
 
--- QMPE 的 scale 原样借用；Wwecam 亮度字节是 0~255，实机偏亮/偏暗就调这个数
-wwecam:GetBkl("(A:LIGHT POTENTIOMETER:15, Percent)", 0.3)
+-- 亮度必须落在 Wwecam 的单字节 0~255：源 0~100 → 2.55；源 0~1 → 255
+-- （QMPE 的 0.3/30/100 是它自己通道的刻度，照搬会溢出：50*30=1500 → 串到 LED id，实测会乱灯）
+wwecam:GetBkl("(A:LIGHT POTENTIOMETER:15, Percent)", 2.55)
 
 -- =====Annunciator test
 -- PowerOff()/SetTest() 只改硬件，Lua 侧的灯值没变就不会重写；

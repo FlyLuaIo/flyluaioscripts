@@ -23,7 +23,7 @@ uluaLog("Wwecam for PMDG737")
 wwecam:CfgRpn(1, "97901 (>K:ROTOR_BRAKE)")
 
 -- EMER CANCEL
--- TODO: QMPE_PMDG737 没有 EMER CANCEL 绑定，先留空
+-- TODO: 737 没有 EMER CANCEL 按钮，QMPE/HubHop 都没有可映射项，先留空
 
 -- MFD ENG BUTTON：QMPE 是两步写（先 46300+1，再写页面索引 20）
 -- 全局函数名加 wwecam_ 前缀，避免和 QMPE_PMDG737.lua 里的同名全局函数互相覆盖
@@ -94,11 +94,12 @@ wwecam:GetEClrL(page_is(12))
 wwecam:GetEClrR(page_is(12))
 wwecam:GetESts(page_is(11))
 
--- QMPE 的 scale 原样借用；Wwecam 亮度字节是 0~255，实机偏亮/偏暗就调这个数
+-- 亮度必须落在 Wwecam 的单字节 0~255：源 0~100 → 2.55；源 0~1 → 255
+-- （QMPE 的 0.3/30/100 是它自己通道的刻度，照搬会溢出：50*30=1500 → 串到 LED id，实测会乱灯）
 if MSFS_VERSION == 0 then
-    wwecam:GetBkl("(L:BL_Pedestal)", 100)                     -- 0~100
+    wwecam:GetBkl("(L:BL_Pedestal)", 2.55)                     -- 0~100
 else
-    wwecam:GetBkl("(L:PED_PANEL_LIGHT_CONTROL, number)", 0.3) -- 0~300
+    wwecam:GetBkl("(L:PED_PANEL_LIGHT_CONTROL, number)", 0.85) -- 0~300 → 255/300
 end
 
 -- =====Annunciator test
