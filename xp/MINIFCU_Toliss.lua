@@ -372,10 +372,8 @@ GlobalFrameLoopManager:add(function()
 	minifcu:SetLoc()
 	minifcu:SetAppr()
 
-	-- EXPED LED：GetExped 的 base 判定是 `> 110`，Toliss 在 ANN LT 自检后
-	-- APVerticalMode 会停在 >110 的值上，灯就再也灭不掉。原来 L26 的注释写的就是
-	-- `== 113`，这里按它显式判等：不入变化检测缓存，进/出 TEST 都能自愈。
-	minifcu:SetExped(dr_vmode:Get() == 113 and 255 or 0)
+	-- EXPED LED
+	minifcu:SetExped()
 
 	-- FCU LCD (miniFCU LCD custom device)
 	local is_mach = dr_is_mach:Get()
