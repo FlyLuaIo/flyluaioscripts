@@ -98,9 +98,10 @@ end
 
 function Wwecam:SetBkl(val)
 	if val == nil then
-		val = self.d_bkl:Get() * self.d_bkl_scale
+		-- ChangedUpdate 内部已 Get；取值用 GetOld，别再 Get 一次（会二次读 dataref
+		-- 并让下一帧的变化判定错位）
 		if self.d_bkl:ChangedUpdate() then
-			self:SetBrt(val)
+			self:SetBrt(self.d_bkl:GetOld() * self.d_bkl_scale)
 		end
 	else
 		self:SetBrt(val)

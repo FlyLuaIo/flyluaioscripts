@@ -104,7 +104,7 @@ local TEST_MODE = 20
 GlobalFrameLoopManager:add(function()
     -- expert code: cold and dark
     if dr_power:ChangedUpdate() then
-        if dr_power:Get() == 0 then
+        if dr_power:GetOld() == 0 then
             wwecam:PowerOff()
             return
         else
@@ -115,7 +115,7 @@ GlobalFrameLoopManager:add(function()
 
     -- expert code: test mode
     if dr_test:ChangedUpdate() then
-        if dr_test:Get() == TEST_MODE then
+        if dr_test:GetOld() == TEST_MODE then
             wwecam:SetTest()
             return
         else

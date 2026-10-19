@@ -103,7 +103,7 @@ local dr_power = iDataRef:New("sim/cockpit2/switches/avionics_power_on") -- 0: O
 GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark
 	if dr_power:ChangedUpdate() then
-		local b_power = dr_power:Get()
+		local b_power = dr_power:GetOld()
 		if b_power == 0 then
 			wwecam:PowerOff()
 			return

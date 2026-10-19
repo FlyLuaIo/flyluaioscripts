@@ -408,7 +408,7 @@ local function rmp1_update()
     end
     -- flip frequency
     if dr_vhf1_stdby:ChangedUpdate() then
-        qmpe:DigiRmpVhf1StbySet(dr_vhf1_stdby:Get())
+        qmpe:DigiRmpVhf1StbySet(dr_vhf1_stdby:GetOld())
     end
 
     -- use my internal standby frequency
@@ -442,7 +442,7 @@ local function rmp2_update()
 
     -- flip frequency
     if dr_vhf2_stdby:ChangedUpdate() then
-        qmpe:DigiRmpVhf2StbySet(dr_vhf2_stdby:Get())
+        qmpe:DigiRmpVhf2StbySet(dr_vhf2_stdby:GetOld())
     end
 
     -- use my internal standby frequency

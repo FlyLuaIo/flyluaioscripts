@@ -65,7 +65,7 @@ local function xpdr_update()
     end
 
     if b_xpdr_act:ChangedUpdate() then
-        local d_xpdr = b_xpdr_act:Get()
+        local d_xpdr = b_xpdr_act:GetOld()
         local xpdr_stby, stdr_num = wwtcas:XpdrDecode9(d_xpdr)
         wwtcas:setLcdText(wwtcas:EncXpdr(xpdr_stby, stdr_num))
     end

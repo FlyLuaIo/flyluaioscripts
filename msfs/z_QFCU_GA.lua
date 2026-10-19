@@ -309,7 +309,7 @@ end
 -- ===========================================================
 GlobalFrameLoopManager:add(function()
     if ga_power:ChangedUpdate() then
-        if ga_power:Get() > 0 then
+        if ga_power:GetOld() > 0 then
             ga_qfcu_digi_disp_power_on()
         else
             ga_qfcu_digi_disp_power_off()

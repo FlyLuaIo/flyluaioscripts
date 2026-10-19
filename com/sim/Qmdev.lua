@@ -279,7 +279,7 @@ function Qmdev:PollAnalogs()
     for i = 1, #self.Analogs do
         local a = self.Analogs[i]
         if a.dr:ChangedUpdate() then
-            local v = (a.baseline - a.dr:Get()) / a.scale - a.postOffset
+            local v = (a.baseline - a.dr:GetOld()) / a.scale - a.postOffset
             if v < a.lo then
                 v = a.lo
             elseif v > a.hi then

@@ -155,7 +155,7 @@ GlobalFrameLoopManager:add(function()
 			wwagp:FreshBkl()
 		end
 	else
-		b_power_ac = dr_acpower:Get()
+		b_power_ac = dr_acpower:GetOld()
 	end
 	if b_power_ac ~= 0 then
 		wwagp:SetBkl()
