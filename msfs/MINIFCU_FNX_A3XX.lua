@@ -308,13 +308,18 @@ local dr_annun_mode = iDataRef:New('(L:S_OH_IN_LT_ANN_LT)')
 -- 断电 = 1 → kSetCustomDevice 32,<设备序号>,-1,0;（Connector MESSAGE_STOP 熄屏）；
 -- 回 0 时插件会强制把该设备的每个通道重发一遍。Get*(path, revert=true)：
 -- 源是「> 0 = 通电」，取反后通道值 1 = 熄灭。
-minifcu:GetFcuPower('(A:CIRCUIT AVIONICS ON,Bool)', true)
-minifcu:GetEfisPower('(A:CIRCUIT AVIONICS ON,Bool)', true)
+local dr_qfcu_fpa_vs = iDataRef:New("(L:I_FCU_HEADING_VS_MODE)")
+local dr_qfcu_hdgtrkmode = iDataRef:New("(L:I_FCU_TRACK_FPA_MODE)")
+minifcu:GetFcuPower('(A:CIRCUIT AVIONICS ON,Bool)')
+minifcu:GetEfisPower('(A:CIRCUIT AVIONICS ON,Bool)')
 
 GlobalFrameLoopManager:add(function()
 	-- ---- 冷舱熄屏 + ANN LT 测试模式（见本文件上方同名小节）----
-	minifcu:SetFcuPower()
-	minifcu:SetEfisPower()
+	local qfcu_fpa_vs = dr_qfcu_fpa_vs:Get()
+	local qfcu_hdgtrkmode = dr_qfcu_hdgtrkmode:Get()
+	local qfcu_fcu_power = ((qfcu_hdgtrkmode > 0) or (qfcu_fpa_vs > 0)) and 0 or 1
+	minifcu:SetFcuPower(qfcu_fcu_power)
+	minifcu:SetEfisPower(qfcu_fcu_power)
 
 	-- 断电 / 上电：iDataRef 自带变化检测。ChangedUpdate 内部已 Get 过，
 	-- 取值一律用 GetOld 读缓存，不要再 Get 触发一次 dataref 读取。

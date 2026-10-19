@@ -269,7 +269,7 @@ end
 -- 断电判定源：QFCU 档按「值 > 0 = 通电」工作
 local dr_fcu_avail  = iDataRef:New('a320/Aircraft/Cockpit/Panel/FCU_AltitudeDigit1/State')
 -- ANN LT 开关：0 = DIM / 1 = BRT / 2 = TEST（语义照 QFCU 档注释，待实机复核） → 测试态 = 2
-local dr_annun_mode = iDataRef:New('a320/Aircraft/Cockpit/Overhead/LightAnnun/Position')
+local dr_annun_mode = iDataRef:New('a320/Overhead/LightAnnun')
 
 -- 断电 = 1 → kSetCustomDevice 32,<设备序号>,-1,0;（Connector MESSAGE_STOP 熄屏）；
 -- 回 0 时插件会强制把该设备的每个通道重发一遍。Get*(path, revert=true)：
