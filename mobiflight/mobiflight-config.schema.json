@@ -62,6 +62,10 @@
               "MapToBits": {
                 "type": "array",
                 "items": { "type": "integer" }
+              },
+              "RevertPressRelease": {
+                "type": "boolean",
+                "description": "Report this key's press/release inverted (press→0, release→1). Use when the board's polarity is the mirror of the sim's expectation; the plugin inverts before writing keysmap[] and before posting the key event. Buttons only: ignored on MapToBits (encoder) entries. Not supported on outputs."
               }
             }
           }
