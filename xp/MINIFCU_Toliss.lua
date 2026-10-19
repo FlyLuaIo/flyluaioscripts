@@ -240,65 +240,6 @@ minifcu:GetFcuLsValue('AirbusFBW/ILSonCapt')
 minifcu:GetFcuPower('AirbusFBW/FCUAvail', true)
 minifcu:GetEfisPower('AirbusFBW/FCUAvail', true)
 
--- Every output channel: Fresh*() drops the Lua-side change cache, so the first frame
--- after power-up writes all of them again even when the value never changed (the
--- plugin also re-sends the whole custom device after MESSAGE_STOP).
-local minifcu_fresh_all = {
-	'FreshAp1', 'FreshAp2', 'FreshAthr', 'FreshLoc', 'FreshAppr', 'FreshExped',
-	'FreshFcuSpdValue', 'FreshFcuMachValue', 'FreshFcuSpdMachMode', 'FreshFcuSpdDashes',
-	'FreshFcuSpdDot', 'FreshFcuHdgValue', 'FreshFcuHdgDashes', 'FreshFcuHdgDot',
-	'FreshFcuAltValue', 'FreshFcuAltDot', 'FreshFcuVsValue', 'FreshFcuFpaValue',
-	'FreshFcuVsDashes', 'FreshFcuHdgTrkMode',
-	'FreshEfisCstr', 'FreshEfisWpt', 'FreshEfisVord', 'FreshEfisNdb', 'FreshEfisArpt',
-	'FreshFcuFdValue', 'FreshFcuLsValue', 'FreshEfisBaroQnnh1', 'FreshEfisBaroStd1',
-	'FreshEfisBaroInhgHpaUnit', 'FreshEfisBaroInhg', 'FreshEfisBaro',
-}
-
--- ANN LT TEST 图案（真机是段码自检：所有灯 + 所有数字段全亮）。
--- FCU/EFIS 两个 custom device 的通道分布见 mobiflight/MiniFCU.json：
---   0–13 FCU 显示、14 ANN LT；EFIS 0–6 是 CSTR/WPT/VORD/NDB/ARPT/FD/LS 七个按键灯。
--- 硬限制：MT8（ALT）是 ft/100 的整数通道，888 → 屏上 88800，写不出 88888。
-local function minifcu_test_pattern()
-	-- 六个指示范灯（GPIO output pin：0=LOW, 255=HIGH）
-	minifcu:SetAp1(255)
-	minifcu:SetAp2(255)
-	minifcu:SetAthr(255)
-	minifcu:SetLoc(255)
-	minifcu:SetAppr(255)
-	minifcu:SetExped(255)
-
-	-- EFIS 按键灯（miniEFIS custom device，1=ON）
-	minifcu:SetEfisCstr(1)
-	minifcu:SetEfisWpt(1)
-	minifcu:SetEfisVord(1)
-	minifcu:SetEfisNdb(1)
-	minifcu:SetEfisArpt(1)
-	minifcu:SetFcuFdValue(1)
-	minifcu:SetFcuLsValue(1)
-
-	-- FCU 数字：SPD/MACH 与 VS/FPA 各自只能显示一个，测试取 SPD + VS
-	minifcu:SetFcuSpdMachMode(0)
-	minifcu:SetFcuSpdValue(888)
-	minifcu:SetFcuSpdDashes(0)
-	minifcu:SetFcuSpdDot(1)
-	minifcu:SetFcuHdgValue(888)
-	minifcu:SetFcuHdgDashes(0)
-	minifcu:SetFcuHdgDot(1)
-	minifcu:SetFcuAltValue(888)
-	minifcu:SetFcuAltDot(1)
-	minifcu:SetFcuVsValue(8800)
-	minifcu:SetFcuFpaValue(0)
-	minifcu:SetFcuVsDashes(0)
-	minifcu:SetFcuHdgTrkMode(0)
-
-	-- EFIS 气压：QNH 标签亮、STD 关（STD 亮会把 baro 数字换成 "STD"），hPa 模式
-	minifcu:SetEfisBaroInhgHpaUnit(0)
-	minifcu:SetEfisBaroStd1(0)
-	minifcu:SetEfisBaroQnnh1(1)
-	minifcu:SetEfisBaro(8888)
-	minifcu:SetEfisBaroInhg(8888)
-end
-
 GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark + ANN LT test mode
 	minifcu:SetFcuPower()
@@ -313,16 +254,9 @@ GlobalFrameLoopManager:add(function()
 		if not fcu_powered then
 			-- The six LEDs are GPIO pins, not part of a custom device: kSetCustomDevice
 			-- only blanks the LCDs, so switch them off here.
-			minifcu:SetAp1(0)
-			minifcu:SetAp2(0)
-			minifcu:SetAthr(0)
-			minifcu:SetLoc(0)
-			minifcu:SetAppr(0)
-			minifcu:SetExped(0)
+			minifcu:AllLedsOff()
 		end
-		for _, fresh in ipairs(minifcu_fresh_all) do
-			minifcu[fresh](minifcu)
-		end
+		minifcu:FreshAll()
 	end
 
 	-- Test mode: QFCU 靠面板旋钮让硬件把段码/灯全点亮，Lua 只做亮度与重绘
@@ -333,11 +267,9 @@ GlobalFrameLoopManager:add(function()
 
 	if annun_changed then
 		if annun_test then
-			minifcu_test_pattern()
+			minifcu:TestPattern()
 		end
-		for _, fresh in ipairs(minifcu_fresh_all) do
-			minifcu[fresh](minifcu)
-		end
+		minifcu:FreshAll()
 	end
 
 	if not fcu_powered then

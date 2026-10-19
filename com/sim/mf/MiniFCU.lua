@@ -796,6 +796,79 @@ function MiniFCU:GetEfisPower(dpath, revert, base)
 	self.d_efis_power = iDataRef:New(dpath, nil, revert, base)
 end
 
+-- ========
+-- panel-level actions (hand written, not generated): identical for every aircraft profile.
+-- Called from the profile's frame loop - cold&dark blanking, ANN LT self test, cache reset.
+
+-- six annunciator LEDs are GPIO output pins (0 = LOW, 255 = HIGH), not custom-device channels:
+-- MESSAGE_STOP only blanks the LCDs, so they have to be switched off here.
+function MiniFCU:AllLedsOff()
+	self:SetAp1(0)
+	self:SetAp2(0)
+	self:SetAthr(0)
+	self:SetLoc(0)
+	self:SetAppr(0)
+	self:SetExped(0)
+end
+
+-- Drop the value cache of every registered channel, so the next Set*() writes even when the
+-- value did not change: needed after MESSAGE_STOP (the device forgot everything) and when
+-- leaving the ANN LT test pattern. Driven by the object's own channel fields - a hard-coded
+-- name list here would silently miss channels added later.
+function MiniFCU:FreshAll()
+	for name, dr in pairs(self) do
+		if type(name) == 'string' and name:sub(1, 2) == 'd_' and name:sub(-6) ~= '_scale' then
+			if dr ~= nil and dr.Invalid then
+				dr:Invalid(-1)
+			end
+		end
+	end
+end
+
+-- ANN LT test pattern. On a real FCU the panel switch lights every lamp and every digit
+-- segment; miniFCU has no brightness / segment-self-test channel, so approximate it:
+-- every LED on, every display showing 8s.
+-- Hard limit: MT8 (ALT) is an integer ft/100 channel -> 888 shows "88800", 88888 is impossible.
+function MiniFCU:TestPattern()
+	self:SetAp1(255)
+	self:SetAp2(255)
+	self:SetAthr(255)
+	self:SetLoc(255)
+	self:SetAppr(255)
+	self:SetExped(255)
+
+	-- EFIS push-button lamps (miniEFIS custom device, 1 = ON)
+	self:SetEfisCstr(1)
+	self:SetEfisWpt(1)
+	self:SetEfisVord(1)
+	self:SetEfisNdb(1)
+	self:SetEfisArpt(1)
+	self:SetFcuFdValue(1)
+	self:SetFcuLsValue(1)
+
+	-- SPD/MACH and VS/FPA are mutually exclusive fields: test shows SPD + VS
+	self:SetFcuSpdMachMode(0)
+	self:SetFcuSpdValue(888)
+	self:SetFcuSpdDashes(0)
+	self:SetFcuSpdDot(1)
+	self:SetFcuHdgValue(888)
+	self:SetFcuHdgDashes(0)
+	self:SetFcuHdgDot(1)
+	self:SetFcuAltValue(888)
+	self:SetFcuAltDot(1)
+	self:SetFcuVsValue(8800)
+	self:SetFcuFpaValue(0)
+	self:SetFcuVsDashes(0)
+	self:SetFcuHdgTrkMode(0)
+
+	-- baro: QNH label on, STD off (STD would replace the digits with "STD"), hPa mode
+	self:SetEfisBaroInhgHpaUnit(0)
+	self:SetEfisBaroStd1(0)
+	self:SetEfisBaroQnnh1(1)
+	self:SetEfisBaro(8888)
+	self:SetEfisBaroInhg(8888)
+end
+
 function MiniFCU:SetEfisPower(val)
 	if val == nil then
 		if self.d_efis_power:ChangedUpdate() then

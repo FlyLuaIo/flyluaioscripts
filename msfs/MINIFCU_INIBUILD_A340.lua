@@ -18,8 +18,9 @@
 --     同时含 a340 与 inibuild 时才放行；其它 iniBuilds 机型（A300/A310/A320/A330…）路径里
 --     没有 a340 会被排除，不会与它们争抢同一台硬件。
 -- 已知取舍（待真机验证）：
---   1. 未做断电门控：QFCU 档用 (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 关 LCD，miniFCU
---      硬件无背光/熄灭通道，XP 档也没做，这里保持一致。
+--   1. 断电门控 / ANN LT 测试：与参考档同源 —— (L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED) 断电熄屏、
+--      (L:INI_ANNLT_SWITCH) == 0 进 TEST。熄屏走 CustomDevice 的 -1（MESSAGE_STOP），TEST 用
+--      “灯全亮 + 数字全 8”图案逼近，做法同 xp/MINIFCU_Toliss.lua。
 --   2. QFCU 面板有两个 EFIS 半区（机长/副驾），miniFCU 只有机长半区，故 QFCU 的
 --      51/52/53（副驾气压）与 56–79（副驾 EFIS）不移植。
 --   3. bit 17（ALT 100/1000）[Q15]：QFCU 该键是 100/1000 拨杆（QmdevPosSwitchInit +
@@ -249,7 +250,58 @@ minifcu:GetEfisBaro('(A:KOHLSMAN SETTING HG, mbar)')
 -- ===========================================================
 -- 帧循环
 
+-- ===========================================================
+-- 冷舱 / 熄屏 + ANN LT 测试模式（与 xp/MINIFCU_Toliss.lua 同一套做法）
+-- 两个源都逐字取自本机型的 QFCU 参考档（dr_qfcu_fcu_power / dr_qfcu_fcu_test）。
+
+-- 断电判定源：QFCU 档按「值 > 0 = 通电」工作
+local dr_fcu_avail  = iDataRef:New('(L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED, number)')
+-- ANN LT 开关：0 = TEST / 1 = BRT / 2 = DIM → 测试态 = 0
+local dr_annun_mode = iDataRef:New('(L:INI_ANNLT_SWITCH, number)')
+
+-- 断电 = 1 → kSetCustomDevice 32,<设备序号>,-1,0;（Connector MESSAGE_STOP 熄屏）；
+-- 回 0 时插件会强制把该设备的每个通道重发一遍。Get*(path, revert=true)：
+-- 源是「> 0 = 通电」，取反后通道值 1 = 熄灭。
+minifcu:GetFcuPower('(L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED, number)', true)
+minifcu:GetEfisPower('(L:INI_ELEC_AC_ESS_SHED_BUS_IS_POWERED, number)', true)
+
 GlobalFrameLoopManager:add(function()
+	-- ---- 冷舱熄屏 + ANN LT 测试模式（见本文件上方同名小节）----
+	minifcu:SetFcuPower()
+	minifcu:SetEfisPower()
+
+	-- 断电 / 上电：iDataRef 自带变化检测。ChangedUpdate 内部已 Get 过，
+	-- 取值一律用 GetOld 读缓存，不要再 Get 触发一次 dataref 读取。
+	local fcu_changed = dr_fcu_avail:ChangedUpdate()
+	local fcu_powered = dr_fcu_avail:GetOld() >= 1
+	if fcu_changed then
+		if not fcu_powered then
+			-- 6 个 LED 是 GPIO pin，不在 custom device 里：-1 只熄 LCD，这里单独关灯
+			minifcu:AllLedsOff()
+		end
+		minifcu:FreshAll()
+	end
+
+	-- TEST 模式：QFCU 靠面板旋钮让硬件把段码 / 灯全点亮，Lua 只做亮度与重绘；
+	-- miniFCU 没有亮度通道，段码自检只能用图案逼近；退出 TEST 时作废缓存，下一帧重写真实值。
+	local annun_changed = dr_annun_mode:ChangedUpdate()
+	local annun_test = fcu_powered and dr_annun_mode:GetOld() == 0
+	if annun_changed then
+		if annun_test then
+			minifcu:TestPattern()
+		end
+		minifcu:FreshAll()
+	end
+
+	if not fcu_powered then
+		-- 屏已熄：这时候再转发数值会把 LCD 重新点亮（来电后插件自己会全量重发）
+		return
+	end
+	if annun_test then
+		-- TEST 期间冻住 LCD：灯已由 minifcu:TestPattern() 写死，数字保持图案值
+		return
+	end
+
 	-- ---- 6 个 LED pin ----
 	minifcu:SetAp1()
 	minifcu:SetAp2()

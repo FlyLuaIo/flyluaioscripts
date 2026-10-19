@@ -35,8 +35,11 @@
 --   6. ALT 没有 dashes 通道（MiniFCU.json 的 26 条 CustomDevice 里就没有 ALT dashes），
 --      managed 只由 MT9 点体现（与 xp/MINIFCU_XP_A333.lua 的同一取舍）。
 --   7. EXPED [Q12]：FF320 有 ExpediteLight，直接取灯。
---   8. 不做断电 / 背光门控：QFCU 档按 a320/Panel/LightShield 等信标做亮度与小屏熄灭，miniFCU
---      硬件没有背光 / 熄灭通道（与 xp/MINIFCU_Toliss.lua、x/MINIFCU_XP_A333.lua 一致）。
+--   8. 断电门控 / ANN LT 测试：与 QFCU 档同源 —— 断电判据 a320/Aircraft/Cockpit/Panel/FCU_AltitudeDigit1/State
+--      （0 = 断电，QFCU 档行 196），TEST 判据 a320/Aircraft/Cockpit/Overhead/LightAnnun/Position == 2
+--      （QFCU 档行 195 的注释：0 DIM / 1 BRT / 2 test；两条都在 publish.txt 第 46 / 285 行，已对第三方公开）。
+--      熄屏走 CustomDevice 的 -1（MESSAGE_STOP），TEST 用“灯全亮 + 数字全 8”图案逼近 —— 做法同
+--      xp/MINIFCU_Toliss.lua。亮度（LightShield）仍不移植：miniFCU 没有亮度通道。
 --   9. ROSE 模式键 [Q24–Q28]：FF320 的 EFIS_NavModeL 只有 0..4 五档（A320 的 ROSE 无第 6 档 ENG），
 --      miniFCU 的 bit67 ROSE_HIDDEN 在该机型上没有对应档位 → 不绑。
 --  10. bit 25（CHRONO）：QFCU 面板没有这个键，本档也不绑（FF320 的 chrono 命令名未查实，
@@ -259,7 +262,58 @@ local function filterbit(val, mask)
 	return 0
 end
 
+-- ===========================================================
+-- 冷舱 / 熄屏 + ANN LT 测试模式（与 xp/MINIFCU_Toliss.lua 同一套做法）
+-- 两个源都逐字取自本机型的 QFCU 参考档（dr_qfcu_fcu_power / dr_qfcu_fcu_test）。
+
+-- 断电判定源：QFCU 档按「值 > 0 = 通电」工作
+local dr_fcu_avail  = iDataRef:New('a320/Aircraft/Cockpit/Panel/FCU_AltitudeDigit1/State')
+-- ANN LT 开关：0 = DIM / 1 = BRT / 2 = TEST（语义照 QFCU 档注释，待实机复核） → 测试态 = 2
+local dr_annun_mode = iDataRef:New('a320/Aircraft/Cockpit/Overhead/LightAnnun/Position')
+
+-- 断电 = 1 → kSetCustomDevice 32,<设备序号>,-1,0;（Connector MESSAGE_STOP 熄屏）；
+-- 回 0 时插件会强制把该设备的每个通道重发一遍。Get*(path, revert=true)：
+-- 源是「> 0 = 通电」，取反后通道值 1 = 熄灭。
+minifcu:GetFcuPower('a320/Aircraft/Cockpit/Panel/FCU_AltitudeDigit1/State', true)
+minifcu:GetEfisPower('a320/Aircraft/Cockpit/Panel/FCU_AltitudeDigit1/State', true)
+
 GlobalFrameLoopManager:add(function()
+	-- ---- 冷舱熄屏 + ANN LT 测试模式（见本文件上方同名小节）----
+	minifcu:SetFcuPower()
+	minifcu:SetEfisPower()
+
+	-- 断电 / 上电：iDataRef 自带变化检测。ChangedUpdate 内部已 Get 过，
+	-- 取值一律用 GetOld 读缓存，不要再 Get 触发一次 dataref 读取。
+	local fcu_changed = dr_fcu_avail:ChangedUpdate()
+	local fcu_powered = dr_fcu_avail:GetOld() >= 1
+	if fcu_changed then
+		if not fcu_powered then
+			-- 6 个 LED 是 GPIO pin，不在 custom device 里：-1 只熄 LCD，这里单独关灯
+			minifcu:AllLedsOff()
+		end
+		minifcu:FreshAll()
+	end
+
+	-- TEST 模式：QFCU 靠面板旋钮让硬件把段码 / 灯全点亮，Lua 只做亮度与重绘；
+	-- miniFCU 没有亮度通道，段码自检只能用图案逼近；退出 TEST 时作废缓存，下一帧重写真实值。
+	local annun_changed = dr_annun_mode:ChangedUpdate()
+	local annun_test = fcu_powered and dr_annun_mode:GetOld() == 2
+	if annun_changed then
+		if annun_test then
+			minifcu:TestPattern()
+		end
+		minifcu:FreshAll()
+	end
+
+	if not fcu_powered then
+		-- 屏已熄：这时候再转发数值会把 LCD 重新点亮（来电后插件自己会全量重发）
+		return
+	end
+	if annun_test then
+		-- TEST 期间冻住 LCD：灯已由 minifcu:TestPattern() 写死，数字保持图案值
+		return
+	end
+
 	-- ---- 6 个 LED pin ----
 	minifcu:SetAp1()
 	minifcu:SetAp2()

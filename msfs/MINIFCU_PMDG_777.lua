@@ -28,8 +28,9 @@
 --   2. 参考档被注释掉的键一律不绑定，也不自己发明事件码：QFCU 8（LOC）、12（EXPED）、
 --      14（METRIC ALT）、41（LS）、35–39（ND 过滤灯）、7（HDG PULL）、22（VS PUSH）、
 --      49（BARO PULL）、26（ROSE NAV）→ miniFCU 对应 bit 4/6/7/12/15/18/19/20/21/22/24/28/45 留空。
---   3. 无断电/背光门控：参考档只用 (L:BL_MCP) 驱动 QFCU 自己的背光通道，miniFCU 硬件没有
---      背光/熄灭通道，XP 档也没做，这里保持一致。
+--   3. 断电门控：参考档用 (A:AVIONICS MASTER SWITCH,Bool) 判 MCP 通电（行 217 / 362）→ 本档同源，
+--      断电发 CustomDevice 的 -1（MESSAGE_STOP）熄屏，做法同 xp/MINIFCU_Toliss.lua。
+--      参考档没有 ANN LT 测试开关 → 本档不做 TEST（只做断电）。
 --   4. 显示通道：参考档的帧循环只读 5 个源（(L:ngx_SPDwindow) / (L:ngx_HDGwindow) /
 --      (L:ngx_ALTwindow) / (L:ngx_VSwindow) + LED 状态变量）。777 上没有对应源的小屏通道
 --      （managed 点、dashes、MACH 之外的 FPA、HDG/TRK 模式、EFIS 过滤灯、全部气压通道）
@@ -233,7 +234,41 @@ minifcu:GetEfisBaro('0')
 -- ===========================================================
 -- 帧循环
 
+-- ===========================================================
+-- 冷舱 / 熄屏（与 xp/MINIFCU_Toliss.lua 同一套做法；本机型参考档没有 ANN LT 测试源，只做断电）
+-- 源逐字取自本机型的 QFCU 参考档 dr_qfcu_fcu_power。
+
+-- 断电判定源：QFCU 档按「值 > 0 = 通电」工作
+local dr_fcu_avail  = iDataRef:New('(A:AVIONICS MASTER SWITCH,Bool)')
+
+-- 断电 = 1 → kSetCustomDevice 32,<设备序号>,-1,0;（Connector MESSAGE_STOP 熄屏）；
+-- 回 0 时插件会强制把该设备的每个通道重发一遍。Get*(path, revert=true)：
+-- 源是「> 0 = 通电」，取反后通道值 1 = 熄灭。
+minifcu:GetFcuPower('(A:AVIONICS MASTER SWITCH,Bool)', true)
+minifcu:GetEfisPower('(A:AVIONICS MASTER SWITCH,Bool)', true)
+
 GlobalFrameLoopManager:add(function()
+	-- ---- 冷舱熄屏 + ANN LT 测试模式（见本文件上方同名小节）----
+	minifcu:SetFcuPower()
+	minifcu:SetEfisPower()
+
+	-- 断电 / 上电：iDataRef 自带变化检测。ChangedUpdate 内部已 Get 过，
+	-- 取值一律用 GetOld 读缓存，不要再 Get 触发一次 dataref 读取。
+	local fcu_changed = dr_fcu_avail:ChangedUpdate()
+	local fcu_powered = dr_fcu_avail:GetOld() >= 1
+	if fcu_changed then
+		if not fcu_powered then
+			-- 6 个 LED 是 GPIO pin，不在 custom device 里：-1 只熄 LCD，这里单独关灯
+			minifcu:AllLedsOff()
+		end
+		minifcu:FreshAll()
+	end
+
+	if not fcu_powered then
+		-- 屏已熄：这时候再转发数值会把 LCD 重新点亮（来电后插件自己会全量重发）
+		return
+	end
+
 	-- ---- 6 个 LED pin ----
 	minifcu:SetAp1()
 	minifcu:SetAp2()
