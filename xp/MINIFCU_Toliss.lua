@@ -299,19 +299,18 @@ local function minifcu_test_pattern()
 	minifcu:SetEfisBaroInhg(8888)
 end
 
-local ch_fcu_powered = iChange:New(nil)
-local ch_annun_test = iChange:New(nil)
-
 GlobalFrameLoopManager:add(function()
 	-- expert code: cold and dark + ANN LT test mode
 	minifcu:SetFcuPower()
 	minifcu:SetEfisPower()
 
-	local powered = dr_fcu_avail:Get() >= 1
-	local annun_test = powered and dr_annun_mode:Get() == 2
+	-- 断电/上电：iDataRef 自带变化检测。ChangedUpdate 内部已 Get 过，
+	-- 取值一律用 GetOld 读缓存，不要再 Get 触发一次 dataref 读取。
+	local fcu_changed = dr_fcu_avail:ChangedUpdate()
+	local fcu_powered = dr_fcu_avail:GetOld() >= 1
 
-	if ch_fcu_powered:ChangedUpdate(powered) then
-		if not powered then
+	if fcu_changed then
+		if not fcu_powered then
 			-- The six LEDs are GPIO pins, not part of a custom device: kSetCustomDevice
 			-- only blanks the LCDs, so switch them off here.
 			minifcu:SetAp1(0)
@@ -329,7 +328,10 @@ GlobalFrameLoopManager:add(function()
 	-- Test mode: QFCU 靠面板旋钮让硬件把段码/灯全点亮，Lua 只做亮度与重绘
 	-- (qfcu_fcu_test + 1)。miniFCU 没有亮度通道，段码自检只能用 pattern 逼近；
 	-- 退出 TEST 时作废缓存，下一帧重写真实值。
-	if ch_annun_test:ChangedUpdate(annun_test) then
+	local annun_changed = dr_annun_mode:ChangedUpdate()
+	local annun_test = fcu_powered and dr_annun_mode:GetOld() == 2
+
+	if annun_changed then
 		if annun_test then
 			minifcu_test_pattern()
 		end
@@ -338,7 +340,7 @@ GlobalFrameLoopManager:add(function()
 		end
 	end
 
-	if not powered then
+	if not fcu_powered then
 		-- Display is blanked; forwarding values now would light it back up.
 		-- On power-up the plugin re-sends every field of both devices by itself.
 		return
