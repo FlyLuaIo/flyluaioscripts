@@ -139,6 +139,7 @@ GlobalFrameLoopManager:add(function()
 		local b_test = dr_test:GetOld()
 		if b_test == 2 then
 			wwecam:SetTest()
+			wwecam:FreshBkl()
 			return
 		elseif b_test == 0 then
 			-- DIM
