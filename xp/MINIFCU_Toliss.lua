@@ -127,12 +127,12 @@ minifcu:CfgVal(35, "AirbusFBW/NDrangeCapt", 4)
 minifcu:CfgVal(36, "AirbusFBW/NDrangeCapt", 5)
 
 -- VOR/ADF selectors (1 and 2)
-minifcu:CfgVal(37, "ckpt/fcu/adf1Left/anim", 0)
-minifcu:CfgVal(38, "ckpt/fcu/adf1Left/anim", 1)
-minifcu:CfgVal(39, "ckpt/fcu/adf1Left/anim", 2)
-minifcu:CfgVal(40, "ckpt/fcu/adf2Left/anim", 0)
-minifcu:CfgVal(41, "ckpt/fcu/adf2Left/anim", 1)
-minifcu:CfgVal(42, "ckpt/fcu/adf2Left/anim", 2)
+minifcu:CfgVal(37, "sim/cockpit/switches/EFIS_dme_1_selector", 0)
+minifcu:CfgVal(38, "sim/cockpit/switches/EFIS_dme_1_selector", 1)
+minifcu:CfgVal(39, "sim/cockpit/switches/EFIS_dme_1_selector", 2)
+minifcu:CfgVal(40, "sim/cockpit/switches/EFIS_dme_2_selector", 0)
+minifcu:CfgVal(41, "sim/cockpit/switches/EFIS_dme_2_selector", 1)
+minifcu:CfgVal(42, "sim/cockpit/switches/EFIS_dme_2_selector", 2)
 
 -- Baro unit select
 minifcu:CfgVal(43, "AirbusFBW/BaroUnitCapt", 1) -- hPa
