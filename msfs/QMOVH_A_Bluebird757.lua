@@ -95,7 +95,7 @@ qmovha:CfgRpn(26, "2 (>L:B757_OVHD_WIPER_SWITCH)")
 ---- start: the START detent returns to ON after 1 second in the model
 qmovha:CfgRpn(30, "2 (>L:B757_OVHD_APU_SWITCH)")
 ---- master 0:OFF 1:ON
-qmovha:CfgRpn(31, "1 (>L:B757_OVHD_APU_SWITCH)", "0 (>L:B757_OVHD_APU_SWITCH)")
+qmovha:CfgRpn(31, "(L:B757_OVHD_APU_SWITCH) ! (>L:B757_OVHD_APU_SWITCH)")
 
 -- ANTI ICE
 ---- ENG2 (right engine)

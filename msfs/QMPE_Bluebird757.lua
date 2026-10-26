@@ -44,7 +44,7 @@ local RTP_VHF = {
 }
 
 local function bb757_bit(f, bit)
-    return math.floor(f / bit) % 2 == 1
+    return f == bit
 end
 
 -- one knob detent: dir = +1/-1, whole = true for the 1 MHz knob
@@ -77,7 +77,7 @@ qmpe:CfgRpn(4, "(L:B757_PED_NAV_1_OFF_BUTTON) ! (>L:B757_PED_NAV_1_OFF_BUTTON)")
 ---- transfer / swap active and standby
 qmpe:CfgRpn(5, "1 (>L:B757_PED_COMHEAD_1_SWAP_BUTTON)", "0 (>L:B757_PED_COMHEAD_1_SWAP_BUTTON)")
 ---- select radio shown on RTP 1
-qmpe:CfgRpn(6, "1 (>L:B757_PED_NAV_1_VHFC_BUTTON)", "0 (>L:B757_PED_NAV_1_VHFC_BUTTON)") -- VHF C
+qmpe:CfgRpn(6, "1 (>L:B757_PED_NAV_1_VHFR_BUTTON)", "0 (>L:B757_PED_NAV_1_VHFR_BUTTON)") -- VHF R
 qmpe:CfgRpn(7, "1 (>L:B757_PED_NAV_1_VHFL_BUTTON)", "0 (>L:B757_PED_NAV_1_VHFL_BUTTON)") -- VHF L
 
 -- ACP (captain audio panel 1)
@@ -122,8 +122,8 @@ qmpe:CfgRpn(32, "(L:B757_PED_NAV_3_OFF_BUTTON) ! (>L:B757_PED_NAV_3_OFF_BUTTON)"
 ---- transfer / swap active and standby
 qmpe:CfgRpn(33, "1 (>L:B757_PED_COMHEAD_3_SWAP_BUTTON)", "0 (>L:B757_PED_COMHEAD_3_SWAP_BUTTON)")
 ---- select radio shown on RTP 3
-qmpe:CfgRpn(34, "1 (>L:B757_PED_NAV_3_VHFR_BUTTON)", "0 (>L:B757_PED_NAV_3_VHFR_BUTTON)") -- VHF R
-qmpe:CfgRpn(35, "1 (>L:B757_PED_NAV_3_VHFC_BUTTON)", "0 (>L:B757_PED_NAV_3_VHFC_BUTTON)") -- VHF C
+qmpe:CfgRpn(34, "1 (>L:B757_PED_NAV_2_VHFL_BUTTON)", "0 (>L:B757_PED_NAV_2_VHFL_BUTTON)") -- VHF L
+qmpe:CfgRpn(35, "1 (>L:B757_PED_NAV_2_VHFR_BUTTON)", "0 (>L:B757_PED_NAV_2_VHFR_BUTTON)") -- VHF R
 
 -- ATC / TCAS panel
 ---- TCAS mode knob 0:STBY 1:ALT RPTG OFF 2:XPNDR 3:TA ONLY 4:TA/RA
@@ -205,10 +205,10 @@ local function xpdr_update()
 end
 
 -- =====RMP mode leds (which radio each RTP shows)
-qmpe:GetR1vhf1("(L:BBS_RTP_L_LIGHTS) 2 / floor 2 % 1 ==")
-qmpe:GetR1vhf2("(L:BBS_RTP_L_LIGHTS) 4 / floor 2 % 1 ==")
-qmpe:GetR2vhf1("(L:BBS_RTP_R_LIGHTS) 8 / floor 2 % 1 ==")
-qmpe:GetR2vhf2("(L:BBS_RTP_R_LIGHTS) 4 / floor 2 % 1 ==")
+qmpe:GetR1vhf1("(L:BBS_RTP_L_LIGHTS) 2 ==")
+qmpe:GetR1vhf2("(L:BBS_RTP_L_LIGHTS) 8 ==")
+qmpe:GetR2vhf1("(L:BBS_RTP_R_LIGHTS) 2 ==")
+qmpe:GetR2vhf2("(L:BBS_RTP_R_LIGHTS) 8 ==")
 
 -- =====ACP (captain audio panel 1)
 -- TX light: only the PTT state is exposed by the model
@@ -284,8 +284,8 @@ local dr_com3s = iDataRef:New("(A:COM STANDBY FREQUENCY:3,KHz)")
 
 local function bb757_rtp_radio(flagdr)
     local f = flagdr:Get()
-    if bb757_bit(f, 4) then return 2 end
-    if bb757_bit(f, 8) then return 3 end
+    if bb757_bit(f, 4) then return 3 end
+    if bb757_bit(f, 8) then return 2 end
     return 1
 end
 
