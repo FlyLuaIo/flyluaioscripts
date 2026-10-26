@@ -82,16 +82,28 @@ qmpe:CfgRpn(7, "1 (>L:B757_PED_NAV_1_VHFL_BUTTON)", "0 (>L:B757_PED_NAV_1_VHFL_B
 
 -- ACP (captain audio panel 1)
 ---- receiver select: the model names these MIC_xx_LIGHT, state 0/1
-qmpe:CfgRpn(10, "(L:B757_PED_AUDIO_1_MIC_L_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_L_LIGHT)")   -- VHF L
-qmpe:CfgRpn(11, "(L:B757_PED_AUDIO_1_MIC_C_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_C_LIGHT)")   -- VHF C
-qmpe:CfgRpn(12, "(L:B757_PED_AUDIO_1_MIC_R_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_R_LIGHT)")   -- VHF R
-qmpe:CfgRpn(13, "(L:B757_PED_AUDIO_1_MIC_INT_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT)") -- INT
-qmpe:CfgRpn(14, "(L:B757_PED_AUDIO_1_MIC_PA_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT)")  -- PA
----- PTT: hold to transmit
-qmpe:CfgRpn(15, "1 (>L:B757_PED_AUDIO_1_PTT_SWITCH)", "0 (>L:B757_PED_AUDIO_1_PTT_SWITCH)")
----- boom / oxygen mask selector
-qmpe:CfgRpn(24, "(L:B757_PED_AUDIO_1_BOOM_OXY_SWITCH) ! (>L:B757_PED_AUDIO_1_BOOM_OXY_SWITCH)")
----- voice / range switch 0:VOICE 1:BOTH 2:RANGE
+qmpe:CfgRpn(10, "(L:B757_PED_AUDIO_1_MIC_L_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_L_LIGHT_KNOB_STATE)")     -- VHF L
+qmpe:CfgRpn(11, "(L:B757_PED_AUDIO_1_MIC_R_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_R_LIGHT_KNOB_STATE)")     -- VHF C
+qmpe:CfgRpn(12, "(L:B757_PED_AUDIO_1_MIC_INT_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT_KNOB_STATE)")     -- VHF R
+qmpe:CfgRpn(13, "(L:B757_PED_AUDIO_1_MIC_C_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_C_LIGHT_KNOB_STATE)") -- INT
+qmpe:CfgRpn(14, "(L:B757_PED_AUDIO_1_MIC_PA_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT_KNOB_STATE)")   -- PA
+---- VHF1 TX
+qmpe:CfgRpn(15,
+    "0 (>L:B757_PED_AUDIO_1_MIC_L_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_C_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_R_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT, bool) (L:B757_PED_AUDIO_1_MIC_L_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_L_LIGHT)")
+---- VHF2 TX
+qmpe:CfgRpn(24,
+    "0 (>L:B757_PED_AUDIO_1_MIC_L_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_C_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_R_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT, bool) (L:B757_PED_AUDIO_1_MIC_R_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_R_LIGHT)")
+-- INT TX
+qmpe:CfgRpn(25,
+    "0 (>L:B757_PED_AUDIO_1_MIC_L_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_C_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_R_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT, bool) (L:B757_PED_AUDIO_1_MIC_INT_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT)")
+-- CAB TX
+qmpe:CfgRpn(26,
+    "0 (>L:B757_PED_AUDIO_1_MIC_L_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_C_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_R_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT, bool) (L:B757_PED_AUDIO_1_MIC_C_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_C_LIGHT)")
+-- PA TX
+qmpe:CfgRpn(27,
+    "0 (>L:B757_PED_AUDIO_1_MIC_L_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_C_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_R_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT, bool) (L:B757_PED_AUDIO_1_MIC_PA_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT)")
+
+
 qmpe:CfgRpn(36, "0 (>L:B757_PED_AUDIO_1_VOICE_RANGE_SWITCH)")
 qmpe:CfgRpn(80, "1 (>L:B757_PED_AUDIO_1_VOICE_RANGE_SWITCH)")
 qmpe:CfgRpn(37, "2 (>L:B757_PED_AUDIO_1_VOICE_RANGE_SWITCH)")
@@ -99,15 +111,15 @@ qmpe:CfgRpn(37, "2 (>L:B757_PED_AUDIO_1_VOICE_RANGE_SWITCH)")
 -- nav aid tuning on the four free ACP volume knobs
 -- (the B757 model exposes no audio volume LVars, so these knobs had nothing
 --  to drive; VOR L and ILS get both a 1 MHz and a 50 kHz knob)
-qmpe:CfgRpn(16, "-1 (>L:B757_ILS_FREQ_WHOLE_INC)")     -- ILS whole
+qmpe:CfgRpn(16, "-1 (>L:B757_ILS_FREQ_WHOLE_INC)")   -- ILS whole
 qmpe:CfgRpn(17, "1 (>L:B757_ILS_FREQ_WHOLE_INC)")
-qmpe:CfgRpn(18, "-1 (>L:B757_ILS_FREQ_FRAC_INC)")      -- ILS frac
+qmpe:CfgRpn(18, "-1 (>L:B757_ILS_FREQ_FRAC_INC)")    -- ILS frac
 qmpe:CfgRpn(19, "1 (>L:B757_ILS_FREQ_FRAC_INC)")
-qmpe:CfgRpn(20, "-1 (>L:B757_VOR_L_FREQ_WHOLE_INC)")   -- VOR L whole
+qmpe:CfgRpn(20, "-1 (>L:B757_VOR_L_FREQ_WHOLE_INC)") -- VOR L whole
 qmpe:CfgRpn(21, "1 (>L:B757_VOR_L_FREQ_WHOLE_INC)")
-qmpe:CfgRpn(22, "-1 (>L:B757_VOR_L_FREQ_FRAC_INC)")    -- VOR L frac
+qmpe:CfgRpn(22, "-1 (>L:B757_VOR_L_FREQ_FRAC_INC)")  -- VOR L frac
 qmpe:CfgRpn(23, "1 (>L:B757_VOR_L_FREQ_FRAC_INC)")
-qmpe:CfgRpn(8, "-1 (>L:B757_VOR_R_FREQ_WHOLE_INC)")    -- VOR R whole
+qmpe:CfgRpn(8, "-1 (>L:B757_VOR_R_FREQ_WHOLE_INC)")  -- VOR R whole
 qmpe:CfgRpn(9, "1 (>L:B757_VOR_R_FREQ_WHOLE_INC)")
 
 -- RMP2 -> RTP 3 (first officer)
@@ -146,8 +158,8 @@ qmpe:CfgRpn(46, "(L:B757_MAIN_PANEL_BACKLIGHT_KNOB, number) 1 - 0 max (>L:B757_M
 qmpe:CfgRpn(47, "(L:B757_MAIN_PANEL_BACKLIGHT_KNOB, number) 1 + 20 min (>L:B757_MAIN_PANEL_BACKLIGHT_KNOB, number)")
 
 -- EICAS / recall buttons
-qmpe:CfgRpn(44, "1 (>L:B757_MAIN_RECALL_BUTTON)", "0 (>L:B757_MAIN_RECALL_BUTTON)")        -- CAUT key -> RECALL
-qmpe:CfgRpn(79, "1 (>L:B757_EICAS_MAX_IND_BUTTON)", "0 (>L:B757_EICAS_MAX_IND_BUTTON)")    -- WARN key -> MAX IND reset
+qmpe:CfgRpn(44, "1 (>L:B757_MAIN_RECALL_BUTTON)", "0 (>L:B757_MAIN_RECALL_BUTTON)")     -- CAUT key -> RECALL
+qmpe:CfgRpn(79, "1 (>L:B757_EICAS_MAX_IND_BUTTON)", "0 (>L:B757_EICAS_MAX_IND_BUTTON)") -- WARN key -> MAX IND reset
 qmpe:CfgRpn(48, "1 (>L:BBS_EICAS_ENGINE_PAGE_REQUEST)", "0 (>L:BBS_EICAS_ENGINE_PAGE_REQUEST)")
 qmpe:CfgRpn(61, "1 (>L:BBS_EICAS_STATUS_PAGE_REQUEST)", "0 (>L:BBS_EICAS_STATUS_PAGE_REQUEST)")
 
@@ -212,22 +224,22 @@ qmpe:GetR2vhf2("(L:BBS_RTP_R_LIGHTS) 8 ==")
 
 -- =====ACP (captain audio panel 1)
 -- TX light: only the PTT state is exposed by the model
-qmpe:GetSVhf1("(L:B757_PED_AUDIO_1_PTT_SWITCH)")
-qmpe:GetSVhf2("0")
-qmpe:GetSMech("0")
-qmpe:GetSAtt("0")
-qmpe:GetSPa("0")
+qmpe:GetSVhf1("(L:B757_PED_AUDIO_1_MIC_L_LIGHT)")
+qmpe:GetSVhf2("(L:B757_PED_AUDIO_1_MIC_R_LIGHT)")
+qmpe:GetSMech("(L:B757_PED_AUDIO_1_MIC_INT_LIGHT)")
+qmpe:GetSAtt("(L:B757_PED_AUDIO_1_MIC_C_LIGHT)")
+qmpe:GetSPa("(L:B757_PED_AUDIO_1_MIC_PA_LIGHT)")
 -- CALL lights: the B757 audio panel has no per-channel call light
 qmpe:GetCVhf1("0")
 qmpe:GetCVhf2("0")
 qmpe:GetCMech("0")
 qmpe:GetCAtt("0")
 -- RX lights
-qmpe:GetRVhf1("(L:B757_PED_AUDIO_1_MIC_L_LIGHT)")
-qmpe:GetRVhf2("(L:B757_PED_AUDIO_1_MIC_C_LIGHT)")
-qmpe:GetRMech("(L:B757_PED_AUDIO_1_MIC_INT_LIGHT)")
-qmpe:GetRAtt("(L:B757_PED_AUDIO_1_MIC_R_LIGHT)")
-qmpe:GetRPa("(L:B757_PED_AUDIO_1_MIC_PA_LIGHT)")
+qmpe:GetRVhf1("(L:B757_PED_AUDIO_1_MIC_L_LIGHT_KNOB_STATE)")
+qmpe:GetRVhf2("(L:B757_PED_AUDIO_1_MIC_R_LIGHT_KNOB_STATE)")
+qmpe:GetRMech("(L:B757_PED_AUDIO_1_MIC_INT_LIGHT_KNOB_STATE)")
+qmpe:GetRAtt("(L:B757_PED_AUDIO_1_MIC_C_LIGHT_KNOB_STATE)")
+qmpe:GetRPa("(L:B757_PED_AUDIO_1_MIC_PA_LIGHT_KNOB_STATE)")
 
 -- =====ECAM row: the B757 has no ECAM, all channels stay dark
 qmpe:GetEEng("0")
