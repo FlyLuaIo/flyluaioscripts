@@ -20,11 +20,7 @@
 -- Keys with no B757 counterpart are listed unbound at the end of the binding
 -- section.
 --
--- Do not remove below lines: aircraft detection (Bluebird B757-200 / B757-300)
--- AIRCRAFT_PATH is the MSFS "AircraftLoaded" full path, which contains both the
--- package folder and the model folder, e.g.
---   .../Community/bluebird-simulations-b757/SimObjects/Airplanes/B752/...
-if ilua_is_acfpath_excluded("b75") then return end
+if ilua_require_bluebird_757() then return end
 
 -- Do not remove below lines: hardware detection
 local qmpe = com.sim.qm.Qmpe.Open()

@@ -14,11 +14,7 @@
 --     selectors, STBY POWER, BUS TIE, GEN DRIVE DISC, pressurization knobs,
 --     center hydraulic pumps, ...) are listed unbound at the end of the file
 --
--- Do not remove below lines: aircraft detection (Bluebird B757-200 / B757-300)
--- AIRCRAFT_PATH is the MSFS "AircraftLoaded" full path, which contains both the
--- package folder and the model folder, e.g.
---   .../Community/bluebird-simulations-b757/SimObjects/Airplanes/B752/...
-if ilua_is_acfpath_excluded("b75") then return end
+if ilua_require_bluebird_757() then return end
 
 -- Do not remove below lines: hardware detection
 local qmovha = com.sim.qm.Qmovha.Open()
