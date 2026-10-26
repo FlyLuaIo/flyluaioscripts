@@ -77,14 +77,14 @@ qmovha:CfgRpn(46, "10 (>L:B757_FLOOD_DOME_KNOB)")
 qmovha:CfgRpn(19, "0 (>L:B757_FLOOD_DOME_KNOB)")
 
 -- ANN LT / WARNING IND 0:BRT 1:DIM 2:DIM (B757 only has DIM/BRT)
-qmovha:CfgRpn(20, "11 (>L:B757_OVHD_WARNING_IND_SWITCH)")
-qmovha:CfgRpn(47, "0 (>L:B757_OVHD_WARNING_IND_SWITCH)")
+qmovha:CfgRpn(20, "1 (>L:OVHD_TEST_LTS)")
+qmovha:CfgRpn(47, "0 (>L:OVHD_TEST_LTS) 11 (>L:B757_OVHD_WARNING_IND_SWITCH)")
 qmovha:CfgRpn(21, "0 (>L:B757_OVHD_WARNING_IND_SWITCH)")
 
 -- EMER EXIT LT 0:ON 1:ARMED 2:OFF (this LVar is named PASS_OXY_Toggle in the model)
-qmovha:CfgRpn(22, "2 (>L:B757_OVHD_PASS_OXY_Toggle_Switch_CLICK)")
-qmovha:CfgRpn(49, "1 (>L:B757_OVHD_PASS_OXY_Toggle_Switch_CLICK)")
-qmovha:CfgRpn(23, "0 (>L:B757_OVHD_PASS_OXY_Toggle_Switch_CLICK)")
+qmovha:CfgRpn(22, "0 (>L:B757_OVHD_SWITCH_GAURD) 2 (>L:B757_OVHD_PASS_OXY_Toggle_Switch_CLICK)")
+qmovha:CfgRpn(49, "1 (>L:B757_OVHD_SWITCH_GAURD) 1 (>L:B757_OVHD_PASS_OXY_Toggle_Switch_CLICK)")
+qmovha:CfgRpn(23, "1 (>L:B757_OVHD_SWITCH_GAURD) 0 (>L:B757_OVHD_PASS_OXY_Toggle_Switch_CLICK)")
 
 -- WIPER 0:OFF 1:LOW 2:HIGH (if the direction is inverted, swap the values of 24 and 26)
 qmovha:CfgRpn(24, "0 (>L:B757_OVHD_WIPER_SWITCH)")
@@ -298,7 +298,8 @@ qmovha:GetUpled1Adr3Up('(L:B757_OVHD_IRS_R_DCFAULT_DECAL)')
 qmovha:GetUpled1Adr3Dn('(L:B757_IRS_R_SWITCH) 0 ==')
 qmovha:GetUpled1Adr2Up('(L:B757_OVHD_IRS_C_DCFAULT_DECAL)')
 qmovha:GetUpled1Adr2Dn('(L:B757_IRS_C_SWITCH) 0 ==')
-qmovha:GetUpled1Onbat('(L:B757_OVHD_IRS_C_ONDC_DECAL) (L:B757_OVHD_IRS_L_ONDC_DECAL) or (L:B757_OVHD_IRS_R_ONDC_DECAL) or')
+qmovha:GetUpled1Onbat(
+    '(L:B757_OVHD_IRS_C_ONDC_DECAL) (L:B757_OVHD_IRS_L_ONDC_DECAL) or (L:B757_OVHD_IRS_R_ONDC_DECAL) or')
 
 -- FUEL PUMPS L FWD/AFT, C L/R, R FWD/AFT
 qmovha:GetUpled1Ltk1Up('(L:B757_OVHD_L_PUMPS_FWD_PRESS_DECAL)')
