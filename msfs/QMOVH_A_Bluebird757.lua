@@ -276,7 +276,7 @@ qmovha:GetWingDn('(L:B757_OVHD_ANTI_ICE_WING_BUTTON_ON)')
 qmovha:GetPack1Up('(L:B757_OVHD_L_PACK_RESET_INOP_DECAL)')
 qmovha:GetPack1Dn('(L:B757_OVHD_SEL_L_PACK_SWITCH) 0 ==')
 qmovha:GetApubUp('(L:B757_OVHD_BLEED_APU_VALVE_DECAL)')
-qmovha:GetApubDn('(L:B757_OVHD_APU_BUTTON) !')
+qmovha:GetApubDn('(L:B757_OVHD_APU_BUTTON)')
 qmovha:GetPack2Up('(L:B757_OVHD_R_PACK_RESET_INOP_DECAL)')
 qmovha:GetPack2Dn('(L:B757_OVHD_SEL_R_PACK_SWITCH) 0 ==')
 

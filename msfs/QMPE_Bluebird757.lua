@@ -84,8 +84,8 @@ qmpe:CfgRpn(7, "1 (>L:B757_PED_NAV_1_VHFL_BUTTON)", "0 (>L:B757_PED_NAV_1_VHFL_B
 ---- receiver select: the model names these MIC_xx_LIGHT, state 0/1
 qmpe:CfgRpn(10, "(L:B757_PED_AUDIO_1_MIC_L_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_L_LIGHT_KNOB_STATE)")     -- VHF L
 qmpe:CfgRpn(11, "(L:B757_PED_AUDIO_1_MIC_R_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_R_LIGHT_KNOB_STATE)")     -- VHF C
-qmpe:CfgRpn(12, "(L:B757_PED_AUDIO_1_MIC_INT_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT_KNOB_STATE)")     -- VHF R
-qmpe:CfgRpn(13, "(L:B757_PED_AUDIO_1_MIC_C_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_C_LIGHT_KNOB_STATE)") -- INT
+qmpe:CfgRpn(12, "(L:B757_PED_AUDIO_1_MIC_INT_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT_KNOB_STATE)") -- VHF R
+qmpe:CfgRpn(13, "(L:B757_PED_AUDIO_1_MIC_C_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_C_LIGHT_KNOB_STATE)")     -- INT
 qmpe:CfgRpn(14, "(L:B757_PED_AUDIO_1_MIC_PA_LIGHT_KNOB_STATE) ! (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT_KNOB_STATE)")   -- PA
 ---- VHF1 TX
 qmpe:CfgRpn(15,
@@ -104,23 +104,28 @@ qmpe:CfgRpn(27,
     "0 (>L:B757_PED_AUDIO_1_MIC_L_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_C_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_R_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT, bool) 0 (>L:B757_PED_AUDIO_1_MIC_INT_LIGHT, bool) (L:B757_PED_AUDIO_1_MIC_PA_LIGHT) ! (>L:B757_PED_AUDIO_1_MIC_PA_LIGHT)")
 
 
-qmpe:CfgRpn(36, "0 (>L:B757_PED_AUDIO_1_VOICE_RANGE_SWITCH)")
-qmpe:CfgRpn(80, "1 (>L:B757_PED_AUDIO_1_VOICE_RANGE_SWITCH)")
-qmpe:CfgRpn(37, "2 (>L:B757_PED_AUDIO_1_VOICE_RANGE_SWITCH)")
-
 -- nav aid tuning on the four free ACP volume knobs
--- (the B757 model exposes no audio volume LVars, so these knobs had nothing
---  to drive; VOR L and ILS get both a 1 MHz and a 50 kHz knob)
-qmpe:CfgRpn(16, "-1 (>L:B757_ILS_FREQ_WHOLE_INC)")   -- ILS whole
-qmpe:CfgRpn(17, "1 (>L:B757_ILS_FREQ_WHOLE_INC)")
-qmpe:CfgRpn(18, "-1 (>L:B757_ILS_FREQ_FRAC_INC)")    -- ILS frac
-qmpe:CfgRpn(19, "1 (>L:B757_ILS_FREQ_FRAC_INC)")
-qmpe:CfgRpn(20, "-1 (>L:B757_VOR_L_FREQ_WHOLE_INC)") -- VOR L whole
-qmpe:CfgRpn(21, "1 (>L:B757_VOR_L_FREQ_WHOLE_INC)")
-qmpe:CfgRpn(22, "-1 (>L:B757_VOR_L_FREQ_FRAC_INC)")  -- VOR L frac
-qmpe:CfgRpn(23, "1 (>L:B757_VOR_L_FREQ_FRAC_INC)")
-qmpe:CfgRpn(8, "-1 (>L:B757_VOR_R_FREQ_WHOLE_INC)")  -- VOR R whole
-qmpe:CfgRpn(9, "1 (>L:B757_VOR_R_FREQ_WHOLE_INC)")
+-- -- VHF1 RX volume
+-- qmpe:CfgRpn(16, "(L:A_ASP_VHF_1_VOLUME) 0.05 - 0 max (>L:A_ASP_VHF_1_VOLUME)")
+-- qmpe:CfgRpn(17, "(L:A_ASP_VHF_1_VOLUME) 0.05 + 1 min (>L:A_ASP_VHF_1_VOLUME)")
+-- -- VHF2 RX volume
+-- qmpe:CfgRpn(18, "(L:A_ASP_VHF_2_VOLUME) 0.05 - 0 max (>L:A_ASP_VHF_2_VOLUME)")
+-- qmpe:CfgRpn(19, "(L:A_ASP_VHF_2_VOLUME) 0.05 + 1 min (>L:A_ASP_VHF_2_VOLUME)")
+-- -- INT RX volume
+-- qmpe:CfgRpn(20, "(L:A_ASP_INT_VOLUME) 0.05 - 0 max (>L:A_ASP_INT_VOLUME)")
+-- qmpe:CfgRpn(21, "(L:A_ASP_INT_VOLUME) 0.05 + 1 min (>L:A_ASP_INT_VOLUME)")
+-- -- CAB RX volume
+-- qmpe:CfgRpn(22, "(L:A_ASP_CAB_VOLUME) 0.05 - 0 max (>L:A_ASP_CAB_VOLUME)")
+-- qmpe:CfgRpn(23, "(L:A_ASP_CAB_VOLUME) 0.05 + 1 min (>L:A_ASP_CAB_VOLUME)")
+-- -- PA volume
+-- qmpe:CfgRpn(8, "(L:A_ASP_PA_VOLUME) 0.05 - 0 max (>L:A_ASP_PA_VOLUME)")
+-- qmpe:CfgRpn(9, "(L:A_ASP_PA_VOLUME) 0.05 + 1 min (>L:A_ASP_PA_VOLUME)")
+
+-- weather SYS 1/OFF/2
+qmpe:CfgRpn(36, "0 (>L:S_WR_SYS)")
+-- 80 is middle key
+qmpe:CfgRpn(80, "1 (>L:S_WR_SYS)")
+qmpe:CfgRpn(37, "2 (>L:S_WR_SYS)")
 
 -- RMP2 -> RTP 3 (first officer)
 ---- inner knob: 25 kHz step
@@ -154,8 +159,8 @@ qmpe:CfgRpn(45, "1 (>L:B757_PED_TCAS_MODE_KNOB_TEST)", "0 (>L:B757_PED_TCAS_MODE
 qmpe:CfgRpn(64, "1 (>L:B757_PED_TCAS_IDENT_SWITCH)", "0 (>L:B757_PED_TCAS_IDENT_SWITCH)")
 
 -- integ light brightness (main panel backlight knob, 0~20)
-qmpe:CfgRpn(46, "(L:B757_MAIN_PANEL_BACKLIGHT_KNOB, number) 1 - 0 max (>L:B757_MAIN_PANEL_BACKLIGHT_KNOB, number)")
-qmpe:CfgRpn(47, "(L:B757_MAIN_PANEL_BACKLIGHT_KNOB, number) 1 + 20 min (>L:B757_MAIN_PANEL_BACKLIGHT_KNOB, number)")
+qmpe:CfgRpn(46, "(L:B757_FLOOD_AISLE_STAND_INNER_KNOB, number) 1 - 0 max (>L:B757_FLOOD_AISLE_STAND_INNER_KNOB, number)")
+qmpe:CfgRpn(47, "(L:B757_FLOOD_AISLE_STAND_INNER_KNOB, number) 1 + 20 min (>L:B757_FLOOD_AISLE_STAND_INNER_KNOB, number)")
 
 -- EICAS / recall buttons
 qmpe:CfgRpn(44, "1 (>L:B757_MAIN_RECALL_BUTTON)", "0 (>L:B757_MAIN_RECALL_BUTTON)")     -- CAUT key -> RECALL
@@ -279,7 +284,7 @@ qmpe:GetUnlock2("(L:BBS757_MAIN_GEAR_NOSE) 5 > (L:BBS757_MAIN_GEAR_NOSE) 255 < a
 qmpe:GetUnlock3("(L:BBS757_MAIN_GEAR_RIGHT) 5 > (L:BBS757_MAIN_GEAR_RIGHT) 195 < and")
 
 -- backlight: main panel backlight knob 0~20 -> 0~100
-qmpe:GetBkl("(L:B757_MAIN_PANEL_BACKLIGHT_KNOB, number) 5 *", 1)
+qmpe:GetBkl("(L:B757_FLOOD_AISLE_STAND_INNER_KNOB, number)", 5)
 
 -- =====RMP radio data
 -- driver display handles (OffRmp1/OffRmp2 blank these on power loss);
