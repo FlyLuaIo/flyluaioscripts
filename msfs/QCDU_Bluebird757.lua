@@ -142,7 +142,7 @@ qcdub:GetExec("(L:FMC_EXEC_ACTIVE_1)")
 
 -- key backlight and screen brightness: the model exposes one brightness output
 -- (0.1~1.5), mapped to the 0~100 range both channels expect (x66)
-qcdub:GetBkl("(L:B757_CDU_BRIGHTNESS_L, number)", 66)
+qcdub:GetBkl("(L:B757_FLOOD_AISLE_STAND_INNER_KNOB, number)", 5)
 qcdub:GetScreenBrt("(L:B757_CDU_BRIGHTNESS_L, number)", 66)
 
 -- ===========================================================
