@@ -72,8 +72,8 @@ qmcp737c:CfgRpn(10, "1 (>L:B757_MCP_IAS_MACH_KNOB_BUTTON)", "0 (>L:B757_MCP_IAS_
 qmcp737c:CfgRpn(11, "1 (>L:B757_MCP_VNAV_BUTTON_PRESS)", "0 (>L:B757_MCP_VNAV_BUTTON_PRESS)")
 
 -- HDG knob: the model lets us write the selected heading directly
-qmcp737c:CfgRpn(12, "(L:BBS_AP_TARGET_HEADING, number) 1 - dup 0 < if{ drop 359 } (>L:BBS_AP_TARGET_HEADING, number)")
-qmcp737c:CfgRpn(13, "(L:BBS_AP_TARGET_HEADING, number) 1 + dup 360 >= if{ drop 0 } (>L:BBS_AP_TARGET_HEADING, number)")
+qmcp737c:CfgRpn(12, "(L:B757_AP_HDG_KNOB, enum) -- 36 + 36 % (>L:B757_AP_HDG_KNOB, enum) (>K:HEADING_BUG_DEC) ")
+qmcp737c:CfgRpn(13, "(L:B757_AP_HDG_KNOB, enum) ++ 36 % (>L:B757_AP_HDG_KNOB, enum) (>K:HEADING_BUG_INC) ")
 -- HDG push = sync bug to present heading
 qmcp737c:CfgRpn(14, "(A:PLANE HEADING DEGREES GYRO, degrees) near (>L:BBS_AP_TARGET_HEADING, number)")
 -- HDG SEL
@@ -257,8 +257,8 @@ local d_vs_blank = iDataRef:New("(L:BBS_VS_BLANKED)")
 -- the model publishes MCP speed only as drum animation LVars, so the selected
 -- speed is taken from the standard simvars (verify in sim; if the model does
 -- not write them the speed window stays blank)
-local d_ias = iDataRef:New("(A:AUTOPILOT AIRSPEED HOLD VAR, knots)")
-local d_mach = iDataRef:New("(A:AUTOPILOT MACH HOLD VAR, mach)")
+local d_ias = iDataRef:New("(L:BBS757_ORANGE_AIRSPEED_BUGS)")
+local d_mach = iDataRef:New("(L:BBS757_ORANGE_AIRSPEED_BUGS)")
 local d_is_mach = iDataRef:New("(L:BBS_AIRSPEED_IN_MACH)")
 local d_ias_blank = iDataRef:New("(L:BBS_IAS_BLANKED)")
 
@@ -279,8 +279,8 @@ local led_vs = iDataRef:New("(L:B757_MCP_VS_BUTTON)")
 local led_cmda = iDataRef:New("(L:B757_MCP_CMD_1_BUTTON)")
 local led_cmdb = iDataRef:New("(L:B757_MCP_CMD_2_BUTTON)")
 local led_lgn = iDataRef:New("(L:B757_MAIN_light_landingGear_nose)")
-local led_lgl = iDataRef:New("(L:B757_MAIN_light_landingGear_gear)")
-local led_lgr = iDataRef:New("(L:B757_MAIN_light_landingGear_gear)")
+local led_lgl = iDataRef:New("(L:B757_MAIN_light_landingGear_L)")
+local led_lgr = iDataRef:New("(L:B757_MAIN_light_landingGear_R)")
 local led_ma = iDataRef:New("(A:AUTOPILOT MASTER, Bool)")
 local led_spd = iDataRef:New("(L:B757_MCP_SPD_BUTTON)")
 local led_lvl = iDataRef:New("(L:B757_MCP_FLCH_BUTTON)")
@@ -292,7 +292,7 @@ local led_at = iDataRef:New("(L:BBS_AUTO_THROTTLE)")
 -- the B757 has no N1 mode, idr_qmcp737c_hid_ledn1 is always written as 0
 
 -- panel brightness (0..20 knob -> 0..100)
-local d_bright = iDataRef:New("(L:B757_MAIN_PANEL_FLOOD_KNOB, number)")
+local d_bright = iDataRef:New("(L:B757_FLOOD_GLARESHIELD_INNER_KNOB, number)")
 
 -- ===========================================================
 -- write helper: only touch the HID when the value actually changes
