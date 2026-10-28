@@ -2,7 +2,9 @@
 -- created by Wei Shuai <cpuwolf@gmail.com> 2026-04-16
 -- *****************************************************************
 
-if ilua_require_inibuild_a350() then return end
+if ilua_require_inibuild_a350() then
+	return
+end
 
 -- Do not remove below lines: hardware detection
 local wwagp = com.sim.qm.Wwagp.Open()
@@ -12,7 +14,6 @@ if not wwagp then return end
 uluaLog('WinWing AGP for Inibuild A350')
 
 --================================ Output key binding
---
 wwagp:CfgRpn(0, "(L:INI_BRAKE_FAN_ON) ! (>L:INI_BRAKE_FAN_ON)", "(L:INI_BRAKE_FAN_ON) ! (>L:INI_BRAKE_FAN_ON)")
 
 -- autobrake
@@ -54,7 +55,7 @@ wwagp:GetLockR("(A:GEAR POSITION:2, percent) 100 =")
 wwagp:GetBrakeOn('(L:INI_BRAKE_FAN_ON)')
 wwagp:GetLowD('(L:INI_AUTOBRAKE_LOW_DECEL)')
 wwagp:GetMedD('(L:INI_AUTOBRAKE_MED_DECEL)')
-wwagp:GetMaxD('(L:INI_AUTOBRAKE_LEVEL) 4 == (L:INI_AUTOBRAKE_ARMED) and')
+wwagp:GetMaxD('(L:INI_AUTOBRAKE_MAX_DECEL)')
 wwagp:GetLow('(L:INI_AUTOBRAKE_LEVEL) 1 ==')
 wwagp:GetMed('(L:INI_AUTOBRAKE_LEVEL) 3 ==')
 wwagp:GetMax(
@@ -65,9 +66,7 @@ wwagp:GetLever('(L:INI_GEAR_DOWN_ARROW_LIGHT)')
 
 
 --====LCD
-local dr_running_chrono = iDataRef:New('(L:INI_CHRONO_STARTED, number)')
-local dr_chrono_sec = iDataRef:New('(L:INI_CHRONO_SECONDS, number)')
-local dr_chrono_min = iDataRef:New('(L:INI_CHRONO_MINUTES, number)')
+local dr_chrono = iDataRef:New('(E:SIMULATION TIME, second)')
 
 local dr_utc_year = iDataRef:New('(E:ZULU YEAR, number)')
 local dr_utc_mon = iDataRef:New('(E:ZULU MONTH OF YEAR, number)')
@@ -75,28 +74,19 @@ local dr_utc_day = iDataRef:New('(E:ZULU DAY OF MONTH, number)')
 
 local dr_utc_sec = iDataRef:New('(E:ZULU TIME, second)')
 
-local dr_running_et = iDataRef:New('(L:INI_ET_STARTED, number)')
-local dr_et_min = iDataRef:New('(L:INI_ET_MINUTE, number)')
-local dr_et_hr = iDataRef:New('(L:INI_ET_HOUR, number)')
+local dr_et_sec = iDataRef:New('(E:SIMULATION TIME, second)')
 
-local dr_utc_is_date = iDataRef:New('(L:INI_CLOCK_DATE_BUTTON)')
+local dr_utc_is_date = iDataRef:New('cpuwolf/flyluaio/WwAgp/keysmap[14]')
 
 local gChrono = ""
 local gUtc = ""
 local elapsed_time = ""
+
+wwagp:FakeChrInit(2)
+wwagp:FakeEtInit()
 function Wwagp_GA_LCD_Loop()
 	--Chrone
-	if dr_chrono_sec:ChangedUpdate() or dr_running_chrono:ChangedUpdate() or dr_chrono_min:ChangedUpdate() then
-		local chr = dr_chrono_sec:GetOld()
-		local chr_min = dr_chrono_min:GetOld()
-		local chr_is_run = dr_running_chrono:GetOld()
-		if chr_is_run == 0 then
-			gChrono = "     "
-		else
-			chr = chr + chr_min * 60
-			gChrono = wwagp:formatChronoStr(chr)
-		end
-	end
+	gChrono = wwagp:FakeChrShow()
 
 	-- UTC time
 	if dr_utc_is_date:ChangedUpdate() then
@@ -122,16 +112,7 @@ function Wwagp_GA_LCD_Loop()
 	end
 
 	-- ET
-	if dr_et_min:ChangedUpdate() or dr_et_hr:ChangedUpdate() or dr_running_et:ChangedUpdate() then
-		local m = math.floor(dr_et_min:GetOld())
-		local h = math.floor(dr_et_hr:GetOld())
-		local et_is_run = dr_running_et:GetOld()
-		if et_is_run == 0 then
-			elapsed_time = "     "
-		else
-			elapsed_time = string.format("%02d:%02d", h, m)
-		end
-	end
+	elapsed_time = wwagp:FakeEtShow()
 
 	-- Write to hardware
 	wwagp:setLcdStr(gChrono, gUtc, elapsed_time)
