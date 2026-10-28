@@ -7,8 +7,9 @@
 
 local CfNano = oop.class(com.sim.mf.MobiFlight)
 function CfNano:init()
-	-- MF bridge assigns qmdev_id at connect (see log). Fallback: ProductName + ModuleSerial from JSON.
-	self.QmdevId = 0x242B0D90
+	-- QmdevId = crc30(ModuleName) ; must equal Mfcfgqmdev::assignMfDeviceId
+	-- CPUWOLF MF NANO -> 0x1884148C
+	self.QmdevId = 0x1884148C
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_cfnano == nil then
 		_G.ilua_hw_assigned_cfnano = 0

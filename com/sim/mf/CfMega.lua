@@ -7,8 +7,9 @@
 
 local CfMega = oop.class(com.sim.mf.MobiFlight)
 function CfMega:init()
-	-- MF bridge assigns qmdev_id at connect (see log). Fallback: ProductName + ModuleSerial from JSON.
-    self.QmdevId = 0x27C0810B
+	-- QmdevId = crc30(ModuleName) ; must equal Mfcfgqmdev::assignMfDeviceId
+	-- MF Mega Pro -> 0x02C1F2F5
+    self.QmdevId = 0x02C1F2F5
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_cfmega == nil then
 		_G.ilua_hw_assigned_cfmega = 0
