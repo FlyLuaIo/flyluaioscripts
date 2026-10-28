@@ -8,7 +8,7 @@
 local KayeRoof = oop.class(com.sim.mf.MobiFlight)
 function KayeRoof:init()
 	-- MF bridge assigns qmdev_id at connect (see log). Fallback: ProductName + ModuleSerial from JSON.
-	self.QmdevId = 0x3D141F88
+	self.QmdevId = 0x3E8CF531
 	self.FastTurnsPerSecond = 5
 	if _G.ilua_hw_assigned_kayeroof == nil then
 		_G.ilua_hw_assigned_kayeroof = 0
